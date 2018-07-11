@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
+apply from: "../library/libraries.gradle"
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -22,11 +26,64 @@ android {
     }
 }
 
+def library = ext.libraries
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:28.0.0-alpha3'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+
+    api project(':uimodule')
+
+    /////Timber//////
+    implementation "${library.timber}"
+    ///
+
+    /////RXJAVA+RXANDROID//////
+    implementation "${library.rxjava}"
+    implementation "${library.retrofit2Rxjava2Adapter}"
+    implementation "${library.rxandroid}"
+    implementation "${library.rxbinding}"
+    implementation "${library.rxbindingSup4}"
+    implementation "${library.rxbindingSup7}"
+    ///
+
+    /////RETROFIT/////
+    implementation "${library.retrofit}"
+    implementation "${library.converterGson}"
+    ///
+
+    /////GLIDE/////
+    implementation "${library.glide}"
+    annotationProcessor "${library.glideCompiler}"
+    ////
+
+    ///Cicerone///
+    implementation "${library.cicerone}"
+
+    //SUPPORT//
+    implementation "${library.supportAppcompat}"
+    implementation "${library.support}"
+    implementation "${library.supportDesign}"
+    implementation "${library.supportFragment}"
+    implementation "${library.recyclerview}"
+    implementation "${library.constraint}"
+
+    //DAGGER//
+    implementation "${library.dagger}"
+    kapt "${library.daggerKapt}"
+
+    //ROOM///
+    implementation "${library.room}"
+    kapt  "${library.roomAnnotations}"
+    testImplementation "${library.roomTest}"
+
+    //LifeCycle//
+    implementation "${library.lifecycle}"
+    kapt "${library.lifecycleKapt}"
+
+    //DataBinding//
+    kapt "${library.dataBinding}"
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
