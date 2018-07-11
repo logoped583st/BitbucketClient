@@ -9,6 +9,6 @@ class TokenPreferences(private val context: Context) {
                 .putString(Constants.TOKEN, token).apply()
     }
 
-    fun getToken(): String = context.getSharedPreferences(Constants.TOKEN_PREFERENCES, Context.MODE_PRIVATE)
+    fun getToken(): String? = context.getSharedPreferences(Constants.TOKEN_PREFERENCES, Context.MODE_PRIVATE)
             .getString(Constants.TOKEN, null)
 }
