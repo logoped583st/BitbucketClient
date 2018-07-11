@@ -3,8 +3,8 @@ package bushuk.stanislau.bitbucketproject
 import android.app.Application
 import bushuk.stanislau.bitbucketproject.di.components.DaggerMainComponent
 import bushuk.stanislau.bitbucketproject.di.components.MainComponent
+import bushuk.stanislau.bitbucketproject.di.modules.TokenPreferencesModule
 import timber.log.Timber
-import javax.inject.Inject
 
 class App : Application() {
 
@@ -14,7 +14,9 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        component = DaggerMainComponent.builder().build()
+        component = DaggerMainComponent.builder()
+                .tokenPreferencesModule(TokenPreferencesModule(this))
+                .build()
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())

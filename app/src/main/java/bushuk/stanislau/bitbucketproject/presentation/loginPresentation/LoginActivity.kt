@@ -9,16 +9,25 @@ import android.support.v7.app.AppCompatActivity
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.Constants
 import bushuk.stanislau.bitbucketproject.R
+import bushuk.stanislau.bitbucketproject.TokenPreferences
 import kotlinx.android.synthetic.main.fragment_login.*
 import timber.log.Timber
+import javax.inject.Inject
 
 
 class LoginActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var tokenPreferences: TokenPreferences
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        (application as App).component.inject(this)
         setContentView(R.layout.fragment_login)
         val webSettings = web_view.settings
         webSettings.javaScriptEnabled = true
@@ -39,6 +48,7 @@ class LoginActivity : AppCompatActivity() {
                 if (url.contains("access_token=")) { //catch access token from redirect
                     tempString = url.subSequence(url.indexOf("=") + 1, url.indexOf("&")).toString()
                     Timber.e(tempString)
+                    tokenPreferences.setToken(tempString)
                     finish()
                     return true
                 }
@@ -47,6 +57,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        web_view.loadUrl("https://bitbucket.org/site/oauth2/authorize?client_id=yuPL4qKCg7VvRzAWAm&response_type=token")
+        web_view.loadUrl(Constants.AUTH_URL)
     }
 }

@@ -7,9 +7,9 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class TokenPreferecesModule {
+class TokenPreferencesModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun getTokenPreferences(context: Context)=TokenPreferences(context)
+    fun getTokenPreferences()=TokenPreferences(context)
 }
