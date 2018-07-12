@@ -8,8 +8,9 @@ import timber.log.Timber
 
 class App : Application() {
 
-
-    lateinit var component: MainComponent
+    companion object {
+        lateinit var component: MainComponent
+    }
 
     override fun onCreate() {
         super.onCreate()

@@ -11,5 +11,5 @@ class TokenPreferencesModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun getTokenPreferences()=TokenPreferences(context)
+    fun getTokenPreferences() = TokenPreferences(context)
 }

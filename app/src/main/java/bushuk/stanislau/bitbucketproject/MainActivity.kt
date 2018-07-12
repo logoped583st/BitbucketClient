@@ -22,20 +22,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (application as App).component.inject(this)
+        App.component.inject(this)
 
-        if(savedInstanceState==null && tokenPreferences.getToken()==null){
+        if (savedInstanceState == null && tokenPreferences.getToken() == null) {
             router.navigateTo(Screens.LOGIN_SCREEN)
-        }else {
-            Timber.e(tokenPreferences.getToken())
-            //TODO {navigate to main screen}
+        } else if (savedInstanceState == null) {
+            router.newRootScreen(Screens.MAIN_SCREEN)
         }
 
         setContentView(R.layout.activity_main)
     }
 
     override fun onResume() {
-        navigatorHolder.setNavigator(MainNavigator(this,R.id.main_container))
+        navigatorHolder.setNavigator(MainNavigator(this, R.id.main_container))
         super.onResume()
     }
 
