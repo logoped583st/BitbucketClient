@@ -3,7 +3,7 @@ package bushuk.stanislau.bitbucketproject
 import android.content.Context
 import java.security.KeyStore
 
-class TokenPreferences(private val context: Context) {
+class TokenPreferences {
 
     private val keyStore: KeyStore = KeyStore.getInstance(Constants.KEY_STRORE)
 
