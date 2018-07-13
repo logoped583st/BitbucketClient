@@ -1,14 +1,17 @@
 package bushuk.stanislau.bitbucketproject
 
 import android.content.Context
+import java.security.KeyStore
 
 class TokenPreferences(private val context: Context) {
 
+    private val keyStore: KeyStore = KeyStore.getInstance(Constants.KEY_STRORE)
+
     fun setToken(token: String) {
-        context.getSharedPreferences(Constants.TOKEN_PREFERENCES, Context.MODE_PRIVATE).edit()
-                .putString(Constants.TOKEN, token).apply()
+        keyStore.load(null)
+        keyStore.provider.put(Constants.TOKEN, token)
+
     }
 
-    fun getToken(): String? = context.getSharedPreferences(Constants.TOKEN_PREFERENCES, Context.MODE_PRIVATE)
-            .getString(Constants.TOKEN, null)
+    fun getToken(): String? = keyStore.provider.get(Constants.TOKEN) as String?
 }
