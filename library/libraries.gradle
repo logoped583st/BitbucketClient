@@ -13,6 +13,7 @@ ext.version = [
         rxbinding:                                                                              "2.1.1",
 
         //RETROFIT
+        okhttpLibVersion:                                                                       "3.4.2",
         retrofit:                                                                               "2.3.0",
 
         //GLIDE
@@ -58,9 +59,10 @@ ext.libraries = [
     rxbindingSup7          : "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:"+       "$version.rxbinding",
 
     //Timber
-    timber : "com.jakewharton.timber:timber:" + "$version.timber",
+    timber : "com.jakewharton.timber:timber:" +                                                 "$version.timber",
 
     //RETROFIT
+    httpLogs               : "com.squareup.okhttp3:logging-interceptor:" +                      "$version.okhttpLibVersion",
     retrofit               : "com.squareup.retrofit2:retrofit:" +                               "$version.retrofit",
     converterGson          : "com.squareup.retrofit2:converter-gson:" +                         "$version.retrofit",
 

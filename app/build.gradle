@@ -24,6 +24,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 def library = ext.libraries
@@ -48,14 +51,14 @@ dependencies {
     ///
 
     /////RETROFIT/////
+    implementation "${library.httpLogs}"
     implementation "${library.retrofit}"
     implementation "${library.converterGson}"
     ///
 
     /////GLIDE/////
     implementation "${library.glide}"
-    implementation 'com.android.support:support-v4:28.0.0-alpha3'
-    annotationProcessor "${library.glideCompiler}"
+    kapt "${library.glideCompiler}"
     ////
 
     ///Cicerone///
@@ -83,9 +86,14 @@ dependencies {
     kapt "${library.lifecycleKapt}"
 
     //DataBinding//
-    kapt "${library.dataBinding}"
+    //kapt "${library.dataBinding}"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
 }

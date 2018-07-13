@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.presentation.loginPresentation
+package bushuk.stanislau.bitbucketproject.presentation.login
 
 
 import android.annotation.SuppressLint
@@ -13,7 +13,7 @@ import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.Constants
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.TokenPreferences
-import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.login_fragment.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -27,8 +27,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (application as App).component.inject(this)
-        setContentView(R.layout.fragment_login)
+        App.component.inject(this)
+        setContentView(R.layout.login_fragment)
         val webSettings = web_view.settings
         webSettings.javaScriptEnabled = true
         web_view.webViewClient = object : WebViewClient() {//for check redirect
@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
 
             private fun shouldOverrideUrlLoading(url: String): Boolean {
                 val tempString: String
-
+                Timber.e(url + "   " + this)
                 if (url.contains("access_token=")) { //catch access token from redirect
                     tempString = url.subSequence(url.indexOf("=") + 1, url.indexOf("&")).toString()
                     Timber.e(tempString)
@@ -57,6 +57,9 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+
         web_view.loadUrl(Constants.AUTH_URL)
+
     }
+
 }
