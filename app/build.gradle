@@ -58,8 +58,7 @@ dependencies {
 
     /////GLIDE/////
     implementation "${library.glide}"
-    implementation 'com.android.support:support-v4:28.0.0-alpha3'
-    annotationProcessor "${library.glideCompiler}"
+    kapt "${library.glideCompiler}"
     ////
 
     ///Cicerone///

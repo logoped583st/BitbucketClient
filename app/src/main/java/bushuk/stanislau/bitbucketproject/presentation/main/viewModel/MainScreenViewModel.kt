@@ -27,7 +27,8 @@ class MainScreenViewModel : ViewModel() {
         App.component.inject(this)
         mainScreenModel.getUser(tokenPreferences.getToken()!!).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess { user.postValue(it) }
+                .doOnSuccess {
+                    user.postValue(it) }
                 .doOnError { Timber.e(it) }//TODO {catch error, add to Room}
                 .subscribe()
     }
