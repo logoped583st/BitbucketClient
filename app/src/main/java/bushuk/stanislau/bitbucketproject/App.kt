@@ -16,6 +16,7 @@ class App : Application() {
         super.onCreate()
 
         component = DaggerMainComponent.builder()
+                .tokenPreferencesModule(TokenPreferencesModule(this))
                 .build()
 
         if (BuildConfig.DEBUG) {
