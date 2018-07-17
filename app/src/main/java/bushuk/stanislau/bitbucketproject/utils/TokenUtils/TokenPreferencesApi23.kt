@@ -9,7 +9,6 @@ import android.security.keystore.KeyProperties
 import android.util.Base64
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.Constants
-import timber.log.Timber
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
@@ -20,14 +19,6 @@ import javax.inject.Inject
 
 @TargetApi(Build.VERSION_CODES.M)
 class TokenPreferencesApi23 @Inject constructor(val context: Context) : TokenPreferences {
-
-
-    /**
-     *
-     * NEED HARD REFACTORING, SO SHITY CODE
-     *
-     */
-
 
     private lateinit var keyStore: KeyStore
     private val AndroidKeyStore = Constants.KEY_STRORE
@@ -84,11 +75,7 @@ class TokenPreferencesApi23 @Inject constructor(val context: Context) : TokenPre
 
     override fun setToken(accessToken: String) {
 
-        val stage1 = accessToken.replace("-", "+1")     //
-        val stage2 = stage1.replace("_", "+2")          //Replace symbols that doesn`t supported by Base64 format
-        val stage3 = stage2.replace("%", "+3")          //
-        Timber.e("$stage3 SET TOKEN")
-        val tokenBytes: ByteArray = encrypt(Base64.decode(stage3, Base64.NO_WRAP or Base64.NO_PADDING))
+        val tokenBytes: ByteArray = encrypt(Base64.decode(StringTokenUtils.convertToBase64(accessToken), Base64.NO_WRAP or Base64.NO_PADDING))
         val tokenEncrypted: String = Base64.encodeToString(tokenBytes, Base64.DEFAULT or Base64.NO_PADDING)
         context.getSharedPreferences(Constants.TOKEN, MODE_PRIVATE).edit().putString(Constants.TOKEN, tokenEncrypted).apply()
     }
@@ -100,12 +87,7 @@ class TokenPreferencesApi23 @Inject constructor(val context: Context) : TokenPre
             val tokenDecryptedBytes: ByteArray = decrypt(Base64.decode(tokenEncrypted, Base64.NO_WRAP))
             val tokenDecrypted: String = Base64.encodeToString(tokenDecryptedBytes, Base64.NO_WRAP)
 
-            val stage1 = tokenDecrypted.replace("+1", "-")
-            val stage2 = stage1.replace("+2", "_")          //Replace symbols that doesn`t supported by Base64 format
-            val stage3 = stage2.replace("+3", "%")
-            Timber.e("$stage3 GET TOKEN")
-
-            return stage3
+            return StringTokenUtils.convertToNormal(tokenDecrypted)
         } else {
             return null
         }
