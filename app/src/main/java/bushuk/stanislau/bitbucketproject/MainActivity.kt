@@ -1,35 +1,32 @@
 package bushuk.stanislau.bitbucketproject
 
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.ViewModelProviders
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
 import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.Router
-import timber.log.Timber
 import javax.inject.Inject
+import android.arch.lifecycle.LifecycleRegistry
 
-class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var router: Router
+
+class MainActivity : AppCompatActivity(),LifecycleOwner {
 
     @Inject
     lateinit var navigatorHolder: NavigatorHolder
 
-    @Inject
-    lateinit var tokenPreferences: TokenPreferences
+    private val lifecycleRegistry: LifecycleRegistry = LifecycleRegistry(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         App.component.inject(this)
-
-        if (savedInstanceState == null && tokenPreferences.getToken() == null) {
-            router.navigateTo(Screens.LOGIN_SCREEN)
-        } else if (savedInstanceState == null) {
-            router.newRootScreen(Screens.MAIN_SCREEN)
-        }
-
+        val viewModel: MainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+        lifecycleRegistry.markState(Lifecycle.State.CREATED)
+        lifecycle.addObserver(viewModel)
         setContentView(R.layout.activity_main)
     }
 
@@ -42,4 +39,5 @@ class MainActivity : AppCompatActivity() {
         navigatorHolder.removeNavigator()
         super.onPause()
     }
+
 }

@@ -3,7 +3,6 @@ package bushuk.stanislau.bitbucketproject.presentation.main.model
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.pojo.User
-import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 

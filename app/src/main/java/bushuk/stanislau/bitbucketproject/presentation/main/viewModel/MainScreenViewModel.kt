@@ -3,9 +3,9 @@ package bushuk.stanislau.bitbucketproject.presentation.main.viewModel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.TokenPreferences
 import bushuk.stanislau.bitbucketproject.pojo.User
 import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
+import bushuk.stanislau.bitbucketproject.utils.TokenUtils.TokenPreferences
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -28,7 +28,8 @@ class MainScreenViewModel : ViewModel() {
         mainScreenModel.getUser(tokenPreferences.getToken()!!).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess {
-                    user.postValue(it) }
+                    user.postValue(it)
+                }
                 .doOnError { Timber.e(it) }//TODO {catch error, add to Room}
                 .subscribe()
     }

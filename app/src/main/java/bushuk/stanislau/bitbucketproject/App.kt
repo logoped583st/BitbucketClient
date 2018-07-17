@@ -3,6 +3,8 @@ package bushuk.stanislau.bitbucketproject
 import android.app.Application
 import bushuk.stanislau.bitbucketproject.di.components.DaggerMainComponent
 import bushuk.stanislau.bitbucketproject.di.components.MainComponent
+import bushuk.stanislau.bitbucketproject.di.modules.ApplicationContextProvider
+import bushuk.stanislau.bitbucketproject.di.modules.CryptoModule
 import bushuk.stanislau.bitbucketproject.di.modules.TokenPreferencesModule
 import timber.log.Timber
 
@@ -16,7 +18,9 @@ class App : Application() {
         super.onCreate()
 
         component = DaggerMainComponent.builder()
+                .cryptoModule(CryptoModule(this))
                 .tokenPreferencesModule(TokenPreferencesModule(this))
+                .applicationContextProvider(ApplicationContextProvider(this))
                 .build()
 
         if (BuildConfig.DEBUG) {
