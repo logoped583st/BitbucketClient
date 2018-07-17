@@ -1,8 +1,7 @@
-package bushuk.stanislau.bitbucketproject.utils.TokenUtils
+package bushuk.stanislau.bitbucketproject.utils.CryptUtils
 
 import android.annotation.TargetApi
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
@@ -16,9 +15,8 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 import javax.inject.Inject
 
-
 @TargetApi(Build.VERSION_CODES.M)
-class TokenPreferencesApi23 @Inject constructor(val context: Context) : TokenPreferences {
+class CryptApi23 @Inject constructor(val context: Context):Crypto{
 
     private lateinit var keyStore: KeyStore
     private val AndroidKeyStore = Constants.KEY_STRORE
@@ -49,59 +47,36 @@ class TokenPreferencesApi23 @Inject constructor(val context: Context) : TokenPre
     }
 
 
-    private fun encrypt(initialBytes: ByteArray): ByteArray {
+     override fun encrypt(byteArray: ByteArray): ByteArray {
         val keyStoreKey = keyStore.getKey(KEY_ALIAS, null)
         val cipher = Cipher.getInstance(AES_MODE)
         cipher.init(Cipher.ENCRYPT_MODE, keyStoreKey)
-        val encodedBytes = cipher.doFinal(initialBytes)
+        val encodedBytes = cipher.doFinal(byteArray)
         val params = cipher.parameters
         val iv = params.getParameterSpec(GCMParameterSpec::class.java).iv
         saveIv(iv)
 
         return encodedBytes
-
-
     }
 
-    private fun decrypt(cipherText: ByteArray): ByteArray {
+     override fun decrypt(byteArray: ByteArray): ByteArray {
         val iv = getIv()
         val ivSpec = GCMParameterSpec(128, iv)
         val keyStoreKey = keyStore.getKey(KEY_ALIAS, null) as SecretKey
         val cipher = Cipher.getInstance(AES_MODE)
         cipher.init(Cipher.DECRYPT_MODE, keyStoreKey, ivSpec)
 
-        return cipher.doFinal(cipherText)
-    }
-
-    override fun setToken(accessToken: String) {
-
-        val tokenBytes: ByteArray = encrypt(Base64.decode(StringTokenUtils.convertToBase64(accessToken), Base64.NO_WRAP or Base64.NO_PADDING))
-        val tokenEncrypted: String = Base64.encodeToString(tokenBytes, Base64.DEFAULT or Base64.NO_PADDING)
-        context.getSharedPreferences(Constants.TOKEN, MODE_PRIVATE).edit().putString(Constants.TOKEN, tokenEncrypted).apply()
-    }
-
-    override fun getToken(): String? {
-        val tokenEncrypted: String? = context.getSharedPreferences(Constants.TOKEN, MODE_PRIVATE).getString(Constants.TOKEN, null)
-
-        if (tokenEncrypted != null) {
-            val tokenDecryptedBytes: ByteArray = decrypt(Base64.decode(tokenEncrypted, Base64.NO_WRAP))
-            val tokenDecrypted: String = Base64.encodeToString(tokenDecryptedBytes, Base64.NO_WRAP)
-
-            return StringTokenUtils.convertToNormal(tokenDecrypted)
-        } else {
-            return null
-        }
+        return cipher.doFinal(byteArray)
     }
 
     private fun saveIv(iv: ByteArray) {
         val ivString: String = Base64.encodeToString(iv, flags)
-        context.getSharedPreferences("IV", MODE_PRIVATE).edit().putString("IV", ivString).apply()
+        context.getSharedPreferences("IV", Context.MODE_PRIVATE).edit().putString("IV", ivString).apply()
     }
 
     private fun getIv(): ByteArray {
-        val ivString: String = context.getSharedPreferences("IV", MODE_PRIVATE).getString("IV", null)
+        val ivString: String = context.getSharedPreferences("IV", Context.MODE_PRIVATE).getString("IV", null)
         return Base64.decode(ivString, flags)
     }
-
 
 }

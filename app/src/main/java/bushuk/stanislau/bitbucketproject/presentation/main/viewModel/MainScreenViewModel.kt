@@ -3,7 +3,6 @@ package bushuk.stanislau.bitbucketproject.presentation.main.viewModel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.utils.TokenUtils.TokenPreferencesApi23
 import bushuk.stanislau.bitbucketproject.pojo.User
 import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
 import bushuk.stanislau.bitbucketproject.utils.TokenUtils.TokenPreferences

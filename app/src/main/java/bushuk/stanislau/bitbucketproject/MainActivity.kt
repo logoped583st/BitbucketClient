@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
 import bushuk.stanislau.bitbucketproject.utils.TokenUtils.TokenPreferences
-import bushuk.stanislau.bitbucketproject.utils.TokenUtils.TokenPreferencesApi23
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject

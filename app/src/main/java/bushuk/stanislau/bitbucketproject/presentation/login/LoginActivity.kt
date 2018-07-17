@@ -15,7 +15,6 @@ import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.Screens
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
 import bushuk.stanislau.bitbucketproject.utils.TokenUtils.TokenPreferences
-import bushuk.stanislau.bitbucketproject.utils.TokenUtils.TokenPreferencesApi23
 import kotlinx.android.synthetic.main.login_fragment.*
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
