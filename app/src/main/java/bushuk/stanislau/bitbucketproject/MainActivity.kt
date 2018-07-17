@@ -3,9 +3,9 @@ package bushuk.stanislau.bitbucketproject
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
+import bushuk.stanislau.bitbucketproject.utils.TokenUtils.TokenPreferencesApi23
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
-import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var navigatorHolder: NavigatorHolder
 
     @Inject
-    lateinit var tokenPreferences: TokenPreferences
+    lateinit var tokenPreferences: TokenPreferencesApi23
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

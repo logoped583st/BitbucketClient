@@ -50,9 +50,6 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
-
-
-        Timber.e("AFTER")
     }
 
     override fun onBackPressed() {

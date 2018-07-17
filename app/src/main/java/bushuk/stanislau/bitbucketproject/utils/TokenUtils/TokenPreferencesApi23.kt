@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject
+package bushuk.stanislau.bitbucketproject.utils.TokenUtils
 
 import android.annotation.TargetApi
 import android.content.Context
@@ -7,15 +7,19 @@ import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
+import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.Constants
 import timber.log.Timber
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
+import javax.inject.Inject
 
 
-class TokenPreferences(val context: Context) {
+@TargetApi(Build.VERSION_CODES.M)
+class TokenPreferencesApi23 @Inject constructor(val context: Context) : TokenPreferences{
 
 
     /**
@@ -25,6 +29,7 @@ class TokenPreferences(val context: Context) {
      */
 
 
+
     private lateinit var keyStore: KeyStore
     private val AndroidKeyStore = Constants.KEY_STRORE
     private val KEY_ALIAS = Constants.TOKEN
@@ -32,10 +37,10 @@ class TokenPreferences(val context: Context) {
     var flags = Base64.NO_PADDING
 
     init {
+        App.component.inject(this)
         init()
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     private fun init() {
         keyStore = KeyStore.getInstance(AndroidKeyStore)
         keyStore.load(null)
@@ -78,7 +83,7 @@ class TokenPreferences(val context: Context) {
         return cipher.doFinal(cipherText)
     }
 
-    fun setToken(accessToken: String) {
+    override fun setToken(accessToken: String) {
 
         val stage1 = accessToken.replace("-", "+1")     //
         val stage2 = stage1.replace("_", "+2")          //Replace symbols that doesn`t supported by Base64 format
@@ -89,8 +94,9 @@ class TokenPreferences(val context: Context) {
         context.getSharedPreferences(Constants.TOKEN, MODE_PRIVATE).edit().putString(Constants.TOKEN, tokenEncrypted).apply()
     }
 
-    fun getToken(): String? {
+    override fun getToken(): String? {
         val tokenEncrypted: String? = context.getSharedPreferences(Constants.TOKEN, MODE_PRIVATE).getString(Constants.TOKEN, null)
+
         if (tokenEncrypted != null) {
             val tokenDecryptedBytes: ByteArray = decrypt(Base64.decode(tokenEncrypted, Base64.NO_WRAP))
             val tokenDecrypted: String = Base64.encodeToString(tokenDecryptedBytes, Base64.NO_WRAP)
