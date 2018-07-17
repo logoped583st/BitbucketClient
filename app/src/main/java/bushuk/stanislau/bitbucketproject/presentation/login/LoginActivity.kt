@@ -12,6 +12,7 @@ import android.webkit.WebViewClient
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.Constants
 import bushuk.stanislau.bitbucketproject.R
+import bushuk.stanislau.bitbucketproject.utils.TokenUtils.TokenPreferences
 import bushuk.stanislau.bitbucketproject.utils.TokenUtils.TokenPreferencesApi23
 import kotlinx.android.synthetic.main.login_fragment.*
 import timber.log.Timber
@@ -21,7 +22,7 @@ import javax.inject.Inject
 class LoginActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var tokenPreferences: TokenPreferencesApi23
+    lateinit var tokenPreferences: TokenPreferences
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {

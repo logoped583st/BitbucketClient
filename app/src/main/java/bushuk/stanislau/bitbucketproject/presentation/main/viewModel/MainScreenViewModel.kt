@@ -6,6 +6,7 @@ import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.utils.TokenUtils.TokenPreferencesApi23
 import bushuk.stanislau.bitbucketproject.pojo.User
 import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
+import bushuk.stanislau.bitbucketproject.utils.TokenUtils.TokenPreferences
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -17,7 +18,7 @@ class MainScreenViewModel : ViewModel() {
     lateinit var mainScreenModel: MainScreenModel
 
     @Inject
-    lateinit var tokenPreferences: TokenPreferencesApi23
+    lateinit var tokenPreferences: TokenPreferences
 
     private var user: MutableLiveData<User> = MutableLiveData()
 

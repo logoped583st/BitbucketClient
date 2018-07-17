@@ -6,6 +6,7 @@ import bushuk.stanislau.bitbucketproject.utils.TokenUtils.TokenPreferencesApi19
 import bushuk.stanislau.bitbucketproject.utils.TokenUtils.TokenPreferencesApi23
 import dagger.Module
 import dagger.Provides
+import timber.log.Timber
 import javax.inject.Singleton
 
 @Module
@@ -16,7 +17,7 @@ class TokenPreferencesModule(val context: Context) {
     fun getTokenPreferences(): TokenPreferences {
         val version = android.os.Build.VERSION.SDK_INT
         val tokenPreferences: TokenPreferences
-
+        Timber.e(version.toString()+" Version")
         if (version >= 23) {
             tokenPreferences = TokenPreferencesApi23(context)
         } else {

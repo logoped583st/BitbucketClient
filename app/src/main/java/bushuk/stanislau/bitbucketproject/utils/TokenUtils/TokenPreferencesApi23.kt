@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 
 @TargetApi(Build.VERSION_CODES.M)
-class TokenPreferencesApi23 @Inject constructor(val context: Context) : TokenPreferences{
+class TokenPreferencesApi23 @Inject constructor(val context: Context) : TokenPreferences {
 
 
     /**
@@ -27,7 +27,6 @@ class TokenPreferencesApi23 @Inject constructor(val context: Context) : TokenPre
      * NEED HARD REFACTORING, SO SHITY CODE
      *
      */
-
 
 
     private lateinit var keyStore: KeyStore
@@ -60,7 +59,7 @@ class TokenPreferencesApi23 @Inject constructor(val context: Context) : TokenPre
 
 
     private fun encrypt(initialBytes: ByteArray): ByteArray {
-        val keyStoreKey = keyStore.getKey(KEY_ALIAS, null) as SecretKey
+        val keyStoreKey = keyStore.getKey(KEY_ALIAS, null)
         val cipher = Cipher.getInstance(AES_MODE)
         cipher.init(Cipher.ENCRYPT_MODE, keyStoreKey)
         val encodedBytes = cipher.doFinal(initialBytes)
