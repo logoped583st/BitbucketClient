@@ -5,8 +5,8 @@ import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import bushuk.stanislau.bitbucketproject.Screens
-import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
+import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import ru.terrakok.cicerone.android.SupportAppNavigator
 
 class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppNavigator(activity, containerId) {

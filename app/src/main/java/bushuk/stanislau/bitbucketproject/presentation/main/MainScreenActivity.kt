@@ -9,16 +9,12 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
-import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.databinding.ActivityMainScreenBinding
 import bushuk.stanislau.bitbucketproject.databinding.NavHeaderMainScreenBinding
 import bushuk.stanislau.bitbucketproject.presentation.main.viewModel.MainScreenViewModel
 import kotlinx.android.synthetic.main.activity_main_screen.*
 import kotlinx.android.synthetic.main.app_bar_main_screen.*
-import timber.log.Timber
-import javax.inject.Inject
 
 class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -30,7 +26,7 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         val navHeaderMainScreenBinding: NavHeaderMainScreenBinding = DataBindingUtil.inflate(layoutInflater,
                 R.layout.nav_header_main_screen, binding.navView, false)
         binding.navView.addHeaderView(navHeaderMainScreenBinding.root)
-        val viewModel = ViewModelProviders.of(this).get(MainScreenViewModel::class.java)
+        val viewModel:MainScreenViewModel = ViewModelProviders.of(this).get(MainScreenViewModel::class.java)
 
         binding.let {
             it.viewModel = viewModel

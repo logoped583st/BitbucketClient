@@ -18,7 +18,6 @@ class App : Application() {
         super.onCreate()
 
         component = DaggerMainComponent.builder()
-
                 .cryptoModule(CryptoModule(this))
                 .tokenPreferencesModule(TokenPreferencesModule(this))
                 .applicationContextProvider(ApplicationContextProvider(this))

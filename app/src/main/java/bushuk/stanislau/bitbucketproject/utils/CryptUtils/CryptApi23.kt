@@ -16,7 +16,7 @@ import javax.crypto.spec.GCMParameterSpec
 import javax.inject.Inject
 
 @TargetApi(Build.VERSION_CODES.M)
-class CryptApi23 @Inject constructor(val context: Context):Crypto{
+class CryptApi23 @Inject constructor(val context: Context) : Crypto {
 
     private lateinit var keyStore: KeyStore
     private val AndroidKeyStore = Constants.KEY_STRORE
@@ -47,7 +47,7 @@ class CryptApi23 @Inject constructor(val context: Context):Crypto{
     }
 
 
-     override fun encrypt(byteArray: ByteArray): ByteArray {
+    override fun encrypt(byteArray: ByteArray): ByteArray {
         val keyStoreKey = keyStore.getKey(KEY_ALIAS, null)
         val cipher = Cipher.getInstance(AES_MODE)
         cipher.init(Cipher.ENCRYPT_MODE, keyStoreKey)
@@ -59,7 +59,7 @@ class CryptApi23 @Inject constructor(val context: Context):Crypto{
         return encodedBytes
     }
 
-     override fun decrypt(byteArray: ByteArray): ByteArray {
+    override fun decrypt(byteArray: ByteArray): ByteArray {
         val iv = getIv()
         val ivSpec = GCMParameterSpec(128, iv)
         val keyStoreKey = keyStore.getKey(KEY_ALIAS, null) as SecretKey

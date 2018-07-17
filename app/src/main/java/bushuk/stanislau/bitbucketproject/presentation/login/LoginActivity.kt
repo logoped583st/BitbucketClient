@@ -3,6 +3,7 @@ package bushuk.stanislau.bitbucketproject.presentation.login
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -54,12 +55,10 @@ class LoginActivity : AppCompatActivity() {
 
             private fun shouldOverrideUrlLoading(url: String): Boolean {
                 val tempString: String
-                Timber.e(url + "   " + this)
                 if (url.contains("access_token=")) { //catch access token from redirect
                     tempString = url.subSequence(url.indexOf("=") + 1, url.indexOf("&")).toString()
-                    Timber.e(tempString)
                     tokenPreferences.setToken(tempString)
-                    router.newRootScreen(Screens.MAIN_SCREEN)
+                    router.exitWithResult(1, Activity.RESULT_OK)
                     return true
                 }
 

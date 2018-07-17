@@ -1,6 +1,7 @@
 package bushuk.stanislau.bitbucketproject.di.components
 
 import bushuk.stanislau.bitbucketproject.MainActivity
+import bushuk.stanislau.bitbucketproject.MainActivityViewModel
 import bushuk.stanislau.bitbucketproject.di.modules.*
 import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
@@ -29,5 +30,7 @@ interface MainComponent {
     fun inject(cryptApi23: CryptApi23)
 
     fun inject(tokenPreferences: TokenPreferences)
+
+    fun inject(mainActivityViewModel: MainActivityViewModel)
 
 }
