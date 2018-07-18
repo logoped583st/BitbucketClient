@@ -37,4 +37,9 @@ class SharedPreferencesUtil @Inject constructor(val context: Context) {
         }
     }
 
+    fun clearToken(){
+        context.getSharedPreferences(Constants.TOKEN_PREFERENCES,Context.MODE_PRIVATE).edit()
+                .putString(Constants.TOKEN_PREFERENCES,null).apply()
+    }
+
 }

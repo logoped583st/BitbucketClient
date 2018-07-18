@@ -43,7 +43,6 @@ class RetrofitModule {
     @Provides
     @Singleton
     fun getApi(): Api {
-        Timber.e("SUKA")
         return Retrofit.Builder()
                 .client(provideOkhttp())
                 .baseUrl("https://api.bitbucket.org/2.0/")

@@ -29,11 +29,13 @@ class AuthorizationInterceptor : Interceptor {
             if (auth.contains("Basic")) {
                 builder.header("Authorization", auth)
             } else {
-                url.addQueryParameter("access_token", auth)
+                url.addEncodedQueryParameter("access_token", auth)
+                //url.addQueryParameter()
             }
         }
 
         val request = builder
+
                 .url(url.build())
                 .build()
 
