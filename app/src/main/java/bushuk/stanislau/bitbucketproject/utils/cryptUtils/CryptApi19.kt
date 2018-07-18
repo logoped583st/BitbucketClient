@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.utils.CryptUtils
+package bushuk.stanislau.bitbucketproject.utils.cryptUtils
 
 import android.content.Context
 import android.security.KeyPairGeneratorSpec
@@ -16,7 +16,7 @@ import javax.security.auth.x500.X500Principal
 
 class CryptApi19 @Inject constructor(val context: Context) : Crypto {
     private val AndroidKeyStore = Constants.KEY_STRORE
-    private val KEY_ALIAS = Constants.TOKEN
+    private val KEY_ALIAS = Constants.TOKEN_PREFERENCES
     private val RSA_MODE = "RSA/ECB/PKCS1Padding"
     private val PROVIDER = "AndroidOpenSSL"
 

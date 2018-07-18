@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.utils.CryptUtils
+package bushuk.stanislau.bitbucketproject.utils.cryptUtils
 
 import android.annotation.TargetApi
 import android.content.Context
@@ -20,7 +20,7 @@ class CryptApi23 @Inject constructor(val context: Context) : Crypto {
 
     private lateinit var keyStore: KeyStore
     private val AndroidKeyStore = Constants.KEY_STRORE
-    private val KEY_ALIAS = Constants.TOKEN
+    private val KEY_ALIAS = Constants.TOKEN_PREFERENCES
     private val AES_MODE = "AES/GCM/NoPadding"
     var flags = Base64.NO_PADDING
 

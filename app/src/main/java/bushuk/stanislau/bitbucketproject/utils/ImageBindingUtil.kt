@@ -14,6 +14,7 @@ class ImageBindingUtil {
             GlideApp.with(imageView.context)
                     .load(url)
                     .centerCrop()
+                    .placeholder(R.color.white)
                     .error(R.drawable.ic_launcher_background)
                     .into(imageView)
         }
