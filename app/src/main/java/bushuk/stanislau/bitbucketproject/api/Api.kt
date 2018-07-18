@@ -18,4 +18,6 @@ interface Api {
 
     @GET("user")
     fun authSuccessful():Completable
+
+
 }

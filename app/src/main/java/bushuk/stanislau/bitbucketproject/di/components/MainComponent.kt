@@ -19,8 +19,8 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [CiceroneModule::class, CryptoModule::class, RetrofitModule::class,
-    MainScreenModule::class, ApplicationContextProvider::class, PreferencesModule::class
-    , AuthLoginModule::class])
+    MainScreenModule::class, ApplicationContextProvider::class, PreferencesModule::class,
+    AuthLoginModule::class, RoomModule::class])
 interface MainComponent {
 
     fun inject(loginActivity: LoginActivity)
