@@ -13,9 +13,8 @@ import android.webkit.WebViewClient
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.Constants
 import bushuk.stanislau.bitbucketproject.R
-import bushuk.stanislau.bitbucketproject.Screens
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
-import bushuk.stanislau.bitbucketproject.utils.TokenUtils.TokenPreferences
+import bushuk.stanislau.bitbucketproject.utils.sharedPreferencesUtils.SharedPreferencesUtil
 import kotlinx.android.synthetic.main.login_fragment.*
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
@@ -26,7 +25,7 @@ import javax.inject.Inject
 class LoginActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var tokenPreferences: TokenPreferences
+    lateinit var tokenPreferences: SharedPreferencesUtil
 
     @Inject
     lateinit var router: Router
@@ -56,6 +55,7 @@ class LoginActivity : AppCompatActivity() {
             private fun shouldOverrideUrlLoading(url: String): Boolean {
                 val tempString: String
                 if (url.contains("access_token=")) { //catch access token from redirect
+                    Timber.e(url)
                     tempString = url.subSequence(url.indexOf("=") + 1, url.indexOf("&")).toString()
                     tokenPreferences.setToken(tempString)
                     router.exitWithResult(1, Activity.RESULT_OK)

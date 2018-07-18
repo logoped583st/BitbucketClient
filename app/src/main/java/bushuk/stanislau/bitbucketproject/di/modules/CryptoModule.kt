@@ -1,9 +1,9 @@
 package bushuk.stanislau.bitbucketproject.di.modules
 
 import android.content.Context
-import bushuk.stanislau.bitbucketproject.utils.CryptUtils.CryptApi19
-import bushuk.stanislau.bitbucketproject.utils.CryptUtils.CryptApi23
-import bushuk.stanislau.bitbucketproject.utils.CryptUtils.Crypto
+import bushuk.stanislau.bitbucketproject.utils.cryptUtils.CryptApi19
+import bushuk.stanislau.bitbucketproject.utils.cryptUtils.CryptApi23
+import bushuk.stanislau.bitbucketproject.utils.cryptUtils.Crypto
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

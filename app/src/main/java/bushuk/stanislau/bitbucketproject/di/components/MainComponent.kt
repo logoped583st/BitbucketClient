@@ -3,18 +3,24 @@ package bushuk.stanislau.bitbucketproject.di.components
 import bushuk.stanislau.bitbucketproject.MainActivity
 import bushuk.stanislau.bitbucketproject.MainActivityViewModel
 import bushuk.stanislau.bitbucketproject.di.modules.*
+import bushuk.stanislau.bitbucketproject.presentation.baseAuth.AuthLoginActivity
+import bushuk.stanislau.bitbucketproject.presentation.baseAuth.model.AuthLoginModel
+import bushuk.stanislau.bitbucketproject.presentation.baseAuth.viewModel.AuthLoginViewModel
 import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
+import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
 import bushuk.stanislau.bitbucketproject.presentation.main.viewModel.MainScreenViewModel
-import bushuk.stanislau.bitbucketproject.utils.CryptUtils.CryptApi19
-import bushuk.stanislau.bitbucketproject.utils.CryptUtils.CryptApi23
-import bushuk.stanislau.bitbucketproject.utils.TokenUtils.TokenPreferences
+import bushuk.stanislau.bitbucketproject.utils.cryptUtils.CryptApi19
+import bushuk.stanislau.bitbucketproject.utils.cryptUtils.CryptApi23
+import bushuk.stanislau.bitbucketproject.utils.retrofitUtils.AuthorizationInterceptor
+import bushuk.stanislau.bitbucketproject.utils.sharedPreferencesUtils.SharedPreferencesUtil
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [CiceroneModule::class, CryptoModule::class, RetrofitModule::class,
-    MainScreenModule::class, ApplicationContextProvider::class, TokenPreferencesModule::class])
+    MainScreenModule::class, ApplicationContextProvider::class, PreferencesModule::class
+    , AuthLoginModule::class])
 interface MainComponent {
 
     fun inject(loginActivity: LoginActivity)
@@ -29,8 +35,17 @@ interface MainComponent {
 
     fun inject(cryptApi23: CryptApi23)
 
-    fun inject(tokenPreferences: TokenPreferences)
+    fun inject(tokenPreferences: SharedPreferencesUtil)
 
     fun inject(mainActivityViewModel: MainActivityViewModel)
 
+    fun inject(mainScreenActivity: MainScreenActivity)
+
+    fun inject(authorizationInterceptor: AuthorizationInterceptor)
+
+    fun inject(authLoginModel: AuthLoginModel)
+
+    fun inject(authLoginViewModel: AuthLoginViewModel)
+
+    fun inject(authLoginActivity: AuthLoginActivity)
 }

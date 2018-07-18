@@ -2,6 +2,18 @@
     <string name="app_name">BitbucketProject</string>
 
 
+    <!--Login Screen -->
+    <string name="title_activity_auth_login">Login Activity</string>
+    <string name="auth_login_screen_powered_text" formatted="false">
+        <![CDATA[
+        Powered by <font color=\'#ec1c24\'>:i</font>Tech<font color=\'#ec1c24\'>Art</font>
+    ]]></string>
+    <string name="auth_login_screen_security_text">For more security you can login with browser</string>
+    <string name="auth_login_screen_browser_text">Log in browser</string>
+    <string name="auth_login_screen_client">Bitbucket Client</string>
+    <string name="auth_login_screen_login_hint">Login or email</string>
+    <string name="auth_login_screen_password_hint">Password</string>
+    <string name="auth_login_screen_button_text">Sign in</string>
     <!-- Navigation Drawer -->
     <string name="title_activity_main_screen">MainScreenActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

@@ -1,13 +1,13 @@
-package bushuk.stanislau.bitbucketproject.utils.TokenUtils
+package bushuk.stanislau.bitbucketproject.utils.sharedPreferencesUtils
 
 import android.content.Context
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.Constants
-import bushuk.stanislau.bitbucketproject.utils.CryptUtils.Crypto
+import bushuk.stanislau.bitbucketproject.utils.cryptUtils.Crypto
 import javax.inject.Inject
 
 
-class TokenPreferences @Inject constructor(val context: Context) {
+class SharedPreferencesUtil @Inject constructor(val context: Context) {
 
     @Inject
     lateinit var crypto: Crypto
@@ -17,14 +17,15 @@ class TokenPreferences @Inject constructor(val context: Context) {
     }
 
     fun setToken(accessToken: String) {
-
         val tokenBytes: ByteArray = crypto.encrypt(accessToken.toByteArray(Charsets.ISO_8859_1))
         val tokenEncrypted: String = String(tokenBytes, Charsets.ISO_8859_1)
-        context.getSharedPreferences(Constants.TOKEN, Context.MODE_PRIVATE).edit().putString(Constants.TOKEN, tokenEncrypted).apply()
+        context.getSharedPreferences(Constants.TOKEN_PREFERENCES, Context.MODE_PRIVATE).edit()
+                .putString(Constants.TOKEN_PREFERENCES, tokenEncrypted).apply()
     }
 
     fun getToken(): String? {
-        val tokenEncrypted: String? = context.getSharedPreferences(Constants.TOKEN, Context.MODE_PRIVATE).getString(Constants.TOKEN, null)
+        val tokenEncrypted: String? = context.getSharedPreferences(Constants.TOKEN_PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.TOKEN_PREFERENCES, null)
 
         if (tokenEncrypted != null) {
             val tokenDecryptedBytes: ByteArray = tokenEncrypted.toByteArray(Charsets.ISO_8859_1)

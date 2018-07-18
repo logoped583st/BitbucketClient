@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:id="@+id/auth_login_screen"
+    android:layout_height="match_parent"
+    tools:context=".presentation.baseAuth.AuthLoginActivity">
+
+
+    <ImageView
+        android:id="@+id/auth_login_screen_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_size_medium"
+        android:layout_marginTop="@dimen/margin_size_large"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toTopOf="@+id/auth_login_application_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+    <TextView
+        android:id="@+id/auth_login_application_textView"
+        style="@style/Headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_medium"
+        android:gravity="center"
+        android:text="@string/auth_login_screen_client"
+        app:layout_constraintBottom_toTopOf="@+id/auth_login_powered_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/auth_login_screen_logo" />
+
+    <TextView
+        android:id="@+id/auth_login_powered_textView"
+        style="@style/Subheading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/auth_login_screen_login_editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/auth_login_application_textView" />
+
+    <EditText
+        android:id="@+id/auth_login_screen_login_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_size_medium"
+        android:layout_marginStart="@dimen/margin_size_medium"
+        android:layout_marginTop="@dimen/margin_size_large"
+        android:ems="10"
+        android:hint="@string/auth_login_screen_login_hint"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/auth_login_screen_password_editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/auth_login_powered_textView"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <EditText
+        android:id="@+id/auth_login_screen_password_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_size_small"
+        android:layout_marginEnd="@dimen/margin_size_medium"
+        android:layout_marginStart="@dimen/margin_size_medium"
+        android:ems="10"
+        android:hint="@string/auth_login_screen_password_hint"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/auth_login_screen_login_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/auth_login_screen_login_editText" />
+
+    <Button
+        android:id="@+id/auth_login_screen_login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_size_large"
+        android:layout_marginStart="@dimen/margin_size_large"
+        android:text="@string/auth_login_screen_button_text"
+        app:layout_constraintBottom_toTopOf="@+id/auth_login_screen_security_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/auth_login_screen_password_editText" />
+
+    <TextView
+        android:id="@+id/auth_login_screen_security_textView"
+        style="@style/Body_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/auth_login_screen_security_text"
+        app:layout_constraintBottom_toTopOf="@+id/auth_login_screen_browser_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/auth_login_screen_login_button"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/auth_login_screen_browser_textView"
+        style="@style/Body_1.Accent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_size_large"
+        android:text="@string/auth_login_screen_browser_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/auth_login_screen_security_textView" />
+
+
+</android.support.constraint.ConstraintLayout>
