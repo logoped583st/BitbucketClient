@@ -7,7 +7,7 @@ import android.util.Base64
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.Constants
 import bushuk.stanislau.bitbucketproject.Screens
-import bushuk.stanislau.bitbucketproject.di.modules.RetrofitModule
+import bushuk.stanislau.bitbucketproject.di.modules.global.RetrofitModule
 import bushuk.stanislau.bitbucketproject.presentation.baseAuth.model.AuthLoginModel
 import bushuk.stanislau.bitbucketproject.utils.sharedPreferencesUtils.SharedPreferencesUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -55,7 +55,6 @@ class AuthLoginViewModel : ViewModel(), ResultListener {
         val basic: String = "Basic " + Base64.encodeToString(credentials
                 .toByteArray(Charsets.ISO_8859_1), Base64.NO_WRAP)
         tokenPreferences.setToken(basic)
-        RetrofitModule().getApi()
         authLoginModel.authSuccessful().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete { router.newRootScreen(Screens.MAIN_SCREEN) }

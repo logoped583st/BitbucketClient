@@ -8,6 +8,7 @@ import bushuk.stanislau.bitbucketproject.Screens
 import bushuk.stanislau.bitbucketproject.presentation.baseAuth.AuthLoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
+import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
 import ru.terrakok.cicerone.android.SupportAppNavigator
 
 class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppNavigator(activity, containerId) {
@@ -25,8 +26,11 @@ class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppN
     }
 
     override fun createFragment(screenKey: String?, data: Any?): Fragment? {
+
+        when(screenKey){
+            Screens.REPOSITORIES_SCREEN -> return RepositoriesFragment()
+        }
         return null
-        //TODO {add navigator logic for create fragments}
     }
 
 }

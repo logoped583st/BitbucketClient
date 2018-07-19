@@ -18,14 +18,11 @@ class MainActivity : AppCompatActivity(),LifecycleOwner {
     @Inject
     lateinit var navigatorHolder: NavigatorHolder
 
-    private val lifecycleRegistry: LifecycleRegistry = LifecycleRegistry(this)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         App.component.inject(this)
         val viewModel: MainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-        lifecycleRegistry.markState(Lifecycle.State.CREATED)
         lifecycle.addObserver(viewModel)
         setContentView(R.layout.activity_main)
     }
