@@ -11,7 +11,6 @@ import bushuk.stanislau.bitbucketproject.utils.sharedPreferencesUtils.SharedPref
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
-import timber.log.Timber
 import javax.inject.Inject
 
 class MainScreenViewModel : ViewModel() {
@@ -36,7 +35,7 @@ class MainScreenViewModel : ViewModel() {
     init {
         App.component.inject(this)
 
-        mainScreenModel.getUserToken().subscribeOn(Schedulers.io())
+        mainScreenModel.getUser().subscribeOn(Schedulers.io())
                 .map { appDatabase.userDao().insertUser(it)
                 it}
                 .observeOn(AndroidSchedulers.mainThread())

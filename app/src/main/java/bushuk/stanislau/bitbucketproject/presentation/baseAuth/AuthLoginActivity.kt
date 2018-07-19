@@ -48,7 +48,7 @@ class AuthLoginActivity : AppCompatActivity() {
         }.subscribe()
 
         viewModel.getSnackBarAction().observe(this, Observer
-        { Timber.e("SNACK")
+        {
             Snackbar.make(auth_login_powered_textView, it!!, Snackbar.LENGTH_LONG).show()
         })
 

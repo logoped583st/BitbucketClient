@@ -8,6 +8,7 @@
         <![CDATA[
         Powered by <font color=\'#ec1c24\'>:i</font>Tech<font color=\'#ec1c24\'>Art</font>
     ]]></string>
+
     <string name="auth_login_screen_security_text">For more security you can login with browser</string>
     <string name="auth_login_screen_browser_text">Log in browser</string>
     <string name="auth_login_screen_client">Bitbucket Client</string>
@@ -22,5 +23,14 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    
+    <!--Navigation Drawer menu -->
+    <string name="drawer_menu_repositories">Repositories</string>
+    <string name="drawer_menu_hooks">Hooks</string>
+    <string name="drawer_menu_followers">Followers</string>
+    <string name="drawer_menu_following">Following</string>
+    <string name="drawer_menu_snippets">Snippets</string>
+    <string name="drawer_menu_pull_requests">Pull requests</string>
+
 
 </resources>

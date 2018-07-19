@@ -16,10 +16,8 @@ class MainScreenModel {
         App.component.inject(this)
     }
 
-    fun getUserToken(): Single<User> = api.myUser()
+    fun getUser(): Single<User> = api.myUser()
 
-    fun getUserBaseAuth(): Single<User> {
-        return api.myUserBaseAuth()
-    }
+
 
 }

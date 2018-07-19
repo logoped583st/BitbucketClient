@@ -4,6 +4,7 @@ import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.utils.sharedPreferencesUtils.SharedPreferencesUtil
 import okhttp3.Interceptor
 import okhttp3.Response
+import java.util.*
 import javax.inject.Inject
 
 
@@ -30,12 +31,10 @@ class AuthorizationInterceptor : Interceptor {
                 builder.header("Authorization", auth)
             } else {
                 url.addEncodedQueryParameter("access_token", auth)
-                //url.addQueryParameter()
             }
         }
 
         val request = builder
-
                 .url(url.build())
                 .build()
 
