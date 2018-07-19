@@ -3,10 +3,7 @@ package bushuk.stanislau.bitbucketproject
 import android.app.Application
 import bushuk.stanislau.bitbucketproject.di.components.DaggerMainComponent
 import bushuk.stanislau.bitbucketproject.di.components.MainComponent
-import bushuk.stanislau.bitbucketproject.di.modules.ApplicationContextProvider
-import bushuk.stanislau.bitbucketproject.di.modules.CryptoModule
-import bushuk.stanislau.bitbucketproject.di.modules.PreferencesModule
-import bushuk.stanislau.bitbucketproject.di.modules.RetrofitModule
+import bushuk.stanislau.bitbucketproject.di.modules.*
 import timber.log.Timber
 
 class App : Application() {
@@ -19,6 +16,7 @@ class App : Application() {
         super.onCreate()
 
         component = DaggerMainComponent.builder()
+                .roomModule(RoomModule(this))
                 .cryptoModule(CryptoModule(this))
                 .preferencesModule(PreferencesModule(this))
                 .applicationContextProvider(ApplicationContextProvider(this))

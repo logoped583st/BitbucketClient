@@ -13,7 +13,7 @@ class CryptoModule(val context: Context) {
 
     @Provides
     @Singleton
-    fun getTokenPreferences(): Crypto {
+    fun provideCtypto(): Crypto {
         val version = android.os.Build.VERSION.SDK_INT
         val crypto: Crypto
 
