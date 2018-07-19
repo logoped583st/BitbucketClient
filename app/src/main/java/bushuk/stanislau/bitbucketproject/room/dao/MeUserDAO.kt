@@ -2,15 +2,16 @@ package bushuk.stanislau.bitbucketproject.room.dao
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
+import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import bushuk.stanislau.bitbucketproject.room.user.MeUser
+import bushuk.stanislau.bitbucketproject.room.user.User
 
 @Dao
 interface MeUserDAO {
 
-    @Insert
-    fun insertUser(user : MeUser)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertUser(user: User)
 
-    @Query("SELECT * FROM MeUser")
-    fun getMeUser():MeUser
+    @Query("SELECT * FROM User")
+    fun getMeUser(): User
 }
