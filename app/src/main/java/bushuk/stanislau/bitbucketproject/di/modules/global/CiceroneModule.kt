@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.di.modules
+package bushuk.stanislau.bitbucketproject.di.modules.global
 
 import dagger.Module
 import dagger.Provides

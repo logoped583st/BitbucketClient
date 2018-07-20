@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.di.modules
+package bushuk.stanislau.bitbucketproject.di.modules.mainScreen
 
 import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
 import dagger.Module

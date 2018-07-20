@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.di.modules
+package bushuk.stanislau.bitbucketproject.di.modules.auth
 
 import bushuk.stanislau.bitbucketproject.presentation.baseAuth.model.AuthLoginModel
 import dagger.Module

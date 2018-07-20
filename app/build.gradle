@@ -80,7 +80,7 @@ dependencies {
     implementation "${library.room}"
     kapt "${library.roomAnnotations}"
     testImplementation "${library.roomTest}"
-
+    implementation "android.arch.persistence.room:rxjava2:1.1.1"
     //LifeCycle//
     implementation "${library.lifecycle}"
     kapt "${library.lifecycleKapt}"

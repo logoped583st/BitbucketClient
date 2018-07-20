@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.di.modules
+package bushuk.stanislau.bitbucketproject.di.modules.global
 
 import android.arch.persistence.room.Room
 import android.content.Context
