@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.utils
+package bushuk.stanislau.bitbucketproject.utils.bindingUtils
 
 import android.databinding.BindingAdapter
 import android.widget.ImageView
