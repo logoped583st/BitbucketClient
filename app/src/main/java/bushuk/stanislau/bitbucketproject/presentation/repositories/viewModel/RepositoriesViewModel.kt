@@ -55,22 +55,5 @@ class RepositoriesViewModel : ViewModel() {
                     loading.postValue(View.GONE)
                 })
 
-//        mainScreenModel.getUser()
-//                .subscribeOn(Schedulers.io())
-//                .switchMapSingle { it ->
-//
-//                }
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({
-//                    //user
-//                    Timber.e(it.values[0].name)
-//                    repositories.postValue(it.values)
-//                    loading.postValue(View.GONE)
-//                }, {
-//                    loading.postValue(View.GONE)
-//                    //do on erroor
-//                })
-
-
     }
 }

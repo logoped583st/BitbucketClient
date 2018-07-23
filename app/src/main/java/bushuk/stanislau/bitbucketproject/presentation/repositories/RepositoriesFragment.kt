@@ -15,7 +15,6 @@ import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapterRepositories
 import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoriesBinding
 import bushuk.stanislau.bitbucketproject.presentation.repositories.viewModel.RepositoriesViewModel
 import kotlinx.android.synthetic.main.fragment_repositories.*
-import timber.log.Timber
 
 class RepositoriesFragment : Fragment() {
 
@@ -42,7 +41,6 @@ class RepositoriesFragment : Fragment() {
         repositories_screen_repositories_recycler.adapter = RecyclerAdapterRepositories(viewModel.getRepositories())
 
         viewModel.getRepositories().observe(this, Observer {
-            Timber.e("NOTIFY")
             repositories_screen_repositories_recycler.adapter!!.notifyDataSetChanged()
         })
     }

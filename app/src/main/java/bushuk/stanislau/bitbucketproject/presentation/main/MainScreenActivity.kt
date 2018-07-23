@@ -31,9 +31,9 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         App.component.inject(this)
         val binding: ActivityMainScreenBinding = DataBindingUtil.setContentView(this, R.layout.activity_main_screen)
         val navHeaderMainScreenBinding: NavHeaderMainScreenBinding = DataBindingUtil.inflate(layoutInflater,
-                R.layout.nav_header_main_screen,  binding.navView, false)
+                R.layout.nav_header_main_screen, binding.navView, false)
         binding.navView.addHeaderView(navHeaderMainScreenBinding.root)
-        val viewModel:MainScreenViewModel = ViewModelProviders.of(this).get(MainScreenViewModel::class.java)
+        val viewModel: MainScreenViewModel = ViewModelProviders.of(this).get(MainScreenViewModel::class.java)
 
         binding.let {
             it.viewModel = viewModel
@@ -103,7 +103,7 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     }
 
     override fun onResume() {
-        navigatorHolder.setNavigator(MainNavigator(this,R.id.main_screen_container))
+        navigatorHolder.setNavigator(MainNavigator(this, R.id.main_screen_container))
         super.onResume()
     }
 

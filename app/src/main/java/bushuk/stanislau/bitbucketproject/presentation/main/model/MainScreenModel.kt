@@ -18,8 +18,5 @@ class MainScreenModel {
         App.component.inject(this)
     }
 
-    fun getUser(): Single<User> {
-        return api.myUser()
-    }
 }
 
