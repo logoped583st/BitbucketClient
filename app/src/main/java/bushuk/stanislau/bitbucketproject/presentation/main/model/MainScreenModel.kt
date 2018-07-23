@@ -3,8 +3,9 @@ package bushuk.stanislau.bitbucketproject.presentation.main.model
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.room.user.User
-import io.reactivex.observables.ConnectableObservable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.Observable
+import io.reactivex.Single
+import io.reactivex.subjects.ReplaySubject
 import javax.inject.Inject
 
 
@@ -17,11 +18,8 @@ class MainScreenModel {
         App.component.inject(this)
     }
 
-    fun getUser(): ConnectableObservable<User> {
+    fun getUser(): Single<User> {
         return api.myUser()
-                .subscribeOn(Schedulers.io())
-                .share()
-                .replay()
     }
 }
 

@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.Screens
+import bushuk.stanislau.bitbucketproject.globalModels.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
 import bushuk.stanislau.bitbucketproject.room.AppDatabase
 import bushuk.stanislau.bitbucketproject.room.user.User
@@ -29,6 +30,9 @@ class MainScreenViewModel : ViewModel() {
     @Inject
     lateinit var router: Router
 
+    @Inject
+    lateinit var userModel: UserModel
+
     private var user: MutableLiveData<User> = MutableLiveData()
 
     fun getUser(): MutableLiveData<User> = user
@@ -39,17 +43,16 @@ class MainScreenViewModel : ViewModel() {
         App.component.inject(this)
         Timber.e("INIT" + mainScreenModel.hashCode())
 
-        mainScreenModel.getUser()
+        userModel.user
+                .subscribeOn(Schedulers.io())
                 .map {
                     appDatabase.userDao().insertUser(it)
                     it
                 }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { user.postValue(it) }
-
-
-
-
+                .subscribe {
+                    user.postValue(it)
+                }
 
         router.replaceScreen(Screens.REPOSITORIES_SCREEN)
 

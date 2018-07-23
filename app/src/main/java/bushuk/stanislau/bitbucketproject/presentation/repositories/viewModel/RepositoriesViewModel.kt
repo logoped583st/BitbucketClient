@@ -4,11 +4,11 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.view.View
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.globalModels.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesModel
 import bushuk.stanislau.bitbucketproject.room.AppDatabase
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
@@ -23,6 +23,10 @@ class RepositoriesViewModel : ViewModel() {
 
     @Inject
     lateinit var mainScreenModel: MainScreenModel
+
+
+    @Inject
+    lateinit var userModel: UserModel
 
     private var repositories: MutableLiveData<MutableList<Repository>> = MutableLiveData()
 
@@ -39,22 +43,33 @@ class RepositoriesViewModel : ViewModel() {
         App.component.inject(this)
         Timber.e("INIT" + mainScreenModel.hashCode())
 
-
-        mainScreenModel.getUser()
-                .autoConnect()
-                .switchMapSingle {
-                    repositoriesModel.getOwnRepositories(it.username) }
-                .observeOn(AndroidSchedulers.mainThread())
+        userModel.user
+                .subscribeOn(Schedulers.io())
+                .flatMapSingle {
+                    repositoriesModel.getOwnRepositories(it.username)
+                }
                 .subscribe({
-                    //user
-                    Timber.e(it.values[0].name)
                     repositories.postValue(it.values)
                     loading.postValue(View.GONE)
                 }, {
                     loading.postValue(View.GONE)
-                    //do on erroor
                 })
 
+//        mainScreenModel.getUser()
+//                .subscribeOn(Schedulers.io())
+//                .switchMapSingle { it ->
+//
+//                }
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                    //user
+//                    Timber.e(it.values[0].name)
+//                    repositories.postValue(it.values)
+//                    loading.postValue(View.GONE)
+//                }, {
+//                    loading.postValue(View.GONE)
+//                    //do on erroor
+//                })
 
 
     }
