@@ -1,7 +1,7 @@
 package bushuk.stanislau.bitbucketproject.room.converters
 
 import android.arch.persistence.room.TypeConverter
-import bushuk.stanislau.bitbucketproject.room.user.Href
+import bushuk.stanislau.bitbucketproject.room.Href
 
 class LinksConverter {
 

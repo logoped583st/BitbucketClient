@@ -15,7 +15,7 @@ class ImageBindingUtil {
                     .load(url)
                     .centerCrop()
                     .placeholder(R.color.white)
-                    .error(R.drawable.ic_launcher_background)
+                    .error(R.drawable.logo)
                     .into(imageView)
         }
     }
