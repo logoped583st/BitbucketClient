@@ -12,7 +12,7 @@ import retrofit2.http.Path
 interface Api {
 
     @GET("user")
-    fun myUser(): Observable<User>
+    fun myUser(): Single<User>
 
 
     @GET("user")

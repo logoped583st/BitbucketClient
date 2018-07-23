@@ -18,6 +18,7 @@ class RecyclerAdapterRepositories(private val repositoriesList: MutableLiveData<
 
         val binding: ViewDataBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_recycler_repositories, parent, false)
 
+
         return RepositoriesViewHolder(binding)
 
     }

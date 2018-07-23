@@ -3,9 +3,10 @@ package bushuk.stanislau.bitbucketproject.di.components
 import bushuk.stanislau.bitbucketproject.MainActivity
 import bushuk.stanislau.bitbucketproject.MainActivityViewModel
 import bushuk.stanislau.bitbucketproject.di.modules.auth.AuthLoginModule
-import bushuk.stanislau.bitbucketproject.di.modules.mainScreen.MainScreenModule
 import bushuk.stanislau.bitbucketproject.di.modules.global.*
+import bushuk.stanislau.bitbucketproject.di.modules.mainScreen.MainScreenModule
 import bushuk.stanislau.bitbucketproject.di.modules.repositories.RepositoriesModule
+import bushuk.stanislau.bitbucketproject.globalModels.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.baseAuth.AuthLoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.baseAuth.model.AuthLoginModel
 import bushuk.stanislau.bitbucketproject.presentation.baseAuth.viewModel.AuthLoginViewModel
@@ -25,7 +26,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [CiceroneModule::class, CryptoModule::class, RetrofitModule::class,
     MainScreenModule::class, ApplicationContextProvider::class, PreferencesModule::class,
-    AuthLoginModule::class, RoomModule::class, RepositoriesModule::class])
+    AuthLoginModule::class, RoomModule::class, RepositoriesModule::class, UserModule::class])
 interface MainComponent {
 
     fun inject(loginActivity: LoginActivity)
@@ -57,4 +58,6 @@ interface MainComponent {
     fun inject(repositoriesModel: RepositoriesModel)
 
     fun inject(repositoriesViewModel: RepositoriesViewModel)
+
+    fun inject(userModel: UserModel)
 }

@@ -8,6 +8,7 @@ import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.Constants
 import bushuk.stanislau.bitbucketproject.Screens
 import bushuk.stanislau.bitbucketproject.di.modules.global.RetrofitModule
+import bushuk.stanislau.bitbucketproject.globalModels.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.baseAuth.model.AuthLoginModel
 import bushuk.stanislau.bitbucketproject.utils.sharedPreferencesUtils.SharedPreferencesUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -33,6 +34,9 @@ class AuthLoginViewModel : ViewModel(), ResultListener {
     lateinit var router: Router
 
     @Inject
+    lateinit var userModel: UserModel
+
+    @Inject
     lateinit var authLoginModel: AuthLoginModel
 
     private val clickableSendButton: MutableLiveData<Boolean> = MutableLiveData()
@@ -41,7 +45,7 @@ class AuthLoginViewModel : ViewModel(), ResultListener {
 
     fun getClickableSendButton(): MutableLiveData<Boolean> = clickableSendButton
 
-    fun getSnackBarAction():MutableLiveData<String> = snackBarAction
+    fun getSnackBarAction(): MutableLiveData<String> = snackBarAction
 
     init {
         clickableSendButton.postValue(true)
@@ -55,17 +59,22 @@ class AuthLoginViewModel : ViewModel(), ResultListener {
         val basic: String = "Basic " + Base64.encodeToString(credentials
                 .toByteArray(Charsets.ISO_8859_1), Base64.NO_WRAP)
         tokenPreferences.setToken(basic)
+
+
         authLoginModel.authSuccessful().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete { router.newRootScreen(Screens.MAIN_SCREEN) }
-                .doOnError {
-                    Timber.e("ERROR")
-                    tokenPreferences.clearToken()
-                    clickableSendButton.postValue(true)
-                    snackBarAction.postValue("Wrong login or password")
-                }
-                .onErrorComplete()
-                .subscribe()
+                .subscribe(
+                        {
+                            userModel.user.onNext(it)
+                            router.newRootScreen(Screens.MAIN_SCREEN)
+                        },
+                        {
+                            Timber.e("ERROR")
+                            tokenPreferences.clearToken()
+                            clickableSendButton.postValue(true)
+                            snackBarAction.postValue("Wrong login or password")
+                        }
+                )
     }
 
     fun navigateToBrowser() {
