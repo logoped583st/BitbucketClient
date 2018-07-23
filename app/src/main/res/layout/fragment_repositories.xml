@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.repositories.RepositoriesFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/repositories_screen_repositories_recycler"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModelRepositories"
+            type="bushuk.stanislau.bitbucketproject.presentation.repositories.viewModel.RepositoriesViewModel" />
+
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        tools:context=".presentation.repositories.RepositoriesFragment">
 
-</FrameLayout>
+        <ProgressBar
+            android:id="@+id/repositories_screen_progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModelRepositories.loading}"
+            android:background="@drawable/progress_bar" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/repositories_screen_repositories_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+</layout>

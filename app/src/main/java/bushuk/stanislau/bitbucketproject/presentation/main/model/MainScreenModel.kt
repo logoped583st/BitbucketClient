@@ -17,18 +17,11 @@ class MainScreenModel {
         App.component.inject(this)
     }
 
-    private var observable: ConnectableObservable<User>? = null
     fun getUser(): ConnectableObservable<User> {
-        return if (observable == null) {
-            this.observable = api.myUser()
-                    .subscribeOn(Schedulers.io())
-                    .share()
-                    .replay()
-            this.observable!!
-        } else {
-            this.observable!!
-        }
+        return api.myUser()
+                .subscribeOn(Schedulers.io())
+                .share()
+                .replay()
     }
-
-
 }
+
