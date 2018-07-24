@@ -29,7 +29,14 @@ class RepositoriesDataSource : PageKeyedDataSource<String, Repository>() {
 
 
     override fun loadAfter(params: LoadParams<String>, callback: LoadCallback<String, Repository>) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Timber.e(params.key + " KEY")
+        api.getReposNextPage(params.key)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ callback.onResult(it.values, it.next) },
+                        {
+                            Timber.e(it.message)
+                        })
     }
 
     override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<String, Repository>) {

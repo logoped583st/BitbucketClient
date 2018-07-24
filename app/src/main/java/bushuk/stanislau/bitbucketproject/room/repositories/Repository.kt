@@ -8,4 +8,5 @@ data class Repository(val uuid: String,
                       val description: String,
                       val updated_on: Date,
                       val links: Links,
-                      val language: String)
+                      val language: String,
+                      val owner: RepositoryOwner)

@@ -5,6 +5,7 @@ import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Url
 
 interface Api {
 
@@ -13,4 +14,9 @@ interface Api {
 
     @GET("repositories/{user}")
     fun getRepos(@Path("user") user: String): Single<RepositoriesResponse>
+
+
+    @GET
+    fun getReposNextPage(@Url url: String): Single<RepositoriesResponse>
+
 }
