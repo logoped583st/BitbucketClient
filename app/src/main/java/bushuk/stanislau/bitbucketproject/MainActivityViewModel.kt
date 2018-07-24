@@ -4,7 +4,7 @@ import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import android.arch.lifecycle.ViewModel
-import bushuk.stanislau.bitbucketproject.utils.sharedPreferencesUtils.SharedPreferencesUtil
+import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 

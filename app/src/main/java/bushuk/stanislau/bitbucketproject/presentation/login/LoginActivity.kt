@@ -14,7 +14,7 @@ import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.Constants
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
-import bushuk.stanislau.bitbucketproject.utils.sharedPreferencesUtils.SharedPreferencesUtil
+import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
 import kotlinx.android.synthetic.main.login_fragment.*
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router

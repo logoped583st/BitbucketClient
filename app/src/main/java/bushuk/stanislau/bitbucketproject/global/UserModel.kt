@@ -1,9 +1,9 @@
-package bushuk.stanislau.bitbucketproject.globalModels
+package bushuk.stanislau.bitbucketproject.global
 
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.room.user.User
-import bushuk.stanislau.bitbucketproject.utils.sharedPreferencesUtils.SharedPreferencesUtil
+import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.utils.cryptUtils
+package bushuk.stanislau.bitbucketproject.utils.crypt
 
 import android.annotation.TargetApi
 import android.content.Context

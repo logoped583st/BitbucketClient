@@ -7,7 +7,7 @@
 
         <variable
             name="viewModelRepositories"
-            type="bushuk.stanislau.bitbucketproject.presentation.repositories.viewModel.RepositoriesViewModel" />
+            type="bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesViewModel" />
 
     </data>
 
@@ -21,8 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="@{viewModelRepositories.loading}"
-            android:background="@drawable/progress_bar" />
+            android:background="@drawable/progress_bar"
+            android:visibility="@{viewModelRepositories.repositoriesDataSourceFactory.repositoriesDataSource.loading}" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/repositories_screen_repositories_recycler"

@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.presentation.baseAuth.viewModel
+package bushuk.stanislau.bitbucketproject.presentation.auth
 
 import android.app.Activity.RESULT_OK
 import android.arch.lifecycle.MutableLiveData
@@ -8,9 +8,9 @@ import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.Constants
 import bushuk.stanislau.bitbucketproject.Screens
 import bushuk.stanislau.bitbucketproject.di.modules.global.RetrofitModule
-import bushuk.stanislau.bitbucketproject.globalModels.UserModel
-import bushuk.stanislau.bitbucketproject.presentation.baseAuth.model.AuthLoginModel
-import bushuk.stanislau.bitbucketproject.utils.sharedPreferencesUtils.SharedPreferencesUtil
+import bushuk.stanislau.bitbucketproject.global.UserModel
+import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
+import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
@@ -39,13 +39,9 @@ class AuthLoginViewModel : ViewModel(), ResultListener {
     @Inject
     lateinit var authLoginModel: AuthLoginModel
 
-    private val clickableSendButton: MutableLiveData<Boolean> = MutableLiveData()
+    val clickableSendButton: MutableLiveData<Boolean> = MutableLiveData()
 
-    private val snackBarAction: MutableLiveData<String> = MutableLiveData()
-
-    fun getClickableSendButton(): MutableLiveData<Boolean> = clickableSendButton
-
-    fun getSnackBarAction(): MutableLiveData<String> = snackBarAction
+    val snackBarAction: MutableLiveData<String> = MutableLiveData()
 
     init {
         clickableSendButton.postValue(true)

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="loginViewModel"
-            type="bushuk.stanislau.bitbucketproject.presentation.baseAuth.viewModel.AuthLoginViewModel" />
+            type="bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true"
-        tools:context=".presentation.baseAuth.AuthLoginActivity">
+        tools:context=".presentation.auth.AuthLoginActivity">
 
 
         <ImageView

@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.presentation.baseAuth
+package bushuk.stanislau.bitbucketproject.presentation.auth
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -11,11 +11,9 @@ import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.ActivityAuthLoginBinding
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
-import bushuk.stanislau.bitbucketproject.presentation.baseAuth.viewModel.AuthLoginViewModel
 import com.jakewharton.rxbinding2.view.clicks
 import kotlinx.android.synthetic.main.activity_auth_login.*
 import ru.terrakok.cicerone.NavigatorHolder
-import timber.log.Timber
 import javax.inject.Inject
 
 class AuthLoginActivity : AppCompatActivity() {
@@ -47,7 +45,7 @@ class AuthLoginActivity : AppCompatActivity() {
                     auth_login_screen_password_editText.text.toString())
         }.subscribe()
 
-        viewModel.getSnackBarAction().observe(this, Observer
+        viewModel.snackBarAction.observe(this, Observer
         {
             Snackbar.make(auth_login_powered_textView, it!!, Snackbar.LENGTH_LONG).show()
         })

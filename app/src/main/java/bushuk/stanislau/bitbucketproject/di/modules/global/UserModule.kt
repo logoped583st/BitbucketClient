@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.di.modules.global
 
-import bushuk.stanislau.bitbucketproject.globalModels.UserModel
+import bushuk.stanislau.bitbucketproject.global.UserModel
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

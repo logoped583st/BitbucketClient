@@ -1,7 +1,7 @@
 package bushuk.stanislau.bitbucketproject.di.modules.global
 
 import android.content.Context
-import bushuk.stanislau.bitbucketproject.utils.sharedPreferencesUtils.SharedPreferencesUtil
+import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

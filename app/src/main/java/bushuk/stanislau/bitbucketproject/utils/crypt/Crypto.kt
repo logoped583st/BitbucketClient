@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.utils.cryptUtils
+package bushuk.stanislau.bitbucketproject.utils.crypt
 
 interface Crypto {
     fun encrypt(byteArray: ByteArray): ByteArray
