@@ -38,10 +38,7 @@ class RepositoriesFragment : Fragment() {
 
         repositories_screen_recycler.layoutManager = LinearLayoutManager(activity)
         val adapter = RecyclerRepositoriesAdapter()
-
         repositories_screen_recycler.adapter = adapter
-        viewModel.getRepositories().observe(this, Observer(adapter::submitList))
-
-
+        viewModel.repositories.observe(this, Observer(adapter::submitList))
     }
 }
