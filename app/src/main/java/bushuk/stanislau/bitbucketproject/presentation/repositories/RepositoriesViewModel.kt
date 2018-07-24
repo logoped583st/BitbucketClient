@@ -23,8 +23,8 @@ class RepositoriesViewModel : ViewModel() {
         App.component.inject(this)
 
         val listPagedConfig = PagedList.Config.Builder()
-                .setPageSize(Constants.ITEMS_ITEM_RECYCLER)
-                .setInitialLoadSizeHint(Constants.ITEMS_ITEM_RECYCLER)
+                .setPageSize(Constants.ITEMS_IN_PAGE)
+                .setInitialLoadSizeHint(Constants.ITEMS_IN_PAGE)
                 .setEnablePlaceholders(true)
                 .build()
 

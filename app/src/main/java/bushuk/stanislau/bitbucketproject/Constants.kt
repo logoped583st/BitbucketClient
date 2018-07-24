@@ -9,8 +9,6 @@ object Constants {
 
     const val GET_TOKEN_BROWSER: Int = 1
 
-    const val HALF_ITEM_RECYCLER: Int = 5
-
-    const val ITEMS_ITEM_RECYCLER: Int = 10
+    const val ITEMS_IN_PAGE: Int = 10
 
 }

@@ -16,7 +16,7 @@ interface Api {
     fun getRepos(@Path("user") user: String): Single<RepositoriesResponse>
 
 
-    @GET
+    @GET//request for getting info from next page, Url we take from previous request
     fun getReposNextPage(@Url url: String): Single<RepositoriesResponse>
 
 }

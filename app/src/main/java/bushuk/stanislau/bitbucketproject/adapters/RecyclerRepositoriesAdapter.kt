@@ -13,8 +13,8 @@ import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import timber.log.Timber
 
 
-class RecyclerAdapterRepositories : PagedListAdapter<Repository,
-        RecyclerAdapterRepositories.RepositoriesViewHolder>(UserDiffCallback) {
+class RecyclerRepositoriesAdapter : PagedListAdapter<Repository,
+        RecyclerRepositoriesAdapter.RepositoriesViewHolder>(UserDiffCallback) {
 
     override fun onBindViewHolder(holder: RepositoriesViewHolder, position: Int) {
         holder.bind(getItem(position))
