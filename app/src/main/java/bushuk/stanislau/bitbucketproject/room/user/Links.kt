@@ -3,6 +3,7 @@ package bushuk.stanislau.bitbucketproject.room.user
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import bushuk.stanislau.bitbucketproject.room.Href
 
 @Entity
 data class Links(

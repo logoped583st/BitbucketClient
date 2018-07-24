@@ -1,10 +1,9 @@
-package bushuk.stanislau.bitbucketproject.utils.retrofitUtils
+package bushuk.stanislau.bitbucketproject.utils.retrofit
 
 import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.utils.sharedPreferencesUtils.SharedPreferencesUtil
+import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.util.*
 import javax.inject.Inject
 
 

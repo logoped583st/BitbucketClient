@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.utils.cryptUtils
+package bushuk.stanislau.bitbucketproject.utils.crypt
 
 import android.content.Context
 import android.security.KeyPairGeneratorSpec

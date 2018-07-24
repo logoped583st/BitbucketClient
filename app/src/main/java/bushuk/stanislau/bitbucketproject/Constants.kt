@@ -9,4 +9,6 @@ object Constants {
 
     const val GET_TOKEN_BROWSER: Int = 1
 
+    const val ITEMS_IN_PAGE: Int = 10
+
 }

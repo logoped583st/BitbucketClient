@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.di.modules.auth
 
-import bushuk.stanislau.bitbucketproject.presentation.baseAuth.model.AuthLoginModel
+import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

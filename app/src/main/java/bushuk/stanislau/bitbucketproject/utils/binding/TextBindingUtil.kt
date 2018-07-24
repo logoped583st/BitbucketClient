@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.utils.bindingUtils
+package bushuk.stanislau.bitbucketproject.utils.binding
 
 import android.annotation.SuppressLint
 import android.databinding.BindingAdapter

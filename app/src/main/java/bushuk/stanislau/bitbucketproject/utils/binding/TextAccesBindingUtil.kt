@@ -1,14 +1,10 @@
-package bushuk.stanislau.bitbucketproject.utils.bindingUtils
+package bushuk.stanislau.bitbucketproject.utils.binding
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.databinding.BindingAdapter
-import android.text.format.DateUtils
 import android.widget.TextView
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
 class TextAccesBindingUtil {

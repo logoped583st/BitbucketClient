@@ -11,9 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import bushuk.stanislau.bitbucketproject.R
-import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapterRepositories
+import bushuk.stanislau.bitbucketproject.adapters.RecyclerRepositoriesAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoriesBinding
-import bushuk.stanislau.bitbucketproject.presentation.repositories.viewModel.RepositoriesViewModel
 import kotlinx.android.synthetic.main.fragment_repositories.*
 
 class RepositoriesFragment : Fragment() {
@@ -37,11 +36,9 @@ class RepositoriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        repositories_screen_repositories_recycler.layoutManager = LinearLayoutManager(activity)
-        repositories_screen_repositories_recycler.adapter = RecyclerAdapterRepositories(viewModel.getRepositories())
-
-        viewModel.getRepositories().observe(this, Observer {
-            repositories_screen_repositories_recycler.adapter!!.notifyDataSetChanged()
-        })
+        repositories_screen_recycler.layoutManager = LinearLayoutManager(activity)
+        val adapter = RecyclerRepositoriesAdapter()
+        repositories_screen_recycler.adapter = adapter
+        viewModel.repositories.observe(this, Observer(adapter::submitList))
     }
 }

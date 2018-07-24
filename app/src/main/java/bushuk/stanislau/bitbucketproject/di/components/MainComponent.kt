@@ -6,27 +6,28 @@ import bushuk.stanislau.bitbucketproject.di.modules.auth.AuthLoginModule
 import bushuk.stanislau.bitbucketproject.di.modules.global.*
 import bushuk.stanislau.bitbucketproject.di.modules.mainScreen.MainScreenModule
 import bushuk.stanislau.bitbucketproject.di.modules.repositories.RepositoriesModule
-import bushuk.stanislau.bitbucketproject.globalModels.UserModel
-import bushuk.stanislau.bitbucketproject.presentation.baseAuth.AuthLoginActivity
-import bushuk.stanislau.bitbucketproject.presentation.baseAuth.model.AuthLoginModel
-import bushuk.stanislau.bitbucketproject.presentation.baseAuth.viewModel.AuthLoginViewModel
+import bushuk.stanislau.bitbucketproject.global.UserModel
+import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginActivity
+import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
+import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
 import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
-import bushuk.stanislau.bitbucketproject.presentation.main.viewModel.MainScreenViewModel
-import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesModel
-import bushuk.stanislau.bitbucketproject.presentation.repositories.viewModel.RepositoriesViewModel
-import bushuk.stanislau.bitbucketproject.utils.cryptUtils.CryptApi19
-import bushuk.stanislau.bitbucketproject.utils.cryptUtils.CryptApi23
-import bushuk.stanislau.bitbucketproject.utils.retrofitUtils.AuthorizationInterceptor
-import bushuk.stanislau.bitbucketproject.utils.sharedPreferencesUtils.SharedPreferencesUtil
+import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenViewModel
+import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSource
+import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesViewModel
+import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSourceFactory
+import bushuk.stanislau.bitbucketproject.utils.crypt.CryptApi19
+import bushuk.stanislau.bitbucketproject.utils.crypt.CryptApi23
+import bushuk.stanislau.bitbucketproject.utils.retrofit.AuthorizationInterceptor
+import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [CiceroneModule::class, CryptoModule::class, RetrofitModule::class,
     MainScreenModule::class, ApplicationContextProvider::class, PreferencesModule::class,
-    AuthLoginModule::class, RoomModule::class, RepositoriesModule::class, UserModule::class])
+    AuthLoginModule::class, RoomModule::class, UserModule::class, RepositoriesModule::class])
 interface MainComponent {
 
     fun inject(loginActivity: LoginActivity)
@@ -55,9 +56,11 @@ interface MainComponent {
 
     fun inject(authLoginActivity: AuthLoginActivity)
 
-    fun inject(repositoriesModel: RepositoriesModel)
-
     fun inject(repositoriesViewModel: RepositoriesViewModel)
 
     fun inject(userModel: UserModel)
+
+    fun inject(repositoriesDataSource: RepositoriesDataSource)
+
+    fun inject(repositoriesDataSourceFactory: RepositoriesDataSourceFactory)
 }

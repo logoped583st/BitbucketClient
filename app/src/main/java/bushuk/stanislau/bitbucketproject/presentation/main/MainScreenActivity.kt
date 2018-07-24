@@ -14,7 +14,6 @@ import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.ActivityMainScreenBinding
 import bushuk.stanislau.bitbucketproject.databinding.NavHeaderMainScreenBinding
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
-import bushuk.stanislau.bitbucketproject.presentation.main.viewModel.MainScreenViewModel
 import kotlinx.android.synthetic.main.activity_main_screen.*
 import kotlinx.android.synthetic.main.app_bar_main_screen.*
 import ru.terrakok.cicerone.NavigatorHolder

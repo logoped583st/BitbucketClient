@@ -26,7 +26,7 @@
             android:label="@string/title_activity_main_screen"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".presentation.baseAuth.AuthLoginActivity"
+            android:name=".presentation.auth.AuthLoginActivity"
             android:label="@string/title_activity_auth_login"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar" >

@@ -1,14 +1,14 @@
-package bushuk.stanislau.bitbucketproject.presentation.main.viewModel
+package bushuk.stanislau.bitbucketproject.presentation.main
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.Screens
-import bushuk.stanislau.bitbucketproject.globalModels.UserModel
+import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
 import bushuk.stanislau.bitbucketproject.room.AppDatabase
 import bushuk.stanislau.bitbucketproject.room.user.User
-import bushuk.stanislau.bitbucketproject.utils.sharedPreferencesUtils.SharedPreferencesUtil
+import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
@@ -33,9 +33,7 @@ class MainScreenViewModel : ViewModel() {
     @Inject
     lateinit var userModel: UserModel
 
-    private var user: MutableLiveData<User> = MutableLiveData()
-
-    fun getUser(): MutableLiveData<User> = user
+    val user: MutableLiveData<User> = MutableLiveData()
 
 
     init {
