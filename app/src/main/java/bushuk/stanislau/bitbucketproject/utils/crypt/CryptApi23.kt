@@ -19,7 +19,7 @@ import javax.inject.Inject
 class CryptApi23 @Inject constructor(val context: Context) : Crypto {
 
     private lateinit var keyStore: KeyStore
-    private val AndroidKeyStore = Constants.KEY_STRORE
+    private val AndroidKeyStore = Constants.KEY_STORE
     private val KEY_ALIAS = Constants.TOKEN_PREFERENCES
     private val AES_MODE = "AES/GCM/NoPadding"
     var flags = Base64.NO_PADDING

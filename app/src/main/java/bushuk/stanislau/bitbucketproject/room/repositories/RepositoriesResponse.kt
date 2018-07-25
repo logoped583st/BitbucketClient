@@ -4,4 +4,5 @@ data class RepositoriesResponse(
         val pagelen: String,
         val size: String,
         val values: MutableList<Repository>,
-        val next: String)
+        val next: String,
+        val previous: String)

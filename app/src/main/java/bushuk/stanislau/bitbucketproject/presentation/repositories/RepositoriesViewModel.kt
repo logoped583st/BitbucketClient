@@ -15,16 +15,12 @@ class RepositoriesViewModel : ViewModel() {
     @Inject
     lateinit var repositoriesDataSourceFactory: RepositoriesDataSourceFactory
 
-    private val listPagedConfig = PagedList.Config.Builder()
-            .setPageSize(Constants.ITEMS_IN_PAGE)
-            .setInitialLoadSizeHint(Constants.ITEMS_IN_PAGE)
-            .setEnablePlaceholders(true)
-            .build()
+
 
     init {
         App.component.inject(this)
     }
 
-    val repositories: LiveData<PagedList<Repository>> = LivePagedListBuilder<String, Repository>(repositoriesDataSourceFactory, listPagedConfig).build()
+    val repositories: LiveData<PagedList<Repository>> = LivePagedListBuilder<String, Repository>(repositoriesDataSourceFactory, Constants.listPagedConfig).build()
 
 }

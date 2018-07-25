@@ -33,7 +33,7 @@ class RepositoriesDataSource : PageKeyedDataSource<String, Repository>() {
         api.getReposNextPage(params.key)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ callback.onResult(it.values, it.next) },
+                .subscribe({ callback.onResult(it.values,it.next) },
                         {
                             Timber.e(it.message)
                         })
@@ -49,7 +49,7 @@ class RepositoriesDataSource : PageKeyedDataSource<String, Repository>() {
                 .switchMapSingle { api.getRepos(it.username) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    callback.onResult(it.values, null, it.next)
+                    callback.onResult(it.values, it.previous, it.next)
                     loading.postValue(View.GONE)
                 }, {
                     Timber.e(it.message)

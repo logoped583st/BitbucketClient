@@ -15,7 +15,7 @@ import javax.inject.Inject
 import javax.security.auth.x500.X500Principal
 
 class CryptApi19 @Inject constructor(val context: Context) : Crypto {
-    private val AndroidKeyStore = Constants.KEY_STRORE
+    private val AndroidKeyStore = Constants.KEY_STORE
     private val KEY_ALIAS = Constants.TOKEN_PREFERENCES
     private val RSA_MODE = "RSA/ECB/PKCS1Padding"
     private val PROVIDER = "AndroidOpenSSL"

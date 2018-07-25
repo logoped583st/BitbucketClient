@@ -5,7 +5,7 @@ import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import javax.inject.Inject
 
-class RepositoriesDataSourceFactory() : DataSource.Factory<String, Repository>() {
+class RepositoriesDataSourceFactory : DataSource.Factory<String, Repository>() {
 
     @Inject
     lateinit var repositoriesDataSource: RepositoriesDataSource
@@ -18,5 +18,4 @@ class RepositoriesDataSourceFactory() : DataSource.Factory<String, Repository>()
         App.component.inject(this)
         return repositoriesDataSource
     }
-
 }

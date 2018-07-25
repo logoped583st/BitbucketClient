@@ -11,9 +11,11 @@ import android.view.Menu
 import android.view.MenuItem
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
+import bushuk.stanislau.bitbucketproject.Screens
 import bushuk.stanislau.bitbucketproject.databinding.ActivityMainScreenBinding
 import bushuk.stanislau.bitbucketproject.databinding.NavHeaderMainScreenBinding
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
+import com.jakewharton.rxbinding2.view.checked
 import kotlinx.android.synthetic.main.activity_main_screen.*
 import kotlinx.android.synthetic.main.app_bar_main_screen.*
 import ru.terrakok.cicerone.NavigatorHolder
@@ -24,15 +26,18 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     @Inject
     lateinit var navigatorHolder: NavigatorHolder
 
+    private lateinit var viewModel:MainScreenViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         App.component.inject(this)
+        viewModel = ViewModelProviders.of(this).get(MainScreenViewModel::class.java)
         val binding: ActivityMainScreenBinding = DataBindingUtil.setContentView(this, R.layout.activity_main_screen)
         val navHeaderMainScreenBinding: NavHeaderMainScreenBinding = DataBindingUtil.inflate(layoutInflater,
                 R.layout.nav_header_main_screen, binding.navView, false)
         binding.navView.addHeaderView(navHeaderMainScreenBinding.root)
-        val viewModel: MainScreenViewModel = ViewModelProviders.of(this).get(MainScreenViewModel::class.java)
+
 
         binding.let {
             it.viewModel = viewModel
@@ -50,6 +55,10 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
+
+        if(savedInstanceState==null) {
+            nav_view.menu.findItem(R.id.drawer_menu_repositories).isChecked = true
+        }
 
         nav_view.setNavigationItemSelectedListener(this)
     }
@@ -70,6 +79,7 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_settings -> return true
+
             else -> return super.onOptionsItemSelected(item)
         }
     }
@@ -77,15 +87,15 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-//            R.id.nav_camera -> {
-//
-//            }
-//            R.id.nav_gallery -> {
-//
-//            }
-//            R.id.nav_slideshow -> {
-//
-//            }
+            R.id.drawer_menu_repositories -> {
+                viewModel.drawerNavigation(Screens.REPOSITORIES_SCREEN)
+            }
+            R.id.drawer_menu_followers -> {
+                viewModel.drawerNavigation(Screens.FOLLOWERS_SCREEN)
+            }
+            R.id.drawer_menu_following -> {
+
+            }
 //            R.id.nav_manage -> {
 //
 //            }
@@ -110,4 +120,5 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         navigatorHolder.removeNavigator()
         super.onPause()
     }
+
 }

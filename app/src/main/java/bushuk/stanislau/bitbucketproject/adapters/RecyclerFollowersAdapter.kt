@@ -10,9 +10,8 @@ import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import timber.log.Timber
 
-
-class RecyclerRepositoriesAdapter : PagedListAdapter<Repository,
-        ViewHolder>(UserDiffCallback) {
+class RecyclerFollowersAdapter : PagedListAdapter<Repository,
+        ViewHolder>(RecyclerRepositoriesAdapter.UserDiffCallback) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
@@ -31,7 +30,6 @@ class RecyclerRepositoriesAdapter : PagedListAdapter<Repository,
         return ViewHolder(binding)
     }
 
-
     companion object {
         val UserDiffCallback = object : DiffUtil.ItemCallback<Repository>() {
             override fun areItemsTheSame(oldItem: Repository, newItem: Repository): Boolean {
@@ -43,5 +41,4 @@ class RecyclerRepositoriesAdapter : PagedListAdapter<Repository,
             }
         }
     }
-
 }

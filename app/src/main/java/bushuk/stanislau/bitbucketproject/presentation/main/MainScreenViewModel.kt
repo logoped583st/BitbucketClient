@@ -35,7 +35,6 @@ class MainScreenViewModel : ViewModel() {
 
     val user: MutableLiveData<User> = MutableLiveData()
 
-
     init {
 
         App.component.inject(this)
@@ -54,5 +53,9 @@ class MainScreenViewModel : ViewModel() {
 
         router.replaceScreen(Screens.REPOSITORIES_SCREEN)
 
+    }
+
+    fun drawerNavigation(screenKey:String){
+        router.replaceScreen(screenKey)
     }
 }
