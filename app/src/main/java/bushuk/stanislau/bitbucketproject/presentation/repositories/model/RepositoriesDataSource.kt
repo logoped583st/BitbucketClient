@@ -23,6 +23,9 @@ class RepositoriesDataSource : PageKeyedDataSource<String, Repository>() {
 
     val loading: MutableLiveData<Int> = MutableLiveData()
 
+    val noRepositories: MutableLiveData<Int> = MutableLiveData()
+
+
     init {
         App.component.inject(this)
     }
@@ -49,6 +52,9 @@ class RepositoriesDataSource : PageKeyedDataSource<String, Repository>() {
                 .switchMapSingle { api.getRepos(it.username) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    if(it.size==0){
+                        noRepositories.postValue(View.VISIBLE)
+                    }
                     callback.onResult(it.values, it.previous, it.next)
                     loading.postValue(View.GONE)
                 }, {

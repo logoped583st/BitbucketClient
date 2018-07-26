@@ -15,9 +15,8 @@ import bushuk.stanislau.bitbucketproject.Screens
 import bushuk.stanislau.bitbucketproject.databinding.ActivityMainScreenBinding
 import bushuk.stanislau.bitbucketproject.databinding.NavHeaderMainScreenBinding
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
-import com.jakewharton.rxbinding2.view.checked
 import kotlinx.android.synthetic.main.activity_main_screen.*
-import kotlinx.android.synthetic.main.app_bar_main_screen.*
+import kotlinx.android.synthetic.main.activity_main_screen.view.*
 import ru.terrakok.cicerone.NavigatorHolder
 import javax.inject.Inject
 
@@ -26,7 +25,7 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     @Inject
     lateinit var navigatorHolder: NavigatorHolder
 
-    private lateinit var viewModel:MainScreenViewModel
+    private lateinit var viewModel: MainScreenViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +36,19 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         val navHeaderMainScreenBinding: NavHeaderMainScreenBinding = DataBindingUtil.inflate(layoutInflater,
                 R.layout.nav_header_main_screen, binding.navView, false)
         binding.navView.addHeaderView(navHeaderMainScreenBinding.root)
+
+        if (savedInstanceState == null) {
+            nav_view.menu.findItem(R.id.drawer_menu_repositories).isChecked = true
+            setSupportActionBar(binding.root.toolbar)
+        }
+
+        val toggle = ActionBarDrawerToggle(
+                this, drawer_layout, binding.root.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawer_layout.addDrawerListener(toggle)
+        toggle.syncState()
+
+
+        nav_view.setNavigationItemSelectedListener(this)
 
 
         binding.let {
@@ -49,18 +61,7 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             it.setLifecycleOwner(this)
         }
 
-        setSupportActionBar(toolbar)
 
-        val toggle = ActionBarDrawerToggle(
-                this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
-
-        if(savedInstanceState==null) {
-            nav_view.menu.findItem(R.id.drawer_menu_repositories).isChecked = true
-        }
-
-        nav_view.setNavigationItemSelectedListener(this)
     }
 
     override fun onBackPressed() {
@@ -88,10 +89,10 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
         when (item.itemId) {
             R.id.drawer_menu_repositories -> {
-                viewModel.drawerNavigation(Screens.REPOSITORIES_SCREEN)
+                viewModel.drawerNavigation(Screens.REPOSITORIES_SCREEN, this.getString(R.string.toolbar_title_repository))
             }
             R.id.drawer_menu_followers -> {
-                viewModel.drawerNavigation(Screens.FOLLOWERS_SCREEN)
+                viewModel.drawerNavigation(Screens.FOLLOWERS_SCREEN, this.getString(R.string.toolbar_title_followers))
             }
             R.id.drawer_menu_following -> {
 

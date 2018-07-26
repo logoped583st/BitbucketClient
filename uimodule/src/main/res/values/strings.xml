@@ -32,5 +32,12 @@
     <string name="drawer_menu_snippets">Snippets</string>
     <string name="drawer_menu_pull_requests">Pull requests</string>
 
+    <!--Fragment followers -->
+    <string name="followers_screen_no_followers">You don`t have followers</string>
+
+    <!-- Toolbar Titles-->
+    <string name="toolbar_title_repository">Repositories</string>
+    <string name="toolbar_title_followers">Followers</string>
+
 
 </resources>

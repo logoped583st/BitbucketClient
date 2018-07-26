@@ -15,8 +15,6 @@ class RepositoriesViewModel : ViewModel() {
     @Inject
     lateinit var repositoriesDataSourceFactory: RepositoriesDataSourceFactory
 
-
-
     init {
         App.component.inject(this)
     }
