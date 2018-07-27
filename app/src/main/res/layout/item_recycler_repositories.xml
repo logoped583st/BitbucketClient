@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
             android:text="@{data.language}"
-            android:textColor="#F37806"
+            android:color="@{data.language}"
             app:layout_constraintBottom_toBottomOf="@+id/item_recycler_repositories_owner"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_owner"

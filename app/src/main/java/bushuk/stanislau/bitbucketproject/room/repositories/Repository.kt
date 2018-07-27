@@ -9,4 +9,4 @@ data class Repository(val uuid: String,
                       val updated_on: Date,
                       val links: Links,
                       val language: String,
-                      val owner: RepositoryOwner)
+                      val owner: Owner)

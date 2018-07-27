@@ -18,20 +18,20 @@
         tools:context=".presentation.repositories.RepositoriesFragment">
 
         <ImageView
-            android:id="@+id/followers_screen_error"
+            android:id="@+id/repositories_screen_error"
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:layout_marginBottom="@dimen/margin_size_small"
             android:src="@drawable/ic_error_no_items"
             android:visibility="@{viewModelRepositories.repositoriesDataSourceFactory.repositoriesDataSource.noRepositories}"
-            app:layout_constraintBottom_toTopOf="@+id/followers_screen_error_text"
+            app:layout_constraintBottom_toTopOf="@+id/repositories_screen_error_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/repositories_screen_recycler"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
-            android:id="@+id/followers_screen_error_text"
+            android:id="@+id/repositories_screen_error_text"
             style="@style/Headline.light_grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/followers_screen_error"
+            app:layout_constraintTop_toBottomOf="@+id/repositories_screen_error"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <ProgressBar

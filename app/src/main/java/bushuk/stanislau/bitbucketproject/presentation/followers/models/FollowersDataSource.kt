@@ -21,7 +21,7 @@ class FollowersDataSource : PageKeyedDataSource<String, User>() {
     lateinit var userModel: UserModel
 
     @Inject
-    lateinit var followModel: FollowModel
+    lateinit var loadingModel: LoadingModel
 
 
     init {
@@ -33,8 +33,8 @@ class FollowersDataSource : PageKeyedDataSource<String, User>() {
     }
 
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, User>) {
-        followModel.noFollowers.postValue(View.INVISIBLE)
-        followModel.loading.postValue(View.VISIBLE)
+        loadingModel.noFollowers.postValue(View.INVISIBLE)
+        loadingModel.loading.postValue(View.VISIBLE)
 
         userModel.user.subscribeOn(Schedulers.io())
                 .switchMapSingle { api.getFollowers(it.username) }
@@ -42,11 +42,11 @@ class FollowersDataSource : PageKeyedDataSource<String, User>() {
                 .subscribe(
                         {
                             if (it.size == 0) {
-                                followModel.noFollowers.postValue(View.VISIBLE)
-                                followModel.errorText.postValue(App.resourcesApp.getString(R.string.followers_screen_no_followers))
+                                loadingModel.noFollowers.postValue(View.VISIBLE)
+                                loadingModel.errorText.postValue(App.resourcesApp.getString(R.string.followers_screen_no_followers))
                             }
 
-                            followModel.loading.postValue(View.INVISIBLE)
+                            loadingModel.loading.postValue(View.INVISIBLE)
                             callback.onResult(it.values, it.previous, it.next)
                         },
                         {

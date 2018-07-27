@@ -18,12 +18,6 @@
             android:title="@string/drawer_menu_following" />
 
         <item
-            android:id="@+id/drawer_menu_pull_requests"
-            android:icon="@drawable/ic_pull_request"
-            android:title="@string/drawer_menu_pull_requests" />
-
-
-        <item
             android:id="@+id/drawer_menu_snippets"
             android:icon="@drawable/ic_snippets"
             android:title="@string/drawer_menu_snippets" />

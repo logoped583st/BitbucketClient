@@ -8,6 +8,7 @@ import bushuk.stanislau.bitbucketproject.di.modules.following.FollowingModule
 import bushuk.stanislau.bitbucketproject.di.modules.global.*
 import bushuk.stanislau.bitbucketproject.di.modules.mainScreen.MainScreenModule
 import bushuk.stanislau.bitbucketproject.di.modules.repositories.RepositoriesModule
+import bushuk.stanislau.bitbucketproject.di.modules.snippets.SnippetsModule
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
@@ -25,6 +26,9 @@ import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesViewModel
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSource
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSourceFactory
+import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsViewModel
+import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSource
+import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.utils.crypt.CryptApi19
 import bushuk.stanislau.bitbucketproject.utils.crypt.CryptApi23
 import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
@@ -36,7 +40,7 @@ import javax.inject.Singleton
 @Component(modules = [CiceroneModule::class, CryptoModule::class, RetrofitModule::class,
     MainScreenModule::class, ApplicationContextProvider::class, PreferencesModule::class,
     AuthLoginModule::class, RoomModule::class, UserModule::class, RepositoriesModule::class,
-    FollowersModule::class, FollowingModule::class, FollowModule::class])
+    FollowersModule::class, FollowingModule::class, FollowModule::class, SnippetsModule::class])
 interface MainComponent {
 
     fun inject(loginActivity: LoginActivity)
@@ -84,4 +88,10 @@ interface MainComponent {
     fun inject(followingDataSource: FollowingDataSource)
 
     fun inject(followingDataSourceFactory: FollowingDataSourceFactory)
+
+    fun inject(snippetsDataSourceFactory: SnippetsDataSourceFactory)
+
+    fun inject(snippetsDataSource: SnippetsDataSource)
+
+    fun inject(snippetsViewModel: SnippetsViewModel)
 }
