@@ -42,6 +42,7 @@
     <string name="toolbar_title_repository">Repositories</string>
     <string name="toolbar_title_followers">Followers</string>
     <string name="toolbar_title_following">Following</string>
+    <string name="toolbar_title_snippets">Snippets</string>
 
 
 </resources>

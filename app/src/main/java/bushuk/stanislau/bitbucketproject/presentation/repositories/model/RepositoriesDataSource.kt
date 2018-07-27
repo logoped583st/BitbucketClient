@@ -48,7 +48,7 @@ class RepositoriesDataSource : PageKeyedDataSource<String, Repository>() {
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, Repository>) {
         loading.postValue(View.VISIBLE)
         userModel.user.subscribeOn(Schedulers.io())
-                .switchMapSingle { api.getRepos(it.username) }
+                .switchMapSingle { api.getRepos("tutorials") }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     if(it.size==0){

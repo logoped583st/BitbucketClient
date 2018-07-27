@@ -12,4 +12,6 @@ object Screens {
     const val FOLLOWERS_SCREEN: String = "FOLLOWERS_SCREEN"
 
     const val FOLLOWING_SCREEN: String = "FOLLOWING_SCREEN"
+
+    const val SNIPPETS_SCREEN:String = "SNIPPETS_SCREEN"
 }

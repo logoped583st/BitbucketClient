@@ -2,7 +2,7 @@ package bushuk.stanislau.bitbucketproject.presentation.followers.models
 
 import android.arch.lifecycle.MutableLiveData
 
-class FollowModel {
+class LoadingModel {
 
     val noFollowers: MutableLiveData<Int> = MutableLiveData()
 

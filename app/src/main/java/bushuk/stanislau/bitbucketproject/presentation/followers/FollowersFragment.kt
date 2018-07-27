@@ -23,7 +23,7 @@ class FollowersFragment : BaseFollow() {
 
         binding.let {
             it.setLifecycleOwner(this)
-            it.modelFollow = viewModel.followModel
+            it.modelFollow = viewModel.loadingModel
         }
     }
 

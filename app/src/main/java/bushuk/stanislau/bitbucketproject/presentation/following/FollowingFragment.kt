@@ -24,7 +24,7 @@ class FollowingFragment : BaseFollow() {
         viewModel = ViewModelProviders.of(this).get(FollowingViewModel::class.java)
 
         binding.let {
-            it.modelFollow = viewModel.followModel
+            it.modelFollow = viewModel.loadingModel
             it.setLifecycleOwner(this)
         }
     }
