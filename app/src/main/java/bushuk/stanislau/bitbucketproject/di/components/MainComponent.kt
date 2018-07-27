@@ -4,6 +4,7 @@ import bushuk.stanislau.bitbucketproject.MainActivity
 import bushuk.stanislau.bitbucketproject.MainActivityViewModel
 import bushuk.stanislau.bitbucketproject.di.modules.auth.AuthLoginModule
 import bushuk.stanislau.bitbucketproject.di.modules.followers.FollowersModule
+import bushuk.stanislau.bitbucketproject.di.modules.following.FollowingModule
 import bushuk.stanislau.bitbucketproject.di.modules.global.*
 import bushuk.stanislau.bitbucketproject.di.modules.mainScreen.MainScreenModule
 import bushuk.stanislau.bitbucketproject.di.modules.repositories.RepositoriesModule
@@ -14,6 +15,9 @@ import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
 import bushuk.stanislau.bitbucketproject.presentation.followers.FollowersViewModel
 import bushuk.stanislau.bitbucketproject.presentation.followers.models.FollowersDataSource
 import bushuk.stanislau.bitbucketproject.presentation.followers.models.FollowersDataSourceFactory
+import bushuk.stanislau.bitbucketproject.presentation.following.FollowingViewModel
+import bushuk.stanislau.bitbucketproject.presentation.following.models.FollowingDataSource
+import bushuk.stanislau.bitbucketproject.presentation.following.models.FollowingDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenViewModel
@@ -32,7 +36,7 @@ import javax.inject.Singleton
 @Component(modules = [CiceroneModule::class, CryptoModule::class, RetrofitModule::class,
     MainScreenModule::class, ApplicationContextProvider::class, PreferencesModule::class,
     AuthLoginModule::class, RoomModule::class, UserModule::class, RepositoriesModule::class,
-    FollowersModule::class])
+    FollowersModule::class, FollowingModule::class, FollowModule::class])
 interface MainComponent {
 
     fun inject(loginActivity: LoginActivity)
@@ -74,4 +78,10 @@ interface MainComponent {
     fun inject(followersDataSource: FollowersDataSource)
 
     fun inject(followersDataSourceFactory: FollowersDataSourceFactory)
+
+    fun inject(followingViewModel: FollowingViewModel)
+
+    fun inject(followingDataSource: FollowingDataSource)
+
+    fun inject(followingDataSourceFactory: FollowingDataSourceFactory)
 }

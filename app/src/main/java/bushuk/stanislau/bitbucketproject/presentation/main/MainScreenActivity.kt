@@ -95,7 +95,7 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                 viewModel.drawerNavigation(Screens.FOLLOWERS_SCREEN, this.getString(R.string.toolbar_title_followers))
             }
             R.id.drawer_menu_following -> {
-
+                viewModel.drawerNavigation(Screens.FOLLOWING_SCREEN,this.getString(R.string.toolbar_title_following))
             }
 //            R.id.nav_manage -> {
 //

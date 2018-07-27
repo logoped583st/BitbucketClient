@@ -26,4 +26,10 @@ interface Api {
     @GET//request for getting info from next page, Url we take from previous request
     fun getFollowersNextPage(@Url url: String): Single<Followers>
 
+    @GET("users/{userName}/following")
+    fun getFollowing(@Path("userName") userName: String):Single<Followers>
+
+    @GET//request for getting info from next page, Url we take from previous request
+    fun getFollowingNextPage(@Url url: String): Single<Followers>
+
 }

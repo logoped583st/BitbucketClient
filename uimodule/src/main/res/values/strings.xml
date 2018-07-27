@@ -35,9 +35,13 @@
     <!--Fragment followers -->
     <string name="followers_screen_no_followers">You don`t have followers</string>
 
+    <!--Fragment following -->
+    <string name="following_screen_no_following">You don`t follow any one</string>
+
     <!-- Toolbar Titles-->
     <string name="toolbar_title_repository">Repositories</string>
     <string name="toolbar_title_followers">Followers</string>
+    <string name="toolbar_title_following">Following</string>
 
 
 </resources>

@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.presentation.followers
+package bushuk.stanislau.bitbucketproject.presentation.following
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
@@ -7,21 +7,21 @@ import android.arch.paging.PagedList
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.Constants
 import bushuk.stanislau.bitbucketproject.presentation.followers.models.FollowModel
-import bushuk.stanislau.bitbucketproject.presentation.followers.models.FollowersDataSourceFactory
+import bushuk.stanislau.bitbucketproject.presentation.following.models.FollowingDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.user.User
 import javax.inject.Inject
 
-class FollowersViewModel : ViewModel() {
-
-    @Inject
-    lateinit var followersDataSourceFactory: FollowersDataSourceFactory
+class FollowingViewModel : ViewModel() {
 
     @Inject
     lateinit var followModel: FollowModel
+
+    @Inject
+    lateinit var followingDataSourceFactory: FollowingDataSourceFactory
 
     init {
         App.component.inject(this)
     }
 
-    val followers: LiveData<PagedList<User>> = LivePagedListBuilder<String, User>(followersDataSourceFactory, Constants.listPagedConfig).build()
+    val following: LiveData<PagedList<User>> = LivePagedListBuilder<String, User>(followingDataSourceFactory, Constants.listPagedConfig).build()
 }

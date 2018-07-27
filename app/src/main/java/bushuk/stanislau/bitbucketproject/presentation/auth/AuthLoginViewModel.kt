@@ -65,7 +65,6 @@ class AuthLoginViewModel : ViewModel(), ResultListener {
                             router.newRootScreen(Screens.MAIN_SCREEN)
                         },
                         {
-                            Timber.e("ERROR")
                             tokenPreferences.clearToken()
                             clickableSendButton.postValue(true)
                             snackBarAction.postValue("Wrong login or password")

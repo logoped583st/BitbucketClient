@@ -7,20 +7,14 @@ import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import bushuk.stanislau.bitbucketproject.R
-import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import bushuk.stanislau.bitbucketproject.room.user.User
 import timber.log.Timber
 
-class RecyclerFollowersAdapter : PagedListAdapter<User,
-        ViewHolder>(RecyclerFollowersAdapter.UserDiffCallback) {
+class RecyclerFollowAdapter : PagedListAdapter<User,
+        ViewHolder>(UserDiffCallback) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
-    }
-
-    override fun getItemCount(): Int {
-        Timber.e(super.getItemCount().toString())
-        return super.getItemCount()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
