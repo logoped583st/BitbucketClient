@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity
 import bushuk.stanislau.bitbucketproject.Screens
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.followers.FollowersFragment
+import bushuk.stanislau.bitbucketproject.presentation.following.FollowingFragment
 import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
@@ -32,6 +33,8 @@ class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppN
             Screens.REPOSITORIES_SCREEN -> return RepositoriesFragment()
 
             Screens.FOLLOWERS_SCREEN ->return FollowersFragment()
+
+            Screens.FOLLOWING_SCREEN ->return FollowingFragment()
         }
         return null
     }
