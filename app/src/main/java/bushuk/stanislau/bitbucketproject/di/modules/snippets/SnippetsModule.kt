@@ -10,7 +10,6 @@ import javax.inject.Singleton
 class SnippetsModule {
 
     @Provides
-    @Singleton
     fun provideSnippetsDataSource(): SnippetsDataSource = SnippetsDataSource()
 
     @Provides

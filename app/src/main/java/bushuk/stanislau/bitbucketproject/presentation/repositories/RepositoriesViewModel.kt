@@ -15,6 +15,7 @@ import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import com.jakewharton.rxbinding2.widget.RxSearchView
 import io.reactivex.android.schedulers.AndroidSchedulers
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -36,9 +37,9 @@ class RepositoriesViewModel : ViewModel() {
     fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
         RxSearchView.queryTextChanges(searchView)
                 .subscribeOn(AndroidSchedulers.mainThread())
+                .map { it.toString() }
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .skip(1)
-                .map { it.toString() }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     searchText = it
@@ -53,5 +54,8 @@ class RepositoriesViewModel : ViewModel() {
         repositories.observe(lifecycleOwner, Observer(adapter::submitList))
     }
 
-
+    override fun onCleared() {
+        repositoriesDataSourceFactory.repositoriesDataSource.invalidate()
+        super.onCleared()
+    }
 }

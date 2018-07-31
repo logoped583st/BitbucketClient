@@ -15,7 +15,6 @@ class RepositoriesDataSourceFactory : DataSource.Factory<String, Repository>() {
     }
 
     override fun create(): DataSource<String, Repository> {
-        App.component.inject(this)
         return repositoriesDataSource
     }
 }

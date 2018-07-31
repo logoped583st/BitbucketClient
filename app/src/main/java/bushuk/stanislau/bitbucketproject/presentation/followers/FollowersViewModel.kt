@@ -23,5 +23,7 @@ class FollowersViewModel : ViewModel() {
         App.component.inject(this)
     }
 
-    val followers: LiveData<PagedList<User>> = LivePagedListBuilder<String, User>(followersDataSourceFactory, Constants.listPagedConfig).build()
+    var followers: LiveData<PagedList<User>> = LivePagedListBuilder<String, User>(followersDataSourceFactory, Constants.listPagedConfig).build()
+
+
 }

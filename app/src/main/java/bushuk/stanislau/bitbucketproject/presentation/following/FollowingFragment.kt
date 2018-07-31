@@ -3,12 +3,14 @@ package bushuk.stanislau.bitbucketproject.presentation.following
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.widget.SearchView
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerFollowAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentFollowersBinding
 import bushuk.stanislau.bitbucketproject.presentation.followers.BaseFollow
 
 
 class FollowingFragment : BaseFollow() {
+
 
     override fun provideBaseFollowAdapter(adapter: RecyclerFollowAdapter) {
         viewModel.following.observe(this, Observer(adapter::submitList))
@@ -28,6 +30,5 @@ class FollowingFragment : BaseFollow() {
             it.setLifecycleOwner(this)
         }
     }
-
 
 }

@@ -10,10 +10,8 @@ import javax.inject.Singleton
 class RepositoriesModule {
 
     @Provides
-    @Singleton
-    fun provideRepositoriesFactory():RepositoriesDataSourceFactory = RepositoriesDataSourceFactory()
+    fun provideRepositoriesFactory(): RepositoriesDataSourceFactory = RepositoriesDataSourceFactory()
 
     @Provides
-    @Singleton
-    fun provideRepositoriesData():RepositoriesDataSource = RepositoriesDataSource()
+    fun provideRepositoriesData(): RepositoriesDataSource = RepositoriesDataSource()
 }

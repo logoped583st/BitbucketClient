@@ -16,7 +16,7 @@ abstract class BaseFollow : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-       val binding: FragmentFollowersBinding= DataBindingUtil
+        val binding: FragmentFollowersBinding = DataBindingUtil
                 .inflate(layoutInflater, R.layout.fragment_followers, container, false)
 
         provideBaseFollowFragmentBinding(binding)
@@ -33,8 +33,10 @@ abstract class BaseFollow : Fragment() {
         provideBaseFollowAdapter(adapter)
     }
 
-    abstract fun provideBaseFollowFragmentBinding(binding:FragmentFollowersBinding)
+
+    abstract fun provideBaseFollowFragmentBinding(binding: FragmentFollowersBinding)
 
     abstract fun provideBaseFollowAdapter(adapter: RecyclerFollowAdapter)
+
 
 }
