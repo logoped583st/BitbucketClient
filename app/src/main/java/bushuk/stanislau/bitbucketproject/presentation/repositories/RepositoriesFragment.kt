@@ -14,19 +14,19 @@ import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerRepositoriesAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoriesBinding
 import kotlinx.android.synthetic.main.fragment_repositories.*
-import timber.log.Timber
 
 class RepositoriesFragment : Fragment(), LifecycleOwner {
 
     lateinit var viewModel: RepositoriesViewModel
-    lateinit var searchView: SearchView
+    private lateinit var searchView: SearchView
     private var test: Boolean = false
+    lateinit var binding: FragmentRepositoriesBinding
 
     private lateinit var adapter: RecyclerRepositoriesAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val binding: FragmentRepositoriesBinding = DataBindingUtil
+        binding = DataBindingUtil
                 .inflate(inflater, R.layout.fragment_repositories, container, false)
         viewModel = ViewModelProviders.of(this).get(RepositoriesViewModel::class.java)
 
@@ -41,7 +41,6 @@ class RepositoriesFragment : Fragment(), LifecycleOwner {
             test = true
         }
 
-
         return binding.root
     }
 
@@ -52,30 +51,28 @@ class RepositoriesFragment : Fragment(), LifecycleOwner {
         adapter = RecyclerRepositoriesAdapter()
         repositories_screen_recycler.adapter = adapter
 
-        if(savedInstanceState==null){
-            viewModel.repositoriesDataSourceFactory.repositoriesDataSource.query=HashMap()
+        if (savedInstanceState == null) {
+            viewModel.repositoriesDataSourceFactory.repositoriesDataSource.query = HashMap()
         }
 
         viewModel.repositories.observe(this, Observer(adapter::submitList))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.main_screen, menu)
+        super.onCreateOptionsMenu(menu, inflater)
 
-        val myActionMenuItem = menu.findItem(R.id.action_search)
-        myActionMenuItem.isEnabled=true
+        val myActionMenuItem: MenuItem = menu.findItem(R.id.action_search)
         searchView = myActionMenuItem.actionView as SearchView
 
-        if (viewModel.searchText != null) {
-            myActionMenuItem.expandActionView()
+        if (!viewModel.searchText.isNullOrEmpty()) {
+            searchView.onActionViewExpanded()
+            searchView.clearFocus()
             searchView.setQuery(viewModel.searchText, true)
         }
-
+        searchView.setIconifiedByDefault(true)
 
         viewModel.observeSearchView(searchView, this, adapter)
-
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
 }

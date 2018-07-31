@@ -10,7 +10,6 @@ import javax.inject.Singleton
 class FollowingModule {
 
     @Provides
-    @Singleton
     fun provideFollowingDataSource(): FollowingDataSource = FollowingDataSource()
 
     @Provides

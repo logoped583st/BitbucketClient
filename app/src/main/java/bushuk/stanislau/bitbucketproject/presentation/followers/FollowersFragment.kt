@@ -8,7 +8,9 @@ import bushuk.stanislau.bitbucketproject.databinding.FragmentFollowersBinding
 
 class FollowersFragment : BaseFollow() {
 
+    lateinit var adapter: RecyclerFollowAdapter
     override fun provideBaseFollowAdapter(adapter: RecyclerFollowAdapter) {
+        this.adapter = adapter
         viewModel.followers.observe(this, Observer(adapter::submitList))
     }
 
