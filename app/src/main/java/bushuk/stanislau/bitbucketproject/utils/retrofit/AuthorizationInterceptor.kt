@@ -17,6 +17,7 @@ class AuthorizationInterceptor : Interceptor {
         App.component.inject(this)
     }
 
+
     override fun intercept(chain: Interceptor.Chain?): Response {
         val original = chain!!.request()
         val builder = original.newBuilder()

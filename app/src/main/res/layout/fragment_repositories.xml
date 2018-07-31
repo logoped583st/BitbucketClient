@@ -39,7 +39,7 @@
             android:layout_marginEnd="@dimen/margin_size_small"
             android:layout_marginStart="@dimen/margin_size_small"
             android:layout_marginTop="@dimen/margin_size_small"
-            android:text="@string/followers_screen_no_followers"
+            android:text="@{viewModelRepositories.repositoriesDataSourceFactory.repositoriesDataSource.noRepositoriesText}"
             android:visibility="@{viewModelRepositories.repositoriesDataSourceFactory.repositoriesDataSource.noRepositories}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

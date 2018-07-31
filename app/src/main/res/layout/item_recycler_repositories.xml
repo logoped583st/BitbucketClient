@@ -112,6 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
+            style="@style/Body_2"
             android:text="@{data.language}"
             android:color="@{data.language}"
             app:layout_constraintBottom_toBottomOf="@+id/item_recycler_repositories_owner"

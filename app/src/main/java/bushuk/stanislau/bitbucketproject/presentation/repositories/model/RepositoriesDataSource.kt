@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.PageKeyedDataSource
 import android.view.View
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
@@ -13,6 +14,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class RepositoriesDataSource : PageKeyedDataSource<String, Repository>() {
+
 
 
     @Inject
@@ -25,9 +27,22 @@ class RepositoriesDataSource : PageKeyedDataSource<String, Repository>() {
 
     val noRepositories: MutableLiveData<Int> = MutableLiveData()
 
+    val noRepositoriesText : MutableLiveData<String> = MutableLiveData()
+
+    var query: HashMap<String, String> = HashMap()
+
 
     init {
         App.component.inject(this)
+    }
+
+
+
+    override fun removeInvalidatedCallback(onInvalidatedCallback: InvalidatedCallback) {
+        onInvalidatedCallback.onInvalidated()
+        Timber.e("REMOVE INVALIDATION CALLBACK")
+        super.removeInvalidatedCallback(onInvalidatedCallback)
+
     }
 
 
@@ -35,7 +50,10 @@ class RepositoriesDataSource : PageKeyedDataSource<String, Repository>() {
         api.getReposNextPage(params.key)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ callback.onResult(it.values,it.next) },
+                .subscribe(
+                        {
+                            callback.onResult(it.values, it.next)
+                        },
                         {
                             Timber.e(it.message)
                         })
@@ -47,12 +65,17 @@ class RepositoriesDataSource : PageKeyedDataSource<String, Repository>() {
 
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, Repository>) {
         loading.postValue(View.VISIBLE)
+        noRepositories.postValue(View.INVISIBLE)
+
         userModel.user.subscribeOn(Schedulers.io())
-                .switchMapSingle { api.getRepos("tutorials") }
+                .switchMapSingle {
+                    api.getReposParametr(it.username, query)
+               }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    if(it.size==0){
+                    if (it.size == 0) {
                         noRepositories.postValue(View.VISIBLE)
+                        noRepositoriesText.postValue(App.resourcesApp.getString(R.string.repositories_screen_no_repositories))
                     }
                     callback.onResult(it.values, it.previous, it.next)
                     loading.postValue(View.GONE)
