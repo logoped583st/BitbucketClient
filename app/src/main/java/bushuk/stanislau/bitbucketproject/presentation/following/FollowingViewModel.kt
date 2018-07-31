@@ -24,4 +24,5 @@ class FollowingViewModel : ViewModel() {
     }
 
     val following: LiveData<PagedList<User>> = LivePagedListBuilder<String, User>(followingDataSourceFactory, Constants.listPagedConfig).build()
+
 }

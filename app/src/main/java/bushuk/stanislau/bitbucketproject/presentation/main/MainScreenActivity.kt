@@ -7,7 +7,6 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
 import android.view.MenuItem
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
@@ -20,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_main_screen.view.*
 import ru.terrakok.cicerone.NavigatorHolder
 import javax.inject.Inject
 
+
 class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     @Inject
@@ -30,6 +30,7 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         App.component.inject(this)
         viewModel = ViewModelProviders.of(this).get(MainScreenViewModel::class.java)
         val binding: ActivityMainScreenBinding = DataBindingUtil.setContentView(this, R.layout.activity_main_screen)
@@ -37,19 +38,18 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                 R.layout.nav_header_main_screen, binding.navView, false)
         binding.navView.addHeaderView(navHeaderMainScreenBinding.root)
 
+        binding.root.toolbar.title = viewModel.toolbarTitle.value
+        setSupportActionBar(binding.root.toolbar)
+
         if (savedInstanceState == null) {
             nav_view.menu.findItem(R.id.drawer_menu_repositories).isChecked = true
-            setSupportActionBar(binding.root.toolbar)
         }
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, binding.root.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-
-
         nav_view.setNavigationItemSelectedListener(this)
-
 
         binding.let {
             it.viewModel = viewModel
@@ -61,7 +61,6 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             it.setLifecycleOwner(this)
         }
 
-
     }
 
     override fun onBackPressed() {
@@ -69,19 +68,6 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_screen, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_settings -> return true
-
-            else -> return super.onOptionsItemSelected(item)
         }
     }
 
