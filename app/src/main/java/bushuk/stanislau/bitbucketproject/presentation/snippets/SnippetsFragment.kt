@@ -32,7 +32,7 @@ class SnippetsFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(SnippetsViewModel::class.java)
 
         binding.let {
-            it.modelFollow = viewModel.loadingModel
+            it.viewModel = viewModel
             it.setLifecycleOwner(this)
         }
 

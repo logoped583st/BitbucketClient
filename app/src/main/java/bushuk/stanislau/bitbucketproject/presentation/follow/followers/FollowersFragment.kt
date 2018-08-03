@@ -1,34 +1,35 @@
-package bushuk.stanislau.bitbucketproject.presentation.following
+package bushuk.stanislau.bitbucketproject.presentation.follow.followers
 
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.widget.SearchView
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerFollowAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentFollowersBinding
-import bushuk.stanislau.bitbucketproject.presentation.followers.BaseFollow
+import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowFragment
 
+class FollowersFragment : BaseFollowFragment() {
 
-class FollowingFragment : BaseFollow() {
-
+    lateinit var adapter: RecyclerFollowAdapter
 
     override fun provideBaseFollowAdapter(adapter: RecyclerFollowAdapter) {
-        viewModel.following.observe(this, Observer(adapter::submitList))
+        this.adapter = adapter
+        viewModel.followers.observe(this, Observer(adapter::submitList))
     }
 
     lateinit var binding: FragmentFollowersBinding
 
-    lateinit var viewModel: FollowingViewModel
+    lateinit var viewModel: FollowersViewModel
 
     override fun provideBaseFollowFragmentBinding(binding: FragmentFollowersBinding) {
         this.binding = binding
 
-        viewModel = ViewModelProviders.of(this).get(FollowingViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(FollowersViewModel::class.java)
 
         binding.let {
-            it.modelFollow = viewModel.loadingModel
             it.setLifecycleOwner(this)
+            it.modelFollow = viewModel.loadingModel
         }
     }
+
 
 }

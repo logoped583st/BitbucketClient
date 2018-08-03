@@ -7,15 +7,15 @@
     <data>
         <variable
             name="viewModelFollowing"
-            type="bushuk.stanislau.bitbucketproject.presentation.following.FollowingViewModel" />
+            type="bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingViewModel" />
 
         <variable
             name="modelFollow"
-            type="bushuk.stanislau.bitbucketproject.presentation.followers.models.LoadingModel"/>
+            type="bushuk.stanislau.bitbucketproject.presentation.follow.followers.models.LoadingModel"/>
 
         <variable
             name="viewModelFollowers"
-            type="bushuk.stanislau.bitbucketproject.presentation.followers.FollowersViewModel" />
+            type="bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout

@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.room.user.User
@@ -34,5 +35,9 @@ class RecyclerFollowAdapter : PagedListAdapter<User,
                 return oldItem == newItem
             }
         }
+    }
+
+    interface ItemClick{
+        fun onItemClick(item : View, user:User)
     }
 }

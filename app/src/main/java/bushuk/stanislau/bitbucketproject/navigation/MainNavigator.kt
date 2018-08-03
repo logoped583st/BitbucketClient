@@ -6,12 +6,13 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import bushuk.stanislau.bitbucketproject.Screens
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginActivity
-import bushuk.stanislau.bitbucketproject.presentation.followers.FollowersFragment
-import bushuk.stanislau.bitbucketproject.presentation.following.FollowingFragment
+import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersFragment
+import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingFragment
 import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
 import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsFragment
+import bushuk.stanislau.bitbucketproject.presentation.user.UserFragment
 import ru.terrakok.cicerone.android.SupportAppNavigator
 
 class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppNavigator(activity, containerId) {
@@ -38,6 +39,8 @@ class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppN
             Screens.FOLLOWING_SCREEN ->return FollowingFragment()
 
             Screens.SNIPPETS_SCREEN -> return SnippetsFragment()
+
+            Screens.USER_SCREEN ->return  UserFragment()
         }
         return null
     }

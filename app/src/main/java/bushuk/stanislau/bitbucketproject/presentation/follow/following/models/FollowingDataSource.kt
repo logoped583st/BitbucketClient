@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.presentation.following.models
+package bushuk.stanislau.bitbucketproject.presentation.follow.following.models
 
 import android.arch.paging.PageKeyedDataSource
 import android.view.View
@@ -6,7 +6,7 @@ import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.global.UserModel
-import bushuk.stanislau.bitbucketproject.presentation.followers.models.LoadingModel
+import bushuk.stanislau.bitbucketproject.presentation.follow.followers.models.LoadingModel
 import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.di.modules.global
 
-import bushuk.stanislau.bitbucketproject.presentation.followers.models.LoadingModel
+import bushuk.stanislau.bitbucketproject.presentation.follow.followers.models.LoadingModel
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -10,5 +10,5 @@ class FollowModule {
 
     @Provides
     @Singleton
-    fun provideFollowModel():LoadingModel = LoadingModel()
+    fun provideFollowModel(): LoadingModel = LoadingModel()
 }

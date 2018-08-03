@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.presentation.followers
+package bushuk.stanislau.bitbucketproject.presentation.follow
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -12,7 +12,7 @@ import bushuk.stanislau.bitbucketproject.adapters.RecyclerFollowAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentFollowersBinding
 import kotlinx.android.synthetic.main.fragment_followers.*
 
-abstract class BaseFollow : Fragment() {
+abstract class BaseFollowFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

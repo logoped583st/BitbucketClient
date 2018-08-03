@@ -21,6 +21,11 @@
             android:id="@+id/drawer_menu_snippets"
             android:icon="@drawable/ic_snippets"
             android:title="@string/drawer_menu_snippets" />
+
+        <item
+            android:id="@+id/drawer_test_user"
+            android:icon="@drawable/ic_snippets"
+            android:title="use test" />
     </group>
 
     <!--<item android:title="Communicate">-->

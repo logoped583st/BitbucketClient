@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.presentation.following.models
+package bushuk.stanislau.bitbucketproject.presentation.follow.following.models
 
 import android.arch.paging.DataSource
 import bushuk.stanislau.bitbucketproject.App

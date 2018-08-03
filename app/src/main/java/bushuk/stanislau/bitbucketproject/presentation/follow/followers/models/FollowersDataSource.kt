@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.presentation.followers.models
+package bushuk.stanislau.bitbucketproject.presentation.follow.followers.models
 
 import android.arch.paging.PageKeyedDataSource
 import android.view.View
@@ -28,6 +28,7 @@ class FollowersDataSource : PageKeyedDataSource<String, User>() {
 
     init {
         App.component.inject(this)
+
     }
 
     override fun invalidate() {
