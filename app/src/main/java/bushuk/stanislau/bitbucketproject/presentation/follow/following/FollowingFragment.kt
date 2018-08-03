@@ -12,7 +12,7 @@ class FollowingFragment : BaseFollowFragment() {
 
 
     override fun provideBaseFollowAdapter(adapter: RecyclerFollowAdapter) {
-        viewModel.following.observe(this, Observer(adapter::submitList))
+        viewModel.followers.observe(this, Observer(adapter::submitList))
     }
 
     lateinit var binding: FragmentFollowersBinding
