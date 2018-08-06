@@ -11,7 +11,7 @@ import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsFragment
 import timber.log.Timber
 
 
-class ViewPagerUserAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+class ViewPagerUserAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
 
     private val repositories = 0
     private val followers = 1

@@ -5,17 +5,25 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import bushuk.stanislau.bitbucketproject.R
+import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowFragment
+import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
 import bushuk.stanislau.bitbucketproject.room.user.User
-import timber.log.Timber
 
 class RecyclerFollowAdapter : PagedListAdapter<User,
         ViewHolder>(UserDiffCallback) {
 
+    lateinit var clickFollow: ClickFollow
+    lateinit var holder: ViewHolder
+
+    fun setListener(baseFollow: BaseFollowFragment) {
+        clickFollow = baseFollow
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        this.holder = holder
+        holder.bind(getItem(position), clickFollow)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
@@ -37,7 +45,4 @@ class RecyclerFollowAdapter : PagedListAdapter<User,
         }
     }
 
-    interface ItemClick{
-        fun onItemClick(item : View, user:User)
-    }
 }

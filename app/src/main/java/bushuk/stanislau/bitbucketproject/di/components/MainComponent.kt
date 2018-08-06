@@ -15,10 +15,9 @@ import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowViewModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersViewModel
-import bushuk.stanislau.bitbucketproject.presentation.follow.followers.models.FollowersDataSource
+import bushuk.stanislau.bitbucketproject.presentation.follow.FollowDataSource
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.models.FollowersDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingViewModel
-import bushuk.stanislau.bitbucketproject.presentation.follow.following.models.FollowingDataSource
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.models.FollowingDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
@@ -81,13 +80,11 @@ interface MainComponent {
 
     fun inject(followersViewModel: FollowersViewModel)
 
-    fun inject(followersDataSource: FollowersDataSource)
+    fun inject(followersDataSource: FollowDataSource)
 
     fun inject(followersDataSourceFactory: FollowersDataSourceFactory)
 
     fun inject(followingViewModel: FollowingViewModel)
-
-    fun inject(followingDataSource: FollowingDataSource)
 
     fun inject(followingDataSourceFactory: FollowingDataSourceFactory)
 

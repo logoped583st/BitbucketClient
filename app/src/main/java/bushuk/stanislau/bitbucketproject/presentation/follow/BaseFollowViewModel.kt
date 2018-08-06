@@ -7,14 +7,16 @@ import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.Constants
-import bushuk.stanislau.bitbucketproject.presentation.follow.followers.models.LoadingModel
+import bushuk.stanislau.bitbucketproject.Screens
+import bushuk.stanislau.bitbucketproject.global.LoadingModel
 import bushuk.stanislau.bitbucketproject.room.user.User
+import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 abstract class BaseFollowViewModel : ViewModel() {
 
     @Inject
-    lateinit var loadingModel: LoadingModel
+    lateinit var router: Router
 
     init {
         App.component.inject(this)
@@ -22,5 +24,9 @@ abstract class BaseFollowViewModel : ViewModel() {
 
     abstract var factory: DataSource.Factory<String, User>
 
-    val followers: LiveData<PagedList<User>> by lazy {  LivePagedListBuilder<String, User>(factory, Constants.listPagedConfig).build() }
+    val followers: LiveData<PagedList<User>> by lazy { LivePagedListBuilder<String, User>(factory, Constants.listPagedConfig).build() }
+
+    fun navigateToUserScreen(userName: User) {
+        router.replaceScreen(Screens.USER_SCREEN, userName)
+    }
 }

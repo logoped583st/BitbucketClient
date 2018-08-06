@@ -86,9 +86,6 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             R.id.drawer_menu_snippets -> {
                 viewModel.drawerNavigation(Screens.SNIPPETS_SCREEN, this.getString(R.string.toolbar_title_snippets))
             }
-            R.id.drawer_test_user -> {
-                viewModel.drawerNavigation(Screens.USER_SCREEN, "USER")
-            }
 //            R.id.nav_send -> {
 //
 //            }

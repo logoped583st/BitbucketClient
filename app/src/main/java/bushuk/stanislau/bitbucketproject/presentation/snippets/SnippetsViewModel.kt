@@ -6,7 +6,6 @@ import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.Constants
-import bushuk.stanislau.bitbucketproject.presentation.follow.followers.models.LoadingModel
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
 import javax.inject.Inject

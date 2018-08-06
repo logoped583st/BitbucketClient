@@ -18,6 +18,10 @@ class UserModel {
 
     val user: BehaviorSubject<User> = BehaviorSubject.create()
 
+    fun setNewUser(userName: String) {
+        user.value.username = userName
+    }
+
     init {
         App.component.inject(this)
 

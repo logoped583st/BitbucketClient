@@ -39,10 +39,10 @@
     <string name="snippets_screen_no_snippets">No Snippets</string>
 
     <!--Fragment followers -->
-    <string name="followers_screen_no_followers">No Data</string>
+    <string name="followers_screen_no_followers">No followers</string>
 
     <!--Fragment following -->
-    <string name="following_screen_no_following">No Data</string>
+    <string name="following_screen_no_following">No followings</string>
 
     <!-- Toolbar Titles-->
     <string name="toolbar_title_repository">Repositories</string>

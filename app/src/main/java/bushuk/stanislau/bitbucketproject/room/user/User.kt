@@ -6,7 +6,7 @@ import android.arch.persistence.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "User")
-data class User(val username: String,
+data class User(var username: String,
 
                 val website: String? = null,
 

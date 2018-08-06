@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.presentation.follow.followers.models
+package bushuk.stanislau.bitbucketproject.global
 
 import android.arch.lifecycle.MutableLiveData
 

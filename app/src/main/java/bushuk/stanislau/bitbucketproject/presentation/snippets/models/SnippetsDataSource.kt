@@ -7,7 +7,6 @@ import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.global.UserModel
-import bushuk.stanislau.bitbucketproject.presentation.follow.followers.models.LoadingModel
 import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
