@@ -13,12 +13,12 @@ import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
-import bushuk.stanislau.bitbucketproject.presentation.followers.FollowersViewModel
-import bushuk.stanislau.bitbucketproject.presentation.followers.models.FollowersDataSource
-import bushuk.stanislau.bitbucketproject.presentation.followers.models.FollowersDataSourceFactory
-import bushuk.stanislau.bitbucketproject.presentation.following.FollowingViewModel
-import bushuk.stanislau.bitbucketproject.presentation.following.models.FollowingDataSource
-import bushuk.stanislau.bitbucketproject.presentation.following.models.FollowingDataSourceFactory
+import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowViewModel
+import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersViewModel
+import bushuk.stanislau.bitbucketproject.presentation.follow.FollowDataSource
+import bushuk.stanislau.bitbucketproject.presentation.follow.followers.models.FollowersDataSourceFactory
+import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingViewModel
+import bushuk.stanislau.bitbucketproject.presentation.follow.following.models.FollowingDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenViewModel
@@ -29,6 +29,7 @@ import bushuk.stanislau.bitbucketproject.presentation.repositories.model.Reposit
 import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsViewModel
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSource
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSourceFactory
+import bushuk.stanislau.bitbucketproject.presentation.user.UserViewModel
 import bushuk.stanislau.bitbucketproject.utils.crypt.CryptApi19
 import bushuk.stanislau.bitbucketproject.utils.crypt.CryptApi23
 import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
@@ -79,13 +80,11 @@ interface MainComponent {
 
     fun inject(followersViewModel: FollowersViewModel)
 
-    fun inject(followersDataSource: FollowersDataSource)
+    fun inject(followersDataSource: FollowDataSource)
 
     fun inject(followersDataSourceFactory: FollowersDataSourceFactory)
 
     fun inject(followingViewModel: FollowingViewModel)
-
-    fun inject(followingDataSource: FollowingDataSource)
 
     fun inject(followingDataSourceFactory: FollowingDataSourceFactory)
 
@@ -94,4 +93,8 @@ interface MainComponent {
     fun inject(snippetsDataSource: SnippetsDataSource)
 
     fun inject(snippetsViewModel: SnippetsViewModel)
+
+    fun inject(userViewModel: UserViewModel)
+
+    fun inject(baseFollowViewModel: BaseFollowViewModel)
 }

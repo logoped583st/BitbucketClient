@@ -1,12 +1,12 @@
 package bushuk.stanislau.bitbucketproject.presentation.snippets.models
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.PageKeyedDataSource
 import android.view.View
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.global.UserModel
-import bushuk.stanislau.bitbucketproject.presentation.followers.models.LoadingModel
 import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -21,12 +21,16 @@ class SnippetsDataSource : PageKeyedDataSource<String, Snippet>() {
     lateinit var userModel: UserModel
 
     @Inject
-    lateinit var loadingModel: LoadingModel
-
-    @Inject
     lateinit var api: Api
 
-    private val disposable : CompositeDisposable = CompositeDisposable()
+    val noSnippets: MutableLiveData<Int> = MutableLiveData()
+
+    val noSnippetsText : MutableLiveData<String> = MutableLiveData()
+
+    val loading: MutableLiveData<Int> = MutableLiveData()
+
+
+    private val disposable: CompositeDisposable = CompositeDisposable()
 
     init {
         App.component.inject(this)
@@ -38,19 +42,19 @@ class SnippetsDataSource : PageKeyedDataSource<String, Snippet>() {
     }
 
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, Snippet>) {
-        loadingModel.noFollowers.postValue(View.INVISIBLE)
-        loadingModel.loading.postValue(View.VISIBLE)
+        noSnippets.postValue(View.INVISIBLE)
+        loading.postValue(View.VISIBLE)
 
         disposable.add(userModel.user.observeOn(Schedulers.io())
                 .switchMapSingle { api.getSnippets(it.username) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {
-                            loadingModel.loading.postValue(View.INVISIBLE)
+                            loading.postValue(View.INVISIBLE)
 
                             if (it.values.isEmpty()) {
-                                loadingModel.noFollowers.postValue(View.VISIBLE)
-                                loadingModel.errorText.postValue(App.resourcesApp.getString(R.string.following_screen_no_following))
+                                noSnippets.postValue(View.VISIBLE)
+                                noSnippetsText.postValue(App.resourcesApp.getString(R.string.snippets_screen_no_snippets))
                             }
 
                             callback.onResult(it.values, it.previous, it.next)

@@ -1,5 +1,4 @@
 package bushuk.stanislau.bitbucketproject.room
 
 
-class Href(
-        var href: String)
+class Href(val href: String)

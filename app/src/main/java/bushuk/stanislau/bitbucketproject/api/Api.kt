@@ -13,6 +13,9 @@ interface Api {
     @GET("user")
     fun myUser(): Single<User>
 
+    @GET("users/{userName}")
+    fun getUser(@Path("userName")userName: String):Single<User>
+
     @GET("repositories/{userName}")
     fun getRepos(@Path("userName") userName: String, @QueryMap(encoded=true) query: Map<String, String>? ): Single<RepositoriesResponse>
 

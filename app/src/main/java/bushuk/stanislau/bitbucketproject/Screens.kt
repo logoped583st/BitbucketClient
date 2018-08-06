@@ -14,4 +14,6 @@ object Screens {
     const val FOLLOWING_SCREEN: String = "FOLLOWING_SCREEN"
 
     const val SNIPPETS_SCREEN:String = "SNIPPETS_SCREEN"
+
+    const val USER_SCREEN: String = "USER_SCREEN"
 }

@@ -8,26 +8,28 @@ import bushuk.stanislau.bitbucketproject.R
 import java.text.SimpleDateFormat
 import java.util.*
 
-object TextBindingUtil {
+class TextBindingUtil {
 
-    @JvmStatic
-    @BindingAdapter("app:text")
-    fun accessText(textView: TextView, string: String) {
+    companion object {
 
-        if (string.isEmpty()) {
-            textView.text = "Description is empty"
-            textView.setTextColor(App.resourcesApp.getColor(R.color.grey))
-        } else {
-            textView.text = string
+        @JvmStatic
+        @BindingAdapter("app:text")
+        fun accessText(textView: TextView, string: String) {
+
+            if (string.isEmpty()) {
+                textView.text = "Description is empty"
+                textView.setTextColor(App.resourcesApp.getColor(R.color.grey))
+            } else {
+                textView.text = string
+            }
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        @JvmStatic
+        @BindingAdapter("android:text")
+        fun dateText(textView: TextView, date: Date) {
+            val format = SimpleDateFormat("dd/MM/yyy")
+            textView.text = format.format(date)
         }
     }
-
-    @SuppressLint("SimpleDateFormat")
-    @JvmStatic
-    @BindingAdapter("android:text")
-    fun dateText(textView: TextView, date: Date) {
-        val format = SimpleDateFormat("dd/MM/yyy")
-        textView.text = format.format(date)
-    }
-
 }

@@ -18,11 +18,16 @@ class UserModel {
 
     val user: BehaviorSubject<User> = BehaviorSubject.create()
 
+    fun setNewUser(userName: String) {
+        user.value.username = userName
+    }
+
     init {
         App.component.inject(this)
 
         if (tokenPreferencesUtil.getToken() != null) {
-            api.myUser().subscribeOn(Schedulers.io()).doOnSuccess { user.onNext(it) }
+            api.myUser().subscribeOn(Schedulers.io())
+                    .doOnSuccess { user.onNext(it) }
                     .onErrorReturn { null }
                     .subscribe()
         }

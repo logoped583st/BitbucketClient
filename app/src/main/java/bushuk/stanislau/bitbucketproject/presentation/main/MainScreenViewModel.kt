@@ -43,9 +43,10 @@ class MainScreenViewModel : ViewModel() {
         Timber.e("INIT" + mainScreenModel.hashCode())
 
         userModel.user
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.newThread())
                 .map {
-                    appDatabase.userDao().insertUser(it)
+                   // appDatabase.userDao().insertUser(it)
                     it
                 }
                 .observeOn(AndroidSchedulers.mainThread())
@@ -58,6 +59,6 @@ class MainScreenViewModel : ViewModel() {
 
     fun drawerNavigation(screenKey: String, toolbarTitle:String) {
         this.toolbarTitle.postValue(toolbarTitle)
-        router.replaceScreen(screenKey)
+        router.newRootScreen(screenKey)
     }
 }

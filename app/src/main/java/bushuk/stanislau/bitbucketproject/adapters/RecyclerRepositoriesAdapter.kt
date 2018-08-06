@@ -5,16 +5,22 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import bushuk.stanislau.bitbucketproject.R
+import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import timber.log.Timber
 
 class RecyclerRepositoriesAdapter : PagedListAdapter<Repository,
-        ViewHolder>(UserDiffCallback) {
+        ViewHolder>(UserDiffCallback) , ClickFollow{
+    override fun onClickItem(view: View, data: Any) {
+
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position),this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {

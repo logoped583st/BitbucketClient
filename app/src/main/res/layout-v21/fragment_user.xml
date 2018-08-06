@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="manager"
+            type="android.support.v4.app.FragmentManager" />
+
+        <variable
+            name="handler"
+            type="bushuk.stanislau.bitbucketproject.presentation.user.UserFragment" />
+
+        <variable
+            name="fragment"
+            type="bushuk.stanislau.bitbucketproject.presentation.user.UserFragment"/>
+
+        <variable
+            name="viewModel"
+            type="bushuk.stanislau.bitbucketproject.presentation.user.UserViewModel" />
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/user_screen_avatar"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:imageUrl="@{fragment.avatar}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/user_screen_display_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                style="@style/Headline"
+                android:text="@{fragment.displayName}"
+                app:layout_constraintBottom_toTopOf="@+id/user_screen_user_name"
+                app:layout_constraintStart_toEndOf="@+id/user_screen_avatar"
+                app:layout_constraintTop_toTopOf="@+id/user_screen_avatar" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayout2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"
+                app:tabTextColor="@color/white"
+                app:tabGravity="center"
+                android:overScrollMode="never"
+                app:tabMode="scrollable"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintTop_toBottomOf="@+id/user_screen_avatar"
+                app:pager="@{pager}">
+
+            </android.support.design.widget.TabLayout>
+
+            <TextView
+                android:id="@+id/user_screen_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                style="@style/Subheading.grey"
+                android:text="@{fragment.userName}"
+                app:layout_constraintBottom_toBottomOf="@+id/user_screen_avatar"
+                app:layout_constraintStart_toStartOf="@+id/user_screen_display_name"
+                app:layout_constraintTop_toBottomOf="@+id/user_screen_display_name" />
+
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:handler="@{handler}"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tabLayout2"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>
