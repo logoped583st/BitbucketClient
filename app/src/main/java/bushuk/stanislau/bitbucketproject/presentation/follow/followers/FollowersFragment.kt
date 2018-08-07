@@ -15,24 +15,17 @@ class FollowersFragment : BaseFollowFragment() {
         viewModel.navigateToUserScreen((data as User))
     }
 
-    lateinit var adapter: RecyclerFollowAdapter
-
     override fun provideBaseFollowAdapter(adapter: RecyclerFollowAdapter) {
-        this.adapter = adapter
         viewModel.followers.observe(this, Observer(adapter::submitList))
     }
-
-    lateinit var binding: FragmentFollowersBinding
 
     lateinit var viewModel: FollowersViewModel
 
     override fun provideBaseFollowFragmentBinding(binding: FragmentFollowersBinding) {
-        this.binding = binding
-
         viewModel = ViewModelProviders.of(this).get(FollowersViewModel::class.java)
 
         binding.let {
-            it.baseFollowrs  = viewModel._factory.followersDataSource
+            it.baseFollowrs = viewModel._factory.followersDataSource
             it.setLifecycleOwner(this)
         }
     }

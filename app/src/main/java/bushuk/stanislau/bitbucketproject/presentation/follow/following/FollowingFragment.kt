@@ -20,12 +20,10 @@ class FollowingFragment : BaseFollowFragment() {
         viewModel.followers.observe(this, Observer(adapter::submitList))
     }
 
-    lateinit var binding: FragmentFollowersBinding
-
     lateinit var viewModel: FollowingViewModel
 
     override fun provideBaseFollowFragmentBinding(binding: FragmentFollowersBinding) {
-        this.binding = binding
+
 
         viewModel = ViewModelProviders.of(this).get(FollowingViewModel::class.java)
 

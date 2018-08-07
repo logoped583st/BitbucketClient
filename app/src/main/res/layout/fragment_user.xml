@@ -14,7 +14,7 @@
 
         <variable
             name="fragment"
-            type="bushuk.stanislau.bitbucketproject.presentation.user.UserFragment"/>
+            type="bushuk.stanislau.bitbucketproject.presentation.user.UserFragment" />
 
         <variable
             name="viewModel"
@@ -30,6 +30,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appBarLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+
+            </android.support.design.widget.AppBarLayout>
 
             <ImageView
                 android:id="@+id/user_screen_avatar"
@@ -39,15 +54,15 @@
                 android:layout_marginTop="8dp"
                 app:imageUrl="@{fragment.avatar}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
 
             <TextView
                 android:id="@+id/user_screen_display_name"
+                style="@style/Headline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                style="@style/Headline"
                 android:text="@{fragment.displayName}"
                 app:layout_constraintBottom_toTopOf="@+id/user_screen_user_name"
                 app:layout_constraintStart_toEndOf="@+id/user_screen_avatar"
@@ -57,25 +72,25 @@
                 android:id="@+id/tabLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:background="@color/colorPrimary"
-                app:tabTextColor="@color/white"
-                app:tabMode="scrollable"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/user_screen_avatar"
-                app:pager="@{pager}">
+                app:pager="@{pager}"
+                app:tabMode="scrollable"
+                app:tabTextColor="@color/white">
 
             </android.support.design.widget.TabLayout>
 
             <TextView
                 android:id="@+id/user_screen_user_name"
+                style="@style/Subheading.grey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
-                style="@style/Subheading.grey"
                 android:text="@{fragment.userName}"
                 app:layout_constraintBottom_toBottomOf="@+id/user_screen_avatar"
                 app:layout_constraintStart_toStartOf="@+id/user_screen_display_name"
@@ -86,8 +101,8 @@
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:handler="@{handler}"
                 android:nestedScrollingEnabled="false"
+                app:handler="@{handler}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
