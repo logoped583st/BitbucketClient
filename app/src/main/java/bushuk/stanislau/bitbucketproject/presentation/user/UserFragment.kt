@@ -48,17 +48,21 @@ class UserFragment : Fragment() {
 
     private fun setToolbar(binding: FragmentUserBinding) {
         (activity as AppCompatActivity).supportActionBar?.hide()
+        setHasOptionsMenu(true)
         (activity as AppCompatActivity).setSupportActionBar(binding.root.toolbar_user)
-        (activity as AppCompatActivity).supportActionBar!!.title = "TEST"
-        setHasOptionsMenu(false)
-
-
+        (activity as AppCompatActivity).supportActionBar!!.title = userName
+        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun onDestroy() {
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        viewModel.exitFromFragment()
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroyView() {
         (activity as MainScreenActivity).recreateToolbar()
 
-        super.onDestroy()
+        super.onDestroyView()
     }
 
     private fun getArgs() {

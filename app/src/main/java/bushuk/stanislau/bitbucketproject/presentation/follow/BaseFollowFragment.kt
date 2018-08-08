@@ -33,7 +33,6 @@ abstract class BaseFollowFragment : Fragment(), ClickFollow {
         val adapter = RecyclerFollowAdapter()
         followers_screen_recycler.adapter = adapter
         adapter.setListener(this)
-        setHasOptionsMenu(false)
 
         provideBaseFollowAdapter(adapter)
     }

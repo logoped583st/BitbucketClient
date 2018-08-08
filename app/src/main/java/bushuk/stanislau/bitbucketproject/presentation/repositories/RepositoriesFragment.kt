@@ -36,7 +36,6 @@ class RepositoriesFragment : Fragment(), LifecycleOwner {
             it.setLifecycleOwner(this)
         }
 
-        setHasOptionsMenu(true)
 
         if (savedInstanceState == null) {
             test = true
@@ -58,27 +57,5 @@ class RepositoriesFragment : Fragment(), LifecycleOwner {
 
         viewModel.repositories.observe(this, Observer(adapter::submitList))
     }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        Timber.e("CREATE OPTIONS")
-        super.onCreateOptionsMenu(menu, inflater)
-
-        menu.clear()
-        inflater.inflate(R.menu.main_screen, menu)
-        val myActionMenuItem: MenuItem = menu.findItem(R.id.action_search)
-        searchView = myActionMenuItem.actionView as SearchView
-
-        if (!viewModel.searchText.isNullOrEmpty()) {
-            searchView.onActionViewExpanded()
-            searchView.clearFocus()
-            searchView.setQuery(viewModel.searchText, true)
-        }
-
-        searchView.setIconifiedByDefault(true)
-
-        viewModel.observeSearchView(searchView, this, adapter)
-
-    }
-
 
 }
