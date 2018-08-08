@@ -14,6 +14,7 @@ import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerRepositoriesAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoriesBinding
 import kotlinx.android.synthetic.main.fragment_repositories.*
+import timber.log.Timber
 
 class RepositoriesFragment : Fragment(), LifecycleOwner {
 
@@ -35,7 +36,6 @@ class RepositoriesFragment : Fragment(), LifecycleOwner {
             it.setLifecycleOwner(this)
         }
 
-        setHasOptionsMenu(true)
 
         if (savedInstanceState == null) {
             test = true
@@ -56,23 +56,6 @@ class RepositoriesFragment : Fragment(), LifecycleOwner {
         }
 
         viewModel.repositories.observe(this, Observer(adapter::submitList))
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main_screen, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-
-        val myActionMenuItem: MenuItem = menu.findItem(R.id.action_search)
-        searchView = myActionMenuItem.actionView as SearchView
-
-        if (!viewModel.searchText.isNullOrEmpty()) {
-            searchView.onActionViewExpanded()
-            searchView.clearFocus()
-            searchView.setQuery(viewModel.searchText, true)
-        }
-        searchView.setIconifiedByDefault(true)
-
-        viewModel.observeSearchView(searchView, this, adapter)
     }
 
 }

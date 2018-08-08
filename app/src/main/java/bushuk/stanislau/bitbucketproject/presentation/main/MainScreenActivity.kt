@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -27,13 +28,15 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
     private lateinit var viewModel: MainScreenViewModel
 
+    lateinit var binding: ActivityMainScreenBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
         App.component.inject(this)
         viewModel = ViewModelProviders.of(this).get(MainScreenViewModel::class.java)
-        val binding: ActivityMainScreenBinding = DataBindingUtil.setContentView(this, R.layout.activity_main_screen)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main_screen)
         val navHeaderMainScreenBinding: NavHeaderMainScreenBinding = DataBindingUtil.inflate(layoutInflater,
                 R.layout.nav_header_main_screen, binding.navView, false)
         binding.navView.addHeaderView(navHeaderMainScreenBinding.root)
@@ -103,6 +106,17 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     override fun onPause() {
         navigatorHolder.removeNavigator()
         super.onPause()
+    }
+
+    fun recreateToolbar(){
+        binding.root.toolbar.title = viewModel.toolbarTitle.value
+        binding.root.toolbar.menu.clear()
+        this.setSupportActionBar(binding.root.toolbar)
+        val toggle = ActionBarDrawerToggle(
+                this, drawer_layout, binding.root.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawer_layout.addDrawerListener(toggle)
+        toggle.syncState()
+        supportActionBar?.show()
     }
 
 }
