@@ -58,7 +58,6 @@ dependencies {
 
     /////GLIDE/////
     implementation "${library.glide}"
-    implementation 'com.android.support:support-v4:28.0.0-alpha3'
     kapt "${library.glideCompiler}"
     ////
 
@@ -92,6 +91,12 @@ dependencies {
     //Paging
     implementation "${library.paging}"
     implementation "${library.pagingRx}"
+
+    //floatingButton
+    implementation "${library.floatingButton}"
+
+    //slidingPanel
+    implementation "${library.slidingPanel}"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

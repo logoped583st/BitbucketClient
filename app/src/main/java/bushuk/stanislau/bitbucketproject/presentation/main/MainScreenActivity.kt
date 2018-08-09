@@ -10,11 +10,14 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.BackPress
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.Screens
 import bushuk.stanislau.bitbucketproject.databinding.ActivityMainScreenBinding
 import bushuk.stanislau.bitbucketproject.databinding.NavHeaderMainScreenBinding
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
+import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_main_screen.*
 import kotlinx.android.synthetic.main.activity_main_screen.view.*
 import ru.terrakok.cicerone.NavigatorHolder
@@ -29,6 +32,8 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     private lateinit var viewModel: MainScreenViewModel
 
     lateinit var binding: ActivityMainScreenBinding
+
+    private var backPress:BackPress? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,9 +75,22 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
+            closeBottom()
+        }
+    }
+
+    private fun closeBottom() {
+        if(backPress!=null){
+            backPress!!.onBackPressed()
+        }else{
             super.onBackPressed()
         }
     }
+
+    fun setBackPress(fragment: RepositoriesFragment){
+        backPress = fragment
+    }
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
