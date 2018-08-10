@@ -7,7 +7,7 @@ import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
 import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.Constants
+import bushuk.stanislau.bitbucketproject.constants.Constants
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator

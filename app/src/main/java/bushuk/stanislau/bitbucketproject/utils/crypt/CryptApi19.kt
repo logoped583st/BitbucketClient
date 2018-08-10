@@ -3,7 +3,7 @@ package bushuk.stanislau.bitbucketproject.utils.crypt
 import android.content.Context
 import android.security.KeyPairGeneratorSpec
 import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.Constants
+import bushuk.stanislau.bitbucketproject.constants.Constants
 import java.math.BigInteger
 import java.security.KeyPairGenerator
 import java.security.KeyStore

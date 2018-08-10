@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="data"
-            type="bushuk.stanislau.bitbucketproject.room.repositories.Repository"
-            />
+            type="bushuk.stanislau.bitbucketproject.room.repositories.Repository" />
 
     </data>
 
@@ -56,12 +55,12 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:text="@{data.description}"
             app:layout_constraintBottom_toTopOf="@+id/item_recycler_repositories_update"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_avatar"
             app:layout_constraintTop_toBottomOf="@+id/item_recycler_repositories_name"
-            app:layout_constraintVertical_chainStyle="spread_inside" />
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            app:text="@{data.description}" />
 
         <ImageView
             android:id="@+id/item_recycler_repositories_update_image"
@@ -109,12 +108,12 @@
 
         <TextView
             android:id="@+id/item_recycler_repositories_language"
+            style="@style/Body_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
-            style="@style/Body_2"
-            android:text="@{data.language}"
             android:color="@{data.language}"
+            android:text="@{data.language}"
             app:layout_constraintBottom_toBottomOf="@+id/item_recycler_repositories_owner"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_owner"

@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
-import bushuk.stanislau.bitbucketproject.Screens
+import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersFragment
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingFragment

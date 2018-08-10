@@ -39,7 +39,13 @@ ext.version = [
 
         //Paging
         paging:                                                                                "1.0.0",
-        pagingRx:                                                                              "1.0.0-rc1"
+        pagingRx:                                                                              "1.0.0-rc1",
+
+        //FloatingButton
+        floatingButton:                                                                        "1.6.4",
+
+        //slidingPanel
+        slidingPanel:                                                                          "3.4.0"
 ]
 def version = ext.version
 
@@ -99,6 +105,11 @@ ext.libraries = [
     //Paging
     paging                :"android.arch.paging:runtime:"+                                     "$version.paging",
     pagingKap             :"android.arch.paging:common:"+                                      "$version.paging",
-    pagingRx              :"android.arch.paging:rxjava2:"+                                     "$version.pagingRx"
+    pagingRx              :"android.arch.paging:rxjava2:"+                                     "$version.pagingRx",
 
+    //floatingButton
+    floatingButton        :"com.github.clans:fab:"+                                            "$version.floatingButton",
+
+    //slidingPanel
+    slidingPanel          :"com.sothree.slidinguppanel:library:"+                              "$version.slidingPanel"
 ]

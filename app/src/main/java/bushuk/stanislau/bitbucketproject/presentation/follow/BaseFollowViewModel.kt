@@ -6,9 +6,8 @@ import android.arch.paging.DataSource
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.Constants
-import bushuk.stanislau.bitbucketproject.Screens
-import bushuk.stanislau.bitbucketproject.global.LoadingModel
+import bushuk.stanislau.bitbucketproject.constants.Constants
+import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.room.user.User
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject

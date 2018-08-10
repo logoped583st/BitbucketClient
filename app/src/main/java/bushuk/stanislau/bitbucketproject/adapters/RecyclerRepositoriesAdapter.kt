@@ -9,18 +9,23 @@ import android.view.View
 import android.view.ViewGroup
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
+import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import timber.log.Timber
 
 class RecyclerRepositoriesAdapter : PagedListAdapter<Repository,
-        ViewHolder>(UserDiffCallback) , ClickFollow{
-    override fun onClickItem(view: View, data: Any) {
+        ViewHolder>(UserDiffCallback){
 
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    lateinit var clickFollow: ClickFollow
+
+
+
+    fun setListener(baseFollow: RepositoriesFragment) {
+        clickFollow = baseFollow
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position),this)
+        holder.bind(getItem(position),clickFollow)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {

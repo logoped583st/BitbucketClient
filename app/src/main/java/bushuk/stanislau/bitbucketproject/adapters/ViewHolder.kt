@@ -12,7 +12,7 @@ class ViewHolder(private val binding: ViewDataBinding) : RecyclerView.ViewHolder
         binding.setVariable(BR.data, any)
         binding.executePendingBindings()
         binding.root.setOnClickListener {
-            clickFollow.onClickItem(it, any as User)
+            clickFollow.onClickItem(it, any!!)
         }
     }
 

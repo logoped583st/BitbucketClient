@@ -1,24 +1,15 @@
 package bushuk.stanislau.bitbucketproject.utils.binding
 
-import android.content.Context
 import android.databinding.BindingAdapter
 import android.graphics.Color
 import android.widget.TextView
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
-import com.google.gson.Gson
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
-import javax.inject.Inject
 
 class TextAccessBindingUtil {
-
-    @Inject
-    lateinit var applicationContext: Context
-
 
     companion object {
 
@@ -35,14 +26,14 @@ class TextAccessBindingUtil {
 
         @JvmStatic
         @BindingAdapter("android:color")
-        fun languageText(textView: TextView,string: String){
+        fun languageText(textView: TextView, string: String) {
             Timber.e(string)
-            if(string!="") {
+            if (string != "") {
                 val obj = JSONObject(loadJSONFromAsset())
 
                 try {
                     textView.setTextColor(Color.parseColor(obj.getString(string)))
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     textView.setTextColor(Color.parseColor("#000000"))
                 }
 
@@ -59,7 +50,7 @@ class TextAccessBindingUtil {
             }
         }
 
-        private fun loadJSONFromAsset(): String? {
+        fun loadJSONFromAsset(): String? {
             var json: String? = null
             try {
                 val inputStream = App.resourcesApp.assets.open("colors.json")
@@ -76,4 +67,5 @@ class TextAccessBindingUtil {
             return json
         }
     }
+
 }

@@ -28,7 +28,8 @@ class RepositoriesDataSource : PageKeyedDataSource<String, Repository>() {
 
     val noRepositoriesText : MutableLiveData<String> = MutableLiveData()
 
-    var query: HashMap<String, String> = HashMap()
+    var query: String? = null
+
 
     private val disposable : CompositeDisposable = CompositeDisposable()
 
