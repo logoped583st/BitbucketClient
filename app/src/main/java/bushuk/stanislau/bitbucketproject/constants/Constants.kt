@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject
+package bushuk.stanislau.bitbucketproject.constants
 
 import android.arch.paging.PagedList
 
@@ -14,8 +14,8 @@ object Constants {
     const val ITEMS_IN_PAGE: Int = 10
 
     val listPagedConfig = PagedList.Config.Builder()
-            .setPageSize(Constants.ITEMS_IN_PAGE)
-            .setInitialLoadSizeHint(Constants.ITEMS_IN_PAGE)
+            .setPageSize(ITEMS_IN_PAGE)
+            .setInitialLoadSizeHint(ITEMS_IN_PAGE)
             .setEnablePlaceholders(true)
             .build()!!
 }

@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject
+package bushuk.stanislau.bitbucketproject.constants
 
 object Screens {
     const val LOGIN_SCREEN: String = "LOGIN_SCREEN"

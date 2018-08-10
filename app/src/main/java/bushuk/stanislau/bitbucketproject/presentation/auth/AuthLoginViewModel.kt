@@ -5,8 +5,8 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Base64
 import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.Constants
-import bushuk.stanislau.bitbucketproject.Screens
+import bushuk.stanislau.bitbucketproject.constants.Constants
+import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.di.modules.global.RetrofitModule
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
@@ -15,7 +15,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.result.ResultListener
-import timber.log.Timber
 import javax.inject.Inject
 
 class AuthLoginViewModel : ViewModel(), ResultListener {

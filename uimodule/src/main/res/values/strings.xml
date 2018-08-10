@@ -26,6 +26,8 @@
 
     <!-- Fragment Repositories-->
     <string name="repositories_screen_no_repositories">Repositories not found</string>
+    <string name="repositories_screen_spinner_access_text">Access</string>
+    <string name="repositories_screen_spinner_language_text">Language</string>
     
     <!--Navigation Drawer menu -->
     <string name="drawer_menu_repositories">Repositories</string>

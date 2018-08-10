@@ -5,7 +5,10 @@ import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
 import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.Single
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
+import retrofit2.http.Url
 
 interface Api {
 
@@ -14,10 +17,10 @@ interface Api {
     fun myUser(): Single<User>
 
     @GET("users/{userName}")
-    fun getUser(@Path("userName")userName: String):Single<User>
+    fun getUser(@Path("userName") userName: String): Single<User>
 
     @GET("repositories/{userName}")
-    fun getRepos(@Path("userName") userName: String, @QueryMap(encoded=true) query: Map<String, String>? ): Single<RepositoriesResponse>
+    fun getRepos(@Path("userName") userName: String, @Query("q", encoded = false) query: String?): Single<RepositoriesResponse>
 
     @GET//request for getting info from next page, Url we take from previous request
     fun getReposNextPage(@Url url: String): Single<RepositoriesResponse>

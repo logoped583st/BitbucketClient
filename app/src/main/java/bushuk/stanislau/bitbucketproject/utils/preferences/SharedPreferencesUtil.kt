@@ -2,7 +2,7 @@ package bushuk.stanislau.bitbucketproject.utils.preferences
 
 import android.content.Context
 import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.Constants
+import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.utils.crypt.Crypto
 import javax.inject.Inject
 

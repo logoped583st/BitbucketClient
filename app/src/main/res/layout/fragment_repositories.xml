@@ -8,7 +8,7 @@
 
         <variable
             name="fragment"
-            type="bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment"/>
+            type="bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment" />
 
         <variable
             name="viewModelRepositories"
@@ -22,7 +22,8 @@
         android:layout_height="match_parent"
         android:gravity="bottom"
         app:umanoOverlay="false"
-        app:umanoPanelHeight="5dp">
+        app:umanoShadowHeight="0dp"
+        app:umanoPanelHeight="0dp">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/repositories_screen_content"
@@ -107,18 +108,18 @@
                     android:id="@+id/repositories_screen_filter_fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{fragment::clickFilterFab}"
                     android:src="@drawable/ic_filter_list_black_24dp"
                     app:fab_colorNormal="@color/colorAccent"
                     app:fab_size="mini" />
 
             </com.github.clans.fab.FloatingActionMenu>
-
-
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
 
             <android.support.v7.widget.SearchView
                 android:id="@+id/repositories_screen_searchView"
@@ -133,21 +134,22 @@
                 app:queryHint="Search" />
 
             <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/repositories_screen_spinner_access"
-                android:layout_width="wrap_content"
+                android:id="@+id/repositories_screen_spinner_language"
+                android:layout_width="0dp"
+                android:onItemSelected="@{fragment::changeLanguageFilter}"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView3"
-                app:layout_constraintEnd_toEndOf="@+id/repositories_screen_spinner_language"
+                app:layout_constraintEnd_toEndOf="@+id/repositories_screen_spinner_access"
                 app:layout_constraintStart_toEndOf="@+id/textView3"
                 app:layout_constraintTop_toTopOf="@+id/textView3" />
 
             <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/repositories_screen_spinner_language"
-                android:layout_width="wrap_content"
+                android:id="@+id/repositories_screen_spinner_access"
+                android:layout_width="0dp"
+                android:onItemSelected="@{fragment::changeAccessFilter}"
                 android:layout_height="wrap_content"
-
                 android:layout_marginEnd="32dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView2"
                 app:layout_constraintTop_toTopOf="@+id/textView2" />
@@ -159,9 +161,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:text="Access"
-                app:layout_constraintEnd_toStartOf="@+id/repositories_screen_spinner_language"
+                android:layout_marginTop="32dp"
+                android:text="@string/repositories_screen_spinner_access_text"
+                app:layout_constraintEnd_toStartOf="@+id/repositories_screen_spinner_access"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/repositories_screen_searchView" />
@@ -171,14 +173,16 @@
                 style="@style/Subheading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginTop="32dp"
-                android:text="Language"
+                android:text="@string/repositories_screen_spinner_language_text"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/repositories_screen_spinner_access"
+                app:layout_constraintEnd_toStartOf="@+id/repositories_screen_spinner_language"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="@+id/textView2"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
         </android.support.constraint.ConstraintLayout>
 
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>

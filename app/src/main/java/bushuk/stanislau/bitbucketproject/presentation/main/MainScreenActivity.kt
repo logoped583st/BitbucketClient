@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -12,12 +11,11 @@ import android.view.MenuItem
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BackPress
 import bushuk.stanislau.bitbucketproject.R
-import bushuk.stanislau.bitbucketproject.Screens
+import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.databinding.ActivityMainScreenBinding
 import bushuk.stanislau.bitbucketproject.databinding.NavHeaderMainScreenBinding
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
-import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_main_screen.*
 import kotlinx.android.synthetic.main.activity_main_screen.view.*
 import ru.terrakok.cicerone.NavigatorHolder
