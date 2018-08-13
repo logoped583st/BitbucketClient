@@ -26,6 +26,6 @@ abstract class BaseFollowViewModel : ViewModel() {
     val followers: LiveData<PagedList<User>> by lazy { LivePagedListBuilder<String, User>(factory, Constants.listPagedConfig).build() }
 
     fun navigateToUserScreen(userName: User) {
-        router.newScreenChain(Screens.USER_SCREEN, userName)
+        router.navigateTo(Screens.USER_SCREEN, userName)
     }
 }

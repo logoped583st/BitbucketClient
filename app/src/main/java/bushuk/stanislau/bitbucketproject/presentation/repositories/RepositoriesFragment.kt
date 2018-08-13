@@ -14,7 +14,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import bushuk.stanislau.bitbucketproject.BackPress
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerRepositoriesAdapter
@@ -23,6 +22,7 @@ import bushuk.stanislau.bitbucketproject.constants.ListOfLanguages
 import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoriesBinding
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
+import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_repositories.*
 import timber.log.Timber
@@ -80,6 +80,9 @@ class RepositoriesFragment : Fragment(), LifecycleOwner, ClickFollow, BackPress 
         })
 
         viewModel.observeSearchView(binding.repositoriesScreenSearchView, this, adapter)
+        viewModel.observeLanguageChangeSpinner(binding.repositoriesScreenSpinnerLanguage, this, adapter)
+        viewModel.observeAccessChangeSpinner(binding.repositoriesScreenSpinnerAccess, this, adapter)
+
 
         viewModel.repositories.observe(this, Observer(adapter::submitList))
 
@@ -90,22 +93,27 @@ class RepositoriesFragment : Fragment(), LifecycleOwner, ClickFollow, BackPress 
     }
 
     override fun onBackPressed() {
-        if (repositories_screen_slide_panel.panelState != SlidingUpPanelLayout.PanelState.COLLAPSED) {
-
-            repositories_screen_slide_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        if ((repositories_screen_slide_panel != null)) {
+            if (repositories_screen_slide_panel.panelState != SlidingUpPanelLayout.PanelState.COLLAPSED) {
+                repositories_screen_slide_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+            } else {
+                viewModel.exitFromFragment()
+            }
         } else {
-            activity!!.finish()
+            viewModel.exitFromFragment()
         }
     }
 
 
     override fun onClickItem(view: View, data: Any) {
-
+        viewModel.navigateToRepositoryScreen((data as Repository))
     }
 
     override fun onAttach(activity: Activity?) {
         super.onAttach(activity)
-        (activity as MainScreenActivity).setBackPress(this)
+        if (activity is MainScreenActivity) {
+            activity.setBackPress(this)
+        }
     }
 
     private fun languageSpinner() {
@@ -123,14 +131,6 @@ class RepositoriesFragment : Fragment(), LifecycleOwner, ClickFollow, BackPress 
     fun clickFilterFab(view: View) {
         repositories_screen_settings_menu.close(true)
         repositories_screen_slide_panel.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
-    }
-
-    fun changeLanguageFilter(adapterView: View, view: View, position: Int, id: Long) {
-        viewModel.repositoriesLanguageChange((view as TextView).text.toString(), this, adapter)
-    }
-
-    fun changeAccessFilter(adapterView: View, view: View, position: Int, id: Long) {
-        viewModel.repositoriesAccessChange((view as TextView).text.toString(), this, adapter)
     }
 
 }

@@ -31,7 +31,7 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
     lateinit var binding: ActivityMainScreenBinding
 
-    private var backPress:BackPress? = null
+    private var backPress: BackPress? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,14 +78,14 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     }
 
     private fun closeBottom() {
-        if(backPress!=null){
+        if (backPress != null) {
             backPress!!.onBackPressed()
-        }else{
+        } else {
             super.onBackPressed()
         }
     }
 
-    fun setBackPress(fragment: RepositoriesFragment){
+    fun setBackPress(fragment: RepositoriesFragment) {
         backPress = fragment
     }
 
@@ -124,7 +124,7 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         super.onPause()
     }
 
-    fun recreateToolbar(){
+    fun recreateToolbar() {
         binding.root.toolbar.title = viewModel.toolbarTitle.value
         binding.root.toolbar.menu.clear()
         this.setSupportActionBar(binding.root.toolbar)

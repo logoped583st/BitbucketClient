@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_songs"
+        android:icon="@drawable/ic_code_24dp"
+        android:title="@string/bottom_navigation_menu_code"/>
+
+    <item
+        android:id="@+id/navigation_albums"
+        android:icon="@drawable/ic_pull_request"
+        android:title="@string/bottom_navigation_menu_pull_requests"/>
+
+    <item
+        android:id="@+id/navigation_artists"
+        android:icon="@drawable/ic_eye_24dp"
+        android:title="@string/bottom_navigation_menu_watchers"/>
+
+</menu>

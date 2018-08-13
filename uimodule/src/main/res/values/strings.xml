@@ -52,5 +52,10 @@
     <string name="toolbar_title_following">Following</string>
     <string name="toolbar_title_snippets">Snippets</string>
 
+    <!-- Bottom Navigation Repositoty -->
+    <string name="bottom_navigation_menu_code">Code</string>
+    <string name="bottom_navigation_menu_pull_requests">Pull requests</string>
+    <string name="bottom_navigation_menu_watchers">Watchers</string>
+
 
 </resources>

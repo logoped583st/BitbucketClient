@@ -2,12 +2,11 @@ package bushuk.stanislau.bitbucketproject.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.view.Gravity
-
 
 
 class SpinnerAdapter(context: Context, layout: Int, listString: List<String>) : ArrayAdapter<String>(context, layout, listString) {
@@ -18,4 +17,5 @@ class SpinnerAdapter(context: Context, layout: Int, listString: List<String>) : 
         (v as TextView).gravity = Gravity.RIGHT
         return v
     }
+
 }

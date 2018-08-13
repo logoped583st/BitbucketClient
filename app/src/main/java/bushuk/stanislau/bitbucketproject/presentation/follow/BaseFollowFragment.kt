@@ -7,16 +7,21 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerFollowAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentFollowersBinding
 import kotlinx.android.synthetic.main.fragment_followers.*
+import ru.terrakok.cicerone.Router
+import javax.inject.Inject
 
 abstract class BaseFollowFragment : Fragment(), ClickFollow {
+
 
     lateinit var binding: FragmentFollowersBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
         binding = DataBindingUtil
                 .inflate(layoutInflater, R.layout.fragment_followers, container, false)
 
@@ -24,7 +29,6 @@ abstract class BaseFollowFragment : Fragment(), ClickFollow {
 
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

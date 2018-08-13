@@ -2,8 +2,9 @@ package bushuk.stanislau.bitbucketproject.adapters
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v4.view.PagerAdapter
+import android.view.ViewGroup
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersFragment
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingFragment
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
@@ -18,23 +19,34 @@ class ViewPagerUserAdapter(fragmentManager: FragmentManager) : FragmentStatePage
     private val following = 2
     private val snippets = 3
 
+    private val repositoriesFragment: RepositoriesFragment = RepositoriesFragment()
+
     override fun getItem(position: Int): Fragment? {
         Timber.e(position.toString())
 
         return when (position) {
 
-            repositories -> RepositoriesFragment()
+            repositories -> repositoriesFragment
 
-            followers -> FollowersFragment()
+            followers -> {
+                FollowersFragment()
+            }
 
-            following -> FollowingFragment()
+            following -> {
+                FollowingFragment()
+            }
 
-            snippets -> SnippetsFragment()
+            snippets -> {
+                SnippetsFragment()
+            }
 
             else -> null
         }
     }
 
+    override fun getItemPosition(`object`: Any): Int {
+        return PagerAdapter.POSITION_NONE
+    }
 
     override fun getCount(): Int = 4
 

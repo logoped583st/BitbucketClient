@@ -51,7 +51,7 @@ class FollowDataSource(private val error: String) : PageKeyedDataSource<String, 
         noFollowers.postValue(View.INVISIBLE)
         loading.postValue(View.VISIBLE)
         val single: Observable<Followers> = if (error == App.resourcesApp.getString(R.string.followers_screen_no_followers)) {
-            userModel.user.switchMapSingle { api.getFollowers(it.username) }
+            userModel.user.switchMapSingle { api.getFollowers("tutorials") }
         } else {
             userModel.user.switchMapSingle { api.getFollowing(it.username) }
         }

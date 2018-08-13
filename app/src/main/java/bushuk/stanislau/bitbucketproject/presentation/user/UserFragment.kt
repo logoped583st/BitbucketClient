@@ -6,7 +6,10 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.FragmentUserBinding
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
@@ -18,8 +21,8 @@ class UserFragment : Fragment() {
     lateinit var viewModel: UserViewModel
 
     lateinit var avatar: String
-    lateinit var userName: String
-    lateinit var displayName: String
+    private lateinit var userName: String
+    private lateinit var displayName: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -32,6 +35,7 @@ class UserFragment : Fragment() {
         setToolbar(binding)
 
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,6 +47,8 @@ class UserFragment : Fragment() {
             it.manager = childFragmentManager
             it.viewModel = viewModel
         }
+
+        binding.pager.isSaveFromParentEnabled = false
 
     }
 
@@ -61,7 +67,6 @@ class UserFragment : Fragment() {
 
     override fun onDestroyView() {
         (activity as MainScreenActivity).recreateToolbar()
-
         super.onDestroyView()
     }
 

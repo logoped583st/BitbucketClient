@@ -12,8 +12,10 @@ import bushuk.stanislau.bitbucketproject.presentation.follow.following.Following
 import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
+import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryFragment
 import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsFragment
 import bushuk.stanislau.bitbucketproject.presentation.user.UserFragment
+import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import bushuk.stanislau.bitbucketproject.room.user.User
 import ru.terrakok.cicerone.android.SupportAppNavigator
 
@@ -49,6 +51,16 @@ class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppN
                 bundle.putString("USERNAME", (data as User).username)
                 bundle.putString("DISPLAYNAME", data.display_name)
                 bundle.putString("AVATAR", data.links.avatar.href)
+                fragment.arguments = bundle
+                return fragment
+            }
+
+            Screens.REPOSITORY_SCREEN -> {
+                val fragment = RepositoryFragment()
+                val bundle = Bundle()
+
+                bundle.putString("REPOSITORYNAME", (data as Repository).name)
+                bundle.putString("REPOSITORYAVATAR", data.links.avatar.href)
                 fragment.arguments = bundle
                 return fragment
             }

@@ -16,4 +16,6 @@ object Screens {
     const val SNIPPETS_SCREEN:String = "SNIPPETS_SCREEN"
 
     const val USER_SCREEN: String = "USER_SCREEN"
+
+    const val REPOSITORY_SCREEN : String = "REPOSITORY_SCREEN"
 }

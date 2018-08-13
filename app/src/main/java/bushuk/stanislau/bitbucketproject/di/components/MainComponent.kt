@@ -8,14 +8,15 @@ import bushuk.stanislau.bitbucketproject.di.modules.following.FollowingModule
 import bushuk.stanislau.bitbucketproject.di.modules.global.*
 import bushuk.stanislau.bitbucketproject.di.modules.mainScreen.MainScreenModule
 import bushuk.stanislau.bitbucketproject.di.modules.repositories.RepositoriesModule
+import bushuk.stanislau.bitbucketproject.di.modules.repository.RepositoryModule
 import bushuk.stanislau.bitbucketproject.di.modules.snippets.SnippetsModule
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowViewModel
-import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersViewModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.FollowDataSource
+import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersViewModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.models.FollowersDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingViewModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.models.FollowingDataSourceFactory
@@ -26,6 +27,10 @@ import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesViewModel
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSource
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSourceFactory
+import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryFragment
+import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryViewModel
+import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryDataSource
+import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsViewModel
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSource
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSourceFactory
@@ -97,4 +102,8 @@ interface MainComponent {
     fun inject(userViewModel: UserViewModel)
 
     fun inject(baseFollowViewModel: BaseFollowViewModel)
+
+    fun inject(repositoryViewModel: RepositoryViewModel)
+
+    fun inject(repositoryFragment: RepositoryFragment)
 }
