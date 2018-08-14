@@ -13,9 +13,15 @@ object Screens {
 
     const val FOLLOWING_SCREEN: String = "FOLLOWING_SCREEN"
 
-    const val SNIPPETS_SCREEN:String = "SNIPPETS_SCREEN"
+    const val SNIPPETS_SCREEN: String = "SNIPPETS_SCREEN"
 
     const val USER_SCREEN: String = "USER_SCREEN"
 
-    const val REPOSITORY_SCREEN : String = "REPOSITORY_SCREEN"
+    const val REPOSITORY_SCREEN: String = "REPOSITORY_SCREEN"
+
+    const val CODE_SCREEN: String = "CODE_SCREEN"
+
+    const val PULL_REQUESTS_SCREEN: String = "PULL_REQUESTS_SCREEN"
+
+    const val WATCHERS_SCREEN: String = "WATCHERS SCREEN"
 }

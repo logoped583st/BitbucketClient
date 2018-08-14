@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BackPress
+import bushuk.stanislau.bitbucketproject.BackPressFragment
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.databinding.ActivityMainScreenBinding
@@ -85,7 +86,7 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         }
     }
 
-    fun setBackPress(fragment: RepositoriesFragment) {
+    fun setBackPress(fragment: BackPressFragment) {
         backPress = fragment
     }
 
@@ -105,9 +106,7 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             R.id.drawer_menu_snippets -> {
                 viewModel.drawerNavigation(Screens.SNIPPETS_SCREEN, this.getString(R.string.toolbar_title_snippets))
             }
-//            R.id.nav_send -> {
-//
-//            }
+
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)

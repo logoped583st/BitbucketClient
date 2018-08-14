@@ -11,6 +11,7 @@ import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSourceFactory
+import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
@@ -28,6 +29,9 @@ class RepositoriesViewModel : ViewModel() {
 
     @Inject
     lateinit var router: Router
+
+    @Inject
+    lateinit var repositoryModel: RepositoryModel
 
     var language: MutableLiveData<String> = MutableLiveData()
 
@@ -74,7 +78,7 @@ class RepositoriesViewModel : ViewModel() {
                 })
     }
 
-    fun observeAccessChangeSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter){
+    fun observeAccessChangeSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
         RxAdapterView.itemSelections(spinner)
                 .skipInitialValue()
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -109,7 +113,8 @@ class RepositoriesViewModel : ViewModel() {
     }
 
     fun navigateToRepositoryScreen(repository: Repository) {
-        router.navigateTo(Screens.REPOSITORY_SCREEN, repository)
+        repositoryModel.repository.onNext(repository)
+        router.navigateTo(Screens.REPOSITORY_SCREEN,repository.links.avatar.href)
     }
 
     override fun onCleared() {

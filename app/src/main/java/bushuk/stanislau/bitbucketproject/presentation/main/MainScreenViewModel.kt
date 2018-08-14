@@ -26,9 +26,6 @@ class MainScreenViewModel : ViewModel() {
     lateinit var tokenPreferences: SharedPreferencesUtil
 
     @Inject
-    lateinit var appDatabase: AppDatabase
-
-    @Inject
     lateinit var router: Router
 
     @Inject
@@ -44,11 +41,6 @@ class MainScreenViewModel : ViewModel() {
 
         userModel.user
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.newThread())
-                .map {
-                   // appDatabase.userDao().insertUser(it)
-                    it
-                }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     user.postValue(it)

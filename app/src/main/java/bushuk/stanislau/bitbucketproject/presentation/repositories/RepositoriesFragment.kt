@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import bushuk.stanislau.bitbucketproject.BackPress
+import bushuk.stanislau.bitbucketproject.BackPressFragment
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerRepositoriesAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
@@ -27,7 +28,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_repositories.*
 import timber.log.Timber
 
-class RepositoriesFragment : Fragment(), LifecycleOwner, ClickFollow, BackPress {
+class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow, BackPress {
 
     lateinit var viewModel: RepositoriesViewModel
     private var test: Boolean = false

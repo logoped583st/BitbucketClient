@@ -29,8 +29,6 @@ import bushuk.stanislau.bitbucketproject.presentation.repositories.model.Reposit
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryFragment
 import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryViewModel
-import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryDataSource
-import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsViewModel
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSource
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSourceFactory
@@ -46,7 +44,9 @@ import javax.inject.Singleton
 @Component(modules = [CiceroneModule::class, CryptoModule::class, RetrofitModule::class,
     MainScreenModule::class, ApplicationContextProvider::class, PreferencesModule::class,
     AuthLoginModule::class, RoomModule::class, UserModule::class, RepositoriesModule::class,
-    FollowersModule::class, FollowingModule::class, FollowModule::class, SnippetsModule::class])
+    FollowersModule::class, FollowingModule::class, FollowModule::class, SnippetsModule::class,
+    RepositoryModule::class])
+
 interface MainComponent {
 
     fun inject(loginActivity: LoginActivity)
