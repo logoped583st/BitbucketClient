@@ -57,7 +57,8 @@ class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppN
             Screens.REPOSITORY_SCREEN -> {
                 val bundle = Bundle()
                 val fragment = RepositoryFragment()
-                bundle.putString("AVATAR", (data as String))
+                bundle.putString("AVATAR", (data as List<*>)[0].toString())
+                bundle.putString("USERNAME",data[1].toString())
                 fragment.arguments = bundle
                 return fragment
             }

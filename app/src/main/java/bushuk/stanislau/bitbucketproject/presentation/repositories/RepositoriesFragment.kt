@@ -7,7 +7,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -33,7 +32,7 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow, B
     lateinit var viewModel: RepositoriesViewModel
     private var test: Boolean = false
     lateinit var binding: FragmentRepositoriesBinding
-    private val access: List<String> = listOf("All", "Public", "Private")
+    private val access: MutableList<String> = mutableListOf("All", "Public", "Private")
     private lateinit var adapter: RecyclerRepositoriesAdapter
 
     lateinit var string: String
@@ -107,7 +106,7 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow, B
 
 
     override fun onClickItem(view: View, data: Any) {
-        viewModel.navigateToRepositoryScreen((data as Repository))
+        viewModel.navigateToRepositoryScreen((data as Repository),viewModel.repositoriesDataSourceFactory.repositoriesDataSource.userModel.user.value.username)
     }
 
     override fun onAttach(activity: Activity?) {

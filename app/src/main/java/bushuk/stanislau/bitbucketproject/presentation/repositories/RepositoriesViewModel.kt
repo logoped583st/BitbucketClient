@@ -112,9 +112,9 @@ class RepositoriesViewModel : ViewModel() {
         router.exit()
     }
 
-    fun navigateToRepositoryScreen(repository: Repository) {
+    fun navigateToRepositoryScreen(repository: Repository, username: String) {
         repositoryModel.repository.onNext(repository)
-        router.navigateTo(Screens.REPOSITORY_SCREEN,repository.links.avatar.href)
+        router.navigateTo(Screens.REPOSITORY_SCREEN, listOf(repository.links.avatar.href,username))
     }
 
     override fun onCleared() {

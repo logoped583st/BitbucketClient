@@ -8,15 +8,14 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BackPressFragment
 import bushuk.stanislau.bitbucketproject.R
-import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoryBinding
 import bushuk.stanislau.bitbucketproject.navigation.RepositoryNavigator
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import kotlinx.android.synthetic.main.fragment_repository.view.*
 import ru.terrakok.cicerone.NavigatorHolder
+import timber.log.Timber
 
 class RepositoryFragment : BackPressFragment() {
 
@@ -25,16 +24,18 @@ class RepositoryFragment : BackPressFragment() {
 
     lateinit var viewModel: RepositoryViewModel
     lateinit var binding: FragmentRepositoryBinding
-    lateinit var avatar : String
+    lateinit var avatar: String
+    lateinit var userName:String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        App.component.inject(this)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_repository, container, false)
         viewModel = ViewModelProviders.of(this).get(RepositoryViewModel::class.java)
         avatar = arguments!!.getString("AVATAR")
+        userName = arguments!!.getString("USERNAME")
+        viewModel.userModel.user.value.username = userName
 
         binding.let {
             it.fragment = this
@@ -43,6 +44,9 @@ class RepositoryFragment : BackPressFragment() {
         }
         setToolbar(binding)
 
+        if (savedInstanceState == null) {
+            viewModel.initView()
+        }
 
         return binding.root
     }
@@ -56,6 +60,7 @@ class RepositoryFragment : BackPressFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         viewModel.exitFromFragment()
+
         return super.onOptionsItemSelected(item)
     }
 
@@ -77,7 +82,6 @@ class RepositoryFragment : BackPressFragment() {
     override fun onResume() {
         super.onResume()
         navigatorHolder.setNavigator(RepositoryNavigator((activity as MainScreenActivity), childFragmentManager, R.id.repository_screen_container))
-        viewModel.initView()
     }
 
 

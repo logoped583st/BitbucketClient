@@ -6,8 +6,10 @@ import android.view.MenuItem
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.constants.Screens
+import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
+import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.android.schedulers.AndroidSchedulers
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Router
@@ -18,10 +20,17 @@ class RepositoryViewModel : ViewModel() {
 
     val cicerone: Cicerone<Router> = Cicerone.create()
 
-    val router = cicerone.router!!
+    private val localRouter = cicerone.router!!
 
     @Inject
     lateinit var repositoryModel: RepositoryModel
+
+    @Inject
+    lateinit var router: Router
+
+    @Inject
+    lateinit var userModel:UserModel
+
 
     val repository: MutableLiveData<Repository> = MutableLiveData()
 
@@ -35,23 +44,32 @@ class RepositoryViewModel : ViewModel() {
                 })
     }
 
+    private val userMe: User = userModel.user.value.copy()
+
+
     fun exitFromFragment() {
         router.exit()
     }
 
+    override fun onCleared() {
+        userModel.user.onNext(userMe)
+        super.onCleared()
+    }
+
+
     fun initView() {
-        router.replaceScreen(Screens.CODE_SCREEN)
+        localRouter.replaceScreen(Screens.CODE_SCREEN)
     }
 
     fun tabRouting(menuItem: MenuItem): Boolean {
         menuItem.isChecked = true
 
         when (menuItem.itemId) {
-            R.id.repository_code_menu -> router.replaceScreen(Screens.CODE_SCREEN)
+            R.id.repository_code_menu -> localRouter.replaceScreen(Screens.CODE_SCREEN)
 
-            R.id.repository_pullrequests_menu -> router.replaceScreen(Screens.PULL_REQUESTS_SCREEN)
+            R.id.repository_pullrequests_menu -> localRouter.replaceScreen(Screens.PULL_REQUESTS_SCREEN)
 
-            R.id.repository_watchers_menu -> router.replaceScreen(Screens.WATCHERS_SCREEN)
+            R.id.repository_watchers_menu -> localRouter.replaceScreen(Screens.WATCHERS_SCREEN)
         }
 
         return false

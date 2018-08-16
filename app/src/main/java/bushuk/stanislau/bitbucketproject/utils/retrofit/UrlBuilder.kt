@@ -9,6 +9,8 @@ object UrlBuilder {
     private var repositoryLanguage: String? = null
     private var repositoryAccess: String? = null
 
+    var repositoryPath: String? = null
+
     fun queryRepositoryNameBuilder(search: String?) {
         repositoryName = "(name~\"$search\")"
     }
@@ -54,5 +56,18 @@ object UrlBuilder {
         }
 
         return query
+    }
+
+
+    fun buildPathUrlSelf(path: String) {
+        repositoryPath = path
+    }
+
+    fun buildPathWithHash(path: String, hash: String) {
+        repositoryPath = if (path == "src") {
+            null
+        } else {
+            "$hash/$path"
+        }
     }
 }
