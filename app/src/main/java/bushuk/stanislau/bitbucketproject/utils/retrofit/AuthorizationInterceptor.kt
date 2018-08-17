@@ -24,7 +24,7 @@ class AuthorizationInterceptor : Interceptor {
 
         val auth = sharedPreferences.getToken()
         val originalHttpUrl = original.url()
-        var url = originalHttpUrl.newBuilder()
+        val url = originalHttpUrl.newBuilder()
 
         if (auth != null) {
             if (auth.contains("Basic")) {

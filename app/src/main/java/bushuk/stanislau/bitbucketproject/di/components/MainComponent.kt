@@ -14,6 +14,8 @@ import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
+import bushuk.stanislau.bitbucketproject.presentation.code.CodeViewModel
+import bushuk.stanislau.bitbucketproject.presentation.code.model.CodeDataSource
 import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowViewModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.FollowDataSource
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersViewModel
@@ -29,8 +31,6 @@ import bushuk.stanislau.bitbucketproject.presentation.repositories.model.Reposit
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryFragment
 import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryViewModel
-import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryDataSource
-import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsViewModel
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSource
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSourceFactory
@@ -46,7 +46,9 @@ import javax.inject.Singleton
 @Component(modules = [CiceroneModule::class, CryptoModule::class, RetrofitModule::class,
     MainScreenModule::class, ApplicationContextProvider::class, PreferencesModule::class,
     AuthLoginModule::class, RoomModule::class, UserModule::class, RepositoriesModule::class,
-    FollowersModule::class, FollowingModule::class, FollowModule::class, SnippetsModule::class])
+    FollowersModule::class, FollowingModule::class, FollowModule::class, SnippetsModule::class,
+    RepositoryModule::class])
+
 interface MainComponent {
 
     fun inject(loginActivity: LoginActivity)
@@ -106,4 +108,9 @@ interface MainComponent {
     fun inject(repositoryViewModel: RepositoryViewModel)
 
     fun inject(repositoryFragment: RepositoryFragment)
+
+    fun initCodeComponent(): CodeComponent
+
+    fun inject(codeDataSource: CodeDataSource)
+
 }

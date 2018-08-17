@@ -18,5 +18,23 @@ class ImageBindingUtil {
                     .error(R.drawable.ic_teamblue)
                     .into(imageView)
         }
+
+
+        @JvmStatic
+        @BindingAdapter("imageCodeUrl")
+        fun codeImage(imageView: ImageView, url: String) {
+
+            if (url == "commit_directory") {
+                GlideApp.with(imageView.context)
+                        .load(R.drawable.ic_folder_24dp)
+                        .centerCrop()
+                        .into(imageView)
+            } else {
+                GlideApp.with(imageView.context)
+                        .load(R.drawable.ic_file_24dp)
+                        .centerCrop()
+                        .into(imageView)
+            }
+        }
     }
 }

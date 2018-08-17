@@ -7,7 +7,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -15,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import bushuk.stanislau.bitbucketproject.BackPress
+import bushuk.stanislau.bitbucketproject.BackPressFragment
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerRepositoriesAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
@@ -27,12 +27,12 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_repositories.*
 import timber.log.Timber
 
-class RepositoriesFragment : Fragment(), LifecycleOwner, ClickFollow, BackPress {
+class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow, BackPress {
 
     lateinit var viewModel: RepositoriesViewModel
     private var test: Boolean = false
     lateinit var binding: FragmentRepositoriesBinding
-    private val access: List<String> = listOf("All", "Public", "Private")
+    private val access: MutableList<String> = mutableListOf("All", "Public", "Private")
     private lateinit var adapter: RecyclerRepositoriesAdapter
 
     lateinit var string: String
@@ -106,7 +106,7 @@ class RepositoriesFragment : Fragment(), LifecycleOwner, ClickFollow, BackPress 
 
 
     override fun onClickItem(view: View, data: Any) {
-        viewModel.navigateToRepositoryScreen((data as Repository))
+        viewModel.navigateToRepositoryScreen((data as Repository),viewModel.repositoriesDataSourceFactory.repositoriesDataSource.userModel.user.value.username)
     }
 
     override fun onAttach(activity: Activity?) {

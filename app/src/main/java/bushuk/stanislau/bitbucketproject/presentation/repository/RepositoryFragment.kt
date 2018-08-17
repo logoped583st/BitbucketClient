@@ -1,68 +1,66 @@
 package bushuk.stanislau.bitbucketproject.presentation.repository
 
-
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.BackPressFragment
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoryBinding
-import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
+import bushuk.stanislau.bitbucketproject.navigation.RepositoryNavigator
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import kotlinx.android.synthetic.main.fragment_repository.view.*
-import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
+import timber.log.Timber
+
+class RepositoryFragment : BackPressFragment() {
 
 
-class RepositoryFragment : Fragment() {
+    val navigatorHolder: NavigatorHolder by lazy { viewModel.cicerone.navigatorHolder }
 
-
-    val navigatorHolder: NavigatorHolder = Cicerone.create().navigatorHolder
-
-    lateinit var avatar: String
-    private lateinit var repositoryName: String
     lateinit var viewModel: RepositoryViewModel
     lateinit var binding: FragmentRepositoryBinding
-
+    lateinit var avatar: String
+    lateinit var userName:String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        App.component.inject(this)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_repository, container, false)
         viewModel = ViewModelProviders.of(this).get(RepositoryViewModel::class.java)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        avatar = arguments!!.getString("AVATAR")
+        userName = arguments!!.getString("USERNAME")
+        viewModel.userModel.user.value.username = userName
 
         binding.let {
             it.fragment = this
+            it.viewModel = viewModel
             it.setLifecycleOwner(this)
         }
-
-        getArgs()
         setToolbar(binding)
+
+        if (savedInstanceState == null) {
+            viewModel.initView()
+        }
+
+        return binding.root
     }
 
     private fun setToolbar(binding: FragmentRepositoryBinding) {
         (activity as AppCompatActivity).supportActionBar?.hide()
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).setSupportActionBar(binding.root.toolbar_repository)
-        (activity as AppCompatActivity).supportActionBar!!.title = repositoryName
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         viewModel.exitFromFragment()
+
         return super.onOptionsItemSelected(item)
     }
 
@@ -72,18 +70,19 @@ class RepositoryFragment : Fragment() {
         super.onDestroyView()
     }
 
-    private fun getArgs() {
-        avatar = arguments!!.getString("REPOSITORYAVATAR")
-        repositoryName = arguments!!.getString("REPOSITORYNAME")
-    }
-
     override fun onPause() {
         navigatorHolder.removeNavigator()
         super.onPause()
     }
 
-    override fun onResume() {
-        navigatorHolder.setNavigator(MainNavigator(activity, R.id.repository_screen_container))
-        super.onResume()
+    override fun onBackPressed() {
+        viewModel.exitFromFragment()
     }
+
+    override fun onResume() {
+        super.onResume()
+        navigatorHolder.setNavigator(RepositoryNavigator((activity as MainScreenActivity), childFragmentManager, R.id.repository_screen_container))
+    }
+
+
 }

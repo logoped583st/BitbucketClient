@@ -57,5 +57,8 @@
     <string name="bottom_navigation_menu_pull_requests">Pull requests</string>
     <string name="bottom_navigation_menu_watchers">Watchers</string>
 
+    <!--Fragment Code-->
+    <string name="code_screen_error_text">No files</string>
+
 
 </resources>

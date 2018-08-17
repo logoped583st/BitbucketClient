@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 
 
-class SpinnerAdapter(context: Context, layout: Int, listString: List<String>) : ArrayAdapter<String>(context, layout, listString) {
+class SpinnerAdapter(context: Context, layout: Int, listString: MutableList<String>) : ArrayAdapter<String>(context, layout, listString) {
 
     @SuppressLint("RtlHardcoded")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {

@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 
 class LoadingModel {
 
-    val noFollowers: MutableLiveData<Int> = MutableLiveData()
+    val noInfo: MutableLiveData<Int> = MutableLiveData()
 
     val loading: MutableLiveData<Int> = MutableLiveData()
 
