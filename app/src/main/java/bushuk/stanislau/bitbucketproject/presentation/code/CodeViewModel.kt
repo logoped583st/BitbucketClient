@@ -41,6 +41,13 @@ class CodeViewModel : ViewModel() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    var i = 0
+                    while (i < it.values.size) {
+                        if (codeDataSourceFactory.codeDataSource.repositoryModel.repository.value.mainbranch.name == it.values[i].name) {
+                            hash = it.values[i].target.hash
+                        }
+                        i++
+                    }
                     branches.postValue(it.values.reversed())
                 }, {
                     Timber.e(it.message)
