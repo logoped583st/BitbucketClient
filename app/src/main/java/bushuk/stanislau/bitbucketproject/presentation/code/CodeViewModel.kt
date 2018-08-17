@@ -3,12 +3,16 @@ package bushuk.stanislau.bitbucketproject.presentation.code
 import android.arch.lifecycle.*
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
+import android.widget.Spinner
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerCodeAdapter
+import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.presentation.code.model.CodeDataSourceFactory
+import bushuk.stanislau.bitbucketproject.room.code.Branch
 import bushuk.stanislau.bitbucketproject.room.code.Code
 import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
+import com.jakewharton.rxbinding2.widget.RxAdapterView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -21,12 +25,12 @@ class CodeViewModel : ViewModel() {
     lateinit var codeDataSourceFactory: CodeDataSourceFactory
 
 
-    val branches: MutableLiveData<List<String>> = MutableLiveData()
+    val branches: MutableLiveData<List<Branch>> = MutableLiveData()
 
     private val disposable: CompositeDisposable = CompositeDisposable()
 
 
-    lateinit var hash: String
+    private lateinit var hash: String
 
     init {
         App.component.initCodeComponent().inject(this)
@@ -35,23 +39,39 @@ class CodeViewModel : ViewModel() {
         disposable.add(codeDataSourceFactory.codeDataSource.api.getBranchWithUrl(codeDataSourceFactory
                 .codeDataSource.repositoryModel.repository.value.links.branches.href)
                 .subscribeOn(Schedulers.io())
-                .map<List<String>> { it ->
-
-                    hash = it.values[0].target.hash
-                    val list: MutableList<String> = ArrayList()
-                    it.values.forEach {
-                        list.add(it.name)
-                    }
-                    return@map list.toList().asReversed()
-                }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    branches.postValue(it)
+                    branches.postValue(it.values.reversed())
                 }, {
                     Timber.e(it.message)
                 })
         )
 
+    }
+
+    fun observeSpinner(spinner: Spinner, adapter: RecyclerCodeAdapter, lifecycleOwner: LifecycleOwner) {
+        RxAdapterView.itemSelections(spinner)
+                .skipInitialValue()
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map {
+
+                    val branchName: String = (spinner.adapter as SpinnerAdapter).getItem(it)
+                    var i = 0
+                    while (i < branches.value?.size!!) {
+                        if (branches.value?.get(i)!!.name == branchName) {
+                            hash = branches.value?.get(i)?.target?.hash!!
+                        }
+                        i++
+                    }
+
+                }
+                .subscribe({
+                    Timber.e("RESULT")
+                    reloadPathWithHash(lifecycleOwner, adapter, "src")
+                }, {
+                    Timber.e(it.message)
+                })
     }
 
     var code: LiveData<PagedList<Code>> = LivePagedListBuilder<String, Code>(codeDataSourceFactory, Constants.listPagedConfig).build()

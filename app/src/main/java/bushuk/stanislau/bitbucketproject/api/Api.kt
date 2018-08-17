@@ -22,17 +22,18 @@ interface Api {
     fun getUser(@Path("userName") userName: String): Single<User>
 
     @GET
-    fun getBranchWithUrl(@Url url: String):Single<BranchesResponse>
+    fun getBranchWithUrl(@Url url: String): Single<BranchesResponse>
 
     @GET("repositories/{userName}")
     fun getRepos(@Path("userName") userName: String, @Query("q", encoded = false) query: String?): Single<RepositoriesResponse>
 
     @GET("repositories/{userName}/{repoName}/src")
-    fun getRepoWithName(@Path("userName") userName: String, @Path("repoName") repoName: String):Single<CodeResponse>
+    fun getRepoWithName(@Path("userName") userName: String, @Path("repoName") repoName: String): Single<CodeResponse>
 
 
     @GET("repositories/{userName}/{repoName}/src/{path}")
-    fun getRepoWithNamePath(@Path("userName") userName: String, @Path("repoName") repoName: String, @Path("path") path:String):Single<CodeResponse>
+    fun getRepoWithNamePath(@Path("userName") userName: String, @Path("repoName")
+    repoName: String, @Path("path", encoded = false) path: String): Single<CodeResponse>
 
     @GET//request for getting info from next page, Url we take from previous request
     fun getRepoWithNameNextPage(@Url url: String): Single<CodeResponse>

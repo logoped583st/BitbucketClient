@@ -59,15 +59,11 @@ object UrlBuilder {
     }
 
 
-    fun buildPathUrlSelf(path: String) {
-        repositoryPath = path
-    }
-
     fun buildPathWithHash(path: String, hash: String) {
-        repositoryPath = if (path == "src") {
-            null
-        } else {
-            "$hash/$path"
+        repositoryPath = when (path) {
+            "src" -> "$hash/"
+
+            else -> "$hash/$path"
         }
     }
 }

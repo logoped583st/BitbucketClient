@@ -67,8 +67,12 @@ class CodeFragment : Fragment(), ClickFollow, RecyclerCodePathAdapter.PathClick 
         code_screen_code_path_recycler.adapter = codePathAdapter
 
         viewModel.branches.observe(this, Observer {
-            branchSpinnerAdapter.addAll(it)
+            it!!.forEach {
+                branchSpinnerAdapter.add(it.name)
+            }
+            viewModel.observeSpinner(code_screen_branch_spinner,codeAdapter,this)
         })
+
 
         code_screen_recycler.layoutManager = LinearLayoutManager(activity)
         codeAdapter.clickFollow = this
