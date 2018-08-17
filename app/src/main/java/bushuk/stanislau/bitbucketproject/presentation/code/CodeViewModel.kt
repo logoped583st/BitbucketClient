@@ -25,7 +25,8 @@ class CodeViewModel : ViewModel() {
 
     private val disposable: CompositeDisposable = CompositeDisposable()
 
-    lateinit var hash:String
+
+    lateinit var hash: String
 
     init {
         App.component.initCodeComponent().inject(this)
@@ -35,6 +36,8 @@ class CodeViewModel : ViewModel() {
                 .codeDataSource.repositoryModel.repository.value.links.branches.href)
                 .subscribeOn(Schedulers.io())
                 .map<List<String>> { it ->
+
+                    hash = it.values[0].target.hash
                     val list: MutableList<String> = ArrayList()
                     it.values.forEach {
                         list.add(it.name)
@@ -49,20 +52,14 @@ class CodeViewModel : ViewModel() {
                 })
         )
 
-
     }
 
     var code: LiveData<PagedList<Code>> = LivePagedListBuilder<String, Code>(codeDataSourceFactory, Constants.listPagedConfig).build()
 
 
-
     fun reloadPathWithHash(lifecycleOwner: LifecycleOwner, adapter: RecyclerCodeAdapter, path: String) {
         code.removeObservers(lifecycleOwner)
-        code.observe(lifecycleOwner, Observer { if(it!![0]?.commit?.hash!=null){
-            hash
-        }
-        })
-        UrlBuilder.buildPathWithHash(path, code.value!![0]!!.commit.hash)
+        UrlBuilder.buildPathWithHash(path, hash)
         codeDataSourceFactory.codeDataSource.path = UrlBuilder.repositoryPath
         code = LivePagedListBuilder<String, Code>(codeDataSourceFactory, Constants.listPagedConfig).build()
         code.observe(lifecycleOwner, Observer(adapter::submitList))

@@ -35,7 +35,7 @@ class RecyclerCodePathAdapter(list: MutableList<String>, codeFragment: CodeFragm
 
         val size = path.size
         for (pos in position + 1..path.lastIndex) {
-            path.removeAt(pos)
+            path.removeAt(path.lastIndex)
         }
 
         notifyItemRangeRemoved(position+1, size)
