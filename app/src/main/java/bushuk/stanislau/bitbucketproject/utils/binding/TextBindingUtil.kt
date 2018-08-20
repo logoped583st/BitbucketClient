@@ -31,5 +31,28 @@ class TextBindingUtil {
             val format = SimpleDateFormat("dd/MM/yyy")
             textView.text = format.format(date)
         }
+
+        @SuppressLint("SetTextI18n")
+        @JvmStatic
+        @BindingAdapter("android:text")
+        fun intText(textView: TextView, int: Int) {
+            textView.text = '#' + int.toString()
+        }
+
+        @JvmStatic
+        @BindingAdapter("pullRequestState")
+        fun setState(textView: TextView, string: String) {
+            when (string) {
+                "OPEN" -> {
+                    textView.text = string
+                    textView.setTextColor(App.resourcesApp.getColor(R.color.green))
+                }
+
+                "CLOSED" -> {
+                    textView.text = string
+                    textView.setTextColor(App.resourcesApp.getColor(R.color.colorAccent))
+                }
+            }
+        }
     }
 }

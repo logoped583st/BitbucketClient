@@ -14,7 +14,6 @@ import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
-import bushuk.stanislau.bitbucketproject.presentation.code.CodeViewModel
 import bushuk.stanislau.bitbucketproject.presentation.code.model.CodeDataSource
 import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowViewModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.FollowDataSource
@@ -26,6 +25,7 @@ import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenViewModel
 import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
+import bushuk.stanislau.bitbucketproject.presentation.pullrequests.model.PullRequestsDataSource
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesViewModel
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSource
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSourceFactory
@@ -111,6 +111,10 @@ interface MainComponent {
 
     fun initCodeComponent(): CodeComponent
 
+    fun initPullRequestsComponent(): PullRequestsComponent
+
     fun inject(codeDataSource: CodeDataSource)
+
+    fun inject(pullRequestsDataSource: PullRequestsDataSource)
 
 }

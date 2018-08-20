@@ -12,6 +12,7 @@ import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
 import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
 
 class RecyclerSnippetsAdapter : PagedListAdapter<Snippet, ViewHolder>(UserDiffCallback),ClickFollow {
+
     override fun onClickItem(view: View, data: Any) {
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

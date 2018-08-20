@@ -27,7 +27,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_repositories.*
 import timber.log.Timber
 
-class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow, BackPress {
+class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
 
     lateinit var viewModel: RepositoriesViewModel
     private var test: Boolean = false
