@@ -60,5 +60,8 @@
     <!--Fragment Code-->
     <string name="code_screen_error_text">No files</string>
 
+    <!--Pullrequests Screen-->
+    <string name="pullrequests_screen_error_text">No open pull requests</string>
+
 
 </resources>
