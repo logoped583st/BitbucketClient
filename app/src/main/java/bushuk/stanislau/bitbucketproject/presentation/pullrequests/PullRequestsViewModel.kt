@@ -15,9 +15,14 @@ class PullRequestsViewModel : ViewModel() {
     @Inject
     lateinit var pullRequestsDataSourceFactory: PullRequestsDataSourceFactory
 
-    val pullRequests: LiveData<PagedList<PullRequest>> by lazy { LivePagedListBuilder<String, PullRequest>(pullRequestsDataSourceFactory, Constants.listPagedConfig).build() }
+    val pullRequests: LiveData<PagedList<PullRequest>>by lazy{ LivePagedListBuilder<String, PullRequest>(pullRequestsDataSourceFactory, Constants.listPagedConfig).build() }
 
     init {
         App.component.initPullRequestsComponent().inject(this)
+    }
+
+    override fun onCleared() {
+        pullRequestsDataSourceFactory.pullRequestsDataSource.invalidate()
+        super.onCleared()
     }
 }

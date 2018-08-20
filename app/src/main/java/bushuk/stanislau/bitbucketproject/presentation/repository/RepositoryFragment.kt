@@ -60,13 +60,11 @@ class RepositoryFragment : BackPressFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         viewModel.exitFromFragment()
-
         return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroyView() {
         (activity as MainScreenActivity).recreateToolbar()
-
         super.onDestroyView()
     }
 

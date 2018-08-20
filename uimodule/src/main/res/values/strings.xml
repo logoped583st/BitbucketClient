@@ -63,5 +63,8 @@
     <!--Pullrequests Screen-->
     <string name="pullrequests_screen_error_text">No open pull requests</string>
 
+    <!--Watchers Screen -->
+    <string name="watchers_screen_error_text">No watchers to repository</string>
+
 
 </resources>

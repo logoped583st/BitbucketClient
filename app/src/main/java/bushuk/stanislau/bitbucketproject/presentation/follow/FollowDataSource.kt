@@ -7,9 +7,10 @@ import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.global.UserModel
+import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
 import bushuk.stanislau.bitbucketproject.room.followers.Followers
 import bushuk.stanislau.bitbucketproject.room.user.User
-import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -24,6 +25,9 @@ class FollowDataSource(private val error: String) : PageKeyedDataSource<String, 
 
     @Inject
     lateinit var userModel: UserModel
+
+    @Inject
+    lateinit var repositoryModel: RepositoryModel
 
 
     val loading: MutableLiveData<Int> = MutableLiveData()
@@ -50,27 +54,31 @@ class FollowDataSource(private val error: String) : PageKeyedDataSource<String, 
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, User>) {
         noFollowers.postValue(View.INVISIBLE)
         loading.postValue(View.VISIBLE)
-        val single: Observable<Followers> = if (error == App.resourcesApp.getString(R.string.followers_screen_no_followers)) {
-            userModel.user.switchMapSingle { api.getFollowers("tutorials") }
-        } else {
-            userModel.user.switchMapSingle { api.getFollowing(it.username) }
-        }
-        disposable.add(
-                single
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                {
-                                    if (it.size == 0) {
-                                        noFollowers.postValue(View.VISIBLE)
-                                        errorText.postValue(error)
-                                    }
 
-                                    loading.postValue(View.INVISIBLE)
-                                    callback.onResult(it.values, it.previous, it.next)
-                                },
-                                {
-                                    Timber.e(it.message)
-                                }))
+        val single: Single<Followers> = when (error) {
+            App.resourcesApp.getString(R.string.followers_screen_no_followers) -> api.getFollowers("tutorials")
+
+            App.resourcesApp.getString(R.string.watchers_screen_error_text) -> api.getWatchersRepo(userModel.user.value.username, repositoryModel.repository.value.uuid)
+
+            else -> api.getFollowing(userModel.user.value.username)
+        }
+
+        disposable.add(single
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        {
+                            if (it.size == 0) {
+                                noFollowers.postValue(View.VISIBLE)
+                                errorText.postValue(error)
+                            }
+
+                            loading.postValue(View.INVISIBLE)
+                            callback.onResult(it.values, it.previous, it.next)
+                        },
+                        {
+                            Timber.e(it.message)
+                        }))
     }
 
     override fun loadAfter(params: LoadParams<String>, callback: LoadCallback<String, User>) {

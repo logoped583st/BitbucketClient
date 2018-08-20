@@ -14,8 +14,8 @@ import kotlinx.android.synthetic.main.fragment_followers.*
 
 abstract class BaseFollowFragment : Fragment(), ClickFollow {
 
-
     lateinit var binding: FragmentFollowersBinding
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
