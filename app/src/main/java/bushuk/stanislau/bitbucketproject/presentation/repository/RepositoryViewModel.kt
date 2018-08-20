@@ -29,7 +29,9 @@ class RepositoryViewModel : ViewModel() {
     lateinit var router: Router
 
     @Inject
-    lateinit var userModel:UserModel
+    lateinit var userModel: UserModel
+
+    private var tabSelected: String = Screens.CODE_SCREEN
 
 
     val repository: MutableLiveData<Repository> = MutableLiveData()
@@ -58,18 +60,28 @@ class RepositoryViewModel : ViewModel() {
 
 
     fun initView() {
-        localRouter.replaceScreen(Screens.CODE_SCREEN)
+        localRouter.replaceScreen(tabSelected)
     }
 
     fun tabRouting(menuItem: MenuItem): Boolean {
         menuItem.isChecked = true
 
         when (menuItem.itemId) {
-            R.id.repository_code_menu -> localRouter.replaceScreen(Screens.CODE_SCREEN)
+            R.id.repository_code_menu -> {
+                tabSelected = Screens.CODE_SCREEN
+                localRouter.replaceScreen(Screens.CODE_SCREEN)
+            }
 
-            R.id.repository_pullrequests_menu -> localRouter.replaceScreen(Screens.PULL_REQUESTS_SCREEN)
+            R.id.repository_pullrequests_menu -> {
+                tabSelected = Screens.PULL_REQUESTS_SCREEN
 
-            R.id.repository_watchers_menu -> localRouter.replaceScreen(Screens.WATCHERS_SCREEN)
+                localRouter.replaceScreen(Screens.PULL_REQUESTS_SCREEN)
+            }
+
+            R.id.repository_watchers_menu -> {
+                tabSelected = Screens.WATCHERS_SCREEN
+                localRouter.replaceScreen(Screens.WATCHERS_SCREEN)
+            }
         }
 
         return false

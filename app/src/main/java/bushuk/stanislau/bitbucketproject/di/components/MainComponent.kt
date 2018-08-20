@@ -35,6 +35,7 @@ import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsViewModel
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSource
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.user.UserViewModel
+import bushuk.stanislau.bitbucketproject.presentation.watchers.model.WatchersDataSourceFactory
 import bushuk.stanislau.bitbucketproject.utils.crypt.CryptApi19
 import bushuk.stanislau.bitbucketproject.utils.crypt.CryptApi23
 import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
@@ -116,5 +117,9 @@ interface MainComponent {
     fun inject(codeDataSource: CodeDataSource)
 
     fun inject(pullRequestsDataSource: PullRequestsDataSource)
+
+    fun initWatchersComponent(): WatchersComponent
+
+    fun inject(watchersDataSourceFactory: WatchersDataSourceFactory)
 
 }

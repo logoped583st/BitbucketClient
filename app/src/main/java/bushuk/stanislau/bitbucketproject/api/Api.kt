@@ -28,8 +28,10 @@ interface Api {
     @GET("repositories/{userName}/{repoName}/src")
     fun getRepoWithName(@Path("userName") userName: String, @Path("repoName") repoName: String): Single<CodeResponse>
 
+    @GET("repositories/{userName}/{repoName}/watchers")
+    fun getWatchersRepo(@Path("userName") userName: String, @Path("repoName", encoded = false) repoName: String): Single<Followers>
 
-    @GET("repositories/{userName}/{repoName}/src/{path}")
+    @GET("repositories/{userName}/{repoName}")
     fun getRepoWithNamePath(@Path("userName") userName: String, @Path("repoName")
     repoName: String, @Path("path", encoded = false) path: String): Single<CodeResponse>
 
@@ -46,18 +48,14 @@ interface Api {
     fun getFollowersNextPage(@Url url: String): Single<Followers>
 
     @GET("repositories/{userName}/{repoName}/pullrequests")
-    fun getPullRequests(@Path("userName") userName: String, @Path("repoName", encoded = false
-    ) repoName: String,
+    fun getPullRequests(@Path("userName") userName: String, @Path("repoName", encoded = false) repoName: String,
                         @Query("q", encoded = false) query: String?): Single<PullRequestResponse>
 
     @GET
-    fun getPullRequestNextPage(@Url url:String):Single<PullRequestResponse>
+    fun getPullRequestNextPage(@Url url: String): Single<PullRequestResponse>
 
     @GET("users/{userName}/following")
     fun getFollowing(@Path("userName") userName: String): Single<Followers>
-
-    @GET//request for getting info from next page, Url we take from previous request
-    fun getFollowingNextPage(@Url url: String): Single<Followers>
 
     @GET("snippets/{userName}")
     fun getSnippets(@Path("userName") userName: String): Single<SnippetsResponce>
