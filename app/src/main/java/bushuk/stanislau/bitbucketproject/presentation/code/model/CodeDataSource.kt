@@ -52,7 +52,7 @@ class CodeDataSource : PageKeyedDataSource<String, Code>() {
         val request: Single<CodeResponse> = if (path.isNullOrEmpty()) {
             api.getRepoWithName(userModel.user.value.username, repositoryModel.repository.value.uuid)
         } else {
-            api.getRepoWithNamePath(userModel.user.value.username, repositoryModel.repository.value.uuid, path!!)
+            api.getRepoWithNamePath(userModel.user.value.username, repositoryModel.repository.value.name, path!!)
         }
 
         disposable.add(request.subscribeOn(Schedulers.io())

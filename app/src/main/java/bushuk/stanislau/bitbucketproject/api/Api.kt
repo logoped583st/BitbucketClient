@@ -30,12 +30,12 @@ interface Api {
     @GET("repositories/{userName}/{repoName}/src")
     fun getRepoWithName(@Path("userName") userName: String, @Path("repoName") repoName: String): Single<CodeResponse>
 
+    @GET("repositories/{userName}/{repoName}/src/{path}")
+    fun getRepoWithNamePath(@Path("userName") userName: String, @Path("repoName",encoded = false) repoName: String,
+                            @Path("path", encoded = false) path: String): Single<CodeResponse>
+
     @GET("repositories/{userName}/{repoName}/watchers")
     fun getWatchersRepo(@Path("userName") userName: String, @Path("repoName", encoded = false) repoName: String): Single<Followers>
-
-    @GET("repositories/{userName}/{repoName}/{path}")
-    fun getRepoWithNamePath(@Path("userName") userName: String, @Path("repoName") repoName: String,
-                            @Path("path", encoded = false) path: String): Single<CodeResponse>
 
     @GET//request for getting info from next page, Url we take from previous request
     fun getRepoWithNameNextPage(@Url url: String): Single<CodeResponse>

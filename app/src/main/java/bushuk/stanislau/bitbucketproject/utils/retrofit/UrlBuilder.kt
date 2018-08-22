@@ -63,7 +63,7 @@ object UrlBuilder {
         repositoryPath = when (path) {
             "src" -> "$hash/"
 
-            else -> "$hash/$path"
+            else -> "$hash/$path/"
         }
     }
 }
