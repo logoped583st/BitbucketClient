@@ -1,5 +1,6 @@
 package bushuk.stanislau.bitbucketproject.presentation.follow
 
+import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,9 +11,17 @@ import android.view.ViewGroup
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerFollowAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentFollowersBinding
+import bushuk.stanislau.bitbucketproject.room.user.User
 import kotlinx.android.synthetic.main.fragment_followers.*
 
 abstract class BaseFollowFragment : Fragment(), ClickFollow {
+
+
+    lateinit var baseFollowViewModel: BaseFollowViewModel
+
+    override fun onClickItem(view: View, data: Any) {
+        baseFollowViewModel.navigateToUserScreen(data as User)
+    }
 
     lateinit var binding: FragmentFollowersBinding
 
@@ -35,13 +44,10 @@ abstract class BaseFollowFragment : Fragment(), ClickFollow {
         followers_screen_recycler.adapter = adapter
         adapter.setListener(this)
 
-        provideBaseFollowAdapter(adapter)
+        baseFollowViewModel.followers.observe(this, Observer(adapter::submitList))
     }
 
 
     abstract fun provideBaseFollowFragmentBinding(binding: FragmentFollowersBinding)
-
-    abstract fun provideBaseFollowAdapter(adapter: RecyclerFollowAdapter)
-
 
 }

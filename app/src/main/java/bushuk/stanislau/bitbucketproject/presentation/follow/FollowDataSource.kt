@@ -17,7 +17,7 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
-class FollowDataSource(private val error: String) : PageKeyedDataSource<String, User>() {
+abstract class FollowDataSource : PageKeyedDataSource<String, User>() {
 
 
     @Inject
@@ -26,9 +26,10 @@ class FollowDataSource(private val error: String) : PageKeyedDataSource<String, 
     @Inject
     lateinit var userModel: UserModel
 
+    abstract val single: Single<Followers>
+
     @Inject
     lateinit var repositoryModel: RepositoryModel
-
 
     val loading: MutableLiveData<Int> = MutableLiveData()
 
@@ -48,20 +49,12 @@ class FollowDataSource(private val error: String) : PageKeyedDataSource<String, 
     }
 
     override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<String, User>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, User>) {
         noFollowers.postValue(View.INVISIBLE)
         loading.postValue(View.VISIBLE)
-
-        val single: Single<Followers> = when (error) {
-            App.resourcesApp.getString(R.string.followers_screen_no_followers) -> api.getFollowers("tutorials")
-
-            App.resourcesApp.getString(R.string.watchers_screen_error_text) -> api.getWatchersRepo(userModel.user.value.username, repositoryModel.repository.value.uuid)
-
-            else -> api.getFollowing(userModel.user.value.username)
-        }
 
         disposable.add(single
                 .subscribeOn(Schedulers.io())
@@ -70,7 +63,7 @@ class FollowDataSource(private val error: String) : PageKeyedDataSource<String, 
                         {
                             if (it.size == 0) {
                                 noFollowers.postValue(View.VISIBLE)
-                                errorText.postValue(error)
+                                doOnEmpty()
                             }
 
                             loading.postValue(View.INVISIBLE)
@@ -93,4 +86,7 @@ class FollowDataSource(private val error: String) : PageKeyedDataSource<String, 
                             Timber.e(it.message)
                         }))
     }
+
+
+    abstract fun doOnEmpty()
 }

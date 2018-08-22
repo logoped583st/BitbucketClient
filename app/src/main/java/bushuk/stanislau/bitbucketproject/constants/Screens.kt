@@ -24,4 +24,6 @@ object Screens {
     const val PULL_REQUESTS_SCREEN: String = "PULL_REQUESTS_SCREEN"
 
     const val WATCHERS_SCREEN: String = "WATCHERS SCREEN"
+
+    const val PULL_REQUEST_SCREEN:String = "PULL_REQUEST_SCREEN"
 }

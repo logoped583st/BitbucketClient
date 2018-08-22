@@ -2,7 +2,9 @@ package bushuk.stanislau.bitbucketproject.api
 
 import bushuk.stanislau.bitbucketproject.room.code.BranchesResponse
 import bushuk.stanislau.bitbucketproject.room.code.CodeResponse
+import bushuk.stanislau.bitbucketproject.room.commits.CommitResponse
 import bushuk.stanislau.bitbucketproject.room.followers.Followers
+import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
@@ -28,12 +30,12 @@ interface Api {
     @GET("repositories/{userName}/{repoName}/src")
     fun getRepoWithName(@Path("userName") userName: String, @Path("repoName") repoName: String): Single<CodeResponse>
 
+    @GET("repositories/{userName}/{repoName}/src/{path}")
+    fun getRepoWithNamePath(@Path("userName") userName: String, @Path("repoName",encoded = false) repoName: String,
+                            @Path("path", encoded = false) path: String): Single<CodeResponse>
+
     @GET("repositories/{userName}/{repoName}/watchers")
     fun getWatchersRepo(@Path("userName") userName: String, @Path("repoName", encoded = false) repoName: String): Single<Followers>
-
-    @GET("repositories/{userName}/{repoName}")
-    fun getRepoWithNamePath(@Path("userName") userName: String, @Path("repoName")
-    repoName: String, @Path("path", encoded = false) path: String): Single<CodeResponse>
 
     @GET//request for getting info from next page, Url we take from previous request
     fun getRepoWithNameNextPage(@Url url: String): Single<CodeResponse>
@@ -62,5 +64,15 @@ interface Api {
 
     @GET//request for getting info from next page, Url we take from previous request
     fun getSnippetsNextPage(@Url url: String): Single<SnippetsResponce>
+
+    @GET
+    fun getCommitWithUrl(@Url url: String): Single<CommitResponse>
+
+    @GET("repositories/{userName}/{repoName}/pullrequests/{id}")
+    fun getPullRequest(@Path("userName") userName: String, @Path("repoName") repoName: String, @Path("id") id: String): Single<PullRequest>
+
+    @GET
+    fun getReviewersPullRequest(@Url url: String): Single<PullRequest>
+
 
 }

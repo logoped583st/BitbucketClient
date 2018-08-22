@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="bushuk.stanislau.bitbucketproject.presentation.pullrequest.PullRequestViewModel" />
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            tools:context=".presentation.pullrequest.PullRequestFragment">
+
+
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/pullrequest_screen_app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbarPullrequest"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
+                    app:title="@{viewModel.pullRequest.publishSubject.value.title}" />
+
+
+            </android.support.design.widget.AppBarLayout>
+
+            <TextView
+                android:id="@+id/pullrequest_screen_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                style="@style/Headline"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/pullrequest_screen_branch_from"
+                app:layout_constraintStart_toStartOf="@+id/pullrequest_screen_branch_to"
+                app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_app_bar"
+                app:pullRequestState="@{viewModel.pullRequest.publishSubject.value.state}" />
+
+            <TextView
+                android:id="@+id/pullrequest_screen_branch_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Subheading"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@{viewModel.pullRequest.publishSubject.value.destination.branch.name}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_status" />
+
+            <ImageView
+                android:id="@+id/pullrequest_screen_arrow_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/pullrequest_screen_branch_from"
+                app:layout_constraintEnd_toStartOf="@+id/pullrequest_screen_branch_from"
+                app:layout_constraintTop_toTopOf="@+id/pullrequest_screen_branch_from" />
+
+            <TextView
+                android:id="@+id/pullrequest_screen_branch_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                style="@style/Subheading"
+                android:text="@{viewModel.pullRequest.publishSubject.value.source.branch.name}"
+                app:layout_constraintEnd_toStartOf="@+id/pullrequest_screen_arrow_image"
+                app:layout_constraintTop_toTopOf="@+id/pullrequest_screen_branch_from" />
+
+            <TextView
+                android:id="@+id/pullrequest_screen_created_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                style="@style/Subheading"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@{viewModel.pullRequest.publishSubject.value.updated_on}"
+                app:layout_constraintEnd_toStartOf="@+id/pullrequest_screen_branch_to"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_created_time_static" />
+
+            <TextView
+                android:id="@+id/pullrequest_screen_created_time_static"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="Updated on"
+                app:layout_constraintEnd_toStartOf="@+id/pullrequest_screen_status"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/pullrequest_screen_status" />
+
+            <TextView
+                android:id="@+id/pullrequest_screen_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                style="@style/Body_2.High"
+                android:layout_marginTop="16dp"
+                android:text="@{viewModel.pullRequest.publishSubject.value.description}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_created_time" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/pullrequest_screen_recycler_commits"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_commits" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/pullrequest_screen_recycler_reviewers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/pullrequest_screen_commits"
+                style="@style/Subheading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Commits:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_description" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                style="@style/Subheading"
+                android:text="Reviewers:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_recycler_commits" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</layout>

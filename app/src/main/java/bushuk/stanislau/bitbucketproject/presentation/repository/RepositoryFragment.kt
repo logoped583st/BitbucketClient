@@ -15,7 +15,6 @@ import bushuk.stanislau.bitbucketproject.navigation.RepositoryNavigator
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import kotlinx.android.synthetic.main.fragment_repository.view.*
 import ru.terrakok.cicerone.NavigatorHolder
-import timber.log.Timber
 
 class RepositoryFragment : BackPressFragment() {
 
@@ -25,7 +24,7 @@ class RepositoryFragment : BackPressFragment() {
     lateinit var viewModel: RepositoryViewModel
     lateinit var binding: FragmentRepositoryBinding
     lateinit var avatar: String
-    lateinit var userName:String
+    lateinit var userName: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -81,6 +80,5 @@ class RepositoryFragment : BackPressFragment() {
         super.onResume()
         navigatorHolder.setNavigator(RepositoryNavigator((activity as MainScreenActivity), childFragmentManager, R.id.repository_screen_container))
     }
-
 
 }
