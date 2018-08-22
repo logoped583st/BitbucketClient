@@ -6,8 +6,11 @@ import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.constants.Constants
+import bushuk.stanislau.bitbucketproject.constants.Screens
+import bushuk.stanislau.bitbucketproject.global.PullRequestModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequests.model.PullRequestsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
+import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 class PullRequestsViewModel : ViewModel() {
@@ -15,10 +18,21 @@ class PullRequestsViewModel : ViewModel() {
     @Inject
     lateinit var pullRequestsDataSourceFactory: PullRequestsDataSourceFactory
 
-    val pullRequests: LiveData<PagedList<PullRequest>>by lazy{ LivePagedListBuilder<String, PullRequest>(pullRequestsDataSourceFactory, Constants.listPagedConfig).build() }
+    @Inject
+    lateinit var router: Router
+
+    @Inject
+    lateinit var pullRequestModel: PullRequestModel
+
+    val pullRequests: LiveData<PagedList<PullRequest>>by lazy { LivePagedListBuilder<String, PullRequest>(pullRequestsDataSourceFactory, Constants.listPagedConfig).build() }
 
     init {
         App.component.initPullRequestsComponent().inject(this)
+    }
+
+    fun navigateToPullRequestScreen(pullRequest: PullRequest) {
+        pullRequestModel.publishSubject.onNext(pullRequest)
+        router.navigateTo(Screens.PULL_REQUEST_SCREEN)
     }
 
     override fun onCleared() {

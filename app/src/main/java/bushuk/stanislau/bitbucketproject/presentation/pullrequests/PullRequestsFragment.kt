@@ -10,17 +10,18 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerPullRequestsAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentPullRequestsBinding
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
+import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
 import kotlinx.android.synthetic.main.fragment_pull_requests.*
 
 
 class PullRequestsFragment : Fragment(), ClickFollow {
+
     override fun onClickItem(view: View, data: Any) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        viewModel.navigateToPullRequestScreen(data as PullRequest)
     }
 
     lateinit var adapter: RecyclerPullRequestsAdapter
@@ -29,7 +30,6 @@ class PullRequestsFragment : Fragment(), ClickFollow {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_pull_requests, container, false)
 
         viewModel = ViewModelProviders.of(this).get(PullRequestsViewModel::class.java)

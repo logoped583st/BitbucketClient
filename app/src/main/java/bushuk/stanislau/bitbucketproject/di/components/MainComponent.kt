@@ -7,6 +7,7 @@ import bushuk.stanislau.bitbucketproject.di.modules.followers.FollowersModule
 import bushuk.stanislau.bitbucketproject.di.modules.following.FollowingModule
 import bushuk.stanislau.bitbucketproject.di.modules.global.*
 import bushuk.stanislau.bitbucketproject.di.modules.mainScreen.MainScreenModule
+import bushuk.stanislau.bitbucketproject.di.modules.pullrequest.PullRequestScopeModule
 import bushuk.stanislau.bitbucketproject.di.modules.repositories.RepositoriesModule
 import bushuk.stanislau.bitbucketproject.di.modules.repository.RepositoryModule
 import bushuk.stanislau.bitbucketproject.di.modules.snippets.SnippetsModule
@@ -25,6 +26,11 @@ import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenViewModel
 import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.PullRequestViewModel
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.model.CommitsDataSourceFactory
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.model.CommitsDataSource
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.model.ReviewersDataSource
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.model.ReviewersDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.pullrequests.model.PullRequestsDataSource
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesViewModel
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSource
@@ -35,7 +41,6 @@ import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsViewModel
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSource
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.user.UserViewModel
-import bushuk.stanislau.bitbucketproject.presentation.watchers.model.WatchersDataSourceFactory
 import bushuk.stanislau.bitbucketproject.utils.crypt.CryptApi19
 import bushuk.stanislau.bitbucketproject.utils.crypt.CryptApi23
 import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
@@ -48,7 +53,7 @@ import javax.inject.Singleton
     MainScreenModule::class, ApplicationContextProvider::class, PreferencesModule::class,
     AuthLoginModule::class, RoomModule::class, UserModule::class, RepositoriesModule::class,
     FollowersModule::class, FollowingModule::class, FollowModule::class, SnippetsModule::class,
-    RepositoryModule::class])
+    RepositoryModule::class, PullRequestModule::class, PullRequestScopeModule::class])
 
 interface MainComponent {
 
@@ -120,6 +125,13 @@ interface MainComponent {
 
     fun initWatchersComponent(): WatchersComponent
 
-    fun inject(watchersDataSourceFactory: WatchersDataSourceFactory)
+    fun inject(pullRequestViewModel: PullRequestViewModel)
 
+    fun inject(commitsDataSource: CommitsDataSource)
+
+    fun inject(commitsDataSourceFactory: CommitsDataSourceFactory)
+
+    fun inject(reviewersDataSourceFactory:ReviewersDataSourceFactory)
+
+    fun inject(reviewersDataSource: ReviewersDataSource)
 }

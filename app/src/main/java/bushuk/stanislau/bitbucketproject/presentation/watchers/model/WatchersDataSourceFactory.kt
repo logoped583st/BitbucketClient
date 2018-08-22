@@ -2,20 +2,20 @@ package bushuk.stanislau.bitbucketproject.presentation.watchers.model
 
 import android.arch.paging.DataSource
 import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.R
-import bushuk.stanislau.bitbucketproject.presentation.follow.FollowDataSource
 import bushuk.stanislau.bitbucketproject.room.user.User
+import javax.inject.Inject
 
 
 class WatchersDataSourceFactory : DataSource.Factory<String, User>() {
 
-    val followDataSource: FollowDataSource by lazy { FollowDataSource(App.resourcesApp.getString(R.string.watchers_screen_error_text)) }
+    @Inject
+    lateinit var watchersDataSource: WatchersDataSource
 
     init {
-        App.component.inject(this)
+        App.component.initWatchersComponent().inject(this)
     }
 
     override fun create(): DataSource<String, User> {
-        return followDataSource
+        return watchersDataSource
     }
 }
