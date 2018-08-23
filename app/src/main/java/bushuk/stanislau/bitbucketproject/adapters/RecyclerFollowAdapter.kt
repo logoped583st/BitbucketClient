@@ -8,16 +8,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowFragment
+import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowViewModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
 import bushuk.stanislau.bitbucketproject.room.user.User
 
-class RecyclerFollowAdapter : PagedListAdapter<User,
+class RecyclerFollowAdapter<ViewModel:BaseFollowViewModel> : PagedListAdapter<User,
         ViewHolder>(UserDiffCallback) {
 
     lateinit var clickFollow: ClickFollow
     lateinit var holder: ViewHolder
 
-    fun setListener(baseFollow: BaseFollowFragment) {
+    fun setListener(baseFollow: BaseFollowFragment<ViewModel>) {
         clickFollow = baseFollow
     }
 

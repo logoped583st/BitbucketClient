@@ -31,7 +31,7 @@ interface Api {
     fun getRepoWithName(@Path("userName") userName: String, @Path("repoName") repoName: String): Single<CodeResponse>
 
     @GET("repositories/{userName}/{repoName}/src/{path}")
-    fun getRepoWithNamePath(@Path("userName") userName: String, @Path("repoName",encoded = false) repoName: String,
+    fun getRepoWithNamePath(@Path("userName") userName: String, @Path("repoName", encoded = false) repoName: String,
                             @Path("path", encoded = false) path: String): Single<CodeResponse>
 
     @GET("repositories/{userName}/{repoName}/watchers")

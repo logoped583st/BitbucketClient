@@ -1,6 +1,7 @@
 package bushuk.stanislau.bitbucketproject.presentation.follow
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -14,13 +15,14 @@ import bushuk.stanislau.bitbucketproject.databinding.FragmentFollowersBinding
 import bushuk.stanislau.bitbucketproject.room.user.User
 import kotlinx.android.synthetic.main.fragment_followers.*
 
-abstract class BaseFollowFragment : Fragment(), ClickFollow {
+abstract class BaseFollowFragment<ViewModel : BaseFollowViewModel> : Fragment(), ClickFollow {
 
+    abstract var viewModelClass: Class<ViewModel>
 
-    lateinit var baseFollowViewModel: BaseFollowViewModel
+    lateinit var viewModel: ViewModel
 
     override fun onClickItem(view: View, data: Any) {
-        baseFollowViewModel.navigateToUserScreen(data as User)
+        viewModel.navigateToUserScreen(data as User)
     }
 
     lateinit var binding: FragmentFollowersBinding
@@ -31,7 +33,12 @@ abstract class BaseFollowFragment : Fragment(), ClickFollow {
         binding = DataBindingUtil
                 .inflate(layoutInflater, R.layout.fragment_followers, container, false)
 
-        provideBaseFollowFragmentBinding(binding)
+        viewModel = ViewModelProviders.of(this).get(viewModelClass)
+
+        binding.let {
+            it.setLifecycleOwner(this)
+            it.baseFollowrs = (viewModel).factory.create() as FollowDataSource
+        }
 
         return binding.root
     }
@@ -40,14 +47,12 @@ abstract class BaseFollowFragment : Fragment(), ClickFollow {
         super.onViewCreated(view, savedInstanceState)
 
         followers_screen_recycler.layoutManager = LinearLayoutManager(activity)
-        val adapter = RecyclerFollowAdapter()
+        val adapter = RecyclerFollowAdapter<ViewModel>()
         followers_screen_recycler.adapter = adapter
         adapter.setListener(this)
 
-        baseFollowViewModel.followers.observe(this, Observer(adapter::submitList))
+        viewModel.followers.observe(this, Observer(adapter::submitList))
     }
 
-
-    abstract fun provideBaseFollowFragmentBinding(binding: FragmentFollowersBinding)
 
 }

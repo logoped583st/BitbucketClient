@@ -2,6 +2,7 @@ package bushuk.stanislau.bitbucketproject.di.components
 
 import bushuk.stanislau.bitbucketproject.MainActivity
 import bushuk.stanislau.bitbucketproject.MainActivityViewModel
+import bushuk.stanislau.bitbucketproject.datasources.*
 import bushuk.stanislau.bitbucketproject.di.modules.auth.AuthLoginModule
 import bushuk.stanislau.bitbucketproject.di.modules.followers.FollowersModule
 import bushuk.stanislau.bitbucketproject.di.modules.following.FollowingModule
@@ -15,7 +16,6 @@ import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
-import bushuk.stanislau.bitbucketproject.presentation.code.model.CodeDataSource
 import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowViewModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.FollowDataSource
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersViewModel
@@ -28,17 +28,12 @@ import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenViewModel
 import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.PullRequestViewModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.model.CommitsDataSourceFactory
-import bushuk.stanislau.bitbucketproject.presentation.pullrequest.model.CommitsDataSource
-import bushuk.stanislau.bitbucketproject.presentation.pullrequest.model.ReviewersDataSource
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.model.ReviewersDataSourceFactory
-import bushuk.stanislau.bitbucketproject.presentation.pullrequests.model.PullRequestsDataSource
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesViewModel
-import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSource
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryFragment
 import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryViewModel
 import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsViewModel
-import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSource
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.user.UserViewModel
 import bushuk.stanislau.bitbucketproject.utils.crypt.CryptApi19
@@ -87,8 +82,6 @@ interface MainComponent {
 
     fun inject(userModel: UserModel)
 
-    fun inject(repositoriesDataSource: RepositoriesDataSource)
-
     fun inject(repositoriesDataSourceFactory: RepositoriesDataSourceFactory)
 
     fun inject(followersViewModel: FollowersViewModel)
@@ -102,8 +95,6 @@ interface MainComponent {
     fun inject(followingDataSourceFactory: FollowingDataSourceFactory)
 
     fun inject(snippetsDataSourceFactory: SnippetsDataSourceFactory)
-
-    fun inject(snippetsDataSource: SnippetsDataSource)
 
     fun inject(snippetsViewModel: SnippetsViewModel)
 
@@ -119,19 +110,26 @@ interface MainComponent {
 
     fun initPullRequestsComponent(): PullRequestsComponent
 
-    fun inject(codeDataSource: CodeDataSource)
-
-    fun inject(pullRequestsDataSource: PullRequestsDataSource)
-
     fun initWatchersComponent(): WatchersComponent
 
     fun inject(pullRequestViewModel: PullRequestViewModel)
 
-    fun inject(commitsDataSource: CommitsDataSource)
-
     fun inject(commitsDataSourceFactory: CommitsDataSourceFactory)
 
-    fun inject(reviewersDataSourceFactory:ReviewersDataSourceFactory)
+    fun inject(reviewersDataSourceFactory: ReviewersDataSourceFactory)
 
-    fun inject(reviewersDataSource: ReviewersDataSource)
+    fun inject(repositoriesDataSourceAbstract: RepositoriesDataSourceAbstract)
+
+    fun inject(usersDataSourceAbstract: UsersDataSourceAbstract)
+
+    fun inject(codeDataSourceAbstract: CodeDataSourceAbstract)
+
+    fun inject(pullRequestDataSourceAbstract: PullRequestsDataSourceAbstract)
+
+    fun inject(snippetsDataSourceAbstract: SnippetsDataSourceAbstract)
+
+    fun inject(commitsDataSourceAbstract: CommitsDataSourceAbstract)
+
+    fun inject(reviewersDataSourceAbstract: ReviewersDataSourceAbstract)
+
 }

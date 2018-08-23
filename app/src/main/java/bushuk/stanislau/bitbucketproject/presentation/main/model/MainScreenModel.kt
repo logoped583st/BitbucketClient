@@ -7,7 +7,6 @@ import javax.inject.Inject
 
 class MainScreenModel {
 
-
     @Inject
     lateinit var router: Router
 

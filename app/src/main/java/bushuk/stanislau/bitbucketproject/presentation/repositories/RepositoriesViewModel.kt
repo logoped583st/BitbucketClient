@@ -59,7 +59,6 @@ class RepositoriesViewModel : ViewModel() {
     private fun repositoriesNameChange(lifecycleOwner: LifecycleOwner, search: String?, adapter: RecyclerRepositoriesAdapter) {
         repositories.removeObservers(lifecycleOwner)
         UrlBuilder.queryRepositoryNameBuilder(search)
-        repositoriesDataSourceFactory.repositoriesDataSource.query = UrlBuilder.buildQuery()
         repositories = LivePagedListBuilder<String, Repository>(repositoriesDataSourceFactory, Constants.listPagedConfig).build()
         repositories.observe(lifecycleOwner, Observer(adapter::submitList))
     }
@@ -95,7 +94,6 @@ class RepositoriesViewModel : ViewModel() {
     private fun repositoriesLanguageChange(language: String, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
         repositories.removeObservers(lifecycleOwner)
         UrlBuilder.queryLanguageBuilder(language)
-        repositoriesDataSourceFactory.repositoriesDataSource.query = UrlBuilder.buildQuery()
         repositories = LivePagedListBuilder<String, Repository>(repositoriesDataSourceFactory, Constants.listPagedConfig).build()
         repositories.observe(lifecycleOwner, Observer(adapter::submitList))
     }
@@ -103,7 +101,6 @@ class RepositoriesViewModel : ViewModel() {
     private fun repositoriesAccessChange(access: String, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
         repositories.removeObservers(lifecycleOwner)
         UrlBuilder.queryAccessBuilder(access)
-        repositoriesDataSourceFactory.repositoriesDataSource.query = UrlBuilder.buildQuery()
         repositories = LivePagedListBuilder<String, Repository>(repositoriesDataSourceFactory, Constants.listPagedConfig).build()
         repositories.observe(lifecycleOwner, Observer(adapter::submitList))
     }
