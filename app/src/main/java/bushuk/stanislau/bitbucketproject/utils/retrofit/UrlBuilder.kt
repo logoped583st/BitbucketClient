@@ -4,7 +4,7 @@ import timber.log.Timber
 
 object UrlBuilder {
 
-    private var query: String = ""
+    var query: String = ""
     private var repositoryName: String? = null
     private var repositoryLanguage: String? = null
     private var repositoryAccess: String? = null

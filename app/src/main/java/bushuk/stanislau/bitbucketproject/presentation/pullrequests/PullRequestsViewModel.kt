@@ -24,7 +24,7 @@ class PullRequestsViewModel : ViewModel() {
     @Inject
     lateinit var pullRequestModel: PullRequestModel
 
-    val pullRequests: LiveData<PagedList<PullRequest>>by lazy { LivePagedListBuilder<String, PullRequest>(pullRequestsDataSourceFactory, Constants.listPagedConfig).build() }
+    val pullRequests: LiveData<PagedList<PullRequest>> by lazy { LivePagedListBuilder<String, PullRequest>(pullRequestsDataSourceFactory, Constants.listPagedConfig).build() }
 
     init {
         App.component.initPullRequestsComponent().inject(this)

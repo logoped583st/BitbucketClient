@@ -48,7 +48,7 @@ class UserFragment : Fragment() {
             it.viewModel = viewModel
         }
 
-        binding.pager.isSaveFromParentEnabled = false
+        //binding.pager.isSaveFromParentEnabled = false //ned check it.
 
     }
 

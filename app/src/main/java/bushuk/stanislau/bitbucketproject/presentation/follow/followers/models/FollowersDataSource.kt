@@ -4,14 +4,19 @@ import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.presentation.follow.FollowDataSource
 import bushuk.stanislau.bitbucketproject.room.followers.Followers
+import io.reactivex.Observable
 import io.reactivex.Single
 
 class FollowersDataSource : FollowDataSource() {
 
-    override val single: Single<Followers> = api.getFollowers(userModel.user.value.username)
+    override val errorText: String = App.resourcesApp.getString(R.string.followers_screen_no_followers)
+
+    override fun loadNextPage(url: String): Single<Followers> = api.getFollowersNextPage(url)
+
+    override val single: Observable<Followers> = userModel.user.switchMapSingle { api.getFollowers(it.username) }
 
     override fun doOnEmpty() {
-        errorText.postValue(App.resourcesApp.getString(R.string.followers_screen_no_followers))
+        loadingModel.errorText.postValue(App.resourcesApp.getString(R.string.followers_screen_no_followers))
     }
 
 }

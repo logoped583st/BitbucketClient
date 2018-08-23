@@ -66,5 +66,11 @@
     <!--Watchers Screen -->
     <string name="watchers_screen_error_text">No watchers to repository</string>
 
+    <!--Commits -->
+    <string name="commits_error_text">No commits</string>
+
+    <!--Reviewers-->
+    <string name="reviewers_error_text">No reviewers</string>
+
 
 </resources>

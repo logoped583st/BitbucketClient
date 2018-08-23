@@ -87,7 +87,6 @@ class CodeViewModel : ViewModel() {
     fun reloadPathWithHash(lifecycleOwner: LifecycleOwner, adapter: RecyclerCodeAdapter, path: String) {
         code.removeObservers(lifecycleOwner)
         UrlBuilder.buildPathWithHash(path, hash)
-        codeDataSourceFactory.codeDataSource.path = UrlBuilder.repositoryPath
         code = LivePagedListBuilder<String, Code>(codeDataSourceFactory, Constants.listPagedConfig).build()
         code.observe(lifecycleOwner, Observer(adapter::submitList))
     }
