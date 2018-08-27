@@ -22,6 +22,7 @@ package sharedcode.turboeditor.util.systemui;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -59,7 +60,7 @@ class SystemUiHelperImplHC extends SystemUiHelper.SystemUiHelperImpl
         }
 
         protected void onSystemUiShown() {
-            ActionBar ab = ((ActionBarActivity) mActivity).getSupportActionBar();
+            ActionBar ab = ((AppCompatActivity) mActivity).getSupportActionBar();
             if (ab != null) {
                 ab.show();
             }
@@ -70,7 +71,7 @@ class SystemUiHelperImplHC extends SystemUiHelper.SystemUiHelperImpl
         }
 
         protected void onSystemUiHidden() {
-            ActionBar ab = ((ActionBarActivity) mActivity).getSupportActionBar();
+            ActionBar ab = ((AppCompatActivity) mActivity).getSupportActionBar();
             if (ab != null) {
                 ab.hide();
             }

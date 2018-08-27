@@ -19,19 +19,19 @@
 
 package sharedcode.turboeditor.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
 import us.feras.mdv.MarkdownView;
 
-public class MarkdownActivity extends AppCompatActivity {
+public class MarkdownActivity extends Activity {
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        MarkdownView webView = new MarkdownView(this);
-        setContentView(webView);
-        webView.loadMarkdown(getIntent().getStringExtra("text"), "file:///android_asset/classic_theme_markdown.css");
-    }
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		MarkdownView webView = new MarkdownView(this);
+		setContentView(webView);
+		webView.loadMarkdown(getIntent().getStringExtra("text"), "file:///android_asset/classic_theme_markdown.css");
+	}
 }

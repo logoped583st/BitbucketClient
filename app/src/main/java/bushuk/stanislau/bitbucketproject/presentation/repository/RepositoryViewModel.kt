@@ -36,6 +36,8 @@ class RepositoryViewModel : ViewModel() {
 
     val repository: MutableLiveData<Repository> = MutableLiveData()
 
+    private lateinit var userMe: User
+
     init {
         App.component.inject(this)
         repositoryModel.repository.observeOn(AndroidSchedulers.mainThread())
@@ -44,9 +46,11 @@ class RepositoryViewModel : ViewModel() {
                 }, {
                     Timber.e(it.message)
                 })
-    }
 
-    private val userMe: User = userModel.user.value.copy()
+        userModel.user.subscribe {
+            userMe = it.copy()
+        }
+    }
 
 
     fun exitFromFragment() {
@@ -63,7 +67,7 @@ class RepositoryViewModel : ViewModel() {
         localRouter.replaceScreen(tabSelected)
     }
 
-    fun navigateToPullRequest(){
+    fun navigateToPullRequest() {
         localRouter.navigateTo(Screens.PULL_REQUEST_SCREEN)
     }
 

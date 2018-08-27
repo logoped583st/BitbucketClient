@@ -61,7 +61,7 @@
                 android:background="@null">
 
                 <HorizontalScrollView
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:scrollbars="horizontal"
                     android:fillViewport="true"
@@ -74,6 +74,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:bufferType="spannable"
+                        android:textCursorDrawable="@null"
                         android:cursorVisible="true"
                         android:gravity="top|start"
                         android:singleLine="false"
@@ -83,11 +84,60 @@
                 </HorizontalScrollView>
     </sharedcode.turboeditor.views.GoodScrollView>
 
+            <com.faizmalkani.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabNext"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="66dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                android:visibility="invisible"/>
+
+            <com.faizmalkani.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabPrev"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="66dp"
+                android:layout_marginRight="100dp"
+                android:layout_marginEnd="90dp"
+                android:visibility="invisible"/>
 
 
-
+        <HorizontalScrollView
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:scrollbars="horizontal"
+            android:layout_gravity="bottom"
+            android:fillViewport="false"
+            android:id="@+id/parent_accessory_view">
+            <sharedcode.turboeditor.util.AccessoryView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/accessoryView"></sharedcode.turboeditor.util.AccessoryView>
+        </HorizontalScrollView>
         </FrameLayout>
     </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="@dimen/navigation_drawer_width"
+        android:layout_height="match_parent"
+        android:background="@color/navigation_drawer_background_inverted"
+        android:id="@id/drawer_files"
+        android:layout_gravity="start"
+        >
+
+        <fragment android:layout_width="@dimen/navigation_drawer_width"
+            android:layout_height="match_parent"
+            android:name="sharedcode.turboeditor.preferences.SettingsFragment"
+            android:id="@id/drawer_settings"
+            android:layout_gravity="end"/>
+
+    </RelativeLayout>
+
+
 
 
 </sharedcode.turboeditor.views.CustomDrawerLayout>

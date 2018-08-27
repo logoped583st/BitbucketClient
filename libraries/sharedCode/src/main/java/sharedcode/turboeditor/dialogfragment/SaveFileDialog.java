@@ -82,6 +82,16 @@ public class SaveFileDialog extends DialogFragment {
                                                     encoding);
                                     dialogFrag.show(getFragmentManager().beginTransaction(),
                                             "dialog");
+                                } else {
+                                    new SaveFileTask((MainActivity) getActivity(), uri, text,
+                                            encoding, new SaveFileTask.SaveFileInterface() {
+                                        @Override
+                                        public void fileSaved(Boolean success) {
+                                            if (getActivity() != null) {
+                                                ((MainActivity) getActivity()).savedAFile(uri, true);
+                                            }
+                                        }
+                                    }).execute();
                                 }
                             }
                         }

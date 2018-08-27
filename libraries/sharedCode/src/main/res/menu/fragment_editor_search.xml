@@ -54,5 +54,10 @@
         app:showAsAction="ifRoom"
         android:title="@string/replace_all">
     </item>
-
+    <!--<item
+        android:id="@id/im_cancel"
+        android:icon="@drawable/ic_action_close"
+        android:title="@app:tring/cancel"
+        app:showAsAction="always">
+    </item>-->
 </menu>

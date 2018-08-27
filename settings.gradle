@@ -1,1 +1,1 @@
-include ':app', ':uimodule' , ':libraries:FloatingActionButton' ,':libraries:sharedCode'
+include ':app', ':uimodule'  ,':libraries:sharedCode', ':libraries:FloatingActionButton'

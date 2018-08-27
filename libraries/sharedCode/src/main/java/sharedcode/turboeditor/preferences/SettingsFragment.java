@@ -54,12 +54,10 @@ public class SettingsFragment extends Fragment implements NumberPickerDialog.INu
     private boolean sUseMonospace;
     private boolean sReadOnly;
     private boolean sAccessoryView;
-    private boolean sStorageAccessFramework;
     private boolean sSuggestions;
     private boolean sAutoSave;
-    private boolean sIgnoreBackButton;
     private boolean sSplitText;
-    private boolean sErrorReports;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,12 +69,10 @@ public class SettingsFragment extends Fragment implements NumberPickerDialog.INu
         sLineNumbers = PreferenceHelper.getLineNumbers(context);
         sReadOnly = PreferenceHelper.getReadOnly(context);
         sAccessoryView = PreferenceHelper.getUseAccessoryView(context);
-        sStorageAccessFramework = PreferenceHelper.getUseStorageAccessFramework(context);
         sSuggestions = PreferenceHelper.getSuggestionActive(context);
         sAutoSave = PreferenceHelper.getAutoSave(context);
-        sIgnoreBackButton = PreferenceHelper.getIgnoreBackButton(context);
         sSplitText = PreferenceHelper.getSplitText(context);
-        sErrorReports = PreferenceHelper.getSendErrorReports(context);
+
     }
 
     @Override
@@ -85,21 +81,20 @@ public class SettingsFragment extends Fragment implements NumberPickerDialog.INu
         // Our custom layout
         final View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
         final SwitchCompat swLineNumbers, swSyntax, swWrapContent, swMonospace, swReadOnly;
-        final SwitchCompat swSuggestions, swAccessoryView, swStorageAccessFramework, swAutoSave, swIgnoreBackButton, swSplitText, swErrorReports;
+        final SwitchCompat swSuggestions, swAccessoryView, swAutoSave, swIgnoreBackButton, swSplitText, swErrorReports;
         
-        swLineNumbers = (SwitchCompat) rootView.findViewById(R.id.switch_line_numbers);
-        swSyntax = (SwitchCompat) rootView.findViewById(R.id.switch_syntax);
-        swWrapContent = (SwitchCompat) rootView.findViewById(R.id.switch_wrap_content);
-        swMonospace = (SwitchCompat) rootView.findViewById(R.id.switch_monospace);
-        swReadOnly = (SwitchCompat) rootView.findViewById(R.id.switch_read_only);
+        swLineNumbers = rootView.findViewById(R.id.switch_line_numbers);
+        swSyntax = rootView.findViewById(R.id.switch_syntax);
+        swWrapContent = rootView.findViewById(R.id.switch_wrap_content);
+        swMonospace = rootView.findViewById(R.id.switch_monospace);
+        swReadOnly = rootView.findViewById(R.id.switch_read_only);
 
-        swSuggestions = (SwitchCompat) rootView.findViewById(R.id.switch_suggestions_active);
-        swAccessoryView = (SwitchCompat) rootView.findViewById(R.id.switch_accessory_view);
-        swStorageAccessFramework = (SwitchCompat) rootView.findViewById(R.id.switch_storage_access_framework);
-        swAutoSave = (SwitchCompat) rootView.findViewById(R.id.switch_auto_save);
-        swIgnoreBackButton = (SwitchCompat) rootView.findViewById(R.id.switch_ignore_backbutton);
-        swSplitText = (SwitchCompat) rootView.findViewById(R.id.switch_page_system);
-        swErrorReports = (SwitchCompat) rootView.findViewById(R.id.switch_send_error_reports);
+        swSuggestions = rootView.findViewById(R.id.switch_suggestions_active);
+        swAccessoryView = rootView.findViewById(R.id.switch_accessory_view);
+        swAutoSave = rootView.findViewById(R.id.switch_auto_save);
+        swIgnoreBackButton = rootView.findViewById(R.id.switch_ignore_backbutton);
+        swSplitText = rootView.findViewById(R.id.switch_page_system);
+        swErrorReports = rootView.findViewById(R.id.switch_send_error_reports);
 
         swLineNumbers.setChecked(sLineNumbers);
         swSyntax.setChecked(sColorSyntax);
@@ -109,33 +104,16 @@ public class SettingsFragment extends Fragment implements NumberPickerDialog.INu
 
         swSuggestions.setChecked(sSuggestions);
         swAccessoryView.setChecked(sAccessoryView);
-        swStorageAccessFramework.setChecked(sStorageAccessFramework);
         swAutoSave.setChecked(sAutoSave);
-        swIgnoreBackButton.setChecked(sIgnoreBackButton);
         swSplitText.setChecked(sSplitText);
-        swErrorReports.setChecked(sErrorReports);
 
         TextView fontSizeView, encodingView, extraOptionsView, themeView, goPro;
-        goPro = (TextView) rootView.findViewById(R.id.drawer_button_go_pro);
-        fontSizeView = (TextView) rootView.findViewById(R.id.drawer_button_font_size);
-        encodingView = (TextView) rootView.findViewById(R.id.drawer_button_encoding);
-        extraOptionsView = (TextView) rootView.findViewById(R.id.drawer_button_extra_options);
-        themeView = (TextView) rootView.findViewById(R.id.drawer_button_theme);
+        fontSizeView = rootView.findViewById(R.id.drawer_button_font_size);
+        encodingView = rootView.findViewById(R.id.drawer_button_encoding);
+        extraOptionsView = rootView.findViewById(R.id.drawer_button_extra_options);
+        themeView = rootView.findViewById(R.id.drawer_button_theme);
 
-        ViewUtils.setVisible(goPro, !ProCheckUtils.isPro(getActivity()));
-        ViewUtils.setVisible(swStorageAccessFramework, Device.hasKitKatApi());
 
-        goPro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String appPackageName = "com.maskyn.fileeditorpro";
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                } catch (android.content.ActivityNotFoundException anfe) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-                }
-            }
-        });
 
         swLineNumbers.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -239,34 +217,11 @@ public class SettingsFragment extends Fragment implements NumberPickerDialog.INu
             }
         });
 
-        swStorageAccessFramework.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    PreferenceHelper.setUseStorageAccessFramework(getActivity(), true);
-                    return;
-                }
-                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        == PackageManager.PERMISSION_GRANTED) {
-                    PreferenceHelper.setUseStorageAccessFramework(getActivity(), false);
-                    return;
-                }
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        MainActivity.REQUEST_WRITE_STORAGE_PERMISSION);
-            }
-        });
 
         swAutoSave.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 PreferenceHelper.setAutoSave(getActivity(), isChecked);
-            }
-        });
-
-        swIgnoreBackButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                PreferenceHelper.setIgnoreBackButton(getActivity(), isChecked);
             }
         });
 
@@ -277,12 +232,6 @@ public class SettingsFragment extends Fragment implements NumberPickerDialog.INu
             }
         });
 
-        swErrorReports.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                PreferenceHelper.setSendErrorReport(getActivity(), isChecked);
-            }
-        });
 
         return rootView;
     }

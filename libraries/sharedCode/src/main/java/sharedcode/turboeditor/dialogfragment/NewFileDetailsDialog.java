@@ -107,7 +107,14 @@ public class NewFileDetailsDialog extends DialogFragment {
 
                                     final GreatUri newUri = new GreatUri(Uri.fromFile(file), file.getAbsolutePath(), file.getName());
 
-
+                                    new SaveFileTask((MainActivity) getActivity(), newUri, fileText, fileEncoding, new SaveFileTask.SaveFileInterface() {
+                                        @Override
+                                        public void fileSaved(Boolean success) {
+                                            if (getActivity() != null) {
+                                                ((MainActivity) getActivity()).savedAFile(newUri, true);
+                                            }
+                                        }
+                                    }).execute();
                                 }
                             }
                         }

@@ -28,7 +28,7 @@ import sharedcode.turboeditor.preferences.PreferenceHelper;
 
 public class PageSystem {
 
-    public List<String> pages;
+    private List<String> pages;
     private int[] startingLines;
     private int currentPage = 0;
     private PageSystemInterface pageSystemInterface;

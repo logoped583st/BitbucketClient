@@ -3,12 +3,16 @@ package bushuk.stanislau.bitbucketproject.presentation.codeeditor
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import sharedcode.turboeditor.activity.MainActivity
 import sharedcode.turboeditor.texteditor.PageSystem
+
 import timber.log.Timber
 
 
 class CodeEditorActivity : MainActivity() {
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +28,7 @@ class CodeEditorActivity : MainActivity() {
             Timber.e(it)
             //mEditor.replaceTextKeepCursor(it)
             showTextEditor()
+            mEditor.enableTextChangedListener()
 
         })
     }

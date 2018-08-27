@@ -20,6 +20,8 @@
 package sharedcode.turboeditor.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +32,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,9 +42,8 @@ import android.provider.DocumentsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -55,7 +57,7 @@ import android.text.method.KeyListener;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.util.AttributeSet;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,12 +67,19 @@ import android.widget.AdapterView;
 import android.widget.HorizontalScrollView;
 import android.widget.Toast;
 
+import com.faizmalkani.floatingactionbutton.FloatingActionButton;
+import com.spazedog.lib.rootfw4.RootFW;
+import com.spazedog.lib.rootfw4.utils.io.FileReader;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -89,7 +98,9 @@ import sharedcode.turboeditor.dialogfragment.NumberPickerDialog;
 import sharedcode.turboeditor.dialogfragment.SaveFileDialog;
 import sharedcode.turboeditor.preferences.PreferenceChangeType;
 import sharedcode.turboeditor.preferences.PreferenceHelper;
+import sharedcode.turboeditor.task.SaveFileTask;
 import sharedcode.turboeditor.texteditor.EditTextPadding;
+import sharedcode.turboeditor.texteditor.FileUtils;
 import sharedcode.turboeditor.texteditor.LineUtils;
 import sharedcode.turboeditor.texteditor.PageSystem;
 import sharedcode.turboeditor.texteditor.PageSystemButtons;
@@ -97,6 +108,7 @@ import sharedcode.turboeditor.texteditor.Patterns;
 import sharedcode.turboeditor.texteditor.SearchResult;
 import sharedcode.turboeditor.util.AccessStorageApi;
 import sharedcode.turboeditor.util.AccessoryView;
+import sharedcode.turboeditor.util.AnimationUtils;
 import sharedcode.turboeditor.util.AppInfoHelper;
 import sharedcode.turboeditor.util.Device;
 import sharedcode.turboeditor.util.GreatUri;
@@ -104,6 +116,9 @@ import sharedcode.turboeditor.util.IHomeActivity;
 import sharedcode.turboeditor.util.MimeTypes;
 import sharedcode.turboeditor.util.ProCheckUtils;
 import sharedcode.turboeditor.util.ThemeUtils;
+import sharedcode.turboeditor.util.ViewUtils;
+import sharedcode.turboeditor.views.CustomDrawerLayout;
+import sharedcode.turboeditor.views.DialogHelper;
 import sharedcode.turboeditor.views.GoodScrollView;
 
 public abstract class MainActivity extends AppCompatActivity implements IHomeActivity, FindTextDialog
@@ -112,11 +127,14 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
         AdapterView.OnItemClickListener, AdapterDrawer.Callbacks, AccessoryView.IAccessoryView, EditTextDialog.EditDialogListener {
 
     //region VARIABLES
-    private static final int
+    private static final int READ_REQUEST_CODE = 42,
+            CREATE_REQUEST_CODE = 43,
+            SAVE_AS_REQUEST_CODE = 44,
             ID_SELECT_ALL = android.R.id.selectAll,
             ID_CUT = android.R.id.cut,
             ID_COPY = android.R.id.copy,
             ID_PASTE = android.R.id.paste,
+            SELECT_FILE_CODE = 121,
             SYNTAX_DELAY_MILLIS_SHORT = 250,
             SYNTAX_DELAY_MILLIS_LONG = 1500,
             ID_UNDO = R.id.im_undo,
@@ -145,19 +163,26 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
      * {@link DrawerLayout} and the framework <code>ActionBar</code> to implement the recommended
      * design for navigation drawers.
      */
+    private ActionBarDrawerToggle mDrawerToggle;
     /*
      * The Drawer Layout
      */
+    private CustomDrawerLayout mDrawerLayout;
     private static GoodScrollView verticalScroll;
     private static GreatUri greatUri = new GreatUri(Uri.EMPTY, "", "");
     protected Editor mEditor;
     private HorizontalScrollView horizontalScroll;
     private static SearchResult searchResult;
     protected static PageSystem pageSystem;
+    private PageSystemButtons pageSystemButtons;
     private static String currentEncoding = "UTF-16";
     private Toolbar toolbar;
 
-
+    /*
+    Navigation Drawer
+     */
+    private AdapterDrawer arrayAdapter;
+    private LinkedList<GreatUri> greatUris;
     //endregion
 
     //region Activity facts
@@ -173,23 +198,26 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
         toolbar = findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
         // setup the navigation drawer
+        setupNavigationDrawer();
         // reset text editor
         setupTextEditor();
         hideTextEditor();
         /* First Time we open this activity */
         if (savedInstanceState == null) {
-            // Open
-            // Set the default title
+
             getSupportActionBar().setTitle(getString(R.string.nome_app_turbo_editor));
         }
         // parse the intent
+
         // show a dialog with the changelog
+        showChangeLog();
     }
 
 
     @Override
     protected final void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
     }
 
     @Override
@@ -201,13 +229,17 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
 
     @Override
     protected void onNewIntent(Intent intent) {
-
         super.onNewIntent(intent);
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
+
+        if (PreferenceHelper.getAutoSave(getBaseContext()) && mEditor.canSaveFile()) {
+            mEditor.fileSaved(); // so it doesn't ask to save in onDetach
+        }
     }
 
     @Override
@@ -223,6 +255,7 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
     @Override
     public final void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -258,18 +291,15 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
     @Override
     public void onBackPressed() {
 
-        try {
-            // if we should ignore the back button
-            if (PreferenceHelper.getIgnoreBackButton(this))
-                return;
-            else {
-                showInterstitial();
-                super.onBackPressed();
-            }
-        } catch (Exception e) {
-            // maybe something is null, who knows
+        if (mDrawerLayout.isDrawerOpen(Gravity.START)) {
+            mDrawerLayout.closeDrawer(Gravity.START);
+        } else {
+            showInterstitial();
+            super.onBackPressed();
         }
+
     }
+
 
 
     private void forceUseStorageAccessFramework() {
@@ -355,20 +385,6 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
                 imRedo.setVisible(false);
             }
 
-            MenuItem imMarkdown = menu.findItem(R.id.im_view_markdown);
-            boolean isMarkdown = Arrays.asList(MimeTypes.MIME_MARKDOWN).contains(FilenameUtils.getExtension(greatUri.getFileName()));
-            if (imMarkdown != null)
-                imMarkdown.setVisible(isMarkdown);
-
-            MenuItem imShare = menu.findItem(R.id.im_share);
-            if (imMarkdown != null) {
-                ShareActionProvider shareAction = (ShareActionProvider) MenuItemCompat
-                        .getActionProvider(imShare);
-                Intent shareIntent = new Intent();
-                shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.putExtra(Intent.EXTRA_STREAM, greatUri.getUri());
-                shareIntent.setType("text/plain");
-            }
         }
 
         MenuItem imDonate = menu.findItem(R.id.im_donate);
@@ -382,10 +398,17 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int i = item.getItemId();
-
-
-        if (i == R.id.im_undo) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            Toast.makeText(getBaseContext(), "drawer click", Toast.LENGTH_SHORT).show();
+            mDrawerLayout.closeDrawer(Gravity.END);
+            return true;
+        } else if (i == R.id.im_rename) {
+            EditTextDialog.newInstance(EditTextDialog.Actions.Rename, greatUri.getFileName()).show(getFragmentManager().beginTransaction(), "dialog");
+        } else if (i == R.id.im_undo) {
             mEditor.onTextContextMenuItem(ID_UNDO);
+
+        } else if (i == R.id.im_redo) {
+            mEditor.onTextContextMenuItem(ID_REDO);
 
         } else if (i == R.id.im_search) {
             FindTextDialog.newInstance(mEditor.getText().toString()).show(getFragmentManager()
@@ -421,10 +444,6 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
                 //
             }
 
-        } else if (i == R.id.im_view_markdown) {
-            Intent browserIntent = new Intent(MainActivity.this, MarkdownActivity.class);
-            browserIntent.putExtra("text", pageSystem.getAllText(mEditor.getText().toString()));
-            startActivity(browserIntent);
         } else if (i == R.id.im_info) {
             FileInfoDialog.newInstance(greatUri.getUri()).show(getFragmentManager().beginTransaction(), "dialog");
         } else if (i == R.id.im_donate) {
@@ -527,18 +546,70 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
         invalidateOptionsMenu();
     }
 
-
+    private boolean useStorageAccessFramework() {
+        if (!Device.hasKitKatApi())
+            return false;
+        boolean pref = PreferenceHelper.getUseStorageAccessFramework(this);
+        if (pref)
+            return true;
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            forceUseStorageAccessFramework();
+            return true;
+        }
+        return false;
+    }
 
 
     /**
      * Setup the navigation drawer
      */
+    private void setupNavigationDrawer() {
+        mDrawerLayout = findViewById(R.id.drawer_layout);
 
-    public void setupTextEditor() {
+        mDrawerToggle =
+                new ActionBarDrawerToggle(
+                        this,
+                        mDrawerLayout,
+                        toolbar,
+                        R.string.nome_app_turbo_editor,
+                        R.string.nome_app_turbo_editor) {
+
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        supportInvalidateOptionsMenu();
+                        try {
+                            closeKeyBoard();
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onDrawerClosed(View view) {
+                        supportInvalidateOptionsMenu();
+                    }
+                };
+        /* link the mDrawerToggle to the Drawer Layout */
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+//mDrawerLayout.setFocusableInTouchMode(false);
+
+        greatUris = new LinkedList<>();
+        arrayAdapter = new AdapterDrawer(this, greatUris, this);
+
+    }
+
+    private void setupTextEditor() {
 
         verticalScroll = findViewById(R.id.vertical_scroll);
         horizontalScroll = findViewById(R.id.horizontal_scroll);
         mEditor = findViewById(R.id.editor);
+
+        AccessoryView accessoryView = findViewById(R.id.accessoryView);
+        accessoryView.setInterface(this);
+
+        HorizontalScrollView parentAccessoryView = findViewById(R.id.parent_accessory_view);
+        ViewUtils.setVisible(parentAccessoryView, PreferenceHelper.getUseAccessoryView(this));
 
 
         if (PreferenceHelper.getWrapContent(this)) {
@@ -551,7 +622,9 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
 
         pageSystem = new PageSystem(this, this, "");
 
-
+        pageSystemButtons = new PageSystemButtons(this, this,
+                (FloatingActionButton) findViewById(R.id.fabPrev),
+                (FloatingActionButton) findViewById(R.id.fabNext));
 
         mEditor.setupEditor();
     }
@@ -567,11 +640,10 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
         searchResult = null;
 
         invalidateOptionsMenu();
-        mEditor.setReadOnly(false);
+
         mEditor.disableTextChangedListener();
         mEditor.replaceTextKeepCursor(pageSystem.getCurrentPageText());
         mEditor.enableTextChangedListener();
-
     }
 
     private void hideTextEditor() {
@@ -648,7 +720,7 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
         int first_index_of_array = savedPaths.length > max_recent_files ? savedPaths.length - max_recent_files : 0;
         savedPaths = ArrayUtils.subarray(savedPaths, first_index_of_array, savedPaths.length);
         // File names for the list
-
+        greatUris.clear();
         // StringBuilder that will contain the file paths
         StringBuilder sb = new StringBuilder();
 
@@ -672,6 +744,7 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
                         good = false;
                 }
                 if (good) {
+                    greatUris.addFirst(new GreatUri(particularUri, AccessStorageApi.getPath(this, particularUri), name));
                     sb.append(savedPaths[i]).append(",");
                 }
             }
@@ -680,16 +753,56 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
         // if is not null, empty, we have to add something and we dont already have this uri
         if (thisUri != null && !thisUri.getUri().equals(Uri.EMPTY) && add && !ArrayUtils.contains(savedPaths, thisUri.getUri().toString())) {
             sb.append(thisUri.getUri().toString()).append(",");
+            greatUris.addFirst(thisUri);
         }
         // save list without empty or non existed files
         PreferenceHelper.setSavedPaths(this, sb);
         // Set adapter
+        arrayAdapter.notifyDataSetChanged();
     }
     //endregion
 
 
+    public void savedAFile(GreatUri uri, boolean updateList) {
+
+        if (uri != null) {
+
+            greatUri = uri;
+
+            String name = uri.getFileName();
+            fileExtension = FilenameUtils.getExtension(name).toLowerCase();
+            toolbar.setTitle(name);
+
+            if (updateList) {
+                refreshList(uri, true, false);
+                arrayAdapter.selectPosition(uri);
+            }
+        }
+
+        mEditor.clearHistory();
+        mEditor.fileSaved();
+        invalidateOptionsMenu();
+
+        try {
+            closeKeyBoard();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    void cannotOpenFile() {
+        //
+        mDrawerLayout.openDrawer(Gravity.LEFT);
+        //
+        getSupportActionBar().setTitle(getString(R.string.nome_app_turbo_editor));
+        //
+        supportInvalidateOptionsMenu();
+        // Replace fragment
+        hideTextEditor();
+    }
+
     public void aPreferenceValueWasChanged(final PreferenceChangeType type) {
-        Log.e("PREF","CHANGE");
         this.aPreferenceValueWasChanged(new ArrayList<PreferenceChangeType>() {{
             add(type);
         }});
@@ -699,6 +812,8 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
 
         if (types.contains(PreferenceChangeType.THEME_CHANGE)) {
             ThemeUtils.setWindowsBackground(this);
+            AccessoryView accessoryView = findViewById(R.id.accessoryView);
+            accessoryView.updateTextColors();
         }
 
         if (types.contains(PreferenceChangeType.WRAP_CONTENT)) {
@@ -755,6 +870,8 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
             mEditor.updatePadding();
             mEditor.setTextSize(PreferenceHelper.getFontSize(this));
         } else if (types.contains(PreferenceChangeType.ACCESSORY_VIEW)) {
+            HorizontalScrollView parentAccessoryView = findViewById(R.id.parent_accessory_view);
+            ViewUtils.setVisible(parentAccessoryView, PreferenceHelper.getUseAccessoryView(this));
             mEditor.updatePadding();
         } else if (types.contains(PreferenceChangeType.ENCODING)) {
             String oldEncoding, newEncoding;
@@ -779,7 +896,6 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
     }
 
 
-    //endregion
 
     //endregion
 
@@ -875,6 +991,7 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
 
     @Override
     public void onPageChanged(int page) {
+        pageSystemButtons.updateVisibility(false);
         searchResult = null;
         mEditor.clearHistory();
         invalidateOptionsMenu();
@@ -882,6 +999,7 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
 
     @Override
     public void onScrollChanged(int l, int t, int oldl, int oldt) {
+        pageSystemButtons.updateVisibility(Math.abs(t) > 10);
 
         if (!PreferenceHelper.getSyntaxHighlight(this) || (mEditor.hasSelection() &&
                 searchResult == null) || updateHandler == null || colorRunnable_duringScroll == null)
@@ -927,10 +1045,14 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
     @Override
     public void userDoesntWantToSave(boolean openNewFile, GreatUri newUri) {
         mEditor.fileSaved();
+
     }
 
     @Override
     public void CancelItem(int position, boolean andCloseOpenedFile) {
+        refreshList(greatUris.get(position), false, true);
+        if (andCloseOpenedFile)
+            cannotOpenFile();
     }
 
     @Override
@@ -960,7 +1082,12 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
                 greatUri.setFilePath(AccessStorageApi.getPath(this, newUri));
                 greatUri.setFileName(AccessStorageApi.getName(this, newUri));
 
-
+                new SaveFileTask(this, greatUri, pageSystem.getAllText(mEditor.getText().toString()), currentEncoding, new SaveFileTask.SaveFileInterface() {
+                    @Override
+                    public void fileSaved(Boolean success) {
+                        savedAFile(greatUri, true);
+                    }
+                }).execute();
             } else {
                 Toast.makeText(this, R.string.file_cannot_be_renamed, Toast.LENGTH_SHORT).show();
             }
@@ -976,11 +1103,18 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
                 greatUri.setFilePath(newFile.getAbsolutePath());
                 greatUri.setFileName(newFile.getName());
 
+                new SaveFileTask(this, greatUri, pageSystem.getAllText(mEditor.getText().toString()), currentEncoding, new SaveFileTask.SaveFileInterface() {
+                    @Override
+                    public void fileSaved(Boolean success) {
 
+                        savedAFile(greatUri, true);
+                    }
+                }).execute();
             } else {
                 Toast.makeText(this, R.string.file_cannot_be_renamed, Toast.LENGTH_SHORT).show();
             }
         }
+
 
     }
 
@@ -1138,7 +1272,7 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
                         0);
             }
             // add a padding from bottom
-            verticalScroll.setPadding(0, 0, 0, 0);
+            verticalScroll.setPadding(0, 0, 0, EditTextPadding.getPaddingBottom(context));
         }
 
         //region OVERRIDES
@@ -1579,6 +1713,106 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
             mShowRedo = getCanRedo();
         }
 
+        /**
+         * Store preferences.
+         */
+        public void storePersistentState(
+                SharedPreferences.Editor editor,
+                String prefix) {
+            // Store hash code of text in the editor so that we can check if the
+            // editor contents has changed.
+            editor.putString(prefix + ".hash",
+                    String.valueOf(
+                            getText().toString().hashCode()));
+            editor.putInt(prefix + ".maxSize",
+                    mEditHistory.mmMaxHistorySize);
+            editor.putInt(prefix + ".position",
+                    mEditHistory.mmPosition);
+            editor.putInt(prefix + ".size",
+                    mEditHistory.mmHistory.size());
+
+            int i = 0;
+            for (EditItem ei : mEditHistory.mmHistory) {
+                String pre = prefix + "." + i;
+
+                editor.putInt(pre + ".start", ei.mmStart);
+                editor.putString(pre + ".before",
+                        ei.mmBefore.toString());
+                editor.putString(pre + ".after",
+                        ei.mmAfter.toString());
+
+                i++;
+            }
+        }
+
+        /**
+         * Restore preferences.
+         *
+         * @param prefix The preference key prefix
+         *               used when state was stored.
+         * @return did restore succeed? If this is
+         * false, the undo history will be empty.
+         */
+        public boolean restorePersistentState(
+                SharedPreferences sp, String prefix)
+                throws IllegalStateException {
+
+            boolean ok =
+                    doRestorePersistentState(sp, prefix);
+            if (!ok) {
+                mEditHistory.clear();
+            }
+
+            return ok;
+        }
+
+        private boolean doRestorePersistentState(
+                SharedPreferences sp, String prefix) {
+
+            String hash =
+                    sp.getString(prefix + ".hash", null);
+            if (hash == null) {
+                // No state to be restored.
+                return true;
+            }
+
+            if (Integer.valueOf(hash)
+                    != getText().toString().hashCode()) {
+                return false;
+            }
+
+            mEditHistory.clear();
+            mEditHistory.mmMaxHistorySize =
+                    sp.getInt(prefix + ".maxSize", -1);
+
+            int count = sp.getInt(prefix + ".size", -1);
+            if (count == -1) {
+                return false;
+            }
+
+            for (int i = 0; i < count; i++) {
+                String pre = prefix + "." + i;
+
+                int start = sp.getInt(pre + ".start", -1);
+                String before =
+                        sp.getString(pre + ".before", null);
+                String after =
+                        sp.getString(pre + ".after", null);
+
+                if (start == -1
+                        || before == null
+                        || after == null) {
+                    return false;
+                }
+                mEditHistory.add(
+                        new EditItem(start, before, after));
+            }
+
+            mEditHistory.mmPosition =
+                    sp.getInt(prefix + ".position", -1);
+            return mEditHistory.mmPosition != -1;
+
+        }
 
         /**
          * Class that listens to changes in the text.

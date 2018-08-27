@@ -66,7 +66,7 @@ public final class PreferenceHelper {
     }
 
     public static boolean getWrapContent(Context context) {
-        return getPrefs(context).getBoolean("editor_wrap_content", true);
+        return getPrefs(context).getBoolean("editor_wrap_content", false);
     }
 
     public static int getTheme(Context context) {
@@ -93,9 +93,6 @@ public final class PreferenceHelper {
         return getPrefs(context).getBoolean("autoencoding", true);
     }
 
-    public static boolean getSendErrorReports(Context context) {
-        return getPrefs(context).getBoolean("send_error_reports", true);
-    }
 
     public static String getEncoding(Context context) {
         return getPrefs(context).getString("editor_encoding", "UTF-16");
@@ -136,12 +133,10 @@ public final class PreferenceHelper {
     }
 
     public static boolean getReadOnly(Context context) {
-        return getPrefs(context).getBoolean("read_only", false);
+        return getPrefs(context).getBoolean("read_only", true);
     }
 
-    public static boolean getIgnoreBackButton(Context context) {
-        return getPrefs(context).getBoolean("ignore_back_button", false);
-    }
+
 
     public static boolean getSplitText(Context context) {
         return getPrefs(context).getBoolean("page_system_active", true);
@@ -216,16 +211,9 @@ public final class PreferenceHelper {
         getEditor(context).putBoolean("auto_save", value).commit();
     }
 
-    public static void setIgnoreBackButton(Context context, boolean value) {
-        getEditor(context).putBoolean("ignore_back_button", value).commit();
-    }
 
     public static void setSplitText(Context context, boolean value) {
         getEditor(context).putBoolean("page_system_active", value).commit();
-    }
-
-    public static void setSendErrorReport(Context context, boolean value) {
-        getEditor(context).putBoolean("send_error_reports", value).commit();
     }
 
     public static void setEncoding(Context context, String value) {
