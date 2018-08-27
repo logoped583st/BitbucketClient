@@ -19,16 +19,9 @@
 
 package sharedcode.turboeditor.preferences;
 
-import android.Manifest;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,8 +34,6 @@ import sharedcode.turboeditor.activity.MainActivity;
 import sharedcode.turboeditor.dialogfragment.EncodingDialog;
 import sharedcode.turboeditor.dialogfragment.NumberPickerDialog;
 import sharedcode.turboeditor.dialogfragment.ThemeDialog;
-import sharedcode.turboeditor.util.Device;
-import sharedcode.turboeditor.util.ProCheckUtils;
 import sharedcode.turboeditor.util.ViewUtils;
 
 public class SettingsFragment extends Fragment implements NumberPickerDialog.INumberPickerDialog, EncodingDialog.DialogListener, ThemeDialog.DialogListener {
@@ -55,7 +46,6 @@ public class SettingsFragment extends Fragment implements NumberPickerDialog.INu
     private boolean sReadOnly;
     private boolean sAccessoryView;
     private boolean sSuggestions;
-    private boolean sAutoSave;
     private boolean sSplitText;
 
 
@@ -70,7 +60,6 @@ public class SettingsFragment extends Fragment implements NumberPickerDialog.INu
         sReadOnly = PreferenceHelper.getReadOnly(context);
         sAccessoryView = PreferenceHelper.getUseAccessoryView(context);
         sSuggestions = PreferenceHelper.getSuggestionActive(context);
-        sAutoSave = PreferenceHelper.getAutoSave(context);
         sSplitText = PreferenceHelper.getSplitText(context);
 
     }
@@ -91,10 +80,7 @@ public class SettingsFragment extends Fragment implements NumberPickerDialog.INu
 
         swSuggestions = rootView.findViewById(R.id.switch_suggestions_active);
         swAccessoryView = rootView.findViewById(R.id.switch_accessory_view);
-        swAutoSave = rootView.findViewById(R.id.switch_auto_save);
-        swIgnoreBackButton = rootView.findViewById(R.id.switch_ignore_backbutton);
         swSplitText = rootView.findViewById(R.id.switch_page_system);
-        swErrorReports = rootView.findViewById(R.id.switch_send_error_reports);
 
         swLineNumbers.setChecked(sLineNumbers);
         swSyntax.setChecked(sColorSyntax);
@@ -104,7 +90,6 @@ public class SettingsFragment extends Fragment implements NumberPickerDialog.INu
 
         swSuggestions.setChecked(sSuggestions);
         swAccessoryView.setChecked(sAccessoryView);
-        swAutoSave.setChecked(sAutoSave);
         swSplitText.setChecked(sSplitText);
 
         TextView fontSizeView, encodingView, extraOptionsView, themeView, goPro;
@@ -217,13 +202,6 @@ public class SettingsFragment extends Fragment implements NumberPickerDialog.INu
             }
         });
 
-
-        swAutoSave.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                PreferenceHelper.setAutoSave(getActivity(), isChecked);
-            }
-        });
 
         swSplitText.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

@@ -7,6 +7,7 @@ import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
 import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import io.reactivex.Single
+import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 class CodeEditorModel {
@@ -25,4 +26,5 @@ class CodeEditorModel {
     init {
         App.component.inject(this)
     }
+
 }

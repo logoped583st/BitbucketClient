@@ -30,7 +30,11 @@ class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppN
 
             Screens.LOGIN_AUTH_SCREEN -> return Intent(context, AuthLoginActivity::class.java)
 
-            Screens.CODE_EDITOR_SCREEN -> return Intent(context, CodeEditorActivity::class.java)
+            Screens.CODE_EDITOR_SCREEN -> {
+                val intent = Intent(context, CodeEditorActivity::class.java)
+                intent.putExtra("FILENAME", data as String)
+                return intent
+            }
         }
 
         return null
@@ -67,9 +71,7 @@ class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppN
                 return fragment
             }
 
-            Screens.PULL_REQUEST_SCREEN -> {
-                return PullRequestFragment()
-            }
+            Screens.PULL_REQUEST_SCREEN -> return PullRequestFragment()
 
         }
         return null

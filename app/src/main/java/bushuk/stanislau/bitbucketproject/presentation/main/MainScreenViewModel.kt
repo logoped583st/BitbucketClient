@@ -40,7 +40,7 @@ class MainScreenViewModel : ViewModel() {
         Timber.e("INIT" + mainScreenModel.hashCode())
 
         userModel.user
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     user.postValue(it)

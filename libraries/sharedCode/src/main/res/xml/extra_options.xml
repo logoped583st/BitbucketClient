@@ -30,11 +30,6 @@
         android:defaultValue="false" />
 
     <CheckBoxPreference
-        android:key="auto_save"
-        android:title="@string/auto_save"
-        android:defaultValue="false" />
-
-    <CheckBoxPreference
         android:key="autoencoding"
         android:title="@string/enable_autoencoding"
         android:defaultValue="true" />

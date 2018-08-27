@@ -18,6 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
+import ru.terrakok.cicerone.result.ResultListener
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -54,6 +55,7 @@ class CodeViewModel : ViewModel() {
                         i++
                     }
                     branches.postValue(it.values.reversed())
+
                 }, {
                     Timber.e(it.message)
                 })
@@ -90,8 +92,13 @@ class CodeViewModel : ViewModel() {
 
 
     fun navigateToCodeEditor(code: Code) {
-        UrlBuilder.buildPathWithHash(code.path,hash)
-        router.navigateTo(Screens.CODE_EDITOR_SCREEN)
+        val position = code.path.lastIndexOf('/')
+        val fileName = when (position) {
+            -1 -> code.path
+            else -> code.path.subSequence(position + 1, code.path.length).toString()
+        }
+        UrlBuilder.buildPathWithHash(code.path, hash)
+        router.navigateTo(Screens.CODE_EDITOR_SCREEN, fileName)
     }
 
     fun reloadPathWithHash(lifecycleOwner: LifecycleOwner, adapter: RecyclerCodeAdapter, path: String) {
@@ -102,6 +109,7 @@ class CodeViewModel : ViewModel() {
     }
 
     override fun onCleared() {
+        UrlBuilder.repositoryPath = null //хардкорно сбиваем путь
         codeDataSourceFactory.codeDataSource.invalidate()
         disposable.clear()
         super.onCleared()

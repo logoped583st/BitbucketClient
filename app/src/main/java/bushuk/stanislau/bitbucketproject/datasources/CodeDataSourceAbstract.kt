@@ -18,7 +18,8 @@ abstract class CodeDataSourceAbstract : BaseDataSource<String, Code>() {
 
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, Code>) {
         super.loadInitial(params, callback)
-        compositeDisposable.add(single.subscribeOn(Schedulers.io())
+        compositeDisposable.add(single
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     loading(it)
@@ -31,7 +32,8 @@ abstract class CodeDataSourceAbstract : BaseDataSource<String, Code>() {
     abstract fun loadNextPage(url: String): Single<CodeResponse>
 
     override fun loadAfter(params: LoadParams<String>, callback: LoadCallback<String, Code>) {
-        compositeDisposable.add(loadNextPage(params.key).subscribeOn(Schedulers.io())
+        compositeDisposable.add(loadNextPage(params.key)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     callback.onResult(it.values, it.next)

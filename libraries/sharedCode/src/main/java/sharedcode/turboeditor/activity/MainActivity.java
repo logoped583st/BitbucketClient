@@ -204,8 +204,7 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
         hideTextEditor();
         /* First Time we open this activity */
         if (savedInstanceState == null) {
-
-            getSupportActionBar().setTitle(getString(R.string.nome_app_turbo_editor));
+            getSupportActionBar().setTitle(getIntent().getStringExtra("FILENAME"));
         }
         // parse the intent
 
@@ -233,14 +232,6 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
 
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        if (PreferenceHelper.getAutoSave(getBaseContext()) && mEditor.canSaveFile()) {
-            mEditor.fileSaved(); // so it doesn't ask to save in onDetach
-        }
-    }
 
     @Override
     protected void onDestroy() {

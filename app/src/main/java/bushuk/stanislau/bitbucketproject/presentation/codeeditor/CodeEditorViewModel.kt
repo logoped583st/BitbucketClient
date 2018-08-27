@@ -19,7 +19,8 @@ class CodeEditorViewModel : ViewModel() {
         Timber.e("INIT CODE VIEW MODEL")
 
         App.component.inject(this)
-        codeEditorModel.getCode().subscribeOn(Schedulers.io())
+        codeEditorModel.getCode()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     code.postValue(it)

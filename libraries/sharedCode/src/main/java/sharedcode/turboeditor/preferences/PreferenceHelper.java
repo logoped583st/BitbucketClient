@@ -128,9 +128,6 @@ public final class PreferenceHelper {
         return getPrefs(context).getBoolean("page_system_button_popup_shown", false);
     }
 
-    public static boolean getAutoSave(Context context) {
-        return getPrefs(context).getBoolean("auto_save", false);
-    }
 
     public static boolean getReadOnly(Context context) {
         return getPrefs(context).getBoolean("read_only", true);
@@ -207,9 +204,7 @@ public final class PreferenceHelper {
         getEditor(context).putBoolean("suggestion_active", value).commit();
     }
 
-    public static void setAutoSave(Context context, boolean value) {
-        getEditor(context).putBoolean("auto_save", value).commit();
-    }
+
 
 
     public static void setSplitText(Context context, boolean value) {
