@@ -17,4 +17,7 @@ class RepositoriesDataSource : RepositoriesDataSourceAbstract() {
 
     override fun loadNextPage(url: String): Single<RepositoriesResponse> = api.getReposNextPage(url)
 
+    override fun invalidate() {
+        compositeDisposable.clear()
+    }
 }

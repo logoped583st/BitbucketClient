@@ -18,8 +18,8 @@ class FollowingViewModel : BaseFollowViewModel() {
 
     override var factory: DataSource.Factory<String, User> = _factory
 
-    override fun onCleared() {
-        _factory.followingDataSource.invalidate()
-        super.onCleared()
-    }
+//    override fun onCleared() {
+//        super.onCleared()
+//        _factory.followingDataSource .invalidate()
+//    }
 }

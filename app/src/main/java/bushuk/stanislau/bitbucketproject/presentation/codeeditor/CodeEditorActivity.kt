@@ -3,7 +3,6 @@ package bushuk.stanislau.bitbucketproject.presentation.codeeditor
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import sharedcode.turboeditor.activity.MainActivity
 import sharedcode.turboeditor.texteditor.PageSystem
 import timber.log.Timber

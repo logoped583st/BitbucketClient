@@ -21,4 +21,9 @@ class SnippetsViewModel : ViewModel() {
     }
 
     val snippets: LiveData<PagedList<Snippet>> = LivePagedListBuilder<String, Snippet>(snippetsDataSourceFactory, Constants.listPagedConfig).build()
+
+    override fun onCleared() {
+        super.onCleared()
+       snippetsDataSourceFactory.snippetsDataSource.invalidate()
+    }
 }

@@ -15,4 +15,5 @@ class SnippetsDataSource : SnippetsDataSourceAbstract() {
 
     override val errorText: String = App.resourcesApp.getString(R.string.snippets_screen_no_snippets)
 
+
 }

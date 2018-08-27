@@ -45,4 +45,8 @@ abstract class CodeDataSourceAbstract : BaseDataSource<String, Code>() {
     override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<String, Code>) {
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun invalidate() {
+        compositeDisposable.clear()
+    }
 }

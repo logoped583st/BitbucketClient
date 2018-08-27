@@ -44,4 +44,8 @@ abstract class SnippetsDataSourceAbstract : BaseDataSource<String, Snippet>() {
     override fun loadBefore(params: PageKeyedDataSource.LoadParams<String>, callback: PageKeyedDataSource.LoadCallback<String, Snippet>) {
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun invalidate() {
+        compositeDisposable.clear()
+    }
 }

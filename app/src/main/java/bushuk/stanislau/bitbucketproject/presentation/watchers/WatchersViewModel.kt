@@ -27,4 +27,8 @@ class WatchersViewModel : BaseFollowViewModel() {
 
     val watchers: LiveData<PagedList<User>> by lazy { LivePagedListBuilder<String, User>(watchersDataSourceFactory, Constants.listPagedConfig).build() }
 
+    override fun onCleared() {
+        super.onCleared()
+        watchersDataSourceFactory.watchersDataSource.invalidate()
+    }
 }

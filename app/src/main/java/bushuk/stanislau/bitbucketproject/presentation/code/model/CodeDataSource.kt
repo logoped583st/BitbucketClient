@@ -27,4 +27,5 @@ class CodeDataSource : CodeDataSourceAbstract() {
 
     override val errorText: String = App.resourcesApp.getString(R.string.code_screen_error_text)
 
+
 }

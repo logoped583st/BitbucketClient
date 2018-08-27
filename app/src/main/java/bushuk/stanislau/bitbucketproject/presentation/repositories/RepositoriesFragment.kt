@@ -30,7 +30,6 @@ import timber.log.Timber
 class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
 
     lateinit var viewModel: RepositoriesViewModel
-    private var test: Boolean = false
     lateinit var binding: FragmentRepositoriesBinding
     private val access: MutableList<String> = mutableListOf("All", "Public", "Private")
     private lateinit var adapter: RecyclerRepositoriesAdapter
@@ -50,10 +49,6 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
         }
 
         viewModel.language.observe(this, Observer { Timber.e(it) })
-
-        if (savedInstanceState == null) {
-            test = true
-        }
 
         return binding.root
     }
