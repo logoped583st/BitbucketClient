@@ -19,4 +19,8 @@ class FollowersViewModel : BaseFollowViewModel() {
 
     override var factory: DataSource.Factory<String, User> = _factory
 
+//    override fun onCleared() {
+//        super.onCleared()
+//        _factory.followersDataSource.invalidate()
+//    }
 }

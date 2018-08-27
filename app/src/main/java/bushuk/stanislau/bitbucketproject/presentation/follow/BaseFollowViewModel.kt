@@ -28,4 +28,5 @@ abstract class BaseFollowViewModel : ViewModel() {
     fun navigateToUserScreen(userName: User) {
         router.navigateTo(Screens.USER_SCREEN, userName)
     }
+
 }

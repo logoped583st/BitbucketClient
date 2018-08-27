@@ -14,10 +14,6 @@ abstract class UsersDataSourceAbstract : BaseDataSource<String, User>() {
         App.component.inject(this)
     }
 
-    override fun invalidate() {
-        compositeDisposable.clear()
-        super.invalidate()
-    }
 
     abstract val single: Observable<Followers>
 
@@ -47,5 +43,8 @@ abstract class UsersDataSourceAbstract : BaseDataSource<String, User>() {
 
     override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<String, User>) {
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+    override fun invalidate() {
+        compositeDisposable.clear()
     }
 }

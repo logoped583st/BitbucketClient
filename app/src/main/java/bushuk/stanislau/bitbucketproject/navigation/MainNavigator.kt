@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginActivity
+import bushuk.stanislau.bitbucketproject.presentation.codeeditor.CodeEditorActivity
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersFragment
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingFragment
 import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
@@ -28,6 +29,12 @@ class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppN
             Screens.MAIN_SCREEN -> return Intent(context, MainScreenActivity::class.java)
 
             Screens.LOGIN_AUTH_SCREEN -> return Intent(context, AuthLoginActivity::class.java)
+
+            Screens.CODE_EDITOR_SCREEN -> {
+                val intent = Intent(context, CodeEditorActivity::class.java)
+                intent.putExtra("FILENAME", data as String)
+                return intent
+            }
         }
 
         return null
@@ -64,9 +71,7 @@ class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppN
                 return fragment
             }
 
-            Screens.PULL_REQUEST_SCREEN -> {
-                return PullRequestFragment()
-            }
+            Screens.PULL_REQUEST_SCREEN -> return PullRequestFragment()
 
         }
         return null

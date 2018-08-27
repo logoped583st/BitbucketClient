@@ -36,6 +36,12 @@ class PullRequestViewModel : ViewModel() {
         router.exit()
     }
 
+    override fun onCleared() {
+        commitDataSourceFactory.commitsDataSource.invalidate()
+        reviewersDataSourceFactory.reviewersDataSource.invalidate()
+        super.onCleared()
+    }
+
     val commits: LiveData<PagedList<Commit>> = LivePagedListBuilder<String, Commit>(commitDataSourceFactory, Constants.listPagedConfig).build()
 
     val reviewers: LiveData<PagedList<User>> = LivePagedListBuilder<String, User>(reviewersDataSourceFactory, Constants.listPagedConfig).build()

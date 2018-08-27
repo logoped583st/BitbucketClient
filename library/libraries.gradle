@@ -75,6 +75,7 @@ ext.libraries = [
     httpLogs               : "com.squareup.okhttp3:logging-interceptor:" +                      "$version.okhttpLibVersion",
     retrofit               : "com.squareup.retrofit2:retrofit:" +                               "$version.retrofit",
     converterGson          : "com.squareup.retrofit2:converter-gson:" +                         "$version.retrofit",
+    scalarsConverter       : "com.squareup.retrofit2:converter-scalars:"+                        "$version.retrofit",
 
     //GLIDE
     glide                  : "com.github.bumptech.glide:glide:" +                               "$version.glide",

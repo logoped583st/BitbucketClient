@@ -43,4 +43,8 @@ abstract class CommitsDataSourceAbstract : BaseDataSource<String, Commit>() {
     override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<String, Commit>) {
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun invalidate() {
+        compositeDisposable.clear()
+    }
 }

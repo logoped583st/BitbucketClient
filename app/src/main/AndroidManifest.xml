@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="bushuk.stanislau.bitbucketproject" >
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".App"
@@ -28,6 +30,12 @@
             android:name=".presentation.auth.AuthLoginActivity"
             android:label="@string/title_activity_auth_login"
             android:windowSoftInputMode="adjustPan"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+
+        <activity
+            android:name=".presentation.codeeditor.CodeEditorActivity"
+            android:label="@string/title_activity_auth_login"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>

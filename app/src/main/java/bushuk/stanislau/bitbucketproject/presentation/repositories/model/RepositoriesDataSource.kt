@@ -12,8 +12,12 @@ class RepositoriesDataSource : RepositoriesDataSourceAbstract() {
 
     override val errorText: String = App.resourcesApp.getString(R.string.repositories_screen_no_repositories)
 
-    override val single: Observable<RepositoriesResponse> = userModel.user.switchMapSingle { api.getRepos(it.username, UrlBuilder.buildQuery()) }
+    override val single: Observable<RepositoriesResponse>
+        get() = userModel.user.switchMapSingle { api.getRepos(it.username, UrlBuilder.buildQuery()) }
 
     override fun loadNextPage(url: String): Single<RepositoriesResponse> = api.getReposNextPage(url)
 
+    override fun invalidate() {
+        compositeDisposable.clear()
+    }
 }

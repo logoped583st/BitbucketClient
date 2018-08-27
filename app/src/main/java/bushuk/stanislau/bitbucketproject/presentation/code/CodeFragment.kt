@@ -33,8 +33,13 @@ class CodeFragment : Fragment(), ClickFollow, RecyclerCodePathAdapter.PathClick 
 
 
     override fun onClickItem(view: View, data: Any) {
-        codePathAdapter.changePath((data as Code).path)
-        viewModel.reloadPathWithHash(this, codeAdapter, data.path)
+        if ((data as Code).type == "commit_directory") {
+            codePathAdapter.changePath(data.path)
+            viewModel.reloadPathWithHash(this, codeAdapter, data.path)
+        } else {
+            viewModel.navigateToCodeEditor(data)
+        }
+
     }
 
     lateinit var viewModel: CodeViewModel
@@ -70,7 +75,7 @@ class CodeFragment : Fragment(), ClickFollow, RecyclerCodePathAdapter.PathClick 
             it!!.forEach {
                 branchSpinnerAdapter.add(it.name)
             }
-            viewModel.observeSpinner(code_screen_branch_spinner,codeAdapter,this)
+            viewModel.observeSpinner(code_screen_branch_spinner, codeAdapter, this)
         })
 
 

@@ -13,6 +13,7 @@ import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
 import io.reactivex.disposables.CompositeDisposable
+import timber.log.Timber
 import javax.inject.Inject
 
 abstract class BaseDataSource<Key : Any, Value : Any> : PageKeyedDataSource<Key, Value>() {
@@ -35,6 +36,7 @@ abstract class BaseDataSource<Key : Any, Value : Any> : PageKeyedDataSource<Key,
     val compositeDisposable = CompositeDisposable()
 
     abstract val errorText: String
+
 
 
     fun loading(a: Any) {

@@ -43,6 +43,10 @@ abstract class PullRequestsDataSourceAbstract : BaseDataSource<String, PullReque
     override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<String, PullRequest>) {
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun invalidate() {
+        compositeDisposable.clear()
+    }
 }
 
 

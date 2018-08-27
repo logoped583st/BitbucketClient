@@ -33,14 +33,14 @@ class RepositoriesViewModel : ViewModel() {
     @Inject
     lateinit var repositoryModel: RepositoryModel
 
-    var language: MutableLiveData<String> = MutableLiveData()
-
 
     init {
         App.component.inject(this)
     }
 
     var repositories: LiveData<PagedList<Repository>> = LivePagedListBuilder<String, Repository>(repositoriesDataSourceFactory, Constants.listPagedConfig).build()
+
+    val language: MutableLiveData<String> = MutableLiveData()
 
 
     fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
@@ -115,8 +115,8 @@ class RepositoriesViewModel : ViewModel() {
     }
 
     override fun onCleared() {
-        repositoriesDataSourceFactory.repositoriesDataSource.invalidate()
         super.onCleared()
+        //repositoriesDataSourceFactory.repositoriesDataSource.invalidate()
     }
 
 }
