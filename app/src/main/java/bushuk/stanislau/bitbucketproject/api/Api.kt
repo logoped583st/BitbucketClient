@@ -74,5 +74,4 @@ interface Api {
     @GET
     fun getReviewersPullRequest(@Url url: String): Single<PullRequest>
 
-
 }

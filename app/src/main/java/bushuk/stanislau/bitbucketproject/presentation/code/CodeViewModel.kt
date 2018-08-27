@@ -8,6 +8,7 @@ import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerCodeAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
+import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.presentation.code.model.CodeDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.code.Branch
 import bushuk.stanislau.bitbucketproject.room.code.Code
@@ -16,6 +17,7 @@ import com.jakewharton.rxbinding2.widget.RxAdapterView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import ru.terrakok.cicerone.Router
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -23,6 +25,9 @@ class CodeViewModel : ViewModel() {
 
     @Inject
     lateinit var codeDataSourceFactory: CodeDataSourceFactory
+
+    @Inject
+    lateinit var router: Router
 
 
     val branches: MutableLiveData<List<Branch>> = MutableLiveData()
@@ -83,6 +88,11 @@ class CodeViewModel : ViewModel() {
 
     var code: LiveData<PagedList<Code>> = LivePagedListBuilder<String, Code>(codeDataSourceFactory, Constants.listPagedConfig).build()
 
+
+    fun navigateToCodeEditor(code: Code) {
+        UrlBuilder.buildPathWithHash(code.path,hash)
+        router.navigateTo(Screens.CODE_EDITOR_SCREEN)
+    }
 
     fun reloadPathWithHash(lifecycleOwner: LifecycleOwner, adapter: RecyclerCodeAdapter, path: String) {
         code.removeObservers(lifecycleOwner)

@@ -21,7 +21,6 @@ class AuthLoginViewModel : ViewModel(), ResultListener {
 
     override fun onResult(resultData: Any?) {
         if (resultData == RESULT_OK) {
-            RetrofitModule().getApi()
             router.newRootScreen(Screens.MAIN_SCREEN)
         }
     }

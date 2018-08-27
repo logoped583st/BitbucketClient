@@ -4,6 +4,7 @@ import bushuk.stanislau.bitbucketproject.MainActivity
 import bushuk.stanislau.bitbucketproject.MainActivityViewModel
 import bushuk.stanislau.bitbucketproject.datasources.*
 import bushuk.stanislau.bitbucketproject.di.modules.auth.AuthLoginModule
+import bushuk.stanislau.bitbucketproject.di.modules.codeeditor.CodeEditorModule
 import bushuk.stanislau.bitbucketproject.di.modules.followers.FollowersModule
 import bushuk.stanislau.bitbucketproject.di.modules.following.FollowingModule
 import bushuk.stanislau.bitbucketproject.di.modules.global.*
@@ -16,6 +17,8 @@ import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
+import bushuk.stanislau.bitbucketproject.presentation.codeeditor.CodeEditorModel
+import bushuk.stanislau.bitbucketproject.presentation.codeeditor.CodeEditorViewModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowViewModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.FollowDataSource
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersViewModel
@@ -48,7 +51,7 @@ import javax.inject.Singleton
     MainScreenModule::class, ApplicationContextProvider::class, PreferencesModule::class,
     AuthLoginModule::class, RoomModule::class, UserModule::class, RepositoriesModule::class,
     FollowersModule::class, FollowingModule::class, FollowModule::class, SnippetsModule::class,
-    RepositoryModule::class, PullRequestModule::class, PullRequestScopeModule::class])
+    RepositoryModule::class, PullRequestModule::class, PullRequestScopeModule::class, CodeEditorModule::class])
 
 interface MainComponent {
 
@@ -131,5 +134,9 @@ interface MainComponent {
     fun inject(commitsDataSourceAbstract: CommitsDataSourceAbstract)
 
     fun inject(reviewersDataSourceAbstract: ReviewersDataSourceAbstract)
+
+    fun inject(codeEditorVIewModel: CodeEditorViewModel)
+
+    fun inject(codeEditorModel: CodeEditorModel)
 
 }
