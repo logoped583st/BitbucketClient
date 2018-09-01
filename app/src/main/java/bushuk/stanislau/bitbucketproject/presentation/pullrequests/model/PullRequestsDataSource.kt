@@ -10,7 +10,7 @@ import io.reactivex.Single
 class PullRequestsDataSource : PullRequestsDataSourceAbstract() {
 
     override val single: Observable<PullRequestResponse> = userModel
-            .user.switchMapSingle { api.getPullRequests(it.username, repositoryModel.repository.value.uuid, null) }
+            .user.flatMapSingle { api.getPullRequests(it.username, repositoryModel.repository.value.uuid, null) }
 
     override fun loadNextPage(url: String): Single<PullRequestResponse> = api.getPullRequestNextPage(url)
 

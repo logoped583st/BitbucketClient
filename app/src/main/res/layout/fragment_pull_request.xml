@@ -16,7 +16,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
 
             tools:context=".presentation.pullrequest.PullRequestFragment">
 
@@ -25,7 +25,10 @@
                 android:id="@+id/pullrequest_screen_app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/AppTheme.AppBarOverlay">
+                android:theme="@style/AppTheme.AppBarOverlay"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbarPullrequest"
@@ -38,12 +41,13 @@
 
             </android.support.design.widget.AppBarLayout>
 
+
             <TextView
                 android:id="@+id/pullrequest_screen_status"
+                style="@style/Headline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                style="@style/Headline"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/pullrequest_screen_branch_from"
@@ -53,9 +57,9 @@
 
             <TextView
                 android:id="@+id/pullrequest_screen_branch_from"
+                style="@style/Subheading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Subheading"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@{viewModel.pullRequest.publishSubject.value.destination.branch.name}"
@@ -74,20 +78,20 @@
 
             <TextView
                 android:id="@+id/pullrequest_screen_branch_to"
+                style="@style/Subheading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                style="@style/Subheading"
                 android:text="@{viewModel.pullRequest.publishSubject.value.source.branch.name}"
                 app:layout_constraintEnd_toStartOf="@+id/pullrequest_screen_arrow_image"
                 app:layout_constraintTop_toTopOf="@+id/pullrequest_screen_branch_from" />
 
             <TextView
                 android:id="@+id/pullrequest_screen_created_time"
+                style="@style/Subheading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                style="@style/Subheading"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@{viewModel.pullRequest.publishSubject.value.updated_on}"
@@ -110,20 +114,33 @@
 
             <TextView
                 android:id="@+id/pullrequest_screen_description"
+                style="@style/Body_2.High"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                style="@style/Body_2.High"
                 android:layout_marginTop="16dp"
                 android:text="@{viewModel.pullRequest.publishSubject.value.description}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_created_time" />
 
+
+            <android.support.constraint.Group
+                android:id="@+id/pullrequest_screen_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="pullrequest_screen_recycler_commits,
+                pullrequest_screen_recycler_reviewers,pullrequest_screen_commits,
+                pullrequest_screen_commits,
+                pullrequest_screen_reviewers_text,
+                pullrequest_screen_merge_button,
+                pullrequest_screen_approve,
+                pullrequest_screen_approve_count" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/pullrequest_screen_recycler_commits"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -132,15 +149,14 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/pullrequest_screen_recycler_reviewers"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/pullrequest_screen_merge_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView10"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_reviewers_text" />
 
             <TextView
                 android:id="@+id/pullrequest_screen_commits"
@@ -154,15 +170,60 @@
                 app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_description" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/pullrequest_screen_reviewers_text"
+                style="@style/Subheading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                style="@style/Subheading"
                 android:text="Reviewers:"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_recycler_commits" />
+
+            <Button
+                android:id="@+id/pullrequest_screen_merge_button"
+                style="@style/Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:onClick="@{viewModel::mergePullRequest}"
+                android:text="Merge"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/pullrequest_screen_approve"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_recycler_reviewers" />
+
+            <Button
+                android:id="@+id/pullrequest_screen_approve"
+                style="@style/Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:onClick="@{viewModel::approveButtonClick}"
+                app:approveState="@{viewModel.isApproved}"
+                app:layout_constraintBottom_toBottomOf="@+id/pullrequest_screen_merge_button"
+                app:layout_constraintEnd_toStartOf="@+id/pullrequest_screen_approve_count"
+                app:layout_constraintStart_toEndOf="@+id/pullrequest_screen_merge_button"
+                app:layout_constraintTop_toTopOf="@+id/pullrequest_screen_merge_button" />
+
+            <Button
+                android:id="@+id/pullrequest_screen_approve_count"
+                android:layout_width="56dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/ic_chat_bubble_black_24dp"
+                android:maxLength="5"
+                android:textColor="@color/white"
+                app:approveAction="@{viewModel.approveAction}"
+                app:approveCount="@{viewModel.countOfApproves}"
+                app:layout_constraintBaseline_toBaselineOf="@+id/pullrequest_screen_approve"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/pullrequest_screen_approve" />
 
         </android.support.constraint.ConstraintLayout>
 

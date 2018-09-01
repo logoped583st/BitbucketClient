@@ -63,4 +63,6 @@ class RecyclerCodePathAdapter(list: MutableList<String>, codeFragment: CodeFragm
     interface PathClick {
         fun onClickPath(path: String, position: Int)
     }
+
+
 }

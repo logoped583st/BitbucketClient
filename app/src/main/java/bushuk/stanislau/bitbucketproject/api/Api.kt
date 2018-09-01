@@ -9,11 +9,9 @@ import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
 import bushuk.stanislau.bitbucketproject.room.user.User
+import io.reactivex.Completable
 import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
-import retrofit2.http.Url
+import retrofit2.http.*
 
 interface Api {
 
@@ -73,5 +71,14 @@ interface Api {
 
     @GET
     fun getReviewersPullRequest(@Url url: String): Single<PullRequest>
+
+    @POST
+    fun mergePullRequest(@Url url: String): Completable
+
+    @POST
+    fun approvePullRequest(@Url url: String): Completable
+
+    @DELETE
+    fun unApprovePullRequest(@Url url: String): Completable
 
 }

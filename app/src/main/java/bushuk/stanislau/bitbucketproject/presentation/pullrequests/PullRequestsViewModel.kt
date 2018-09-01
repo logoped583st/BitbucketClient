@@ -11,6 +11,7 @@ import bushuk.stanislau.bitbucketproject.global.PullRequestModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequests.model.PullRequestsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
 import ru.terrakok.cicerone.Router
+import timber.log.Timber
 import javax.inject.Inject
 
 class PullRequestsViewModel : ViewModel() {
@@ -31,6 +32,7 @@ class PullRequestsViewModel : ViewModel() {
     }
 
     fun navigateToPullRequestScreen(pullRequest: PullRequest) {
+        Timber.e(pullRequest.toString())
         pullRequestModel.publishSubject.onNext(pullRequest)
         router.navigateTo(Screens.PULL_REQUEST_SCREEN)
     }

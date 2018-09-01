@@ -1,17 +1,30 @@
 package bushuk.stanislau.bitbucketproject.presentation.pullrequest
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MediatorLiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
+import android.support.design.widget.Snackbar
+import android.view.View
+import android.widget.Button
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.constants.Constants
+import bushuk.stanislau.bitbucketproject.constants.Screens
+import bushuk.stanislau.bitbucketproject.global.LoadingModel
 import bushuk.stanislau.bitbucketproject.global.PullRequestModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.model.CommitsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.model.ReviewersDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.commits.Commit
+import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestParticipants
 import bushuk.stanislau.bitbucketproject.room.user.User
+import io.reactivex.Completable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
+import timber.log.Timber
 import javax.inject.Inject
 
 class PullRequestViewModel : ViewModel() {
@@ -28,8 +41,39 @@ class PullRequestViewModel : ViewModel() {
     @Inject
     lateinit var reviewersDataSourceFactory: ReviewersDataSourceFactory
 
+    val loadingModel: LoadingModel = LoadingModel()
+
+    @Inject
+    lateinit var api: Api
+
+    val approveAction: MutableLiveData<Boolean> = MutableLiveData()
+
+    val countOfApproves: MutableLiveData<List<PullRequestParticipants>> = MutableLiveData()
+
+    val isApproved: MutableLiveData<Boolean> = MutableLiveData()
+
+    val commits: LiveData<PagedList<Commit>> by lazy { LivePagedListBuilder<String, Commit>(commitDataSourceFactory, Constants.listPagedConfig).build() }
+
+    val reviewers: LiveData<PagedList<User>> by lazy { LivePagedListBuilder<String, User>(reviewersDataSourceFactory, Constants.listPagedConfig).build() }
+
     init {
+        isApproved.postValue(false)
         App.component.inject(this)
+        loadingModel.loading.postValue(View.GONE)
+        pullRequest.publishSubject
+                .subscribe { it ->
+                    if (it.participants != null) {
+                        countOfApproves.postValue(it.participants)
+
+                        it.participants.forEach {
+                            if (it.user.uuid == commitDataSourceFactory.commitsDataSource.userModel.user.value.uuid) {
+                                isApproved.postValue(true)
+                            }
+                        }
+                    }
+                }
+
+        zipLiveData(commits, reviewers)
     }
 
     fun exitFromFragment() {
@@ -42,7 +86,82 @@ class PullRequestViewModel : ViewModel() {
         super.onCleared()
     }
 
-    val commits: LiveData<PagedList<Commit>> = LivePagedListBuilder<String, Commit>(commitDataSourceFactory, Constants.listPagedConfig).build()
+    fun navigateToUser(data: User) {
+        router.navigateTo(Screens.USER_SCREEN, data)
+    }
 
-    val reviewers: LiveData<PagedList<User>> = LivePagedListBuilder<String, User>(reviewersDataSourceFactory, Constants.listPagedConfig).build()
+    fun approveButtonClick(view: View) {
+        (view as Button).isClickable = false
+        val completable: Completable = if (isApproved.value!!) {
+            api.unApprovePullRequest(pullRequest.publishSubject.value.links.approve.href)
+        } else {
+            api.approvePullRequest(pullRequest.publishSubject.value.links.approve.href)
+        }
+
+        completable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    view.isClickable = true
+                    if (view.text == "Approve") {
+                        isApproved.postValue(true)
+                        approveAction.postValue(true)
+                    } else {
+                        isApproved.postValue(false)
+                        approveAction.postValue(false)
+                    }
+                }, {
+                    view.isClickable = true
+                })
+
+    }
+
+    fun mergePullRequest(view: View) {
+        (view as Button).isClickable = false
+        pullRequest.publishSubject.flatMapCompletable { api.mergePullRequest(it.links.merge.href) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete {
+                    Timber.e("ONCOMPLETE")
+                    val tempPullRequest = pullRequest.publishSubject.value.copy()
+                    tempPullRequest.state = "Merged"
+                    pullRequest.publishSubject.onNext(tempPullRequest)
+                    Snackbar.make(view, "Merged successful", Snackbar.LENGTH_LONG).show()
+                    view.visibility = View.GONE
+                }
+                .subscribe({
+
+                }, {
+                    Timber.e(it.message)
+                    Snackbar.make(view, it.localizedMessage, Snackbar.LENGTH_LONG).show()
+                })
+    }
+
+
+    fun <A, B> zipLiveData(a: LiveData<A>, b: LiveData<B>): LiveData<Pair<A, B>> {
+        return MediatorLiveData<Pair<A, B>>().apply {
+            var lastA: A? = null
+            var lastB: B? = null
+
+            fun update() {
+                val localLastA = lastA
+                val localLastB = lastB
+                if (localLastA != null && localLastB != null) {
+                    this.value = Pair(localLastA, localLastB)
+                    Timber.e("PAIR")
+                    loadingModel.loading.postValue(View.VISIBLE)
+
+                }
+            }
+
+            addSource(a) {
+                lastA = it
+                update()
+            }
+            addSource(b) {
+                lastB = it
+                update()
+            }
+        }
+    }
+
 }

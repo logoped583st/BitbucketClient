@@ -7,6 +7,7 @@ import bushuk.stanislau.bitbucketproject.room.code.CodeResponse
 import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 class CodeDataSource : CodeDataSourceAbstract() {
@@ -16,10 +17,12 @@ class CodeDataSource : CodeDataSourceAbstract() {
             if (UrlBuilder.repositoryPath.isNullOrEmpty()) {
                 Timber.e("Rep PAth" + UrlBuilder.repositoryPath)
                 userModel.user
-                        .switchMapSingle { api.getRepoWithName(it.username, repositoryModel.repository.value.name) }
+                        .subscribeOn(Schedulers.io())
+                        .flatMapSingle { api.getRepoWithName(it.username, repositoryModel.repository.value.name) }
             } else {
                 userModel.user
-                        .switchMapSingle { api.getRepoWithNamePath(it.username, repositoryModel.repository.value.name, UrlBuilder.repositoryPath!!) }
+                        .subscribeOn(Schedulers.io())
+                        .flatMapSingle { api.getRepoWithNamePath(it.username, repositoryModel.repository.value.name, UrlBuilder.repositoryPath!!) }
             }
 
 

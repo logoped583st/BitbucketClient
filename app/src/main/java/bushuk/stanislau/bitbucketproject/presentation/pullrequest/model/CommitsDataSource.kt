@@ -9,8 +9,7 @@ import io.reactivex.Single
 
 class CommitsDataSource : CommitsDataSourceAbstract() {
 
-    override val single: Observable<CommitResponse> = pullrequestModel.publishSubject
-            .switchMapSingle { api.getCommitWithUrl(it.links.commits.href) }
+    override val single: Observable<CommitResponse> = pullrequestModel.publishSubject.flatMapSingle { api.getCommitWithUrl(it.links.commits.href) }
 
     override fun loadNextPage(url: String): Single<CommitResponse> = api.getCommitWithUrl(url)
 

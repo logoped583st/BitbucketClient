@@ -54,5 +54,15 @@ class TextBindingUtil {
                 }
             }
         }
+
+        @JvmStatic
+        @BindingAdapter("app:approveState")
+        fun setTextApprove(textView: TextView, isApproved: Boolean) {
+            if (isApproved) {
+                textView.text = "UnApprove"
+            } else if (!isApproved) {
+                textView.text = "Approve"
+            }
+        }
     }
 }

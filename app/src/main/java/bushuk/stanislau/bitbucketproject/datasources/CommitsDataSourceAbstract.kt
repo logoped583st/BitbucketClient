@@ -7,6 +7,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 abstract class CommitsDataSourceAbstract : BaseDataSource<String, Commit>() {
 
@@ -17,14 +18,12 @@ abstract class CommitsDataSourceAbstract : BaseDataSource<String, Commit>() {
     abstract val single: Observable<CommitResponse>
 
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, Commit>) {
-        super.loadInitial(params, callback)
         compositeDisposable.add(single.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    loading(it)
                     callback.onResult(it.values, it.previous, it.next)
                 }, {
-
+                    Timber.e(it.message)
                 }))
     }
 
@@ -36,7 +35,7 @@ abstract class CommitsDataSourceAbstract : BaseDataSource<String, Commit>() {
                 .subscribe({
                     callback.onResult(it.values, it.next)
                 }, {
-
+                    Timber.e(it.message)
                 }))
     }
 

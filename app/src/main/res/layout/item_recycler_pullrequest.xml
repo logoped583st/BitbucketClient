@@ -115,16 +115,16 @@
 
         <TextView
             android:id="@+id/textView11"
+            style="@style/Body_2.High"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            style="@style/Body_2.High"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
-            app:pullRequestState="@{data.state}"
             app:layout_constraintEnd_toEndOf="@+id/imageView2"
             app:layout_constraintStart_toStartOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/item_recycler_pullrequest_title"
+            app:pullRequestState="@{data.state}" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>
