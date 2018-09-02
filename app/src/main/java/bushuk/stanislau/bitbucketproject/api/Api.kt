@@ -73,7 +73,7 @@ interface Api {
     fun getReviewersPullRequest(@Url url: String): Single<PullRequest>
 
     @POST
-    fun mergePullRequest(@Url url: String): Completable
+    fun mergePullRequest(@Url url: String): Single<PullRequest>
 
     @POST
     fun approvePullRequest(@Url url: String): Completable

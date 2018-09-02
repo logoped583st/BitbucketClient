@@ -67,14 +67,23 @@ class CodeFragment : Fragment(), ClickFollow, RecyclerCodePathAdapter.PathClick 
         branchSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         code_screen_branch_spinner.adapter = branchSpinnerAdapter
 
+
         code_screen_code_path_recycler.setHasFixedSize(true)
         code_screen_code_path_recycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         code_screen_code_path_recycler.adapter = codePathAdapter
 
+        val mainBranch: String = viewModel.codeDataSourceFactory.codeDataSource.repositoryModel.repository.value.mainbranch.name
+        var positionOfMainBranch: Int = 0
+
         viewModel.branches.observe(this, Observer {
-            it!!.forEach {
-                branchSpinnerAdapter.add(it.name)
+            it!!.forEachIndexed { index, branch ->
+                if (mainBranch == branch.name) {
+                    positionOfMainBranch = index
+                }
+                branchSpinnerAdapter.add(branch.name)
             }
+
+            code_screen_branch_spinner.setSelection(positionOfMainBranch)
             viewModel.observeSpinner(code_screen_branch_spinner, codeAdapter, this)
         })
 

@@ -20,7 +20,7 @@ abstract class ReviewersDataSourceAbstract : BaseDataSource<String, User>() {
         compositeDisposable.add(single.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    pullrequestModel.publishSubject.onNext(it)
+                    pullrequestModel.publishSubject.onNext( it)
                     callback.onResult(it.reviewers, null, null)
                 }, {
                     Timber.e(it.message)

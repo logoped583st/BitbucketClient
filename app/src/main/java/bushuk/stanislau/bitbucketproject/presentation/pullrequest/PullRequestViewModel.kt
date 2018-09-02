@@ -48,6 +48,8 @@ class PullRequestViewModel : ViewModel() {
 
     val approveAction: MutableLiveData<Boolean> = MutableLiveData()
 
+    val pullRequestState: MutableLiveData<String> = MutableLiveData()
+
     val countOfApproves: MutableLiveData<List<PullRequestParticipants>> = MutableLiveData()
 
     val isApproved: MutableLiveData<Boolean> = MutableLiveData()
@@ -62,9 +64,9 @@ class PullRequestViewModel : ViewModel() {
         loadingModel.loading.postValue(View.GONE)
         pullRequest.publishSubject
                 .subscribe { it ->
+                    pullRequestState.postValue(it.state)
                     if (it.participants != null) {
                         countOfApproves.postValue(it.participants)
-
                         it.participants.forEach {
                             if (it.user.uuid == commitDataSourceFactory.commitsDataSource.userModel.user.value.uuid) {
                                 isApproved.postValue(true)
@@ -117,21 +119,18 @@ class PullRequestViewModel : ViewModel() {
 
     fun mergePullRequest(view: View) {
         (view as Button).isClickable = false
-        pullRequest.publishSubject.flatMapCompletable { api.mergePullRequest(it.links.merge.href) }
+        api.mergePullRequest(pullRequest.publishSubject.value.links.merge.href)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete {
-                    Timber.e("ONCOMPLETE")
-                    val tempPullRequest = pullRequest.publishSubject.value.copy()
-                    tempPullRequest.state = "Merged"
-                    pullRequest.publishSubject.onNext(tempPullRequest)
-                    Snackbar.make(view, "Merged successful", Snackbar.LENGTH_LONG).show()
-                    view.visibility = View.GONE
-                }
                 .subscribe({
-
+                    Timber.e("SUCCMERGE")
+                    pullRequest.publishSubject.onNext(it)
+                    pullRequestState.postValue(it.state)
+                    view.text = "Revert"
+                    Snackbar.make(view, "Merged successful", Snackbar.LENGTH_LONG).show()
                 }, {
                     Timber.e(it.message)
+                    view.isClickable = true
                     Snackbar.make(view, it.localizedMessage, Snackbar.LENGTH_LONG).show()
                 })
     }
@@ -149,7 +148,6 @@ class PullRequestViewModel : ViewModel() {
                     this.value = Pair(localLastA, localLastB)
                     Timber.e("PAIR")
                     loadingModel.loading.postValue(View.VISIBLE)
-
                 }
             }
 

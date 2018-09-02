@@ -45,7 +45,6 @@ class PullRequestFragment : Fragment(), ClickFollow {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        pullrequest_screen_progressBar.visibility = View.VISIBLE
 
         binding.let {
             it.setLifecycleOwner(this)

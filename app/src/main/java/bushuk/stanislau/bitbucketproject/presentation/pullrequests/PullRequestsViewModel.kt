@@ -32,8 +32,8 @@ class PullRequestsViewModel : ViewModel() {
     }
 
     fun navigateToPullRequestScreen(pullRequest: PullRequest) {
-        Timber.e(pullRequest.toString())
         pullRequestModel.publishSubject.onNext(pullRequest)
+        Timber.e(pullRequest.toString())
         router.navigateTo(Screens.PULL_REQUEST_SCREEN)
     }
 

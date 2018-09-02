@@ -15,7 +15,7 @@ abstract class CommitsDataSourceAbstract : BaseDataSource<String, Commit>() {
         App.component.inject(this)
     }
 
-    abstract val single: Observable<CommitResponse>
+    abstract val single: Single<CommitResponse>
 
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, Commit>) {
         compositeDisposable.add(single.subscribeOn(Schedulers.io())

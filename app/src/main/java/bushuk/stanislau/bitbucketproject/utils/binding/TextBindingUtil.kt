@@ -41,14 +41,19 @@ class TextBindingUtil {
 
         @JvmStatic
         @BindingAdapter("pullRequestState")
-        fun setState(textView: TextView, string: String) {
+        fun setState(textView: TextView, string: String?) {
             when (string) {
                 "OPEN" -> {
                     textView.text = string
                     textView.setTextColor(App.resourcesApp.getColor(R.color.green))
                 }
 
-                "CLOSED" -> {
+                "DECLINED"->{
+                    textView.text = string
+                    textView.setTextColor(App.resourcesApp.getColor(R.color.black))
+                }
+
+                "MERGED" -> {
                     textView.text = string
                     textView.setTextColor(App.resourcesApp.getColor(R.color.colorAccent))
                 }
