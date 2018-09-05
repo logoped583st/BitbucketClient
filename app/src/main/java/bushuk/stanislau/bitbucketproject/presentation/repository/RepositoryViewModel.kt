@@ -67,10 +67,6 @@ class RepositoryViewModel : ViewModel() {
         localRouter.replaceScreen(tabSelected)
     }
 
-    fun navigateToPullRequest() {
-        localRouter.navigateTo(Screens.PULL_REQUEST_SCREEN)
-    }
-
     fun tabRouting(menuItem: MenuItem): Boolean {
         menuItem.isChecked = true
 

@@ -14,7 +14,7 @@ class WatchersDataSource : FollowDataSource() {
     override fun loadNextPage(url: String): Single<Followers> = api.getFollowersNextPage(url)
 
 
-    override val single: Observable<Followers> = repositoryModel.repository.switchMapSingle {
+    override val single: Observable<Followers> = repositoryModel.repository.flatMapSingle {
         api.getWatchersRepo(userModel.user.value.username, it.uuid)
     }
 

@@ -22,9 +22,11 @@
             style="@style/Headline.light_grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="7dp"
             android:layout_marginStart="8dp"
             android:text="@{data.id}"
             app:layout_constraintBaseline_toBaselineOf="@+id/item_recycler_pullrequest_title"
+            app:layout_constraintEnd_toStartOf="@+id/item_recycler_pullrequest_title"
             app:layout_constraintStart_toStartOf="parent" />
 
 
@@ -48,12 +50,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
-            android:maxLines="3"
             android:ellipsize="end"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:maxLines="3"
+            app:layout_constraintEnd_toStartOf="@+id/textView11"
             app:layout_constraintStart_toStartOf="@+id/item_recycler_pullrequest_id"
-            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            app:layout_constraintTop_toBottomOf="@+id/item_recycler_pullrequest_title"
             app:text="@{data.description}" />
 
         <TextView
@@ -76,7 +77,7 @@
             android:layout_marginStart="8dp"
             android:text="@{data.source.branch.name}"
             app:layout_constraintBottom_toBottomOf="@+id/textView5"
-            app:layout_constraintEnd_toEndOf="@+id/textView4"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
             app:layout_constraintTop_toTopOf="@+id/textView5" />
 
@@ -115,16 +116,16 @@
 
         <TextView
             android:id="@+id/textView11"
+            style="@style/Body_2.High"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            style="@style/Body_2.High"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            app:pullRequestState="@{data.state}"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="@+id/imageView2"
             app:layout_constraintStart_toStartOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:pullRequestState="@{data.state}" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

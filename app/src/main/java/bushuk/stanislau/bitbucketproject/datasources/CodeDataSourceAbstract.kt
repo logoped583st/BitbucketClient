@@ -7,6 +7,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 abstract class CodeDataSourceAbstract : BaseDataSource<String, Code>() {
 
@@ -25,7 +26,7 @@ abstract class CodeDataSourceAbstract : BaseDataSource<String, Code>() {
                     loading(it)
                     callback.onResult(it.values, it.previous, it.next)
                 }, {
-
+                    Timber.e(it.message)
                 }))
     }
 
@@ -38,7 +39,7 @@ abstract class CodeDataSourceAbstract : BaseDataSource<String, Code>() {
                 .subscribe({
                     callback.onResult(it.values, it.next)
                 }, {
-
+                    Timber.e(it.message)
                 }))
     }
 

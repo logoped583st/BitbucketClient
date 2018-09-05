@@ -12,19 +12,25 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerCommitsAdapter
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerReviewersAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentPullRequestBinding
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
+import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryFragment
+import bushuk.stanislau.bitbucketproject.room.user.User
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_pull_request.*
 import kotlinx.android.synthetic.main.fragment_pull_request.view.*
+import kotlinx.android.synthetic.main.fragment_repositories.*
+import kotlinx.android.synthetic.main.fragment_repository.*
 
 class PullRequestFragment : Fragment(), ClickFollow {
 
     override fun onClickItem(view: View, data: Any) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (data is User) {
+            viewModel.navigateToUser(data)
+        }
     }
 
     lateinit var binding: FragmentPullRequestBinding
@@ -53,13 +59,19 @@ class PullRequestFragment : Fragment(), ClickFollow {
         pullrequest_screen_recycler_commits.layoutManager = LinearLayoutManager(activity)
         pullrequest_screen_recycler_commits.adapter = adapterCommits
         adapterCommits.setListener(this)
-        viewModel.commits.observe(this, Observer(adapterCommits::submitList))
 
         val adapterReviewers = RecyclerReviewersAdapter()
         pullrequest_screen_recycler_reviewers.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         pullrequest_screen_recycler_reviewers.adapter = adapterReviewers
         adapterReviewers.setListener(this)
-        viewModel.reviewers.observe(this, Observer(adapterReviewers::submitList))
+
+        viewModel.zipLiveData(viewModel.commits, viewModel.reviewers).observe(this, Observer {
+            adapterCommits.submitList(it!!.first)
+            adapterReviewers.submitList(it.second)
+        })
+
+
+
     }
 
     private fun setToolbar(binding: FragmentPullRequestBinding) {
@@ -69,8 +81,11 @@ class PullRequestFragment : Fragment(), ClickFollow {
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        viewModel.exitFromFragment()
+        activity!!.onBackPressed()
         return super.onOptionsItemSelected(item)
     }
+
+
 }

@@ -12,5 +12,6 @@ data class PullRequest(val title: String,
                        val updated_on: Date,
                        val source: PullRequestSource,
                        val author: Owner,
+                       val participants: List<PullRequestParticipants>?,
                        val reviewers: MutableList<User>,
-                       val state: String)
+                       var state: String)

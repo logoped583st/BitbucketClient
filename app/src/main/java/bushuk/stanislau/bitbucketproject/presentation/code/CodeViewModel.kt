@@ -18,7 +18,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
-import ru.terrakok.cicerone.result.ResultListener
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -30,7 +29,6 @@ class CodeViewModel : ViewModel() {
     @Inject
     lateinit var router: Router
 
-
     val branches: MutableLiveData<List<Branch>> = MutableLiveData()
 
     private val disposable: CompositeDisposable = CompositeDisposable()
@@ -40,7 +38,6 @@ class CodeViewModel : ViewModel() {
 
     init {
         App.component.initCodeComponent().inject(this)
-
 
         disposable.add(codeDataSourceFactory.codeDataSource.api.getBranchWithUrl(codeDataSourceFactory
                 .codeDataSource.repositoryModel.repository.value.links.branches.href)

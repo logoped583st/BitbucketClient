@@ -8,14 +8,13 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import bushuk.stanislau.bitbucketproject.BackPress
 import bushuk.stanislau.bitbucketproject.BackPressFragment
 import bushuk.stanislau.bitbucketproject.R
+import bushuk.stanislau.bitbucketproject.RecyclerScrollFab
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerRepositoriesAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.ListOfLanguages
@@ -23,6 +22,7 @@ import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoriesBinding
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
+import com.github.clans.fab.FloatingActionMenu
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_repositories.*
 import timber.log.Timber
@@ -63,15 +63,8 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
         languageSpinner()
         repositories_screen_recycler.adapter = adapter
 
-        repositories_screen_recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (dy > 0 && !repositories_screen_settings_menu.isMenuButtonHidden) {
-                    repositories_screen_settings_menu.hideMenuButton(true)
-                } else if (dy < 0 && repositories_screen_settings_menu.isMenuButtonHidden) {
-                    repositories_screen_settings_menu.showMenuButton(true)
-                }
-            }
+        repositories_screen_recycler.addOnScrollListener(object : RecyclerScrollFab() {
+            override fun getFab(): FloatingActionMenu = repositories_screen_settings_menu
         })
 
         viewModel.observeSearchView(binding.repositoriesScreenSearchView, this, adapter)
@@ -81,6 +74,10 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
 
         viewModel.repositories.observe(this, Observer(adapter::submitList))
 
+
+        repositories_screen_slide_constraint.setOnClickListener {
+            //Block closing
+        }
 
         repositories_screen_slide_panel.setFadeOnClickListener {
             repositories_screen_slide_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
@@ -101,7 +98,7 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
 
 
     override fun onClickItem(view: View, data: Any) {
-        viewModel.navigateToRepositoryScreen((data as Repository),viewModel.repositoriesDataSourceFactory.repositoriesDataSource.userModel.user.value.username)
+        viewModel.navigateToRepositoryScreen((data as Repository), viewModel.repositoriesDataSourceFactory.repositoriesDataSource.userModel.user.value.username)
     }
 
     override fun onAttach(activity: Activity?) {
