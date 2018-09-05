@@ -49,7 +49,12 @@ interface Api {
 
     @GET("repositories/{userName}/{repoName}/pullrequests")
     fun getPullRequests(@Path("userName") userName: String, @Path("repoName", encoded = false) repoName: String,
-                        @Query("q", encoded = false) query: String?): Single<PullRequestResponse>
+                        @Query("q", encoded = false) query: String?,
+                        @Query("sort",encoded = false)sort: String?): Single<PullRequestResponse>
+
+    @GET("repositories/{userName}/{repoName}/pullRequests")
+    fun getPullRequestsQuery(@Path("userName") userName: String, @Path("repoName", encoded = false) repoName: String,
+                             @Query("q", encoded = false) query: String?, @Query("sort", encoded = false) sort: String?): Single<PullRequestResponse>
 
     @GET
     fun getPullRequestNextPage(@Url url: String): Single<PullRequestResponse>

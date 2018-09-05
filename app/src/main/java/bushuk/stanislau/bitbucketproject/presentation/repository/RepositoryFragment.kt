@@ -13,6 +13,9 @@ import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoryBinding
 import bushuk.stanislau.bitbucketproject.navigation.RepositoryNavigator
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import kotlinx.android.synthetic.main.fragment_repositories.*
+import kotlinx.android.synthetic.main.fragment_repository.*
 import kotlinx.android.synthetic.main.fragment_repository.view.*
 import ru.terrakok.cicerone.NavigatorHolder
 
@@ -48,6 +51,18 @@ class RepositoryFragment : BackPressFragment() {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        pullrequests_screen_slide_panel_constrain.setOnClickListener {
+            //Block closing
+        }
+
+        pullrequests_screen_slide_panel.setFadeOnClickListener {
+            pullrequests_screen_slide_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        }
     }
 
     private fun setToolbar(binding: FragmentRepositoryBinding) {

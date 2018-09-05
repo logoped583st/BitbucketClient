@@ -18,6 +18,7 @@ import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryFragm
 import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsFragment
 import bushuk.stanislau.bitbucketproject.presentation.user.UserFragment
 import bushuk.stanislau.bitbucketproject.room.user.User
+import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import ru.terrakok.cicerone.android.SupportAppNavigator
 
 class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppNavigator(activity, containerId) {
@@ -63,6 +64,7 @@ class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppN
             }
 
             Screens.REPOSITORY_SCREEN -> {
+                UrlBuilder.resetQueryAfterRoute()
                 val bundle = Bundle()
                 val fragment = RepositoryFragment()
                 bundle.putString("AVATAR", (data as List<*>)[0].toString())
