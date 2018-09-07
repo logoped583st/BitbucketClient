@@ -74,5 +74,8 @@
     <!--Reviewers-->
     <string name="reviewers_error_text">No reviewers</string>
 
+    <!--Comments-->
+    <string name="comments_error_text">No comments</string>
+
 
 </resources>

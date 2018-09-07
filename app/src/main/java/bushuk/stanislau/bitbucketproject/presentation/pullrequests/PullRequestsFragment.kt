@@ -61,6 +61,7 @@ class PullRequestsFragment : Fragment(), ClickFollow {
         pullrequests_screen_recycler.addOnScrollListener(object : RecyclerScrollFab() {
             override fun getFab(): FloatingActionMenu = binding.root.pullrequests_screen_settings_menu
         })
+
         stateSpinner()
         sortSpinner()
         viewModel.observeSearchView((parentFragment as RepositoryFragment).binding.pullrequestsScreenSearchView, this, adapter)

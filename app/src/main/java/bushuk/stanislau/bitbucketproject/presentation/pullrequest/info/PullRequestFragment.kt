@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.presentation.pullrequest
+package bushuk.stanislau.bitbucketproject.presentation.pullrequest.info
 
 
 import android.arch.lifecycle.Observer
@@ -17,13 +17,9 @@ import bushuk.stanislau.bitbucketproject.adapters.RecyclerCommitsAdapter
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerReviewersAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentPullRequestBinding
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
-import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryFragment
 import bushuk.stanislau.bitbucketproject.room.user.User
-import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_pull_request.*
 import kotlinx.android.synthetic.main.fragment_pull_request.view.*
-import kotlinx.android.synthetic.main.fragment_repositories.*
-import kotlinx.android.synthetic.main.fragment_repository.*
 
 class PullRequestFragment : Fragment(), ClickFollow {
 
@@ -43,7 +39,6 @@ class PullRequestFragment : Fragment(), ClickFollow {
         viewModel = ViewModelProviders.of(this).get(PullRequestViewModel::class.java)
 
 
-        setToolbar(binding)
         return binding.root
     }
 
@@ -70,21 +65,6 @@ class PullRequestFragment : Fragment(), ClickFollow {
             adapterReviewers.submitList(it.second)
         })
 
-
-
-    }
-
-    private fun setToolbar(binding: FragmentPullRequestBinding) {
-        (activity as AppCompatActivity).supportActionBar?.hide()
-        setHasOptionsMenu(true)
-        (activity as AppCompatActivity).setSupportActionBar(binding.root.toolbarPullrequest)
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        activity!!.onBackPressed()
-        return super.onOptionsItemSelected(item)
     }
 
 

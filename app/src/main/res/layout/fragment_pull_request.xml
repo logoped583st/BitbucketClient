@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="bushuk.stanislau.bitbucketproject.presentation.pullrequest.PullRequestViewModel" />
+            type="bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.PullRequestViewModel" />
     </data>
 
     <android.support.v4.widget.NestedScrollView
@@ -18,28 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            tools:context=".presentation.pullrequest.PullRequestFragment">
-
-
-            <android.support.design.widget.AppBarLayout
-                android:id="@+id/pullrequest_screen_app_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/AppTheme.AppBarOverlay"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbarPullrequest"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary"
-                    app:popupTheme="@style/AppTheme.PopupOverlay"
-                    app:title="@{viewModel.pullRequest.publishSubject.value.title}" />
-
-
-            </android.support.design.widget.AppBarLayout>
+            tools:context=".presentation.pullrequest.info.PullRequestFragment">
 
 
             <TextView
@@ -52,7 +31,7 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/pullrequest_screen_branch_from"
                 app:layout_constraintStart_toStartOf="@+id/pullrequest_screen_branch_to"
-                app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_app_bar"
+                app:layout_constraintTop_toTopOf="parent"
                 app:pullRequestState="@{viewModel.pullRequestState}" />
 
             <TextView

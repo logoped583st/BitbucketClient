@@ -2,6 +2,7 @@ package bushuk.stanislau.bitbucketproject.api
 
 import bushuk.stanislau.bitbucketproject.room.code.BranchesResponse
 import bushuk.stanislau.bitbucketproject.room.code.CodeResponse
+import bushuk.stanislau.bitbucketproject.room.comments.CommentResponse
 import bushuk.stanislau.bitbucketproject.room.commits.CommitResponse
 import bushuk.stanislau.bitbucketproject.room.followers.Followers
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
@@ -50,11 +51,7 @@ interface Api {
     @GET("repositories/{userName}/{repoName}/pullrequests")
     fun getPullRequests(@Path("userName") userName: String, @Path("repoName", encoded = false) repoName: String,
                         @Query("q", encoded = false) query: String?,
-                        @Query("sort",encoded = false)sort: String?): Single<PullRequestResponse>
-
-    @GET("repositories/{userName}/{repoName}/pullRequests")
-    fun getPullRequestsQuery(@Path("userName") userName: String, @Path("repoName", encoded = false) repoName: String,
-                             @Query("q", encoded = false) query: String?, @Query("sort", encoded = false) sort: String?): Single<PullRequestResponse>
+                        @Query("sort", encoded = false) sort: String?): Single<PullRequestResponse>
 
     @GET
     fun getPullRequestNextPage(@Url url: String): Single<PullRequestResponse>
@@ -75,7 +72,7 @@ interface Api {
     fun getPullRequest(@Path("userName") userName: String, @Path("repoName") repoName: String, @Path("id") id: String): Single<PullRequest>
 
     @GET
-    fun getReviewersPullRequest(@Url url: String): Single<PullRequest>
+    fun getPullRequestComments(@Url url: String): Single<CommentResponse>
 
     @POST
     fun mergePullRequest(@Url url: String): Single<PullRequest>
