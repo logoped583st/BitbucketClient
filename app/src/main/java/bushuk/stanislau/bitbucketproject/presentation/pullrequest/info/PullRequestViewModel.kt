@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.presentation.pullrequest
+package bushuk.stanislau.bitbucketproject.presentation.pullrequest.info
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
@@ -15,8 +15,8 @@ import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.global.LoadingModel
 import bushuk.stanislau.bitbucketproject.global.PullRequestModel
-import bushuk.stanislau.bitbucketproject.presentation.pullrequest.model.CommitsDataSourceFactory
-import bushuk.stanislau.bitbucketproject.presentation.pullrequest.model.ReviewersDataSourceFactory
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.model.CommitsDataSourceFactory
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.model.ReviewersDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.commits.Commit
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestParticipants
 import bushuk.stanislau.bitbucketproject.room.user.User

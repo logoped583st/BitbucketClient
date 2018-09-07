@@ -7,9 +7,8 @@ import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import bushuk.stanislau.bitbucketproject.R
-import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowFragment
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
-import bushuk.stanislau.bitbucketproject.presentation.pullrequest.PullRequestFragment
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.PullRequestFragment
 import bushuk.stanislau.bitbucketproject.room.user.User
 
 class RecyclerReviewersAdapter : PagedListAdapter<User,

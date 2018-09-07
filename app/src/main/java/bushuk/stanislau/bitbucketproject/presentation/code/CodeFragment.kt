@@ -68,7 +68,7 @@ class CodeFragment : Fragment(), ClickFollow, RecyclerCodePathAdapter.PathClick 
         code_screen_branch_spinner.adapter = branchSpinnerAdapter
 
 
-        code_screen_code_path_recycler.setHasFixedSize(true)
+        //code_screen_code_path_recycler.setHasFixedSize(true)
         code_screen_code_path_recycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         code_screen_code_path_recycler.adapter = codePathAdapter
 

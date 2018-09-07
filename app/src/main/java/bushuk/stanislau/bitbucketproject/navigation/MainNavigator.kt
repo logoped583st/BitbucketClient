@@ -12,7 +12,7 @@ import bushuk.stanislau.bitbucketproject.presentation.follow.followers.Followers
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingFragment
 import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
-import bushuk.stanislau.bitbucketproject.presentation.pullrequest.PullRequestFragment
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.ContainerPullRequestFragment
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
 import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryFragment
 import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsFragment
@@ -73,7 +73,7 @@ class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppN
                 return fragment
             }
 
-            Screens.PULL_REQUEST_SCREEN -> return PullRequestFragment()
+            Screens.PULL_REQUEST_SCREEN -> return ContainerPullRequestFragment()
 
         }
         return null

@@ -10,6 +10,7 @@ import bushuk.stanislau.bitbucketproject.di.modules.following.FollowingModule
 import bushuk.stanislau.bitbucketproject.di.modules.global.*
 import bushuk.stanislau.bitbucketproject.di.modules.mainScreen.MainScreenModule
 import bushuk.stanislau.bitbucketproject.di.modules.pullrequest.PullRequestScopeModule
+import bushuk.stanislau.bitbucketproject.di.modules.pullrequest.PullRequestScopeModule_ProvidePullRequestCommentsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.di.modules.repositories.RepositoriesModule
 import bushuk.stanislau.bitbucketproject.di.modules.repository.RepositoryModule
 import bushuk.stanislau.bitbucketproject.di.modules.snippets.SnippetsModule
@@ -29,9 +30,13 @@ import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenViewModel
 import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
-import bushuk.stanislau.bitbucketproject.presentation.pullrequest.PullRequestViewModel
-import bushuk.stanislau.bitbucketproject.presentation.pullrequest.model.CommitsDataSourceFactory
-import bushuk.stanislau.bitbucketproject.presentation.pullrequest.model.ReviewersDataSourceFactory
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.ContainerPullRequestFragment
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.ContainerPullRequestViewModel
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.comments.PullRequestCommentsViewModel
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.comments.model.PullRequestCommentsDataSourceFactory
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.PullRequestViewModel
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.model.CommitsDataSourceFactory
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.model.ReviewersDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesViewModel
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryFragment
@@ -139,4 +144,11 @@ interface MainComponent {
 
     fun inject(codeEditorModel: CodeEditorModel)
 
+    fun inject(containerPullRequestViewModel: ContainerPullRequestViewModel )
+
+    fun inject (pullRequestCommentsDataSourceFactory: PullRequestCommentsDataSourceFactory)
+
+    fun inject (pullRequestCommentsViewModel: PullRequestCommentsViewModel)
+
+    fun inject(pullRequestCommentsDataSourceAbstract: PullRequestCommentsDataSourceAbstract)
 }

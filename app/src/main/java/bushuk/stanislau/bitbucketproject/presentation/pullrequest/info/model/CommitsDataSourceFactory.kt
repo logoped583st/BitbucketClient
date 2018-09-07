@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.presentation.pullrequest.model
+package bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.model
 
 import android.arch.paging.DataSource
 import bushuk.stanislau.bitbucketproject.App

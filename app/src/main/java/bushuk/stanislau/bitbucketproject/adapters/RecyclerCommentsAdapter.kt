@@ -8,41 +8,38 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
-import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.PullRequestFragment
-import bushuk.stanislau.bitbucketproject.room.commits.Commit
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.comments.PullRequestCommentsFragment
+import bushuk.stanislau.bitbucketproject.room.comments.Comment
 
-class RecyclerCommitsAdapter : PagedListAdapter<Commit,
-        ViewHolder>(UserDiffCallback) {
+class RecyclerCommentsAdapter : PagedListAdapter<Comment, ViewHolder>(UserDiffCallback) {
 
     lateinit var clickFollow: ClickFollow
-    lateinit var holder: ViewHolder
 
-    fun setListener(baseFollow: PullRequestFragment) {
+    fun setListener(baseFollow: PullRequestCommentsFragment) {
         clickFollow = baseFollow
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        this.holder = holder
         holder.bind(getItem(position), clickFollow)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding: ViewDataBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_recycler_commit, parent, false)
+        val binding: ViewDataBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_recycler_pullrequest_comments, parent, false)
+
 
         return ViewHolder(binding)
     }
 
     companion object {
-        val UserDiffCallback = object : DiffUtil.ItemCallback<Commit>() {
-            override fun areItemsTheSame(oldItem: Commit, newItem: Commit): Boolean {
-                return oldItem.hash == newItem.hash
+        val UserDiffCallback = object : DiffUtil.ItemCallback<Comment>() {
+            override fun areItemsTheSame(oldItem: Comment, newItem: Comment): Boolean {
+                return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: Commit, newItem: Commit): Boolean {
+            override fun areContentsTheSame(oldItem: Comment, newItem: Comment): Boolean {
                 return oldItem == newItem
             }
         }
     }
-
 }

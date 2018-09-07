@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.presentation.pullrequest.model
+package bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.model
 
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
