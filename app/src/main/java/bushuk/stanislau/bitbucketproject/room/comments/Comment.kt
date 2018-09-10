@@ -7,5 +7,5 @@ data class Comment(val user: User,
                    val id: Int,
                    val updated_on: Date,
                    val links: CommentLinks,
-                   val inline: CommentInline,
+                   val inline: CommentInline?,
                    val content: CommentContent)

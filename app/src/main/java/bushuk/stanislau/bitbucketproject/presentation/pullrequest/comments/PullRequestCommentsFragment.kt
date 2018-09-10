@@ -7,7 +7,9 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerCommentsAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentPullRequestCommentsBinding
@@ -24,11 +26,9 @@ class PullRequestCommentsFragment : Fragment(), ClickFollow {
         val alert = AlertCodeDialog()
 
         alert.comment = (data as Comment)
-        alert.show(fragmentManager,"test")
-        //val window:Window = alert.wind!!
-
-        //window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-
+        if (data.inline != null) {
+            alert.show(fragmentManager, "test")
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
