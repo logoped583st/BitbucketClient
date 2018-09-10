@@ -71,6 +71,10 @@ object UrlBuilder {
         }
     }
 
+    fun resetCodePath() {
+        repositoryPath = null
+    }
+
 
     fun pullRequestNameBuilder(name: String) {
         pullRequestName = "(title~\"$name\")"

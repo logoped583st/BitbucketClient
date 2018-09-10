@@ -157,7 +157,7 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
                 }
             };
     private boolean fileOpened = false;
-    private static String fileExtension = "";
+    public static String fileExtension = "";
     /*
      * This class provides a handy way to tie together the functionality of
      * {@link DrawerLayout} and the framework <code>ActionBar</code> to implement the recommended
@@ -173,7 +173,7 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
     protected Editor mEditor;
     private HorizontalScrollView horizontalScroll;
     private static SearchResult searchResult;
-    protected static PageSystem pageSystem;
+    public static PageSystem pageSystem;
     private PageSystemButtons pageSystemButtons;
     private static String currentEncoding = "UTF-16";
     private Toolbar toolbar;

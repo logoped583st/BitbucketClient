@@ -36,8 +36,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-    api project(':uimodule')
-    api project(':libraries:sharedCode')
+    implementation project(':uimodule')
+    implementation project(':libraries:sharedCode')
 
     /////Timber//////
     implementation "${library.timber}"

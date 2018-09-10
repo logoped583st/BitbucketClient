@@ -7,13 +7,12 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerCommentsAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentPullRequestCommentsBinding
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
+import bushuk.stanislau.bitbucketproject.room.comments.Comment
 import kotlinx.android.synthetic.main.fragment_pull_request_comments.*
 
 class PullRequestCommentsFragment : Fragment(), ClickFollow {
@@ -22,7 +21,14 @@ class PullRequestCommentsFragment : Fragment(), ClickFollow {
     lateinit var binding: FragmentPullRequestCommentsBinding
 
     override fun onClickItem(view: View, data: Any) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val alert = AlertCodeDialog()
+
+        alert.comment = (data as Comment)
+        alert.show(fragmentManager,"test")
+        //val window:Window = alert.wind!!
+
+        //window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +36,7 @@ class PullRequestCommentsFragment : Fragment(), ClickFollow {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_pull_request_comments, container, false)
         viewModel = ViewModelProviders.of(this).get(PullRequestCommentsViewModel::class.java)
+
 
         binding.let {
             it.setLifecycleOwner(this)
