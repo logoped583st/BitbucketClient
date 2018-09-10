@@ -32,6 +32,7 @@ import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenViewModel
 import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.ContainerPullRequestFragment
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.ContainerPullRequestViewModel
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.comments.AlertCodeDialogViewModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.comments.PullRequestCommentsViewModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.comments.model.PullRequestCommentsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.PullRequestViewModel
@@ -151,4 +152,6 @@ interface MainComponent {
     fun inject (pullRequestCommentsViewModel: PullRequestCommentsViewModel)
 
     fun inject(pullRequestCommentsDataSourceAbstract: PullRequestCommentsDataSourceAbstract)
+
+    fun inject(alertCodeDialogViewModel: AlertCodeDialogViewModel)
 }

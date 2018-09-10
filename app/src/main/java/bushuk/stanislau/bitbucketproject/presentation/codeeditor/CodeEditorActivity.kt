@@ -9,6 +9,9 @@ import timber.log.Timber
 
 
 class CodeEditorActivity : MainActivity() {
+    override fun showInterstitial(): Boolean {
+        return true
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,18 +24,10 @@ class CodeEditorActivity : MainActivity() {
         viewModel.code.observe(this, Observer {
             pageSystem = PageSystem(this, this, it)
 
-            Timber.e(it)
-            //mEditor.replaceTextKeepCursor(it)
             showTextEditor()
             mEditor.enableTextChangedListener()
 
         })
-    }
-
-
-    override fun showInterstitial(): Boolean {
-
-        return true
     }
 
 }

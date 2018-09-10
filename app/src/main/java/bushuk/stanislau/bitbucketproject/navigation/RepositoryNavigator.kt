@@ -9,6 +9,7 @@ import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.presentation.code.CodeFragment
 import bushuk.stanislau.bitbucketproject.presentation.pullrequests.PullRequestsFragment
 import bushuk.stanislau.bitbucketproject.presentation.watchers.WatchersFragment
+import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import ru.terrakok.cicerone.android.SupportAppNavigator
 
 
@@ -21,7 +22,10 @@ class RepositoryNavigator(activity: FragmentActivity?, fragmentManager: Fragment
     override fun createFragment(screenKey: String?, data: Any?): Fragment? {
 
         when (screenKey) {
-            Screens.CODE_SCREEN -> return CodeFragment()
+            Screens.CODE_SCREEN -> {
+                UrlBuilder.resetCodePath()
+                return CodeFragment()
+            }
 
             Screens.PULL_REQUESTS_SCREEN -> return PullRequestsFragment()
 
