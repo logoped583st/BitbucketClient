@@ -28,4 +28,6 @@ object Screens {
     const val PULL_REQUEST_SCREEN:String = "PULL_REQUEST_SCREEN"
 
     const val CODE_EDITOR_SCREEN : String = "CODE_EDITOR_SCREEN"
+
+    const val SNIPPETS_CODE_SCREEN: String = "SNIPPETS_CODE_SCREEN"
 }

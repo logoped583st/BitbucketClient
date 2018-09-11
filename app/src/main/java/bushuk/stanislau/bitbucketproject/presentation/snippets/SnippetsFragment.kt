@@ -13,10 +13,15 @@ import android.view.ViewGroup
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerSnippetsAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentSnippetsBinding
+import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
+import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
 import kotlinx.android.synthetic.main.fragment_snippets.*
 
 
-class SnippetsFragment : Fragment() {
+class SnippetsFragment : Fragment(), ClickFollow {
+    override fun onClickItem(view: View, data: Any) {
+        viewModel.navigateToCode((data as Snippet).links.self.href)
+    }
 
     lateinit var binding: FragmentSnippetsBinding
 
@@ -24,10 +29,8 @@ class SnippetsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_snippets, container, false)
-
         viewModel = ViewModelProviders.of(this).get(SnippetsViewModel::class.java)
 
         binding.let {
@@ -43,6 +46,7 @@ class SnippetsFragment : Fragment() {
 
         snippets_screen_recycler.layoutManager = LinearLayoutManager(activity)
         val adapter = RecyclerSnippetsAdapter()
+        adapter.clickFollow = this
         snippets_screen_recycler.adapter = adapter
         viewModel.snippets.observe(this, Observer(adapter::submitList))
     }

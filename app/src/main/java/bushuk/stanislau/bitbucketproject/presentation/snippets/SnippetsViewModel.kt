@@ -6,8 +6,10 @@ import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.constants.Constants
+import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
+import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 class SnippetsViewModel : ViewModel() {
@@ -15,6 +17,8 @@ class SnippetsViewModel : ViewModel() {
     @Inject
     lateinit var snippetsDataSourceFactory: SnippetsDataSourceFactory
 
+    @Inject
+    lateinit var router: Router
 
     init {
         App.component.inject(this)
@@ -24,6 +28,10 @@ class SnippetsViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-       snippetsDataSourceFactory.snippetsDataSource.invalidate()
+        snippetsDataSourceFactory.snippetsDataSource.invalidate()
+    }
+
+    fun navigateToCode(url: String) {
+        router.navigateTo(Screens.SNIPPETS_CODE_SCREEN, url)
     }
 }
