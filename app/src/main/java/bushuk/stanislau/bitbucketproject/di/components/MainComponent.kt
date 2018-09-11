@@ -42,6 +42,7 @@ import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesV
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryFragment
 import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryViewModel
+import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsCodeViewModel
 import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsViewModel
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.user.UserViewModel
@@ -154,4 +155,6 @@ interface MainComponent {
     fun inject(pullRequestCommentsDataSourceAbstract: PullRequestCommentsDataSourceAbstract)
 
     fun inject(alertCodeDialogViewModel: AlertCodeDialogViewModel)
+
+    fun inject(snippetsCodeViewModel: SnippetsCodeViewModel)
 }

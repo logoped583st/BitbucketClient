@@ -15,6 +15,7 @@ import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.ContainerPullRequestFragment
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
 import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryFragment
+import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsCodeActivity
 import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsFragment
 import bushuk.stanislau.bitbucketproject.presentation.user.UserFragment
 import bushuk.stanislau.bitbucketproject.room.user.User
@@ -36,6 +37,13 @@ class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppN
                 intent.putExtra("FILENAME", data as String)
                 return intent
             }
+
+            Screens.SNIPPETS_CODE_SCREEN -> {
+                val intent = Intent(context, SnippetsCodeActivity::class.java)
+                intent.putExtra("Path", data as String)
+                return intent
+            }
+
         }
 
         return null

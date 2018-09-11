@@ -38,6 +38,9 @@
             android:label="@string/title_activity_auth_login"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+
+        <activity android:name=".presentation.snippets.SnippetsCodeActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

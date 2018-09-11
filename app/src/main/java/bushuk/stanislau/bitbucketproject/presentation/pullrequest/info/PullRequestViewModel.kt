@@ -68,8 +68,10 @@ class PullRequestViewModel : ViewModel() {
                     if (it.participants != null) {
                         countOfApproves.postValue(it.participants)
                         it.participants.forEach {
-                            if (it.user.uuid == commitDataSourceFactory.commitsDataSource.userModel.user.value.uuid) {
+                            if (it.user.uuid == commitDataSourceFactory.commitsDataSource.userModel.user.value.uuid &&
+                                    it.approved) {
                                 isApproved.postValue(true)
+                                return@forEach
                             }
                         }
                     }
@@ -123,7 +125,6 @@ class PullRequestViewModel : ViewModel() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    Timber.e("SUCCMERGE")
                     pullRequest.publishSubject.onNext(it)
                     pullRequestState.postValue(it.state)
                     view.text = "Revert"

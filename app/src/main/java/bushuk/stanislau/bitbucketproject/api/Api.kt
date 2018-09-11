@@ -8,9 +8,11 @@ import bushuk.stanislau.bitbucketproject.room.followers.Followers
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
+import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
 import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
 import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -82,5 +84,8 @@ interface Api {
 
     @DELETE
     fun unApprovePullRequest(@Url url: String): Completable
+
+    @GET
+    fun getSnippet(@Url url: String):Single<Snippet>
 
 }

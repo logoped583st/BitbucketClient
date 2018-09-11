@@ -9,16 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.PullRequestFragment
+import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsFragment
 import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
 
-class RecyclerSnippetsAdapter : PagedListAdapter<Snippet, ViewHolder>(UserDiffCallback),ClickFollow {
+class RecyclerSnippetsAdapter : PagedListAdapter<Snippet, ViewHolder>(UserDiffCallback) {
 
-    override fun onClickItem(view: View, data: Any) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    lateinit var clickFollow: ClickFollow
+
+    fun setListener(snippets: SnippetsFragment) {
+        clickFollow = snippets
     }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position),this)
+        holder.bind(getItem(position),clickFollow)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {

@@ -16,8 +16,6 @@ class CodeEditorViewModel : ViewModel() {
     val code : MutableLiveData<String> = MutableLiveData()
 
     init {
-        Timber.e("INIT CODE VIEW MODEL")
-
         App.component.inject(this)
         codeEditorModel.getCode()
                 .subscribeOn(Schedulers.io())
