@@ -1,6 +1,7 @@
 package bushuk.stanislau.bitbucketproject.datasources
 
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.global.LoadingModel
 import bushuk.stanislau.bitbucketproject.room.comments.Comment
 import bushuk.stanislau.bitbucketproject.room.comments.CommentResponse
 import io.reactivex.Single
@@ -8,7 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-abstract class PullRequestCommentsDataSourceAbstract : BaseDataSource<String, Comment>() {
+abstract class PullRequestCommentsDataSourceAbstract : BaseDataSource<String, Comment>(LoadingModel()) {
 
     init {
         App.component.inject(this)

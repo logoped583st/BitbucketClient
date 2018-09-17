@@ -45,6 +45,7 @@ class AlertCodeDialog : DialogFragment(), PageSystem.PageSystemInterface {
         setupTextEditor()
         hideTextEditor()
 
+
         binding.let {
             it.data = comment
         }
@@ -63,16 +64,13 @@ class AlertCodeDialog : DialogFragment(), PageSystem.PageSystemInterface {
         editor.visibility = View.VISIBLE
         editor.resetVariables()
         editor.disableTextChangedListener()
-
+        editor.setReadOnly(true)
         editor.replaceTextKeepCursor(pageSystem.currentPageText)
-        editor.enableTextChangedListener()
     }
 
     private fun hideTextEditor() {
         editor.visibility = View.INVISIBLE
-        editor.disableTextChangedListener()
         editor.replaceTextKeepCursor("")
-        editor.enableTextChangedListener()
     }
 
     private fun setupTextEditor() {

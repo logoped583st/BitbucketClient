@@ -15,13 +15,11 @@ import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-abstract class BaseDataSource<Key : Any, Value : Any> : PageKeyedDataSource<Key, Value>() {
+abstract class BaseDataSource<Key : Any, Value : Any>(val loadingModel: LoadingModel) : PageKeyedDataSource<Key, Value>() {
 
     @Inject
     lateinit var userModel: UserModel
 
-    @Inject
-    lateinit var loadingModel: LoadingModel
 
     @Inject
     lateinit var api: Api

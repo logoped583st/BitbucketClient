@@ -1,6 +1,7 @@
 package bushuk.stanislau.bitbucketproject.datasources
 
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.global.LoadingModel
 import bushuk.stanislau.bitbucketproject.room.followers.Followers
 import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.Observable
@@ -8,7 +9,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-abstract class UsersDataSourceAbstract : BaseDataSource<String, User>() {
+abstract class UsersDataSourceAbstract : BaseDataSource<String, User>(LoadingModel()) {
 
     init {
         App.component.inject(this)

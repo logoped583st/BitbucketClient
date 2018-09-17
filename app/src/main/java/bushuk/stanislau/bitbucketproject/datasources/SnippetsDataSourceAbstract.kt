@@ -2,6 +2,7 @@ package bushuk.stanislau.bitbucketproject.datasources
 
 import android.arch.paging.PageKeyedDataSource
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.global.LoadingModel
 import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
 import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
 import io.reactivex.Observable
@@ -9,7 +10,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-abstract class SnippetsDataSourceAbstract : BaseDataSource<String, Snippet>() {
+abstract class SnippetsDataSourceAbstract : BaseDataSource<String, Snippet>(LoadingModel()) {
 
     init {
         App.component.inject(this)

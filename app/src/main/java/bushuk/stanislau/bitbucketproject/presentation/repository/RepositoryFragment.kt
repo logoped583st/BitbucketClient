@@ -14,7 +14,6 @@ import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoryBinding
 import bushuk.stanislau.bitbucketproject.navigation.RepositoryNavigator
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
-import kotlinx.android.synthetic.main.fragment_repositories.*
 import kotlinx.android.synthetic.main.fragment_repository.*
 import kotlinx.android.synthetic.main.fragment_repository.view.*
 import ru.terrakok.cicerone.NavigatorHolder
@@ -27,7 +26,7 @@ class RepositoryFragment : BackPressFragment() {
     lateinit var viewModel: RepositoryViewModel
     lateinit var binding: FragmentRepositoryBinding
     lateinit var avatar: String
-    lateinit var userName: String
+    private lateinit var userName: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

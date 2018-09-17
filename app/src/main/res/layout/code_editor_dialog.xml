@@ -32,15 +32,15 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@mipmap/ic_launcher" />
 
-        <TextView
+        <br.tiagohm.markdownview.MarkdownView
             android:id="@+id/item_recycler_snippets_title"
-            style="@style/Headline"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            app:escapeHtml="false"
+            app:text="@{data.content.raw}"
             android:layout_marginTop="8dp"
-            android:text="@{data.content.raw}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_recycler_snippets_users_avatar"
             app:layout_constraintTop_toTopOf="parent" />
@@ -62,7 +62,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:layout_marginTop="8dp"
             android:text="@{data.user.display_name}"
             app:layout_constraintEnd_toStartOf="@+id/item_recycler_snippets_id"
             app:layout_constraintStart_toEndOf="@+id/item_recycler_snippets_owner_avatar"
@@ -93,6 +92,7 @@
             android:gravity="top|start"
             android:singleLine="false"
             android:text=""
+            android:focusable="false"
             android:textCursorDrawable="@null"
             android:textIsSelectable="true"
             app:layout_constraintBottom_toBottomOf="parent"

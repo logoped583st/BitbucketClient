@@ -46,7 +46,6 @@ class PullRequestsViewModel : ViewModel() {
 
     fun navigateToPullRequestScreen(pullRequest: PullRequest) {
         pullRequestModel.publishSubject.onNext(pullRequest)
-        Timber.e(pullRequest.toString())
         router.navigateTo(Screens.PULL_REQUEST_SCREEN)
     }
 
@@ -62,7 +61,7 @@ class PullRequestsViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { (spinner.adapter as SpinnerAdapter).getItem(it) }
                 .subscribe({
-                    pullRequestStatusChange(it, lifecycleOwner, adapter)
+                    pullRequestStatusChange(it!!, lifecycleOwner, adapter)
                 }, {
                     Timber.e(it.message)
                 })
@@ -77,7 +76,7 @@ class PullRequestsViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { (spinner.adapter as SpinnerAdapter).getItem(it) }
                 .subscribe({
-                    pullRequestSortChange(it, lifecycleOwner, adapter)
+                    pullRequestSortChange(it!!, lifecycleOwner, adapter)
                 }, {
                     Timber.e(it.message)
                 })
@@ -115,7 +114,6 @@ class PullRequestsViewModel : ViewModel() {
     private fun pullRequestSortChange(sort:String,lifecycleOwner: LifecycleOwner,adapter: RecyclerPullRequestsAdapter){
         pullRequests.removeObservers(lifecycleOwner)
         UrlBuilder.buildSortPullRequest(sort)
-        Timber.e("SORT")
         pullRequests = LivePagedListBuilder<String, PullRequest>(pullRequestsDataSourceFactory, Constants.listPagedConfig).build()
         pullRequests.observe(lifecycleOwner, Observer(adapter::submitList))
     }

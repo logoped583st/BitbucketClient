@@ -46,7 +46,7 @@ class CodeViewModel : ViewModel() {
                 .subscribe({
                     var i = 0
                     while (i < it.values.size) {
-                        if (codeDataSourceFactory.codeDataSource.repositoryModel.repository.value.mainbranch.name == it.values[i].name) {
+                        if (codeDataSourceFactory.codeDataSource.repositoryModel.repository.value.mainbranch?.name == it.values[i].name) {
                             hash = it.values[i].target.hash
                         }
                         i++

@@ -38,8 +38,7 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil
-                .inflate(inflater, R.layout.fragment_repositories, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_repositories, container, false)
         viewModel = ViewModelProviders.of(this).get(RepositoriesViewModel::class.java)
 
         binding.let {

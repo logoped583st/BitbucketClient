@@ -10,5 +10,5 @@ class PullRequestModule {
 
     @Provides
     @Singleton
-    fun providePullRequestModel():PullRequestModel = PullRequestModel()
+    fun providePullRequestModel(): PullRequestModel = PullRequestModel()
 }

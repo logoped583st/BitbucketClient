@@ -788,11 +788,7 @@ public class Editor extends android.support.v7.widget.AppCompatEditText {
             if (showUndo != mShowUndo || showRedo != mShowRedo) {
                 mShowUndo = showUndo;
                 mShowRedo = showRedo;
-                ((MainActivity) getContext()).invalidateOptionsMenu();
-            }
-
-            ((MainActivity) getContext()).updateTextSyntax();
-        }
+            } }
     }
 
     //endregion

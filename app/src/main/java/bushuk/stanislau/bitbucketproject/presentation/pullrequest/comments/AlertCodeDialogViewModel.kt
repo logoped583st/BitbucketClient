@@ -47,12 +47,17 @@ class AlertCodeDialogViewModel : ViewModel() {
                 .map {
                     val lines = it.split(System.getProperty("line.separator"))
                     val finalStringBuilder = StringBuilder("")
-                    Timber.e(comment.inline.to.toString() + "Count")
+                    var index = comment.inline.to
 
-                    for (i in comment.inline.to - 3..lines.lastIndex) {
+                    if (index == null) {
+                        index = comment.inline.from
+                    }
+
+                    for (i in Math.abs(index!!)..lines.lastIndex) {
                         Timber.e(lines[i])
                         finalStringBuilder.append(lines[i]).append(System.getProperty("line.separator"))
                     }
+
                     return@map finalStringBuilder.toString()
                 }
                 .observeOn(AndroidSchedulers.mainThread())

@@ -2,7 +2,9 @@ package bushuk.stanislau.bitbucketproject.utils.binding
 
 import android.annotation.SuppressLint
 import android.databinding.BindingAdapter
+import android.view.View
 import android.widget.TextView
+import br.tiagohm.markdownview.MarkdownView
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
 import java.text.SimpleDateFormat
@@ -21,6 +23,17 @@ class TextBindingUtil {
                 textView.setTextColor(App.resourcesApp.getColor(R.color.grey))
             } else {
                 textView.text = string
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("app:text")
+        fun markDownText(textView: MarkdownView, string: String) {
+            if (string.isEmpty()) {
+                textView.visibility = View.GONE
+            } else {
+                textView.loadMarkdown(string)
+
             }
         }
 
@@ -48,7 +61,7 @@ class TextBindingUtil {
                     textView.setTextColor(App.resourcesApp.getColor(R.color.green))
                 }
 
-                "DECLINED"->{
+                "DECLINED" -> {
                     textView.text = string
                     textView.setTextColor(App.resourcesApp.getColor(R.color.black))
                 }

@@ -10,5 +10,5 @@ class UserModule {
 
     @Provides
     @Singleton
-    fun provideUserModel():UserModel = UserModel()
+    fun provideUserModel(): UserModel = UserModel()
 }

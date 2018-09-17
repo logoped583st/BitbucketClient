@@ -1,18 +1,12 @@
 package bushuk.stanislau.bitbucketproject.presentation.repositories.model
 
 import android.arch.paging.DataSource
-import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.global.LoadingModel
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
-import javax.inject.Inject
 
-class RepositoriesDataSourceFactory : DataSource.Factory<String, Repository>() {
+class RepositoriesDataSourceFactory(access: String?, language: String?, loadingModel: LoadingModel) : DataSource.Factory<String, Repository>() {
 
-    @Inject
-    lateinit var repositoriesDataSource: RepositoriesDataSource
-
-    init {
-        App.component.inject(this)
-    }
+    val repositoriesDataSource: RepositoriesDataSource = RepositoriesDataSource(access, language, loadingModel)
 
     override fun create(): DataSource<String, Repository> {
         return repositoriesDataSource

@@ -5,8 +5,8 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class FollowModule {
+class LoadingModule {
 
     @Provides
-    fun provideFollowModel(): LoadingModel = LoadingModel()
+    fun provideLoadingModel(): LoadingModel = LoadingModel()
 }

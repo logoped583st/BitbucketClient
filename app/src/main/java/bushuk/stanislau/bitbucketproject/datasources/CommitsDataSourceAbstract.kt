@@ -1,6 +1,7 @@
 package bushuk.stanislau.bitbucketproject.datasources
 
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.global.LoadingModel
 import bushuk.stanislau.bitbucketproject.room.commits.Commit
 import bushuk.stanislau.bitbucketproject.room.commits.CommitResponse
 import io.reactivex.Observable
@@ -9,7 +10,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-abstract class CommitsDataSourceAbstract : BaseDataSource<String, Commit>() {
+abstract class CommitsDataSourceAbstract : BaseDataSource<String, Commit>(LoadingModel()) {
 
     init {
         App.component.inject(this)

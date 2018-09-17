@@ -4,38 +4,30 @@ import timber.log.Timber
 
 object UrlBuilder {
 
-    var query: String = ""
-    private var repositoryName: String? = null
-    private var repositoryLanguage: String? = null
-    private var repositoryAccess: String? = null
 
     private var pullRequestName: String? = null
     var pullRequestSort: String = "-id"
     private var pullRequestState: String? = "(state=\"OPEN\")"
-    var queryPullRequest: String? = null
 
     var repositoryPath: String? = null
 
-    fun queryRepositoryNameBuilder(search: String?) {
-        repositoryName = "(name~\"$search\")"
-    }
 
-    fun queryLanguageBuilder(language: String) {
+    fun queryLanguageBuilder(language: String?): String? {
         Timber.e(language)
-        repositoryLanguage = if (language == "All") {
-            null
+        return if (language == "All" || language == null) {
+            ""
         } else {
-            "(language=\"$language\")"
+            "AND(language=\"$language\")"
         }
     }
 
-    fun queryAccessBuilder(access: String) {
-        repositoryAccess = when (access) {
-            "All" -> null
+    fun queryAccessBuilder(access: String?): String? {
+        return when (access) {
+            "All" -> ""
 
-            "Private" -> "(is_private=" + true + ")"
+            "Private" -> "AND(is_private=" + true + ")"
 
-            "Public" -> "(is_private=" + false + ")"
+            "Public" -> "AND(is_private=" + false + ")"
 
             else -> {
                 null
@@ -43,20 +35,20 @@ object UrlBuilder {
         }
     }
 
-    fun buildQuery(): String {
-        query = ""
+    fun buildQuery(repositoryName: String?, repositoryAccess: String?, repositoryLanguage: String?): String {
+        var query = ""
         query += if (repositoryName.isNullOrEmpty()) {
             "(name~\"\")"
         } else {
-            repositoryName
+            "(name~\"$repositoryName\")"
         }
 
-        if (!repositoryLanguage.isNullOrEmpty()) {
-            query += "AND$repositoryLanguage"
+        if (!(repositoryLanguage).isNullOrEmpty()) {
+            query += queryLanguageBuilder(repositoryLanguage)
         }
 
         if (!repositoryAccess.isNullOrEmpty()) {
-            query += "AND$repositoryAccess"
+            query += queryAccessBuilder(repositoryAccess)
         }
 
         return query
