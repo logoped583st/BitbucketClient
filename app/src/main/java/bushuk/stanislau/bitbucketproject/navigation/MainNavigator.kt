@@ -72,7 +72,6 @@ class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppN
             }
 
             Screens.REPOSITORY_SCREEN -> {
-                UrlBuilder.resetQueryAfterRoute()
                 val bundle = Bundle()
                 val fragment = RepositoryFragment()
                 bundle.putString("AVATAR", (data as List<*>)[0].toString())

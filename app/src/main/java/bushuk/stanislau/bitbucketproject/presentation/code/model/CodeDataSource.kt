@@ -2,15 +2,33 @@ package bushuk.stanislau.bitbucketproject.presentation.code.model
 
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
+import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.datasources.CodeDataSourceAbstract
+import bushuk.stanislau.bitbucketproject.global.UserModel
+import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
 import bushuk.stanislau.bitbucketproject.room.code.CodeResponse
 import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import javax.inject.Inject
 
 class CodeDataSource : CodeDataSourceAbstract() {
+
+    @Inject
+    lateinit var userModel: UserModel
+
+    @Inject
+    lateinit var api: Api
+
+    @Inject
+    lateinit var repositoryModel: RepositoryModel
+
+    init {
+        App.component.inject(this)
+    }
+
 
     override val single: Observable<CodeResponse>
         get() =

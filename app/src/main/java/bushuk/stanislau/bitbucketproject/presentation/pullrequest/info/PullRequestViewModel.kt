@@ -15,6 +15,7 @@ import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.global.LoadingModel
 import bushuk.stanislau.bitbucketproject.global.PullRequestModel
+import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.model.CommitsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.model.ReviewersDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.commits.Commit
@@ -40,6 +41,9 @@ class PullRequestViewModel : ViewModel() {
 
     @Inject
     lateinit var reviewersDataSourceFactory: ReviewersDataSourceFactory
+
+    @Inject
+    lateinit var userModel: UserModel
 
     val loadingModel: LoadingModel = LoadingModel()
 
@@ -68,7 +72,7 @@ class PullRequestViewModel : ViewModel() {
                     if (it.participants != null) {
                         countOfApproves.postValue(it.participants)
                         it.participants.forEach {
-                            if (it.user.uuid == commitDataSourceFactory.commitsDataSource.userModel.user.value.uuid &&
+                            if (it.user.uuid == userModel.user.value.uuid &&
                                     it.approved) {
                                 isApproved.postValue(true)
                                 return@forEach

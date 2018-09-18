@@ -1,7 +1,6 @@
 package bushuk.stanislau.bitbucketproject.datasources
 
 import android.arch.paging.PageKeyedDataSource
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
 import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
 import io.reactivex.Observable
@@ -11,9 +10,6 @@ import io.reactivex.schedulers.Schedulers
 
 abstract class SnippetsDataSourceAbstract : BaseDataSource<String, Snippet>() {
 
-    init {
-        App.component.inject(this)
-    }
 
     abstract val single: Observable<SnippetsResponce>
 

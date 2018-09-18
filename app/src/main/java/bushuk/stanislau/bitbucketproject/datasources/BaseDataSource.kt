@@ -2,11 +2,7 @@ package bushuk.stanislau.bitbucketproject.datasources
 
 import android.arch.paging.PageKeyedDataSource
 import android.view.View
-import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.global.LoadingModel
-import bushuk.stanislau.bitbucketproject.global.PullRequestModel
-import bushuk.stanislau.bitbucketproject.global.UserModel
-import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
 import bushuk.stanislau.bitbucketproject.room.code.CodeResponse
 import bushuk.stanislau.bitbucketproject.room.followers.Followers
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestResponse
@@ -18,24 +14,11 @@ import javax.inject.Inject
 abstract class BaseDataSource<Key : Any, Value : Any> : PageKeyedDataSource<Key, Value>() {
 
     @Inject
-    lateinit var userModel: UserModel
-
-    @Inject
     lateinit var loadingModel: LoadingModel
-
-    @Inject
-    lateinit var api: Api
-
-    @Inject
-    lateinit var repositoryModel: RepositoryModel
-
-    @Inject
-    lateinit var pullrequestModel: PullRequestModel
 
     val compositeDisposable = CompositeDisposable()
 
     abstract val errorText: String
-
 
     fun loading(a: Any) {
         loadingModel.loading.postValue(View.INVISIBLE)

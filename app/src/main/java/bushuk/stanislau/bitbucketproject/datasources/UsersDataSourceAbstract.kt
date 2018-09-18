@@ -1,6 +1,5 @@
 package bushuk.stanislau.bitbucketproject.datasources
 
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.room.followers.Followers
 import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.Observable
@@ -9,10 +8,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 abstract class UsersDataSourceAbstract : BaseDataSource<String, User>() {
-
-    init {
-        App.component.inject(this)
-    }
 
 
     abstract val single: Observable<Followers>
@@ -44,6 +39,7 @@ abstract class UsersDataSourceAbstract : BaseDataSource<String, User>() {
     override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<String, User>) {
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
     override fun invalidate() {
         compositeDisposable.clear()
     }
