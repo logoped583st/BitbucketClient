@@ -36,17 +36,25 @@ class PullRequestsViewModel : ViewModel() {
     @Inject
     lateinit var pullRequestModel: PullRequestModel
 
+    var statePullRequest: String = "Open"
+
+    var namePullRequest: String? = null
+
+    var sortPullRequest: String = "Id up"
+
 
     init {
         App.component.initPullRequestsComponent().inject(this)
+        pullRequestsDataSourceFactory.pullRequestsDataSource.queryPullRequst = UrlBuilder.buildQueryPullRequest(namePullRequest, statePullRequest)
+        pullRequestsDataSourceFactory.pullRequestsDataSource.sortPullRequest = UrlBuilder.buildSortPullRequest(sortPullRequest)
     }
+
 
     var pullRequests: LiveData<PagedList<PullRequest>> = LivePagedListBuilder<String, PullRequest>(pullRequestsDataSourceFactory, Constants.listPagedConfig).build()
 
 
     fun navigateToPullRequestScreen(pullRequest: PullRequest) {
         pullRequestModel.publishSubject.onNext(pullRequest)
-        Timber.e(pullRequest.toString())
         router.navigateTo(Screens.PULL_REQUEST_SCREEN)
     }
 
@@ -62,7 +70,8 @@ class PullRequestsViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { (spinner.adapter as SpinnerAdapter).getItem(it) }
                 .subscribe({
-                    pullRequestStatusChange(it, lifecycleOwner, adapter)
+                    statePullRequest = it!!
+                    change(lifecycleOwner, adapter)
                 }, {
                     Timber.e(it.message)
                 })
@@ -77,7 +86,8 @@ class PullRequestsViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { (spinner.adapter as SpinnerAdapter).getItem(it) }
                 .subscribe({
-                    pullRequestSortChange(it, lifecycleOwner, adapter)
+                    sortPullRequest = it!!
+                    change(lifecycleOwner, adapter)
                 }, {
                     Timber.e(it.message)
                 })
@@ -93,29 +103,17 @@ class PullRequestsViewModel : ViewModel() {
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    pullRequestTitleChange(it, lifecycleOwner, adapter)
+                    namePullRequest = it
+                    change(lifecycleOwner, adapter)
                 }
         pullRequestsDataSourceFactory.pullRequestsDataSource.compositeDisposable.add(disposable)
     }
 
-    private fun pullRequestStatusChange(status: String, lifecycleOwner: LifecycleOwner, adapter: RecyclerPullRequestsAdapter) {
-        pullRequests.removeObservers(lifecycleOwner)
-        UrlBuilder.pullRequestStateBuilder(status)
-        pullRequests = LivePagedListBuilder<String, PullRequest>(pullRequestsDataSourceFactory, Constants.listPagedConfig).build()
-        pullRequests.observe(lifecycleOwner, Observer(adapter::submitList))
-    }
 
-    private fun pullRequestTitleChange(title: String, lifecycleOwner: LifecycleOwner, adapter: RecyclerPullRequestsAdapter) {
+    private fun change(lifecycleOwner: LifecycleOwner, adapter: RecyclerPullRequestsAdapter) {
         pullRequests.removeObservers(lifecycleOwner)
-        UrlBuilder.pullRequestNameBuilder(title)
-        pullRequests = LivePagedListBuilder<String, PullRequest>(pullRequestsDataSourceFactory, Constants.listPagedConfig).build()
-        pullRequests.observe(lifecycleOwner, Observer(adapter::submitList))
-    }
-
-    private fun pullRequestSortChange(sort:String,lifecycleOwner: LifecycleOwner,adapter: RecyclerPullRequestsAdapter){
-        pullRequests.removeObservers(lifecycleOwner)
-        UrlBuilder.buildSortPullRequest(sort)
-        Timber.e("SORT")
+        pullRequestsDataSourceFactory.pullRequestsDataSource.queryPullRequst = UrlBuilder.buildQueryPullRequest(namePullRequest, statePullRequest)
+        pullRequestsDataSourceFactory.pullRequestsDataSource.sortPullRequest = UrlBuilder.buildSortPullRequest(sortPullRequest)
         pullRequests = LivePagedListBuilder<String, PullRequest>(pullRequestsDataSourceFactory, Constants.listPagedConfig).build()
         pullRequests.observe(lifecycleOwner, Observer(adapter::submitList))
     }

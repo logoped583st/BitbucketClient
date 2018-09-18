@@ -2,11 +2,25 @@ package bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.model
 
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
+import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.datasources.CommitsDataSourceAbstract
+import bushuk.stanislau.bitbucketproject.global.PullRequestModel
 import bushuk.stanislau.bitbucketproject.room.commits.CommitResponse
 import io.reactivex.Single
+import javax.inject.Inject
 
 class CommitsDataSource : CommitsDataSourceAbstract() {
+
+    @Inject
+    lateinit var pullrequestModel: PullRequestModel
+
+    @Inject
+    lateinit var api: Api
+
+    init {
+        App.component.inject(this)
+    }
+
 
     override val single: Single<CommitResponse>
         get() = api.getCommitWithUrl(pullrequestModel.publishSubject.value.links.commits.href)

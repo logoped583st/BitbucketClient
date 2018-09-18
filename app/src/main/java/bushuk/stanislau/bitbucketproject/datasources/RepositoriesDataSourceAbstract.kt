@@ -1,6 +1,5 @@
 package bushuk.stanislau.bitbucketproject.datasources
 
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import io.reactivex.Observable
@@ -9,11 +8,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 abstract class RepositoriesDataSourceAbstract : BaseDataSource<String, Repository>() {
-
-
-    init {
-        App.component.inject(this)
-    }
 
     abstract val single: Observable<RepositoriesResponse>
 

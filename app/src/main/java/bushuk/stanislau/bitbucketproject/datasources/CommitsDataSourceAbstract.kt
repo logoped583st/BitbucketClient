@@ -1,19 +1,13 @@
 package bushuk.stanislau.bitbucketproject.datasources
 
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.room.commits.Commit
 import bushuk.stanislau.bitbucketproject.room.commits.CommitResponse
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 abstract class CommitsDataSourceAbstract : BaseDataSource<String, Commit>() {
-
-    init {
-        App.component.inject(this)
-    }
 
     abstract val single: Single<CommitResponse>
 

@@ -4,38 +4,25 @@ import timber.log.Timber
 
 object UrlBuilder {
 
-    var query: String = ""
-    private var repositoryName: String? = null
-    private var repositoryLanguage: String? = null
-    private var repositoryAccess: String? = null
-
-    private var pullRequestName: String? = null
-    var pullRequestSort: String = "-id"
-    private var pullRequestState: String? = "(state=\"OPEN\")"
-    var queryPullRequest: String? = null
-
     var repositoryPath: String? = null
 
-    fun queryRepositoryNameBuilder(search: String?) {
-        repositoryName = "(name~\"$search\")"
-    }
 
-    fun queryLanguageBuilder(language: String) {
+    private fun queryLanguageBuilder(language: String?): String? {
         Timber.e(language)
-        repositoryLanguage = if (language == "All") {
-            null
+        return if (language == "All" || language == null) {
+            ""
         } else {
-            "(language=\"$language\")"
+            "AND(language=\"$language\")"
         }
     }
 
-    fun queryAccessBuilder(access: String) {
-        repositoryAccess = when (access) {
-            "All" -> null
+    private fun queryAccessBuilder(access: String?): String? {
+        return when (access) {
+            "All" -> ""
 
-            "Private" -> "(is_private=" + true + ")"
+            "Private" -> "AND(is_private=" + true + ")"
 
-            "Public" -> "(is_private=" + false + ")"
+            "Public" -> "AND(is_private=" + false + ")"
 
             else -> {
                 null
@@ -43,20 +30,20 @@ object UrlBuilder {
         }
     }
 
-    fun buildQuery(): String {
-        query = ""
+    fun buildQuery(repositoryName: String?, repositoryAccess: String?, repositoryLanguage: String?): String {
+        var query = ""
         query += if (repositoryName.isNullOrEmpty()) {
             "(name~\"\")"
         } else {
-            repositoryName
+            "(name~\"$repositoryName\")"
         }
 
-        if (!repositoryLanguage.isNullOrEmpty()) {
-            query += "AND$repositoryLanguage"
+        if (!(repositoryLanguage).isNullOrEmpty()) {
+            query += queryLanguageBuilder(repositoryLanguage)
         }
 
         if (!repositoryAccess.isNullOrEmpty()) {
-            query += "AND$repositoryAccess"
+            query += queryAccessBuilder(repositoryAccess)
         }
 
         return query
@@ -76,38 +63,37 @@ object UrlBuilder {
     }
 
 
-    fun pullRequestNameBuilder(name: String) {
-        pullRequestName = "(title~\"$name\")"
-    }
-
-    fun parseState(): String = when (pullRequestState) {
-        "(state=\"OPEN\")" -> "Open"
-
-        "(state=\"MERGED\")" -> "Merged"
-
-        "(state=\"DECLINED\")" -> "Declined"
-
-        "(state=\"OPEN\") OR (state=\"MERGED\") OR (state=\"DECLINED\")" -> "All"
-
-        else -> ""
-    }
-
-    fun parseSort(): String = when (pullRequestSort) {
-        "-id" -> "Id up"
-
-        "id" -> "Id down"
-
-        "-updated_on" -> "Update time up"
-
-        "updated_on" -> "Update time down"
-
-        else -> null.toString()
-    }
+    private fun pullRequestNameBuilder(name: String?): String? = "(title~\"$name\")"
 
 
-    fun pullRequestStateBuilder(state: String) {
+//    fun parseState(): String = when (pullRequestState) {
+//        "(state=\"OPEN\")" -> "Open"
+//
+//        "(state=\"MERGED\")" -> "Merged"
+//
+//        "(state=\"DECLINED\")" -> "Declined"
+//
+//        "(state=\"OPEN\") OR (state=\"MERGED\") OR (state=\"DECLINED\")" -> "All"
+//
+//        else -> ""
+//    }
+//
+//    fun parseSort(pullRequestSort: String?): String = when (pullRequestSort) {
+//        "-id" -> "Id up"
+//
+//        "id" -> "Id down"
+//
+//        "-updated_on" -> "Update time up"
+//
+//        "updated_on" -> "Update time down"
+//
+//        else -> null.toString()
+//    }
+
+
+    private fun pullRequestStateBuilder(state: String): String {
         val upperState = state.toUpperCase()
-        pullRequestState = when (upperState) {
+        return when (upperState) {
             "OPEN" -> "(state=\"OPEN\")"
 
             "MERGED" -> "(state=\"MERGED\")"
@@ -116,36 +102,28 @@ object UrlBuilder {
 
             "ALL" -> "(state=\"OPEN\") OR (state=\"MERGED\") OR (state=\"DECLINED\")"
 
-            else -> null
-        }
-    }
-
-    fun buildQueryPullRequest(): String = if (pullRequestName == null) {
-        pullRequestState!!
-    } else {
-        pullRequestName + "AND" + pullRequestState
-    }
-
-
-    fun buildSortPullRequest(sort: String) {
-        pullRequestSort = when (sort) {
-            "Id up" -> "-id"
-
-            "Id down" -> "id"
-
-            "Update time up" -> "-updated_on"
-
-            "Update time down" -> "updated_on"
-
             else -> null.toString()
         }
     }
 
+    fun buildSortPullRequest(pullRequestSort: String): String = when (pullRequestSort) {
+        "Id up" -> "-id"
 
-    fun resetQueryAfterRoute() {
-        pullRequestName = null
-        pullRequestSort = "-id"
-        pullRequestState = "(state=\"OPEN\")"
+        "Id down" -> "id"
+
+        "Update time up" -> "-updated_on"
+
+        "Update time down" -> "updated_on"
+
+        else -> null.toString()
     }
 
+
+    fun buildQueryPullRequest(pullRequestName: String?, pullRequestState: String): String =
+            if (!pullRequestName.isNullOrEmpty()) {
+                pullRequestNameBuilder(pullRequestName) + "AND" + pullRequestStateBuilder(pullRequestState)
+            } else {
+                pullRequestStateBuilder(pullRequestState)
+            }
 }
+

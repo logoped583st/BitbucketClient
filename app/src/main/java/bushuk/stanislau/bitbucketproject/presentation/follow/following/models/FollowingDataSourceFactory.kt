@@ -10,12 +10,6 @@ import javax.inject.Inject
 class FollowingDataSourceFactory : DataSource.Factory<String, User>() {
 
     @Inject
-    lateinit var api: Api
-
-    @Inject
-    lateinit var userModel: UserModel
-
-    @Inject
     lateinit var followingDataSource: FollowingDataSource
 
     init {

@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.datasources
 
-import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.global.PullRequestModel
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
 import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.Single
@@ -10,9 +10,7 @@ import timber.log.Timber
 
 abstract class ReviewersDataSourceAbstract : BaseDataSource<String, User>() {
 
-    init {
-        App.component.inject(this)
-    }
+    abstract val pullRequestModel: PullRequestModel
 
     abstract val single: Single<PullRequest>
 
@@ -20,7 +18,7 @@ abstract class ReviewersDataSourceAbstract : BaseDataSource<String, User>() {
         compositeDisposable.add(single.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    pullrequestModel.publishSubject.onNext( it)
+                    pullRequestModel.publishSubject.onNext(it)
                     callback.onResult(it.reviewers, null, null)
                 }, {
                     Timber.e(it.message)

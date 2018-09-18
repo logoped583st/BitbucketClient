@@ -73,7 +73,7 @@ class CodeFragment : Fragment(), ClickFollow, RecyclerCodePathAdapter.PathClick 
         code_screen_code_path_recycler.adapter = codePathAdapter
 
         val mainBranch: String = viewModel.codeDataSourceFactory.codeDataSource.repositoryModel.repository.value.mainbranch.name
-        var positionOfMainBranch: Int = 0
+        var positionOfMainBranch = 0
 
         viewModel.branches.observe(this, Observer {
             it!!.forEachIndexed { index, branch ->
@@ -87,12 +87,9 @@ class CodeFragment : Fragment(), ClickFollow, RecyclerCodePathAdapter.PathClick 
             viewModel.observeSpinner(code_screen_branch_spinner, codeAdapter, this)
         })
 
-
         code_screen_recycler.layoutManager = LinearLayoutManager(activity)
         codeAdapter.clickFollow = this
         code_screen_recycler.adapter = codeAdapter
         viewModel.code.observe(this, Observer(codeAdapter::submitList))
     }
-
-
 }

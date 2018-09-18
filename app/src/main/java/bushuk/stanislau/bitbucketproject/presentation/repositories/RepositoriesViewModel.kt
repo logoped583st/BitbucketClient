@@ -33,6 +33,11 @@ class RepositoriesViewModel : ViewModel() {
     @Inject
     lateinit var repositoryModel: RepositoryModel
 
+    var repositoryName: String? = null
+
+    var repositoryAccess: String? = null
+
+    var repositoryLanguage: String? = null
 
     init {
         App.component.inject(this)
@@ -51,16 +56,9 @@ class RepositoriesViewModel : ViewModel() {
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    repositoriesNameChange(lifecycleOwner, it, adapter)
+                    repositoryName = it
+                    queryChange(lifecycleOwner, adapter)
                 }
-    }
-
-
-    private fun repositoriesNameChange(lifecycleOwner: LifecycleOwner, search: String?, adapter: RecyclerRepositoriesAdapter) {
-        repositories.removeObservers(lifecycleOwner)
-        UrlBuilder.queryRepositoryNameBuilder(search)
-        repositories = LivePagedListBuilder<String, Repository>(repositoriesDataSourceFactory, Constants.listPagedConfig).build()
-        repositories.observe(lifecycleOwner, Observer(adapter::submitList))
     }
 
 
@@ -71,7 +69,8 @@ class RepositoriesViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { (spinner.adapter as SpinnerAdapter).getItem(it) }
                 .subscribe({
-                    repositoriesLanguageChange(it, lifecycleOwner, adapter)
+                    repositoryLanguage = it
+                    queryChange(lifecycleOwner, adapter)
                 }, {
                     Timber.e(it.message)
                 })
@@ -84,23 +83,17 @@ class RepositoriesViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { (spinner.adapter as SpinnerAdapter).getItem(it) }
                 .subscribe({
-                    repositoriesAccessChange(it, lifecycleOwner, adapter)
+                    repositoryAccess = it
+                    queryChange(lifecycleOwner, adapter)
                 }, {
                     Timber.e(it.message)
                 })
     }
 
 
-    private fun repositoriesLanguageChange(language: String, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
+    private fun queryChange(lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
         repositories.removeObservers(lifecycleOwner)
-        UrlBuilder.queryLanguageBuilder(language)
-        repositories = LivePagedListBuilder<String, Repository>(repositoriesDataSourceFactory, Constants.listPagedConfig).build()
-        repositories.observe(lifecycleOwner, Observer(adapter::submitList))
-    }
-
-    private fun repositoriesAccessChange(access: String, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
-        repositories.removeObservers(lifecycleOwner)
-        UrlBuilder.queryAccessBuilder(access)
+        repositoriesDataSourceFactory.repositoriesDataSource.url = UrlBuilder.buildQuery(repositoryName, repositoryAccess, repositoryLanguage)
         repositories = LivePagedListBuilder<String, Repository>(repositoriesDataSourceFactory, Constants.listPagedConfig).build()
         repositories.observe(lifecycleOwner, Observer(adapter::submitList))
     }
@@ -111,12 +104,12 @@ class RepositoriesViewModel : ViewModel() {
 
     fun navigateToRepositoryScreen(repository: Repository, username: String) {
         repositoryModel.repository.onNext(repository)
-        router.navigateTo(Screens.REPOSITORY_SCREEN, listOf(repository.links.avatar.href,username))
+        router.navigateTo(Screens.REPOSITORY_SCREEN, listOf(repository.links.avatar.href, username))
     }
 
     override fun onCleared() {
         super.onCleared()
-        //repositoriesDataSourceFactory.repositoriesDataSource.invalidate()
+        repositoriesDataSourceFactory.repositoriesDataSource.invalidate()
     }
 
 }

@@ -22,7 +22,6 @@ class UserViewModel : ViewModel() {
     private val userMe: User= userModel.user.value.copy()
 
     override fun onCleared() {
-        Timber.e("CLEAR")
         userModel.user.value.username = userMe.username
         super.onCleared()
     }

@@ -30,8 +30,8 @@ class UserFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user, container, false)
         viewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
-        viewModel.setUser(arguments?.getString("USERNAME").toString())
         getArgs()
+        viewModel.setUser(userName)
         setToolbar(binding)
 
         return binding.root
@@ -48,7 +48,7 @@ class UserFragment : Fragment() {
             it.viewModel = viewModel
         }
 
-        //binding.pager.isSaveFromParentEnabled = false //ned check it.
+        binding.pager.isSaveFromParentEnabled = false //ned check it.
 
     }
 

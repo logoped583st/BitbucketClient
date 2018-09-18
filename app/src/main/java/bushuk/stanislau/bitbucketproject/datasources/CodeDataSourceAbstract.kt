@@ -1,6 +1,5 @@
 package bushuk.stanislau.bitbucketproject.datasources
 
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.room.code.Code
 import bushuk.stanislau.bitbucketproject.room.code.CodeResponse
 import io.reactivex.Observable
@@ -11,9 +10,6 @@ import timber.log.Timber
 
 abstract class CodeDataSourceAbstract : BaseDataSource<String, Code>() {
 
-    init {
-        App.component.inject(this)
-    }
 
     abstract val single: Observable<CodeResponse>
 

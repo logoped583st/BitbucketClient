@@ -7,7 +7,6 @@ import android.util.Base64
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.constants.Screens
-import bushuk.stanislau.bitbucketproject.di.modules.global.RetrofitModule
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
 import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
