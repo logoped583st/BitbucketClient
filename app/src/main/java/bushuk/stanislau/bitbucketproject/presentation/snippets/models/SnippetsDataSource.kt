@@ -1,17 +1,25 @@
 package bushuk.stanislau.bitbucketproject.presentation.snippets.models
 
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.api.Api
-import bushuk.stanislau.bitbucketproject.datasources.SnippetsDataSourceAbstract
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
+import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
 import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
-import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 
-class SnippetsDataSource : SnippetsDataSourceAbstract() {
+class SnippetsDataSource : BaseDataSource<Snippet, SnippetsResponce>() {
+
+    override fun onResult(value: SnippetsResponce, callback: LoadCallback<String, Snippet>) {
+        callback.onResult(value.values, value.next)
+    }
+
+    override fun onResultInitial(value: SnippetsResponce, callback: LoadInitialCallback<String, Snippet>) {
+        callback.onResult(value.values, value.previous, value.next)
+    }
 
     @Inject
     lateinit var api: Api
@@ -26,7 +34,7 @@ class SnippetsDataSource : SnippetsDataSourceAbstract() {
         App.component.inject(this)
     }
 
-    override val single: Observable<SnippetsResponce> = userModel.user.flatMapSingle { api.getSnippets(it.username) }
+    override val single: Single<SnippetsResponce> = userModel.user.flatMapSingle { api.getSnippets(it.username) }.firstOrError()
 
     override fun loadNextPage(url: String): Single<SnippetsResponce> = api.getSnippetsNextPage(url)
 

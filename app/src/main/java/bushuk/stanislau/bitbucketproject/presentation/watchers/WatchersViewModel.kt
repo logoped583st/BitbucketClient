@@ -5,9 +5,11 @@ import android.arch.paging.DataSource
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowViewModel
 import bushuk.stanislau.bitbucketproject.presentation.watchers.model.WatchersDataSourceFactory
+import bushuk.stanislau.bitbucketproject.room.followers.Followers
 import bushuk.stanislau.bitbucketproject.room.user.User
 import javax.inject.Inject
 
@@ -21,6 +23,10 @@ class WatchersViewModel : BaseFollowViewModel() {
     init {
         App.component.initWatchersComponent().inject(this)
     }
+
+    override val dataSource: BaseDataSource<User, Followers>
+        get() = watchersDataSourceFactory.watchersDataSource
+
 
     override var factory: DataSource.Factory<String, User> = watchersDataSourceFactory
 

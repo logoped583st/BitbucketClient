@@ -1,16 +1,17 @@
 package bushuk.stanislau.bitbucketproject.presentation.repositories.model
 
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.api.Api
-import bushuk.stanislau.bitbucketproject.datasources.RepositoriesDataSourceAbstract
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
-import io.reactivex.Observable
+import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import io.reactivex.Single
+import timber.log.Timber
 import javax.inject.Inject
 
-class RepositoriesDataSource : RepositoriesDataSourceAbstract() {
+class RepositoriesDataSource : BaseDataSource<Repository, RepositoriesResponse>() {
 
     @Inject
     lateinit var userModel: UserModel
@@ -20,18 +21,23 @@ class RepositoriesDataSource : RepositoriesDataSourceAbstract() {
     @Inject
     lateinit var api: Api
 
+    override val errorText: String = App.resourcesApp.getString(R.string.repositories_screen_no_repositories)
+
     init {
         App.component.inject(this)
     }
 
-    override val errorText: String = App.resourcesApp.getString(R.string.repositories_screen_no_repositories)
+    override val single: Single<RepositoriesResponse> = userModel.user.flatMapSingle {  api.getRepos(it.username, url) }.firstOrError()
 
-    override val single: Observable<RepositoriesResponse>
-        get() = userModel.user.flatMapSingle { api.getRepos(it.username, url) }
 
     override fun loadNextPage(url: String): Single<RepositoriesResponse> = api.getReposNextPage(url)
 
-    override fun invalidate() {
-        compositeDisposable.clear()
+    override fun onResult(value: RepositoriesResponse, callback: LoadCallback<String, Repository>) {
+        callback.onResult(value.values, value.next)
+    }
+
+    override fun onResultInitial(value: RepositoriesResponse, callback: LoadInitialCallback<String, Repository>) {
+        Timber.e(Thread.currentThread().name)
+        callback.onResult(value.values, value.previous, value.next)
     }
 }

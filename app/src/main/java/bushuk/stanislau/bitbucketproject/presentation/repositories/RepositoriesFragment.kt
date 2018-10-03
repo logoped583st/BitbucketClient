@@ -25,7 +25,6 @@ import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import com.github.clans.fab.FloatingActionMenu
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_repositories.*
-import timber.log.Timber
 
 class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
 
@@ -36,6 +35,7 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
 
     lateinit var string: String
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil
@@ -44,11 +44,9 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
 
         binding.let {
             it.fragment = this
-            it.viewModelRepositories = viewModel
+            it.loading = viewModel.liveLoadingModel
             it.setLifecycleOwner(this)
         }
-
-        viewModel.language.observe(this, Observer { Timber.e(it) })
 
         return binding.root
     }
@@ -73,7 +71,6 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
 
 
         viewModel.repositories.observe(this, Observer(adapter::submitList))
-
 
         repositories_screen_slide_constraint.setOnClickListener {
             //Block closing

@@ -45,7 +45,7 @@ class PullRequestsViewModel : ViewModel() {
 
     init {
         App.component.initPullRequestsComponent().inject(this)
-        pullRequestsDataSourceFactory.pullRequestsDataSource.queryPullRequst = UrlBuilder.buildQueryPullRequest(namePullRequest, statePullRequest)
+        pullRequestsDataSourceFactory.pullRequestsDataSource.queryPullRequest = UrlBuilder.buildQueryPullRequest(namePullRequest, statePullRequest)
         pullRequestsDataSourceFactory.pullRequestsDataSource.sortPullRequest = UrlBuilder.buildSortPullRequest(sortPullRequest)
     }
 
@@ -76,7 +76,7 @@ class PullRequestsViewModel : ViewModel() {
                     Timber.e(it.message)
                 })
 
-        pullRequestsDataSourceFactory.pullRequestsDataSource.compositeDisposable.add(disposable)
+        //pullRequestsDataSourceFactory.pullRequestsDataSource.compositeDisposable.add(disposable)
     }
 
     fun observeSortSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerPullRequestsAdapter) {
@@ -92,7 +92,7 @@ class PullRequestsViewModel : ViewModel() {
                     Timber.e(it.message)
                 })
 
-        pullRequestsDataSourceFactory.pullRequestsDataSource.compositeDisposable.add(disposable)
+        //pullRequestsDataSourceFactory.pullRequestsDataSource.compositeDisposable.add(disposable)
     }
 
     fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerPullRequestsAdapter) {
@@ -106,13 +106,13 @@ class PullRequestsViewModel : ViewModel() {
                     namePullRequest = it
                     change(lifecycleOwner, adapter)
                 }
-        pullRequestsDataSourceFactory.pullRequestsDataSource.compositeDisposable.add(disposable)
+        //pullRequestsDataSourceFactory.pullRequestsDataSource.compositeDisposable.add(disposable)
     }
 
 
     private fun change(lifecycleOwner: LifecycleOwner, adapter: RecyclerPullRequestsAdapter) {
         pullRequests.removeObservers(lifecycleOwner)
-        pullRequestsDataSourceFactory.pullRequestsDataSource.queryPullRequst = UrlBuilder.buildQueryPullRequest(namePullRequest, statePullRequest)
+        pullRequestsDataSourceFactory.pullRequestsDataSource.queryPullRequest = UrlBuilder.buildQueryPullRequest(namePullRequest, statePullRequest)
         pullRequestsDataSourceFactory.pullRequestsDataSource.sortPullRequest = UrlBuilder.buildSortPullRequest(sortPullRequest)
         pullRequests = LivePagedListBuilder<String, PullRequest>(pullRequestsDataSourceFactory, Constants.listPagedConfig).build()
         pullRequests.observe(lifecycleOwner, Observer(adapter::submitList))

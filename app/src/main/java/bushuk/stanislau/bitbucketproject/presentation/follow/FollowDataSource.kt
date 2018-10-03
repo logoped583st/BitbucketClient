@@ -1,8 +1,10 @@
 package bushuk.stanislau.bitbucketproject.presentation.follow
 
-import bushuk.stanislau.bitbucketproject.datasources.UsersDataSourceAbstract
+import bushuk.stanislau.bitbucketproject.BaseDataSource
+import bushuk.stanislau.bitbucketproject.room.followers.Followers
+import bushuk.stanislau.bitbucketproject.room.user.User
 
-abstract class FollowDataSource : UsersDataSourceAbstract() {
+abstract class FollowDataSource : BaseDataSource<User, Followers>() {
 
     abstract fun doOnEmpty()
 }

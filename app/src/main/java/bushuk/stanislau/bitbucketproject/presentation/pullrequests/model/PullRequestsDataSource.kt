@@ -1,17 +1,24 @@
 package bushuk.stanislau.bitbucketproject.presentation.pullrequests.model
 
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.api.Api
-import bushuk.stanislau.bitbucketproject.datasources.PullRequestsDataSourceAbstract
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
+import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestResponse
-import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 
-class PullRequestsDataSource : PullRequestsDataSourceAbstract() {
+class PullRequestsDataSource : BaseDataSource<PullRequest, PullRequestResponse>() {
+    override fun onResult(value: PullRequestResponse, callback: LoadCallback<String, PullRequest>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onResultInitial(value: PullRequestResponse, callback: LoadInitialCallback<String, PullRequest>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     @Inject
     lateinit var userModel: UserModel
@@ -22,7 +29,7 @@ class PullRequestsDataSource : PullRequestsDataSourceAbstract() {
     @Inject
     lateinit var repositoryModel: RepositoryModel
 
-    var queryPullRequst: String = ""
+    var queryPullRequest: String = ""
 
     var sortPullRequest: String = ""
 
@@ -30,10 +37,10 @@ class PullRequestsDataSource : PullRequestsDataSourceAbstract() {
         App.component.inject(this)
     }
 
-    override val single: Observable<PullRequestResponse> = userModel
+    override val single: Single<PullRequestResponse> = userModel
             .user.flatMapSingle {
-        api.getPullRequests(it.username, repositoryModel.repository.value.uuid, queryPullRequst, sortPullRequest)
-    }
+        api.getPullRequests(it.username, repositoryModel.repository.value.uuid, queryPullRequest, sortPullRequest)
+    }.singleOrError()
 
     override fun loadNextPage(url: String): Single<PullRequestResponse> = api.getPullRequestNextPage(url)
 

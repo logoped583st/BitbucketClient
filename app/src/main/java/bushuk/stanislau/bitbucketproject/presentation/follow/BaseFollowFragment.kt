@@ -37,7 +37,7 @@ abstract class BaseFollowFragment<ViewModel : BaseFollowViewModel> : Fragment(),
 
         binding.let {
             it.setLifecycleOwner(this)
-            it.baseFollowrs = (viewModel).factory.create() as FollowDataSource
+            it.loading = viewModel.liveLoadingModel
         }
 
         return binding.root

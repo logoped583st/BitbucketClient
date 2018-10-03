@@ -45,7 +45,7 @@ class PullRequestViewModel : ViewModel() {
     @Inject
     lateinit var userModel: UserModel
 
-    val loadingModel: LoadingModel = LoadingModel()
+    //val loadingModel: LoadingModel = LoadingModel()
 
     @Inject
     lateinit var api: Api
@@ -65,7 +65,7 @@ class PullRequestViewModel : ViewModel() {
     init {
         isApproved.postValue(false)
         App.component.inject(this)
-        loadingModel.loading.postValue(View.GONE)
+        //loadingModel.loading.postValue(View.GONE)
         pullRequest.publishSubject
                 .subscribe { it ->
                     pullRequestState.postValue(it.state)
@@ -82,10 +82,6 @@ class PullRequestViewModel : ViewModel() {
                 }
 
         zipLiveData(commits, reviewers)
-    }
-
-    fun exitFromFragment() {
-        router.exit()
     }
 
     override fun onCleared() {
@@ -152,7 +148,7 @@ class PullRequestViewModel : ViewModel() {
                 if (localLastA != null && localLastB != null) {
                     this.value = Pair(localLastA, localLastB)
                     Timber.e("PAIR")
-                    loadingModel.loading.postValue(View.VISIBLE)
+                   // loadingModel.loading.postValue(View.VISIBLE)
                 }
             }
 

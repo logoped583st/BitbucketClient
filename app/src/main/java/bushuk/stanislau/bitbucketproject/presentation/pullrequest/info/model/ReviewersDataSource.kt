@@ -1,17 +1,31 @@
 package bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.model
 
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.api.Api
-import bushuk.stanislau.bitbucketproject.datasources.ReviewersDataSourceAbstract
 import bushuk.stanislau.bitbucketproject.global.PullRequestModel
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
+import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.Single
 import javax.inject.Inject
 
-class ReviewersDataSource : ReviewersDataSourceAbstract() {
+class ReviewersDataSource : BaseDataSource<User, PullRequest>() {
+
+    override fun onResult(value: PullRequest, callback: LoadCallback<String, User>) {
+        //there doesn`t exist next page
+    }
+
+    override fun onResultInitial(value: PullRequest, callback: LoadInitialCallback<String, User>) {
+        callback.onResult(value.reviewers, null, null)
+        pullRequestModel.publishSubject.onNext(value)
+    }
+
+    override fun loadNextPage(url: String): Single<PullRequest> {
+        return Single.error(NullPointerException())//there doesn`t exist next page
+    }
 
 
     @Inject
@@ -24,7 +38,6 @@ class ReviewersDataSource : ReviewersDataSourceAbstract() {
     lateinit var userModel: UserModel
 
     @Inject
-    override
     lateinit var pullRequestModel: PullRequestModel
 
     init {

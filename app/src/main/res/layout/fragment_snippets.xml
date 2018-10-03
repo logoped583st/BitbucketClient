@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="viewModel"
-            type="bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsViewModel" />
+            name="loading"
+            type="bushuk.stanislau.bitbucketproject.global.LiveLoadingModel"/>
 
 
     </data>
@@ -19,8 +19,7 @@
             android:id="@+id/snippets_screen_error"
             android:layout_width="128dp"
             android:layout_height="128dp"
-            android:visibility="@{viewModel.snippetsDataSourceFactory.snippetsDataSource.loadingModel.noInfo}"
-
+            android:visibility="@{loading.noInfo}"
             android:layout_marginBottom="@dimen/margin_size_small"
             android:src="@drawable/ic_error_no_items"
             app:layout_constraintBottom_toTopOf="@+id/snippets_screen_error_text"
@@ -34,13 +33,12 @@
             style="@style/Headline.light_grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.snippetsDataSourceFactory.snippetsDataSource.loadingModel.noInfo}"
-
+            android:visibility="@{loading.noInfo}"
+            android:text="@{loading.errorText}"
             android:layout_marginBottom="72dp"
             android:layout_marginEnd="@dimen/margin_size_small"
             android:layout_marginStart="@dimen/margin_size_small"
             android:layout_marginTop="@dimen/margin_size_small"
-            android:text="@{viewModel.snippetsDataSourceFactory.snippetsDataSource.loadingModel.errorText}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_gravity="center"
-            android:visibility="@{viewModel.snippetsDataSourceFactory.snippetsDataSource.loadingModel.loading}"
+            android:visibility="@{loading.loading}"
             android:background="@drawable/progress_bar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

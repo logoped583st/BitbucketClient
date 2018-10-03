@@ -30,8 +30,7 @@ class AlertCodeDialogViewModel : ViewModel() {
     @Inject
     lateinit var pullRequestModel: PullRequestModel
 
-    @Inject
-    lateinit var loadingModel: LoadingModel
+
 
     val code: MutableLiveData<String> = MutableLiveData()
 
@@ -40,7 +39,7 @@ class AlertCodeDialogViewModel : ViewModel() {
     }
 
     fun setComment(comment: Comment) {
-        loadingModel.loading.postValue(View.VISIBLE)
+        //loadingModel.loading.postValue(View.VISIBLE)
         UrlBuilder.buildPathWithHash(comment.inline!!.path, pullRequestModel.publishSubject.value.source.commit.hash)
         scalarApi.getCodeOfFile(userModel.user.value.username, repositoryModel.repository.value.uuid, UrlBuilder.repositoryPath!!)
                 .subscribeOn(Schedulers.io())

@@ -1,17 +1,22 @@
 package bushuk.stanislau.bitbucketproject.presentation.repositories
 
-import android.arch.lifecycle.*
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Observer
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.SearchView
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.BaseDataSource
+import bushuk.stanislau.bitbucketproject.LoadingViewModel
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerRepositoriesAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
+import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
@@ -22,7 +27,8 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class RepositoriesViewModel : ViewModel() {
+class RepositoriesViewModel : LoadingViewModel<Repository, RepositoriesResponse>() {
+
 
     @Inject
     lateinit var repositoriesDataSourceFactory: RepositoriesDataSourceFactory
@@ -33,11 +39,12 @@ class RepositoriesViewModel : ViewModel() {
     @Inject
     lateinit var repositoryModel: RepositoryModel
 
-    var repositoryName: String? = null
+    private var repositoryName: String? = null
 
-    var repositoryAccess: String? = null
+    private var repositoryAccess: String? = null
 
-    var repositoryLanguage: String? = null
+    private var repositoryLanguage: String? = null
+
 
     init {
         App.component.inject(this)
@@ -45,8 +52,8 @@ class RepositoriesViewModel : ViewModel() {
 
     var repositories: LiveData<PagedList<Repository>> = LivePagedListBuilder<String, Repository>(repositoriesDataSourceFactory, Constants.listPagedConfig).build()
 
-    val language: MutableLiveData<String> = MutableLiveData()
-
+    override val dataSource: BaseDataSource<Repository, RepositoriesResponse>
+        get() = repositoriesDataSourceFactory.repositoriesDataSource
 
     fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
         RxSearchView.queryTextChanges(searchView)

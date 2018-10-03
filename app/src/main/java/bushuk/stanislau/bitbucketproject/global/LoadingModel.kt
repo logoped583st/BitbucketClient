@@ -1,12 +1,9 @@
 package bushuk.stanislau.bitbucketproject.global
 
-import android.arch.lifecycle.MutableLiveData
+import android.view.View
 
-class LoadingModel {
-
-    val noInfo: MutableLiveData<Int> = MutableLiveData()
-
-    val loading: MutableLiveData<Int> = MutableLiveData()
-
-    val errorText: MutableLiveData<String> = MutableLiveData()
-}
+data class LoadingModel(
+        var noInfo: Int = View.INVISIBLE,
+        var loading: Int = View.VISIBLE,
+        var errorText: String = ""
+)
