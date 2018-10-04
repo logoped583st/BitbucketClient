@@ -12,7 +12,9 @@ import bushuk.stanislau.bitbucketproject.room.user.User
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
-class FollowingViewModel : BaseFollowViewModel<DataSource.Factory<String,User>>() {
+class FollowingViewModel(factory: FollowingDataSourceFactory = FollowingDataSourceFactory(),
+                         source: BaseDataSource<User, Followers> = factory.followingDataSource)
+    : BaseFollowViewModel<DataSource.Factory<String, User>>(factory, source)  {
 
     @Inject
     lateinit var router: Router
@@ -25,10 +27,10 @@ class FollowingViewModel : BaseFollowViewModel<DataSource.Factory<String,User>>(
         router.navigateTo(Screens.USER_SCREEN, userName)
     }
 
-    override var dataSource: BaseDataSource<User, Followers>
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-        set(value) {}
-    override var dataSourceFactory: DataSource.Factory<String, User> = FollowersDataSourceFactory()
+//    override var dataSource: BaseDataSource<User, Followers>
+//        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+//        set(value) {}
+//    override var dataSourceFactory: DataSource.Factory<String, User> = FollowersDataSourceFactory()
 
 
     override fun onCleared() {

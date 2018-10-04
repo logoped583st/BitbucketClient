@@ -27,11 +27,13 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class RepositoriesViewModel : LoadingViewModel<Repository, RepositoriesResponse, RepositoriesDataSourceFactory>() {
+class RepositoriesViewModel(private val factory: RepositoriesDataSourceFactory = RepositoriesDataSourceFactory(),
+                            private val source: BaseDataSource<Repository, RepositoriesResponse> = factory.repositoriesDataSource )
+    : LoadingViewModel<Repository, RepositoriesResponse, RepositoriesDataSourceFactory>(factory, source) {
 
-    override var dataSourceFactory: RepositoriesDataSourceFactory = RepositoriesDataSourceFactory()
+//    override var dataSourceFactory: RepositoriesDataSourceFactory = RepositoriesDataSourceFactory()
 
-    override var dataSource: BaseDataSource<Repository, RepositoriesResponse> = dataSourceFactory.repositoriesDataSource
+//    override var dataSource: BaseDataSource<Repository, RepositoriesResponse> = dataSourceFactory.repositoriesDataSource
 
     @Inject
     lateinit var router: Router

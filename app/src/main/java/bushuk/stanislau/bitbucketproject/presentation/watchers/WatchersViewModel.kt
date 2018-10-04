@@ -15,13 +15,15 @@ import bushuk.stanislau.bitbucketproject.room.user.User
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
-class WatchersViewModel : BaseFollowViewModel<DataSource.Factory<String, User>>() {
+class WatchersViewModel(factory: WatchersDataSourceFactory = WatchersDataSourceFactory(),
+                        source: BaseDataSource<User, Followers> = factory.watchersDataSource)
+    : BaseFollowViewModel<DataSource.Factory<String, User>>(factory, source) {
 
     @Inject
     lateinit var router: Router
 
-    override var dataSourceFactory: DataSource.Factory<String, User> = WatchersDataSourceFactory()
-    override lateinit var dataSource: BaseDataSource<User, Followers>
+//    override var dataSourceFactory: DataSource.Factory<String, User> = WatchersDataSourceFactory()
+//    override lateinit var dataSource: BaseDataSource<User, Followers>
 
 
 

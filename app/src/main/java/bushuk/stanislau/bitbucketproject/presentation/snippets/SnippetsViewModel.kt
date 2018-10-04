@@ -14,11 +14,14 @@ import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
-class SnippetsViewModel : LoadingViewModel<Snippet, SnippetsResponce, SnippetsDataSourceFactory>() {
+class SnippetsViewModel
+(factory: SnippetsDataSourceFactory = SnippetsDataSourceFactory(),
+source: BaseDataSource<Snippet, SnippetsResponce> = factory.snippetsDataSource)
+    : LoadingViewModel<Snippet, SnippetsResponce, SnippetsDataSourceFactory>(factory, source) {
 
-    override var dataSourceFactory: SnippetsDataSourceFactory = SnippetsDataSourceFactory()
-
-    override var dataSource: BaseDataSource<Snippet, SnippetsResponce> = dataSourceFactory.snippetsDataSource
+//    override var dataSourceFactory: SnippetsDataSourceFactory = SnippetsDataSourceFactory()
+//
+//    override var dataSource: BaseDataSource<Snippet, SnippetsResponce> = dataSourceFactory.snippetsDataSource
 
     @Inject
     lateinit var router: Router
