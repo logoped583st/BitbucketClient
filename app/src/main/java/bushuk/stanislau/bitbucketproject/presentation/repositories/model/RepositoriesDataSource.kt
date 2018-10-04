@@ -37,7 +37,6 @@ class RepositoriesDataSource : BaseDataSource<Repository, RepositoriesResponse>(
     }
 
     override fun onResultInitial(value: RepositoriesResponse, callback: LoadInitialCallback<String, Repository>) {
-        Timber.e(Thread.currentThread().name)
         callback.onResult(value.values, value.previous, value.next)
     }
 }

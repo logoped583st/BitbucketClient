@@ -44,7 +44,7 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
 
         binding.let {
             it.fragment = this
-            it.loading = viewModel.liveLoadingModel
+            it.viewModel = viewModel
             it.setLifecycleOwner(this)
         }
 
@@ -95,7 +95,7 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
 
 
     override fun onClickItem(view: View, data: Any) {
-        viewModel.navigateToRepositoryScreen((data as Repository), viewModel.repositoriesDataSourceFactory.repositoriesDataSource.userModel.user.value.username)
+        viewModel.navigateToRepositoryScreen((data as Repository), viewModel.dataSourceFactory.repositoriesDataSource.userModel.user.value.username)
     }
 
     override fun onAttach(activity: Activity?) {

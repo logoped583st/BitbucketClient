@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="loading"
-            type="bushuk.stanislau.bitbucketproject.global.LiveLoadingModel"/>
+            name="viewModel"
+            type="bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesViewModel"/>
 
         <variable
             name="fragment"
@@ -36,7 +36,7 @@
                 android:layout_width="128dp"
                 android:layout_height="128dp"
                 android:layout_marginBottom="@dimen/margin_size_small"
-                android:visibility="@{loading.noInfo}"
+                android:visibility="@{viewModel.liveLoadingModel.noInfo}"
                 android:src="@drawable/ic_error_no_items"
                 app:layout_constraintBottom_toTopOf="@+id/repositories_screen_error_text"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -53,8 +53,8 @@
                 android:layout_marginEnd="@dimen/margin_size_small"
                 android:layout_marginStart="@dimen/margin_size_small"
                 android:layout_marginTop="@dimen/margin_size_small"
-                android:visibility="@{loading.noInfo}"
-                android:text="@{loading.errorText}"
+                android:visibility="@{viewModel.liveLoadingModel.noInfo}"
+                android:text="@{viewModel.liveLoadingModel.errorText}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +67,7 @@
                 android:layout_height="48dp"
                 android:layout_gravity="center"
                 android:background="@drawable/progress_bar"
-                android:visibility="@{loading.loading}"
+                android:visibility="@{viewModel.liveLoadingModel.loading}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -1,7 +1,6 @@
 package bushuk.stanislau.bitbucketproject.presentation.snippets
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import bushuk.stanislau.bitbucketproject.App
@@ -15,28 +14,24 @@ import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
-class SnippetsViewModel : LoadingViewModel<Snippet,SnippetsResponce>() {
+class SnippetsViewModel : LoadingViewModel<Snippet, SnippetsResponce, SnippetsDataSourceFactory>() {
 
+    override var dataSourceFactory: SnippetsDataSourceFactory = SnippetsDataSourceFactory()
 
-    @Inject
-    lateinit var snippetsDataSourceFactory: SnippetsDataSourceFactory
+    override var dataSource: BaseDataSource<Snippet, SnippetsResponce> = dataSourceFactory.snippetsDataSource
 
     @Inject
     lateinit var router: Router
-
 
     init {
         App.component.inject(this)
     }
 
-    override val dataSource: BaseDataSource<Snippet, SnippetsResponce>
-        get() = snippetsDataSourceFactory.snippetsDataSource
-
-    val snippets: LiveData<PagedList<Snippet>> = LivePagedListBuilder<String, Snippet>(snippetsDataSourceFactory, Constants.listPagedConfig).build()
+    val snippets: LiveData<PagedList<Snippet>> = LivePagedListBuilder<String, Snippet>(dataSourceFactory, Constants.listPagedConfig).build()
 
     override fun onCleared() {
         super.onCleared()
-        snippetsDataSourceFactory.snippetsDataSource.invalidate()
+        dataSource.invalidate()
     }
 
     fun navigateToCode(url: String) {

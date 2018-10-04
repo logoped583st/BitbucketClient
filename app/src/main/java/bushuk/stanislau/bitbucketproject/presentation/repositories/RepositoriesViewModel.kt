@@ -27,11 +27,11 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class RepositoriesViewModel : LoadingViewModel<Repository, RepositoriesResponse>() {
+class RepositoriesViewModel : LoadingViewModel<Repository, RepositoriesResponse, RepositoriesDataSourceFactory>() {
 
+    override var dataSourceFactory: RepositoriesDataSourceFactory = RepositoriesDataSourceFactory()
 
-    @Inject
-    lateinit var repositoriesDataSourceFactory: RepositoriesDataSourceFactory
+    override var dataSource: BaseDataSource<Repository, RepositoriesResponse> = dataSourceFactory.repositoriesDataSource
 
     @Inject
     lateinit var router: Router
@@ -45,15 +45,12 @@ class RepositoriesViewModel : LoadingViewModel<Repository, RepositoriesResponse>
 
     private var repositoryLanguage: String? = null
 
-
     init {
         App.component.inject(this)
     }
 
-    var repositories: LiveData<PagedList<Repository>> = LivePagedListBuilder<String, Repository>(repositoriesDataSourceFactory, Constants.listPagedConfig).build()
+    var repositories: LiveData<PagedList<Repository>> = LivePagedListBuilder<String, Repository>(dataSourceFactory, Constants.listPagedConfig).build()
 
-    override val dataSource: BaseDataSource<Repository, RepositoriesResponse>
-        get() = repositoriesDataSourceFactory.repositoriesDataSource
 
     fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
         RxSearchView.queryTextChanges(searchView)
@@ -100,8 +97,8 @@ class RepositoriesViewModel : LoadingViewModel<Repository, RepositoriesResponse>
 
     private fun queryChange(lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
         repositories.removeObservers(lifecycleOwner)
-        repositoriesDataSourceFactory.repositoriesDataSource.url = UrlBuilder.buildQuery(repositoryName, repositoryAccess, repositoryLanguage)
-        repositories = LivePagedListBuilder<String, Repository>(repositoriesDataSourceFactory, Constants.listPagedConfig).build()
+        dataSourceFactory.repositoriesDataSource.url = UrlBuilder.buildQuery(repositoryName, repositoryAccess, repositoryLanguage)
+        repositories = LivePagedListBuilder<String, Repository>(dataSourceFactory, Constants.listPagedConfig).build()
         repositories.observe(lifecycleOwner, Observer(adapter::submitList))
     }
 
@@ -116,7 +113,7 @@ class RepositoriesViewModel : LoadingViewModel<Repository, RepositoriesResponse>
 
     override fun onCleared() {
         super.onCleared()
-        repositoriesDataSourceFactory.repositoriesDataSource.invalidate()
+        dataSourceFactory.repositoriesDataSource.invalidate()
     }
 
 }

@@ -1,5 +1,6 @@
 package bushuk.stanislau.bitbucketproject.adapters
 
+import android.arch.paging.DataSource
 import android.arch.paging.PagedListAdapter
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -12,7 +13,7 @@ import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowViewModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
 import bushuk.stanislau.bitbucketproject.room.user.User
 
-class RecyclerFollowAdapter<ViewModel:BaseFollowViewModel> : PagedListAdapter<User,
+class RecyclerFollowAdapter<ViewModel:BaseFollowViewModel<DataSource.Factory<String,User>>> : PagedListAdapter<User,
         ViewHolder>(UserDiffCallback) {
 
     lateinit var clickFollow: ClickFollow

@@ -7,34 +7,38 @@ import android.arch.paging.PagedList
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.constants.Constants
+import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowViewModel
 import bushuk.stanislau.bitbucketproject.presentation.watchers.model.WatchersDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.followers.Followers
 import bushuk.stanislau.bitbucketproject.room.user.User
+import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
-class WatchersViewModel : BaseFollowViewModel() {
-
+class WatchersViewModel : BaseFollowViewModel<DataSource.Factory<String, User>>() {
 
     @Inject
-    lateinit var watchersDataSourceFactory: WatchersDataSourceFactory
+    lateinit var router: Router
+
+    override var dataSourceFactory: DataSource.Factory<String, User> = WatchersDataSourceFactory()
+    override lateinit var dataSource: BaseDataSource<User, Followers>
+
 
 
     init {
-        App.component.initWatchersComponent().inject(this)
+        App.component.inject(this)
     }
 
-    override val dataSource: BaseDataSource<User, Followers>
-        get() = watchersDataSourceFactory.watchersDataSource
-
-
-    override var factory: DataSource.Factory<String, User> = watchersDataSourceFactory
-
-
-    val watchers: LiveData<PagedList<User>> by lazy { LivePagedListBuilder<String, User>(watchersDataSourceFactory, Constants.listPagedConfig).build() }
+    val watchers: LiveData<PagedList<User>> by lazy { LivePagedListBuilder<String, User>(dataSourceFactory, Constants.listPagedConfig).build() }
 
     override fun onCleared() {
+        dataSource.invalidate()
         super.onCleared()
-        watchersDataSourceFactory.watchersDataSource.invalidate()
     }
+
+    fun navigateToUserScreen(userName: User) {
+        router.navigateTo(Screens.USER_SCREEN, userName)
+    }
+
+
 }

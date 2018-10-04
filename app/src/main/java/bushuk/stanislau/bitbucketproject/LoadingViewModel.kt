@@ -1,18 +1,22 @@
 package bushuk.stanislau.bitbucketproject
 
 import android.arch.lifecycle.ViewModel
+import android.arch.paging.DataSource
 import bushuk.stanislau.bitbucketproject.global.LiveLoadingModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 import javax.inject.Inject
 
-abstract class LoadingViewModel<Value : Any, Response : Any> : ViewModel() {
+abstract class LoadingViewModel<Value : Any, Response : Any, Factory : DataSource.Factory<String, Value>>
+    : ViewModel() {
 
     @Inject
     lateinit var liveLoadingModel: LiveLoadingModel
 
-    abstract val dataSource: BaseDataSource<Value, Response>
+    abstract var dataSourceFactory: Factory
+
+    abstract var dataSource: BaseDataSource<Value, Response>
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
