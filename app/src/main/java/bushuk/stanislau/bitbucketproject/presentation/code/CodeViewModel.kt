@@ -1,11 +1,15 @@
 package bushuk.stanislau.bitbucketproject.presentation.code
 
-import android.arch.lifecycle.*
-import android.arch.paging.DataSource
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Observer
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import android.widget.Spinner
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.BaseDataSource
+import bushuk.stanislau.bitbucketproject.LoadingViewModel
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerCodeAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
@@ -13,6 +17,7 @@ import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.presentation.code.model.CodeDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.code.Branch
 import bushuk.stanislau.bitbucketproject.room.code.Code
+import bushuk.stanislau.bitbucketproject.room.code.CodeResponse
 import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import com.jakewharton.rxbinding2.widget.RxAdapterView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,32 +27,27 @@ import ru.terrakok.cicerone.Router
 import timber.log.Timber
 import javax.inject.Inject
 
-class CodeViewModel : ViewModel() {
-
-    @Inject
-    lateinit var codeDataSourceFactory: CodeDataSourceFactory
+class CodeViewModel(val factory: CodeDataSourceFactory = CodeDataSourceFactory(), source: BaseDataSource<Code, CodeResponse>) :
+        LoadingViewModel<Code, CodeResponse, CodeDataSourceFactory>(factory, source) {
 
     @Inject
     lateinit var router: Router
 
     val branches: MutableLiveData<List<Branch>> = MutableLiveData()
 
-    private val disposable: CompositeDisposable = CompositeDisposable()
-
-
     private lateinit var hash: String
 
     init {
         App.component.initCodeComponent().inject(this)
 
-        disposable.add(codeDataSourceFactory.codeDataSource.api.getBranchWithUrl(codeDataSourceFactory
+        compositeDisposable.add(factory.codeDataSource.api.getBranchWithUrl(factory
                 .codeDataSource.repositoryModel.repository.value.links.branches.href)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     var i = 0
                     while (i < it.values.size) {
-                        if (codeDataSourceFactory.codeDataSource.repositoryModel.repository.value.mainbranch.name == it.values[i].name) {
+                        if (factory.codeDataSource.repositoryModel.repository.value.mainbranch.name == it.values[i].name) {
                             hash = it.values[i].target.hash
                         }
                         i++
@@ -62,7 +62,7 @@ class CodeViewModel : ViewModel() {
     }
 
     fun observeSpinner(spinner: Spinner, adapter: RecyclerCodeAdapter, lifecycleOwner: LifecycleOwner) {
-        RxAdapterView.itemSelections(spinner)
+        compositeDisposable.add(RxAdapterView.itemSelections(spinner)
                 .skipInitialValue()
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -83,10 +83,10 @@ class CodeViewModel : ViewModel() {
                     reloadPathWithHash(lifecycleOwner, adapter, "src")
                 }, {
                     Timber.e(it.message)
-                })
+                }))
     }
 
-    var code: LiveData<PagedList<Code>> = LivePagedListBuilder<String, Code>(codeDataSourceFactory, Constants.listPagedConfig).build()
+    var code: LiveData<PagedList<Code>> = LivePagedListBuilder<String, Code>(factory, Constants.listPagedConfig).build()
 
 
     fun navigateToCodeEditor(code: Code) {
@@ -102,14 +102,13 @@ class CodeViewModel : ViewModel() {
     fun reloadPathWithHash(lifecycleOwner: LifecycleOwner, adapter: RecyclerCodeAdapter, path: String) {
         code.removeObservers(lifecycleOwner)
         UrlBuilder.buildPathWithHash(path, hash)
-        code = LivePagedListBuilder<String, Code>(codeDataSourceFactory, Constants.listPagedConfig).build()
+        code = LivePagedListBuilder<String, Code>(factory, Constants.listPagedConfig).build()
         code.observe(lifecycleOwner, Observer(adapter::submitList))
     }
 
     override fun onCleared() {
         UrlBuilder.repositoryPath = null //хардкорно сбиваем путь
-        codeDataSourceFactory.codeDataSource.invalidate()
-        disposable.clear()
+        factory.codeDataSource.invalidate()
         super.onCleared()
     }
 }

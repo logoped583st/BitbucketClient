@@ -28,12 +28,8 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class RepositoriesViewModel(private val factory: RepositoriesDataSourceFactory = RepositoriesDataSourceFactory(),
-                            private val source: BaseDataSource<Repository, RepositoriesResponse> = factory.repositoriesDataSource )
-    : LoadingViewModel<Repository, RepositoriesResponse, RepositoriesDataSourceFactory>(factory, source) {
-
-//    override var dataSourceFactory: RepositoriesDataSourceFactory = RepositoriesDataSourceFactory()
-
-//    override var dataSource: BaseDataSource<Repository, RepositoriesResponse> = dataSourceFactory.repositoriesDataSource
+                            source: BaseDataSource<Repository, RepositoriesResponse> = factory.repositoriesDataSource)
+    : LoadingViewModel<Repository, RepositoriesResponse>(source) {
 
     @Inject
     lateinit var router: Router
@@ -51,11 +47,11 @@ class RepositoriesViewModel(private val factory: RepositoriesDataSourceFactory =
         App.component.inject(this)
     }
 
-    var repositories: LiveData<PagedList<Repository>> = LivePagedListBuilder<String, Repository>(dataSourceFactory, Constants.listPagedConfig).build()
+    var repositories: LiveData<PagedList<Repository>> = LivePagedListBuilder<String, Repository>(factory, Constants.listPagedConfig).build()
 
 
     fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
-        RxSearchView.queryTextChanges(searchView)
+        compositeDisposable.add(RxSearchView.queryTextChanges(searchView)
                 .skipInitialValue()
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .map { it.toString() }
@@ -64,12 +60,12 @@ class RepositoriesViewModel(private val factory: RepositoriesDataSourceFactory =
                 .subscribe {
                     repositoryName = it
                     queryChange(lifecycleOwner, adapter)
-                }
+                })
     }
 
 
     fun observeLanguageChangeSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
-        RxAdapterView.itemSelections(spinner)
+        compositeDisposable.add(RxAdapterView.itemSelections(spinner)
                 .skipInitialValue()
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -79,11 +75,11 @@ class RepositoriesViewModel(private val factory: RepositoriesDataSourceFactory =
                     queryChange(lifecycleOwner, adapter)
                 }, {
                     Timber.e(it.message)
-                })
+                }))
     }
 
     fun observeAccessChangeSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
-        RxAdapterView.itemSelections(spinner)
+         compositeDisposable.add(RxAdapterView.itemSelections(spinner)
                 .skipInitialValue()
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -93,14 +89,14 @@ class RepositoriesViewModel(private val factory: RepositoriesDataSourceFactory =
                     queryChange(lifecycleOwner, adapter)
                 }, {
                     Timber.e(it.message)
-                })
+                }))
     }
 
 
     private fun queryChange(lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
         repositories.removeObservers(lifecycleOwner)
-        dataSourceFactory.repositoriesDataSource.url = UrlBuilder.buildQuery(repositoryName, repositoryAccess, repositoryLanguage)
-        repositories = LivePagedListBuilder<String, Repository>(dataSourceFactory, Constants.listPagedConfig).build()
+        factory.repositoriesDataSource.url = UrlBuilder.buildQuery(repositoryName, repositoryAccess, repositoryLanguage)
+        repositories = LivePagedListBuilder<String, Repository>(factory, Constants.listPagedConfig).build()
         repositories.observe(lifecycleOwner, Observer(adapter::submitList))
     }
 
@@ -115,7 +111,7 @@ class RepositoriesViewModel(private val factory: RepositoriesDataSourceFactory =
 
     override fun onCleared() {
         super.onCleared()
-        dataSourceFactory.repositoriesDataSource.invalidate()
+        factory.repositoriesDataSource.invalidate()
     }
 
 }

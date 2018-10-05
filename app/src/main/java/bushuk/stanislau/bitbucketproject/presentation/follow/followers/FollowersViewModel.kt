@@ -11,19 +11,12 @@ import bushuk.stanislau.bitbucketproject.room.user.User
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
-class FollowersViewModel(private val factory: FollowersDataSourceFactory = FollowersDataSourceFactory(),
+class FollowersViewModel(factory: FollowersDataSourceFactory = FollowersDataSourceFactory(),
                          private val source: BaseDataSource<User, Followers> = factory.followersDataSource)
-    : BaseFollowViewModel<DataSource.Factory<String, User>>(factory, source)
-{
-//    override var dataSource: BaseDataSource<User, Followers>
-//        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-//        set(value) {}
+    : BaseFollowViewModel<DataSource.Factory<String, User>>(factory, source) {
 
     @Inject
     lateinit var router: Router
-
-//    override var dataSourceFactory: DataSource.Factory<String, User> = FollowersDataSourceFactory()
-//    override var dataSource: BaseDataSource<User, Followers>= todo: dataSourceFactory.followersDataSource
 
     init {
         App.component.inject(this)
@@ -35,7 +28,7 @@ class FollowersViewModel(private val factory: FollowersDataSourceFactory = Follo
 
     override fun onCleared() {
         super.onCleared()
-        dataSource.invalidate()
+        source.invalidate()
     }
 
 

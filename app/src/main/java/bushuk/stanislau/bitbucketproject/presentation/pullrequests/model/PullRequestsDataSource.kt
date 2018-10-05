@@ -13,11 +13,11 @@ import javax.inject.Inject
 
 class PullRequestsDataSource : BaseDataSource<PullRequest, PullRequestResponse>() {
     override fun onResult(value: PullRequestResponse, callback: LoadCallback<String, PullRequest>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        callback.onResult(value.values, value.previous)
     }
 
     override fun onResultInitial(value: PullRequestResponse, callback: LoadInitialCallback<String, PullRequest>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        callback.onResult(value.values, value.previous, value.next)
     }
 
     @Inject
@@ -40,7 +40,7 @@ class PullRequestsDataSource : BaseDataSource<PullRequest, PullRequestResponse>(
     override val single: Single<PullRequestResponse> = userModel
             .user.flatMapSingle {
         api.getPullRequests(it.username, repositoryModel.repository.value.uuid, queryPullRequest, sortPullRequest)
-    }.singleOrError()
+    }.firstOrError()
 
     override fun loadNextPage(url: String): Single<PullRequestResponse> = api.getPullRequestNextPage(url)
 

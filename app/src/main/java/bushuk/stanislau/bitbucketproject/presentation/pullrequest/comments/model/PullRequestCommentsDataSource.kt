@@ -12,17 +12,14 @@ import javax.inject.Inject
 
 class PullRequestCommentsDataSource : BaseDataSource<Comment, CommentResponse>() {
     override fun onResult(value: CommentResponse, callback: LoadCallback<String, Comment>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        callback.onResult(value.values, value.previous)
     }
 
     override fun onResultInitial(value: CommentResponse, callback: LoadInitialCallback<String, Comment>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        callback.onResult(value.values, value.previous, value.next)
     }
 
-    override fun loadNextPage(url: String): Single<CommentResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
+    override fun loadNextPage(url: String): Single<CommentResponse> = api.getPullRequestComments(url)
 
     @Inject
     lateinit var api: Api

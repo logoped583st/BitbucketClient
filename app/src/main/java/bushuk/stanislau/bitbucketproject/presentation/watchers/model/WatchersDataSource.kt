@@ -41,7 +41,7 @@ class WatchersDataSource : FollowDataSource() {
 
     override val single: Single<Followers> = repositoryModel.repository.flatMapSingle {
         api.getWatchersRepo(userModel.user.value.username, it.uuid)
-    }.singleOrError()
+    }.firstOrError()
 
     override fun doOnEmpty() {
       //  loadingModel.errorText.postValue(App.resourcesApp.getString(R.string.watchers_screen_error_text))

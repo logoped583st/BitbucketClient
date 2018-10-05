@@ -16,31 +16,25 @@ import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 class WatchersViewModel(factory: WatchersDataSourceFactory = WatchersDataSourceFactory(),
-                        source: BaseDataSource<User, Followers> = factory.watchersDataSource)
+                        val source: BaseDataSource<User, Followers> = factory.watchersDataSource)
     : BaseFollowViewModel<DataSource.Factory<String, User>>(factory, source) {
 
     @Inject
     lateinit var router: Router
 
-//    override var dataSourceFactory: DataSource.Factory<String, User> = WatchersDataSourceFactory()
-//    override lateinit var dataSource: BaseDataSource<User, Followers>
-
-
-
     init {
         App.component.inject(this)
     }
 
-    val watchers: LiveData<PagedList<User>> by lazy { LivePagedListBuilder<String, User>(dataSourceFactory, Constants.listPagedConfig).build() }
+    val watchers: LiveData<PagedList<User>> by lazy { LivePagedListBuilder<String, User>(factory, Constants.listPagedConfig).build() }
+
 
     override fun onCleared() {
-        dataSource.invalidate()
+        source.invalidate()
         super.onCleared()
     }
 
     fun navigateToUserScreen(userName: User) {
         router.navigateTo(Screens.USER_SCREEN, userName)
     }
-
-
 }

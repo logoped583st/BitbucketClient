@@ -13,7 +13,7 @@ import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 class FollowingViewModel(factory: FollowingDataSourceFactory = FollowingDataSourceFactory(),
-                         source: BaseDataSource<User, Followers> = factory.followingDataSource)
+                         private val source: BaseDataSource<User, Followers> = factory.followingDataSource)
     : BaseFollowViewModel<DataSource.Factory<String, User>>(factory, source)  {
 
     @Inject
@@ -27,14 +27,8 @@ class FollowingViewModel(factory: FollowingDataSourceFactory = FollowingDataSour
         router.navigateTo(Screens.USER_SCREEN, userName)
     }
 
-//    override var dataSource: BaseDataSource<User, Followers>
-//        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-//        set(value) {}
-//    override var dataSourceFactory: DataSource.Factory<String, User> = FollowersDataSourceFactory()
-
-
     override fun onCleared() {
         super.onCleared()
-        dataSource.invalidate()
+        source.invalidate()
     }
 }
