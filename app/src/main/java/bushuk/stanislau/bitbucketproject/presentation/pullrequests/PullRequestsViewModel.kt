@@ -3,12 +3,13 @@ package bushuk.stanislau.bitbucketproject.presentation.pullrequests
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModel
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.SearchView
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.BaseDataSource
+import bushuk.stanislau.bitbucketproject.LoadingViewModel
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerPullRequestsAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
@@ -16,6 +17,7 @@ import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.global.PullRequestModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequests.model.PullRequestsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
+import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestResponse
 import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import com.jakewharton.rxbinding2.widget.RxAdapterView
@@ -25,10 +27,9 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class PullRequestsViewModel : ViewModel() {
-
-    @Inject
-    lateinit var pullRequestsDataSourceFactory: PullRequestsDataSourceFactory
+class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullRequestsDataSourceFactory(),
+                            source: BaseDataSource<PullRequest, PullRequestResponse> = factory.pullRequestsDataSource)
+    : LoadingViewModel<PullRequest, PullRequestResponse>(source) {
 
     @Inject
     lateinit var router: Router
@@ -45,12 +46,12 @@ class PullRequestsViewModel : ViewModel() {
 
     init {
         App.component.initPullRequestsComponent().inject(this)
-        pullRequestsDataSourceFactory.pullRequestsDataSource.queryPullRequest = UrlBuilder.buildQueryPullRequest(namePullRequest, statePullRequest)
-        pullRequestsDataSourceFactory.pullRequestsDataSource.sortPullRequest = UrlBuilder.buildSortPullRequest(sortPullRequest)
+        factory.pullRequestsDataSource.queryPullRequest = UrlBuilder.buildQueryPullRequest(namePullRequest, statePullRequest)
+        factory.pullRequestsDataSource.sortPullRequest = UrlBuilder.buildSortPullRequest(sortPullRequest)
     }
 
 
-    var pullRequests: LiveData<PagedList<PullRequest>> = LivePagedListBuilder<String, PullRequest>(pullRequestsDataSourceFactory, Constants.listPagedConfig).build()
+    var pullRequests: LiveData<PagedList<PullRequest>> = LivePagedListBuilder<String, PullRequest>(factory, Constants.listPagedConfig).build()
 
 
     fun navigateToPullRequestScreen(pullRequest: PullRequest) {
@@ -59,12 +60,12 @@ class PullRequestsViewModel : ViewModel() {
     }
 
     override fun onCleared() {
-        pullRequestsDataSourceFactory.pullRequestsDataSource.invalidate()
+        factory.pullRequestsDataSource.invalidate()
         super.onCleared()
     }
 
     fun observeStateSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerPullRequestsAdapter) {
-        val disposable = RxAdapterView.itemSelections(spinner)
+        RxAdapterView.itemSelections(spinner)
                 .skipInitialValue()
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -75,12 +76,10 @@ class PullRequestsViewModel : ViewModel() {
                 }, {
                     Timber.e(it.message)
                 })
-
-        //pullRequestsDataSourceFactory.pullRequestsDataSource.compositeDisposable.add(disposable)
     }
 
     fun observeSortSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerPullRequestsAdapter) {
-        val disposable = RxAdapterView.itemSelections(spinner)
+        compositeDisposable.add(RxAdapterView.itemSelections(spinner)
                 .skipInitialValue()
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -90,13 +89,11 @@ class PullRequestsViewModel : ViewModel() {
                     change(lifecycleOwner, adapter)
                 }, {
                     Timber.e(it.message)
-                })
-
-        //pullRequestsDataSourceFactory.pullRequestsDataSource.compositeDisposable.add(disposable)
+                }))
     }
 
     fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerPullRequestsAdapter) {
-        val disposable = RxSearchView.queryTextChanges(searchView)
+        compositeDisposable.add(RxSearchView.queryTextChanges(searchView)
                 .skipInitialValue()
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .map { it.toString() }
@@ -105,16 +102,15 @@ class PullRequestsViewModel : ViewModel() {
                 .subscribe {
                     namePullRequest = it
                     change(lifecycleOwner, adapter)
-                }
-        //pullRequestsDataSourceFactory.pullRequestsDataSource.compositeDisposable.add(disposable)
+                })
     }
 
 
     private fun change(lifecycleOwner: LifecycleOwner, adapter: RecyclerPullRequestsAdapter) {
         pullRequests.removeObservers(lifecycleOwner)
-        pullRequestsDataSourceFactory.pullRequestsDataSource.queryPullRequest = UrlBuilder.buildQueryPullRequest(namePullRequest, statePullRequest)
-        pullRequestsDataSourceFactory.pullRequestsDataSource.sortPullRequest = UrlBuilder.buildSortPullRequest(sortPullRequest)
-        pullRequests = LivePagedListBuilder<String, PullRequest>(pullRequestsDataSourceFactory, Constants.listPagedConfig).build()
+        factory.pullRequestsDataSource.queryPullRequest = UrlBuilder.buildQueryPullRequest(namePullRequest, statePullRequest)
+        factory.pullRequestsDataSource.sortPullRequest = UrlBuilder.buildSortPullRequest(sortPullRequest)
+        pullRequests = LivePagedListBuilder<String, PullRequest>(factory, Constants.listPagedConfig).build()
         pullRequests.observe(lifecycleOwner, Observer(adapter::submitList))
     }
 }

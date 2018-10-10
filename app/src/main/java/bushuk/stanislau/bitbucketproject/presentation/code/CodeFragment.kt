@@ -28,6 +28,8 @@ class CodeFragment : Fragment(), ClickFollow, RecyclerCodePathAdapter.PathClick 
     }
 
     lateinit var binding: FragmentCodeBinding
+    lateinit var viewModel: CodeViewModel
+
     private val codePathAdapter = RecyclerCodePathAdapter(mutableListOf("src"), this)
     private val codeAdapter = RecyclerCodeAdapter()
 
@@ -42,7 +44,6 @@ class CodeFragment : Fragment(), ClickFollow, RecyclerCodePathAdapter.PathClick 
 
     }
 
-    lateinit var viewModel: CodeViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -72,7 +73,7 @@ class CodeFragment : Fragment(), ClickFollow, RecyclerCodePathAdapter.PathClick 
         code_screen_code_path_recycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         code_screen_code_path_recycler.adapter = codePathAdapter
 
-        val mainBranch: String = viewModel.dataSourceFactory.codeDataSource.repositoryModel.repository.value.mainbranch.name
+        val mainBranch: String = viewModel.factory.codeDataSource.repositoryModel.repository.value.mainbranch.name
         var positionOfMainBranch = 0
 
         viewModel.branches.observe(this, Observer {

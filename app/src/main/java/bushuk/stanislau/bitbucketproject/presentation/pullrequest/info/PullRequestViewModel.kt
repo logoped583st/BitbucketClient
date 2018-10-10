@@ -3,22 +3,23 @@ package bushuk.stanislau.bitbucketproject.presentation.pullrequest.info
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import android.support.design.widget.Snackbar
 import android.view.View
 import android.widget.Button
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.LoadingViewModel
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.constants.Screens
-import bushuk.stanislau.bitbucketproject.global.LoadingModel
 import bushuk.stanislau.bitbucketproject.global.PullRequestModel
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.model.CommitsDataSourceFactory
+import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.model.ReviewersDataSource
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.model.ReviewersDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.commits.Commit
+import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestParticipants
 import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.Completable
@@ -28,7 +29,8 @@ import ru.terrakok.cicerone.Router
 import timber.log.Timber
 import javax.inject.Inject
 
-class PullRequestViewModel : ViewModel() {
+class PullRequestViewModel(private val reviewersDataSourceFactory: ReviewersDataSourceFactory = ReviewersDataSourceFactory(),
+                           source: ReviewersDataSource = reviewersDataSourceFactory.reviewersDataSource) : LoadingViewModel<User, PullRequest>(source) {
 
     @Inject
     lateinit var pullRequest: PullRequestModel
@@ -40,12 +42,7 @@ class PullRequestViewModel : ViewModel() {
     lateinit var commitDataSourceFactory: CommitsDataSourceFactory
 
     @Inject
-    lateinit var reviewersDataSourceFactory: ReviewersDataSourceFactory
-
-    @Inject
     lateinit var userModel: UserModel
-
-    //val loadingModel: LoadingModel = LoadingModel()
 
     @Inject
     lateinit var api: Api
@@ -65,7 +62,6 @@ class PullRequestViewModel : ViewModel() {
     init {
         isApproved.postValue(false)
         App.component.inject(this)
-        //loadingModel.loading.postValue(View.GONE)
         pullRequest.publishSubject
                 .subscribe { it ->
                     pullRequestState.postValue(it.state)
@@ -148,7 +144,7 @@ class PullRequestViewModel : ViewModel() {
                 if (localLastA != null && localLastB != null) {
                     this.value = Pair(localLastA, localLastB)
                     Timber.e("PAIR")
-                   // loadingModel.loading.postValue(View.VISIBLE)
+                    // loadingModel.loading.postValue(View.VISIBLE)
                 }
             }
 

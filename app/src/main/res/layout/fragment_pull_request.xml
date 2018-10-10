@@ -85,6 +85,7 @@
                 android:layout_height="56dp"
                 android:layout_marginBottom="@dimen/margin_size_small"
                 android:src="@drawable/ic_error_no_items"
+                android:visibility="@{viewModel.liveLoadingModel.noInfo}"
                 app:layout_constraintBottom_toTopOf="@+id/pullrequest_screen_error_reviewers_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -100,12 +101,14 @@
                 android:layout_marginEnd="@dimen/margin_size_small"
                 android:layout_marginStart="@dimen/margin_size_small"
                 android:layout_marginTop="@dimen/margin_size_small"
-
+                android:text="@{viewModel.liveLoadingModel.errorText}"
+                android:visibility="@{viewModel.liveLoadingModel.noInfo}"
                 app:layout_constraintBottom_toBottomOf="@+id/pullrequest_screen_recycler_reviewers"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_error_reviewers"
                 app:layout_constraintVertical_chainStyle="packed" />
+
             <TextView
                 android:id="@+id/pullrequest_screen_created_time_static"
                 android:layout_width="wrap_content"
@@ -152,17 +155,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_commits" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/pullrequest_screen_recycler_reviewers"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/pullrequest_screen_error_reviewers_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_reviewers_text" />
 
             <TextView
                 android:id="@+id/pullrequest_screen_commits"
@@ -231,6 +223,18 @@
                 app:layout_constraintBaseline_toBaselineOf="@+id/pullrequest_screen_approve"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/pullrequest_screen_approve" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/pullrequest_screen_recycler_reviewers"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/pullrequest_screen_merge_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_reviewers_text"
+                app:layout_constraintVertical_bias="1.0" />
 
         </android.support.constraint.ConstraintLayout>
 

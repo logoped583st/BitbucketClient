@@ -21,14 +21,13 @@ import bushuk.stanislau.bitbucketproject.room.code.CodeResponse
 import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import com.jakewharton.rxbinding2.widget.RxAdapterView
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
 import timber.log.Timber
 import javax.inject.Inject
 
-class CodeViewModel(val factory: CodeDataSourceFactory = CodeDataSourceFactory(), source: BaseDataSource<Code, CodeResponse>) :
-        LoadingViewModel<Code, CodeResponse, CodeDataSourceFactory>(factory, source) {
+class CodeViewModel(val factory: CodeDataSourceFactory = CodeDataSourceFactory(), val source: BaseDataSource<Code, CodeResponse> = factory.codeDataSource) :
+        LoadingViewModel<Code, CodeResponse>(source) {
 
     @Inject
     lateinit var router: Router

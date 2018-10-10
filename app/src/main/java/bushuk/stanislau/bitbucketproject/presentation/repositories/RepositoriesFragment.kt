@@ -95,7 +95,7 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
 
 
     override fun onClickItem(view: View, data: Any) {
-        viewModel.navigateToRepositoryScreen((data as Repository), viewModel.dataSourceFactory.repositoriesDataSource.userModel.user.value.username)
+        viewModel.navigateToRepositoryScreen((data as Repository), viewModel.factory.repositoriesDataSource.userModel.user.value.username)
     }
 
     override fun onAttach(activity: Activity?) {

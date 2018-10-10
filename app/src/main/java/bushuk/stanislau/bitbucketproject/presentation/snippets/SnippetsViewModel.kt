@@ -15,13 +15,9 @@ import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 class SnippetsViewModel
-(factory: SnippetsDataSourceFactory = SnippetsDataSourceFactory(),
-source: BaseDataSource<Snippet, SnippetsResponce> = factory.snippetsDataSource)
-    : LoadingViewModel<Snippet, SnippetsResponce, SnippetsDataSourceFactory>(factory, source) {
-
-//    override var dataSourceFactory: SnippetsDataSourceFactory = SnippetsDataSourceFactory()
-//
-//    override var dataSource: BaseDataSource<Snippet, SnippetsResponce> = dataSourceFactory.snippetsDataSource
+(val factory: SnippetsDataSourceFactory = SnippetsDataSourceFactory(),
+ source: BaseDataSource<Snippet, SnippetsResponce> = factory.snippetsDataSource)
+    : LoadingViewModel<Snippet, SnippetsResponce>(source) {
 
     @Inject
     lateinit var router: Router
@@ -30,11 +26,11 @@ source: BaseDataSource<Snippet, SnippetsResponce> = factory.snippetsDataSource)
         App.component.inject(this)
     }
 
-    val snippets: LiveData<PagedList<Snippet>> = LivePagedListBuilder<String, Snippet>(dataSourceFactory, Constants.listPagedConfig).build()
+    val snippets: LiveData<PagedList<Snippet>> = LivePagedListBuilder<String, Snippet>(factory, Constants.listPagedConfig).build()
 
     override fun onCleared() {
         super.onCleared()
-        dataSource.invalidate()
+        factory.snippetsDataSource.invalidate()
     }
 
     fun navigateToCode(url: String) {

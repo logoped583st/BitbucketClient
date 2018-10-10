@@ -27,7 +27,7 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class RepositoriesViewModel(private val factory: RepositoriesDataSourceFactory = RepositoriesDataSourceFactory(),
+class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = RepositoriesDataSourceFactory(),
                             source: BaseDataSource<Repository, RepositoriesResponse> = factory.repositoriesDataSource)
     : LoadingViewModel<Repository, RepositoriesResponse>(source) {
 
