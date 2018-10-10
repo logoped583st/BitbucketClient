@@ -11,7 +11,7 @@ object Constants {
 
     const val GET_TOKEN_BROWSER: Int = 1
 
-    const val ITEMS_IN_PAGE: Int = 10
+    private const val ITEMS_IN_PAGE: Int = 10
 
     val listPagedConfig = PagedList.Config.Builder()
             .setPageSize(ITEMS_IN_PAGE)

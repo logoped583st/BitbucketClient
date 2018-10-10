@@ -3,14 +3,14 @@ package bushuk.stanislau.bitbucketproject.presentation.repositories.model
 import android.arch.paging.DataSource
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
-import javax.inject.Inject
+import timber.log.Timber
 
 class RepositoriesDataSourceFactory : DataSource.Factory<String, Repository>() {
 
-    @Inject
-    lateinit var repositoriesDataSource: RepositoriesDataSource
+    val repositoriesDataSource: RepositoriesDataSource = RepositoriesDataSource()
 
     init {
+        Timber.e("FACTORY CONSTRUCROT")
         App.component.inject(this)
     }
 

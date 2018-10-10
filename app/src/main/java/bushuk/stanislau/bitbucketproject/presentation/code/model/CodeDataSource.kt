@@ -1,20 +1,26 @@
 package bushuk.stanislau.bitbucketproject.presentation.code.model
 
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.api.Api
-import bushuk.stanislau.bitbucketproject.datasources.CodeDataSourceAbstract
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
+import bushuk.stanislau.bitbucketproject.room.code.Code
 import bushuk.stanislau.bitbucketproject.room.code.CodeResponse
 import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
-import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 import javax.inject.Inject
 
-class CodeDataSource : CodeDataSourceAbstract() {
+class CodeDataSource : BaseDataSource<Code, CodeResponse>() {
+
+    override fun onResult(value: CodeResponse, callback: LoadCallback<String, Code>) {
+        callback.onResult(value.values, value.next)
+    }
+
+    override fun onResultInitial(value: CodeResponse, callback: LoadInitialCallback<String, Code>) {
+        callback.onResult(value.values, value.previous, value.next)
+    }
 
     @Inject
     lateinit var userModel: UserModel
@@ -30,17 +36,12 @@ class CodeDataSource : CodeDataSourceAbstract() {
     }
 
 
-    override val single: Observable<CodeResponse>
+    override val single: Single<CodeResponse>
         get() =
             if (UrlBuilder.repositoryPath.isNullOrEmpty()) {
-                Timber.e("Rep PAth" + UrlBuilder.repositoryPath)
-                userModel.user
-                        .subscribeOn(Schedulers.io())
-                        .flatMapSingle { api.getRepoWithName(it.username, repositoryModel.repository.value.name) }
+                api.getRepoWithName(userModel.user.value.username, repositoryModel.repository.value.name)
             } else {
-                userModel.user
-                        .subscribeOn(Schedulers.io())
-                        .flatMapSingle { api.getRepoWithNamePath(it.username, repositoryModel.repository.value.name, UrlBuilder.repositoryPath!!) }
+                api.getRepoWithNamePath(userModel.user.value.username, repositoryModel.repository.value.name, UrlBuilder.repositoryPath!!)
             }
 
 

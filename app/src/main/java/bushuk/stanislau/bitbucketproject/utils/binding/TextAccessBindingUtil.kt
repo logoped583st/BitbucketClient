@@ -50,7 +50,7 @@ class TextAccessBindingUtil {
             }
         }
 
-        fun loadJSONFromAsset(): String? {
+        private fun loadJSONFromAsset(): String? {
             var json: String? = null
             try {
                 val inputStream = App.resourcesApp.assets.open("colors.json")

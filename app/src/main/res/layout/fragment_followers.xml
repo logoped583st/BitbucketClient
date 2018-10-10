@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="baseFollowrs"
-            type="bushuk.stanislau.bitbucketproject.presentation.follow.FollowDataSource" />
+            name="loading"
+            type="bushuk.stanislau.bitbucketproject.global.LiveLoadingModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -20,8 +20,8 @@
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:layout_marginBottom="@dimen/margin_size_small"
+            android:visibility="@{loading.noInfo}"
             android:src="@drawable/ic_error_no_items"
-            android:visibility="@{baseFollowrs.loadingModel.noInfo}"
             app:layout_constraintBottom_toTopOf="@+id/followers_screen_error_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,13 +32,14 @@
             android:id="@+id/followers_screen_error_text"
             style="@style/Headline.light_grey"
             android:layout_width="wrap_content"
+            android:visibility="@{loading.noInfo}"
+            android:text = "@{loading.errorText}"
             android:layout_height="wrap_content"
             android:layout_marginBottom="72dp"
             android:layout_marginEnd="@dimen/margin_size_small"
             android:layout_marginStart="@dimen/margin_size_small"
             android:layout_marginTop="@dimen/margin_size_small"
-            android:text="@{baseFollowrs.loadingModel.errorText}"
-            android:visibility="@{baseFollowrs.loadingModel.noInfo}"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,8 +50,8 @@
             android:id="@+id/repositories_screen_progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="@{loading.loading}"
             android:background="@drawable/progress_bar"
-            android:visibility="@{baseFollowrs.loadingModel.loading}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -19,7 +19,6 @@ import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
 import bushuk.stanislau.bitbucketproject.presentation.code.model.CodeDataSource
 import bushuk.stanislau.bitbucketproject.presentation.codeeditor.CodeEditorModel
 import bushuk.stanislau.bitbucketproject.presentation.codeeditor.CodeEditorViewModel
-import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowViewModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersViewModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.models.FollowersDataSource
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.models.FollowersDataSourceFactory
@@ -50,6 +49,7 @@ import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsViewModel
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSource
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.user.UserViewModel
+import bushuk.stanislau.bitbucketproject.presentation.watchers.WatchersViewModel
 import bushuk.stanislau.bitbucketproject.presentation.watchers.model.WatchersDataSource
 import bushuk.stanislau.bitbucketproject.utils.crypt.CryptApi19
 import bushuk.stanislau.bitbucketproject.utils.crypt.CryptApi23
@@ -62,8 +62,8 @@ import javax.inject.Singleton
 @Component(modules = [CiceroneModule::class, CryptoModule::class, RetrofitModule::class,
     MainScreenModule::class, ApplicationContextProvider::class, PreferencesModule::class,
     AuthLoginModule::class, RoomModule::class, UserModule::class, RepositoriesModule::class,
-    FollowersModule::class, FollowingModule::class, FollowModule::class, SnippetsModule::class,
-    RepositoryModule::class, PullRequestModule::class, PullRequestScopeModule::class, CodeEditorModule::class])
+    FollowersModule::class, FollowingModule::class, SnippetsModule::class,
+    RepositoryModule::class, PullRequestModule::class, PullRequestScopeModule::class, CodeEditorModule::class, LoadingModule::class])
 
 interface MainComponent {
 
@@ -113,8 +113,6 @@ interface MainComponent {
 
     fun inject(userViewModel: UserViewModel)
 
-    fun inject(baseFollowViewModel: BaseFollowViewModel)
-
     fun inject(repositoryViewModel: RepositoryViewModel)
 
     fun initCodeComponent(): CodeComponent
@@ -162,4 +160,6 @@ interface MainComponent {
     fun inject(pullRequestCommentsDataSource: PullRequestCommentsDataSource)
 
     fun inject(followingDataSource: FollowingDataSource)
+
+    fun inject(watchersViewModel: WatchersViewModel)
 }

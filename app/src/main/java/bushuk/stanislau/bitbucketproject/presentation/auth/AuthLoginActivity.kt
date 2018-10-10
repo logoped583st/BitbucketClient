@@ -37,7 +37,7 @@ class AuthLoginActivity : AppCompatActivity() {
         }
 
         auth_login_screen.requestFocus()
-        auth_login_powered_textView.text = Html.escapeHtml(getString(R.string.auth_login_screen_powered_text))
+        auth_login_powered_textView.text = Html.fromHtml(getString(R.string.auth_login_screen_powered_text))
 
         auth_login_screen_login_button.clicks().doOnNext {
             viewModel.getUserBaseAuth(

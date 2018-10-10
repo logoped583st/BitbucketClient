@@ -7,8 +7,7 @@ import javax.inject.Inject
 
 class PullRequestsDataSourceFactory : DataSource.Factory<String, PullRequest>() {
 
-    @Inject
-    lateinit var pullRequestsDataSource: PullRequestsDataSource
+    val pullRequestsDataSource: PullRequestsDataSource = PullRequestsDataSource()
 
     init {
         App.component.initPullRequestsComponent().inject(this)

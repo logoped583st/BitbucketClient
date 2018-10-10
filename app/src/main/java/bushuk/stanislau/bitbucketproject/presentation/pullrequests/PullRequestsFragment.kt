@@ -77,7 +77,7 @@ class PullRequestsFragment : Fragment(), ClickFollow {
         val stateSpinnerAdapter: ArrayAdapter<String> = SpinnerAdapter(activity!!, android.R.layout.simple_spinner_item, mutableListOf("Open", "Merged", "Declined", "All"))
         stateSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         (parentFragment as RepositoryFragment).binding.pullrequestsScreenSpinnerState.adapter = stateSpinnerAdapter
-      //  (parentFragment as RepositoryFragment).binding.pullrequestsScreenSpinnerState.setSelection(stateSpinnerAdapter.getPosition(UrlBuilder.parseState()))
+        //  (parentFragment as RepositoryFragment).binding.pullrequestsScreenSpinnerState.setSelection(stateSpinnerAdapter.getPosition(UrlBuilder.parseState()))
         viewModel.observeStateSpinner((parentFragment as RepositoryFragment).binding.pullrequestsScreenSpinnerState, this, adapter)
     }
 
@@ -86,7 +86,7 @@ class PullRequestsFragment : Fragment(), ClickFollow {
                 mutableListOf("Id up", "Id down", "Update time up", "Update time down"))
         sortSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         (parentFragment as RepositoryFragment).binding.pullrequestsScreenSpinnerSort.adapter = sortSpinnerAdapter
-       // (parentFragment as RepositoryFragment).binding.pullrequestsScreenSpinnerSort.setSelection(sortSpinnerAdapter.getPosition(UrlBuilder.parseSort()))
+        // (parentFragment as RepositoryFragment).binding.pullrequestsScreenSpinnerSort.setSelection(sortSpinnerAdapter.getPosition(UrlBuilder.parseSort()))
         viewModel.observeSortSpinner((parentFragment as RepositoryFragment).binding.pullrequestsScreenSpinnerSort, this, adapter)
     }
 

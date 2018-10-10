@@ -26,7 +26,7 @@ interface Api {
     fun getBranchWithUrl(@Url url: String): Single<BranchesResponse>
 
     @GET("repositories/{userName}")
-    fun getRepos(@Path("userName") userName: String, @Query("q", encoded = false) query: String?): Single<RepositoriesResponse>
+    fun getRepos(@Path("userName") userName: String?, @Query("q", encoded = false) query: String?): Single<RepositoriesResponse>
 
     @GET("repositories/{userName}/{repoName}/src")
     fun getRepoWithName(@Path("userName") userName: String, @Path("repoName") repoName: String): Single<CodeResponse>

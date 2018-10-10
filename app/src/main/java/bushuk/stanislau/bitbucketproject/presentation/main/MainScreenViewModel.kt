@@ -18,10 +18,6 @@ import javax.inject.Inject
 
 class MainScreenViewModel : ViewModel() {
 
-
-    @Inject
-    lateinit var mainScreenModel: MainScreenModel
-
     @Inject
     lateinit var tokenPreferences: SharedPreferencesUtil
 
@@ -37,7 +33,6 @@ class MainScreenViewModel : ViewModel() {
 
     init {
         App.component.inject(this)
-        Timber.e("INIT" + mainScreenModel.hashCode())
 
         userModel.user
                 .subscribeOn(Schedulers.io())
