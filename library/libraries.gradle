@@ -45,7 +45,9 @@ ext.version = [
         floatingButton:                                                                        "1.6.4",
 
         //slidingPanel
-        slidingPanel:                                                                          "3.4.0"
+        slidingPanel:                                                                          "3.4.0",
+
+        markDown:                                                                              "2.0.0"
 ]
 def version = ext.version
 
@@ -112,5 +114,7 @@ ext.libraries = [
     floatingButton        :"com.github.clans:fab:"+                                            "$version.floatingButton",
 
     //slidingPanel
-    slidingPanel          :"com.sothree.slidinguppanel:library:"+                              "$version.slidingPanel"
+    slidingPanel          :"com.sothree.slidinguppanel:library:"+                              "$version.slidingPanel",
+
+    markDown              :"ru.noties:markwon:"+                                               "$version.markDown"
 ]

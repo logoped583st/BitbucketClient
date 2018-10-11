@@ -27,7 +27,6 @@
             android:layout_margin="@dimen/margin_size_small"
             android:layout_marginStart="8dp"
             app:imageUrl="@{data.user.links.avatar.href}"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@mipmap/ic_launcher" />
@@ -40,7 +39,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="@{data.content.raw}"
+            app:markDownText="@{data.content.raw}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_recycler_snippets_users_avatar"
             app:layout_constraintTop_toTopOf="parent" />
