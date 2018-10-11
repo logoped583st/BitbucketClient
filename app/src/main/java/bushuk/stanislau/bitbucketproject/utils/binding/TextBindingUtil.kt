@@ -5,6 +5,7 @@ import android.databinding.BindingAdapter
 import android.widget.TextView
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
+import ru.noties.markwon.Markwon
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -32,6 +33,14 @@ class TextBindingUtil {
             textView.text = format.format(date)
         }
 
+        @SuppressLint("SimpleDateFormat")
+        @JvmStatic
+        @BindingAdapter("app:markDownText")
+        fun markDownText(textView: TextView, text: String) {
+            val format = SimpleDateFormat("dd/MM/yyy")
+            Markwon.setMarkdown(textView, text)
+        }
+
         @SuppressLint("SetTextI18n")
         @JvmStatic
         @BindingAdapter("android:text")
@@ -48,7 +57,7 @@ class TextBindingUtil {
                     textView.setTextColor(App.resourcesApp.getColor(R.color.green))
                 }
 
-                "DECLINED"->{
+                "DECLINED" -> {
                     textView.text = string
                     textView.setTextColor(App.resourcesApp.getColor(R.color.black))
                 }

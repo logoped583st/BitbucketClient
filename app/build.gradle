@@ -98,6 +98,8 @@ dependencies {
     //slidingPanel
     implementation "${library.slidingPanel}"
 
+    implementation "${library.markDown}"
+
     implementation 'com.android.support:multidex:1.0.3'
 
 

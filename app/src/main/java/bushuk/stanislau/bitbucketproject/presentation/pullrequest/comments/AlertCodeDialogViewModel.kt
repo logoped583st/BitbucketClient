@@ -2,10 +2,8 @@ package bushuk.stanislau.bitbucketproject.presentation.pullrequest.comments
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import android.view.View
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.api.ScalarApi
-import bushuk.stanislau.bitbucketproject.global.LoadingModel
 import bushuk.stanislau.bitbucketproject.global.PullRequestModel
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
@@ -31,7 +29,6 @@ class AlertCodeDialogViewModel : ViewModel() {
     lateinit var pullRequestModel: PullRequestModel
 
 
-
     val code: MutableLiveData<String> = MutableLiveData()
 
     init {
@@ -46,12 +43,28 @@ class AlertCodeDialogViewModel : ViewModel() {
                 .map {
                     val lines = it.split(System.getProperty("line.separator"))
                     val finalStringBuilder = StringBuilder("")
-                    Timber.e(comment.inline.to.toString() + "Count")
-
-                    for (i in comment.inline.to - 3..lines.lastIndex) {
-                        Timber.e(lines[i])
-                        finalStringBuilder.append(lines[i]).append(System.getProperty("line.separator"))
+                    if (comment.inline.from == null) {
+                        if (comment.inline.to == null) {
+                            for (i in 0..lines.lastIndex) {
+                                finalStringBuilder.append(lines[i]).append(System.getProperty("line.separator"))
+                            }
+                        } else {
+                            for (i in 0..comment.inline.to) {
+                                finalStringBuilder.append(lines[i]).append(System.getProperty("line.separator"))
+                            }
+                        }
+                    } else {
+                        if (comment.inline.to == null) {
+                            for (i in comment.inline.from..lines.lastIndex) {
+                                finalStringBuilder.append(lines[i]).append(System.getProperty("line.separator"))
+                            }
+                        } else {
+                            for (i in comment.inline.from..comment.inline.to) {
+                                finalStringBuilder.append(lines[i]).append(System.getProperty("line.separator"))
+                            }
+                        }
                     }
+
                     return@map finalStringBuilder.toString()
                 }
                 .observeOn(AndroidSchedulers.mainThread())
