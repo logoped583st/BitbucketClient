@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="fragment"
+            type="bushuk.stanislau.bitbucketproject.presentation.addrepository.AddRepositoryFragment"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/add_repository_screen_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        tools:context=".presentation.addrepository.AddRepositoryFragment">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBarRepository"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/add_repository_screen_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@android:color/transparent"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="@string/add_repositories_toolbar_title_text" />
+        </android.support.design.widget.AppBarLayout>
+
+        <TextView
+            android:id="@+id/add_repository_screen_title_textView"
+            style="@style/Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/add_repositories_title_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarRepository" />
+
+        <EditText
+            android:id="@+id/add_repository_screen_title_editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/add_repository_screen_title_textView"
+            app:layout_constraintTop_toBottomOf="@+id/add_repository_screen_title_textView" />
+
+        <TextView
+            android:id="@+id/add_repository_screen_description_textView"
+            style="@style/Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/add_repositories_description_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_repository_screen_title_editText" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/add_repository_screen_tab_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/add_repository_screen_description_textView"
+            app:layout_constraintTop_toBottomOf="@+id/add_repository_screen_description_textView"
+            app:tabMode="fixed"
+            app:tabTextColor="@color/black">
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Write" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Preview" />
+
+        </android.support.design.widget.TabLayout>
+
+        <EditText
+            android:id="@+id/add_repository_screen_description_editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/ic_item_recycler_background"
+            android:minLines="3"
+            android:padding="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_repository_screen_tab_layout" />
+
+        <TextView
+            android:id="@+id/add_repository_screen_description_support_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/add_repositories_description_support_text"
+            app:layout_constraintBottom_toTopOf="@+id/add_repository_screen_isPrivate_checkbox"
+            app:layout_constraintEnd_toEndOf="@+id/add_repository_screen_description_editText"
+            app:layout_constraintTop_toBottomOf="@+id/add_repository_screen_description_editText"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/add_repository_screen_isPrivate_textView"
+            style="@style/Subheading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/add_repositories_isPrivate_text"
+            app:layout_constraintEnd_toStartOf="@+id/add_repository_screen_isPrivate_checkbox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_repository_screen_description_support_textView" />
+
+        <CheckBox
+            android:id="@+id/add_repository_screen_isPrivate_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/add_repository_screen_isPrivate_textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/add_repository_screen_isPrivate_textView" />
+
+        <Button
+            android:id="@+id/add_repository_screen_create_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:onClick="@{fragment::createButtonClick}"
+            android:text="@string/add_repositories_create_button_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_repository_screen_isPrivate_textView" />
+    </android.support.constraint.ConstraintLayout>
+</layout>

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import bushuk.stanislau.bitbucketproject.constants.Screens
+import bushuk.stanislau.bitbucketproject.presentation.addrepository.AddRepositoryFragment
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.codeeditor.CodeEditorActivity
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersFragment
@@ -19,7 +20,6 @@ import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsCodeActiv
 import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsFragment
 import bushuk.stanislau.bitbucketproject.presentation.user.UserFragment
 import bushuk.stanislau.bitbucketproject.room.user.User
-import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import ru.terrakok.cicerone.android.SupportAppNavigator
 
 class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppNavigator(activity, containerId) {
@@ -82,6 +82,7 @@ class MainNavigator(activity: FragmentActivity?, containerId: Int) : SupportAppN
 
             Screens.PULL_REQUEST_SCREEN -> return ContainerPullRequestFragment()
 
+            Screens.ADD_REPOSITORY_SCREEN -> return AddRepositoryFragment()
         }
         return null
     }

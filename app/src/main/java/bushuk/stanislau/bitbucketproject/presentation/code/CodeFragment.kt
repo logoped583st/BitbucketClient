@@ -73,7 +73,7 @@ class CodeFragment : Fragment(), ClickFollow, RecyclerCodePathAdapter.PathClick 
         code_screen_code_path_recycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         code_screen_code_path_recycler.adapter = codePathAdapter
 
-        val mainBranch: String = viewModel.factory.codeDataSource.repositoryModel.repository.value.mainbranch.name
+        val mainBranch: String? = viewModel.factory.codeDataSource.repositoryModel.repository.value.mainbranch?.name
         var positionOfMainBranch = 0
 
         viewModel.branches.observe(this, Observer {

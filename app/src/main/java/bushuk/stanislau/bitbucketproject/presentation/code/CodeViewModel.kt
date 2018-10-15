@@ -46,7 +46,7 @@ class CodeViewModel(val factory: CodeDataSourceFactory = CodeDataSourceFactory()
                 .subscribe({
                     var i = 0
                     while (i < it.values.size) {
-                        if (factory.codeDataSource.repositoryModel.repository.value.mainbranch.name == it.values[i].name) {
+                        if (factory.codeDataSource.repositoryModel.repository.value.mainbranch!!.name == it.values[i].name) {
                             hash = it.values[i].target.hash
                         }
                         i++

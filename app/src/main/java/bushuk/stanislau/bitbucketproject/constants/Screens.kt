@@ -30,4 +30,6 @@ object Screens {
     const val CODE_EDITOR_SCREEN : String = "CODE_EDITOR_SCREEN"
 
     const val SNIPPETS_CODE_SCREEN: String = "SNIPPETS_CODE_SCREEN"
+
+    const val ADD_REPOSITORY_SCREEN: String = "ADD_REPOSITORY_SCREEN"
 }

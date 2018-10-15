@@ -31,5 +31,7 @@ class ViewPagerBinding {
         fun bindViewPagerTabs(tabView: TabLayout, pagerView: ViewPager) {
             tabView.setupWithViewPager(pagerView, true)
         }
+
+
     }
 }
