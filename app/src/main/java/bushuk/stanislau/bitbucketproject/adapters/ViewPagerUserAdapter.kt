@@ -19,26 +19,19 @@ class ViewPagerUserAdapter(fragmentManager: FragmentManager) : FragmentStatePage
     private val following = 2
     private val snippets = 3
 
-    private val repositoriesFragment: RepositoriesFragment = RepositoriesFragment()
-
     override fun getItem(position: Int): Fragment? {
-        Timber.e(position.toString())
-
         return when (position) {
 
-            repositories -> repositoriesFragment
+            repositories -> RepositoriesFragment()
 
-            followers -> {
-                FollowersFragment()
-            }
+            followers -> FollowersFragment()
 
-            following -> {
-                FollowingFragment()
-            }
 
-            snippets -> {
-                SnippetsFragment()
-            }
+            following -> FollowingFragment()
+
+
+            snippets -> SnippetsFragment()
+
 
             else -> null
         }

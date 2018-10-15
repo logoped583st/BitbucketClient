@@ -7,6 +7,7 @@ import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.SearchView
+import android.view.View
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.LoadingViewModel
@@ -79,7 +80,7 @@ class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = Reposit
     }
 
     fun observeAccessChangeSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
-         compositeDisposable.add(RxAdapterView.itemSelections(spinner)
+        compositeDisposable.add(RxAdapterView.itemSelections(spinner)
                 .skipInitialValue()
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -112,6 +113,10 @@ class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = Reposit
     override fun onCleared() {
         super.onCleared()
         factory.repositoriesDataSource.invalidate()
+    }
+
+    fun navigateToAddRepository(view: View) {
+        router.navigateTo(Screens.ADD_REPOSITORY_SCREEN)
     }
 
 }

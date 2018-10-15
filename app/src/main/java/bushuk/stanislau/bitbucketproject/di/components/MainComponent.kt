@@ -13,6 +13,7 @@ import bushuk.stanislau.bitbucketproject.di.modules.repositories.RepositoriesMod
 import bushuk.stanislau.bitbucketproject.di.modules.repository.RepositoryModule
 import bushuk.stanislau.bitbucketproject.di.modules.snippets.SnippetsModule
 import bushuk.stanislau.bitbucketproject.global.UserModel
+import bushuk.stanislau.bitbucketproject.presentation.addrepository.AddRepositoryViewModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginActivity
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
@@ -162,4 +163,6 @@ interface MainComponent {
     fun inject(followingDataSource: FollowingDataSource)
 
     fun inject(watchersViewModel: WatchersViewModel)
+
+    fun inject(addRepositoryViewModel: AddRepositoryViewModel)
 }

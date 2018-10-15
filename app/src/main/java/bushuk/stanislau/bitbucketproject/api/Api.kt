@@ -7,12 +7,12 @@ import bushuk.stanislau.bitbucketproject.room.commits.CommitResponse
 import bushuk.stanislau.bitbucketproject.room.followers.Followers
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestResponse
+import bushuk.stanislau.bitbucketproject.room.repositories.CreateRepository
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
 import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
 import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -71,7 +71,8 @@ interface Api {
     fun getCommitWithUrl(@Url url: String): Single<CommitResponse>
 
     @GET("repositories/{userName}/{repoName}/pullrequests/{id}")
-    fun getPullRequest(@Path("userName") userName: String, @Path("repoName") repoName: String, @Path("id") id: String): Single<PullRequest>
+    fun getPullRequest(@Path("userName") userName: String, @Path("repoName") repoName: String,
+                       @Path("id") id: String): Single<PullRequest>
 
     @GET
     fun getPullRequestComments(@Url url: String): Single<CommentResponse>
@@ -86,6 +87,10 @@ interface Api {
     fun unApprovePullRequest(@Url url: String): Completable
 
     @GET
-    fun getSnippet(@Url url: String):Single<Snippet>
+    fun getSnippet(@Url url: String): Single<Snippet>
+
+    @POST("repositories/{userName}/{repoName}")
+    fun createRepository(@Path("userName") userName: String, @Path("repoName") repoName: String,
+                         @Body createRepository: CreateRepository): Completable
 
 }

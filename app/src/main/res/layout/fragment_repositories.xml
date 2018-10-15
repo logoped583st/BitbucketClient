@@ -99,6 +99,7 @@
                     android:id="@+id/repositories_screen_add_repo_fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{viewModel::navigateToAddRepository}"
                     android:src="@drawable/ic_add_black_24dp"
                     app:fab_colorNormal="@color/colorAccent"
                     app:fab_size="mini" />
