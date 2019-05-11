@@ -28,13 +28,16 @@ android {
     dataBinding {
         enabled = true
     }
+
 }
+
+
 
 def library = ext.libraries
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation project(':uimodule')
     implementation project(':libraries:sharedCode')
@@ -74,6 +77,7 @@ dependencies {
     implementation "${library.supportFragment}"
     implementation "${library.recyclerview}"
     implementation "${library.constraint}"
+    //implementation 'com.google.android.material:material:1.1.0-alpha06'
 
     //DAGGER//
     implementation "${library.dagger}"
@@ -84,6 +88,7 @@ dependencies {
     kapt "${library.roomAnnotations}"
     testImplementation "${library.roomTest}"
     implementation "android.arch.persistence.room:rxjava2:1.1.1"
+
     //LifeCycle//
     implementation "${library.lifecycle}"
     kapt "${library.lifecycleKapt}"

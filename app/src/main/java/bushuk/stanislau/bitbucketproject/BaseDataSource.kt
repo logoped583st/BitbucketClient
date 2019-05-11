@@ -42,11 +42,10 @@ abstract class BaseDataSource<Value : Any, Response : Any> : PageKeyedDataSource
 
     private fun loading(a: Any) {
         loadingModel.loading = View.INVISIBLE
+        loadingModel.noInfo = View.INVISIBLE
         loadingEvent.onNext(loadingModel)
         when (a) {
             is CommentResponse -> showErrorWindow(a.size)
-
-            is PullRequest -> showErrorWindow(a.reviewers.size)
 
             is RepositoriesResponse -> showErrorWindow(a.size)
 
@@ -54,17 +53,24 @@ abstract class BaseDataSource<Value : Any, Response : Any> : PageKeyedDataSource
 
             is SnippetsResponce -> showErrorWindow(a.values.size)
 
-            is CodeResponse -> showErrorWindow(a.size)
-
             is PullRequestResponse -> showErrorWindow(a.size)
+
+            else -> {
+                loadingModel.loading = View.INVISIBLE
+                loadingModel.noInfo = View.INVISIBLE
+                loadingEvent.onNext(loadingModel)
+            }
         }
     }
 
     private fun showErrorWindow(size: Int) {
         if (size == 0) {
             loadingModel.noInfo = View.VISIBLE
-            loadingEvent.onNext(loadingModel)
+        }else{
+            loadingModel.noInfo = View.INVISIBLE
         }
+        loadingEvent.onNext(loadingModel)
+
     }
 
 
@@ -78,7 +84,7 @@ abstract class BaseDataSource<Value : Any, Response : Any> : PageKeyedDataSource
                     loading(it)
                     onResultInitial(it, callback)
                 }, {
-                    Timber.e(it.message)
+                    loadingEvent.onNext(LoadingModel(noInfo = View.VISIBLE,loading = View.INVISIBLE,errorText = "Error or empty"))
                 }))
     }
 

@@ -10,125 +10,134 @@
 
     </data>
 
-
-    <android.support.constraint.ConstraintLayout
+    <android.support.design.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:foreground="?selectableItemBackground"
+        app:rippleColor = "@color/black"
         android:layout_margin="4dp"
-        android:background="@drawable/ic_item_recycler_background">
+        app:cardCornerRadius="4dp"
+        android:focusable="true">
 
-        <TextView
-            android:id="@+id/item_recycler_repositories_access"
-            style="@style/Subheading.white"
-            android:layout_width="wrap_content"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@{data.is_private}"
-            android:padding="2dp"
-            android:text="@{data.is_private}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_name"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_margin="4dp">
 
-        <TextView
-            android:id="@+id/item_recycler_repositories_name"
-            style="@style/Headline"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:text="@{data.name}"
-            app:layout_constraintEnd_toStartOf="@+id/item_recycler_repositories_access"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/item_recycler_repositories_access"
+                style="@style/Subheading.white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@{data.is_private}"
+                android:padding="2dp"
+                android:text="@{data.is_private}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_name"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/item_recycler_repositories_description"
-            style="@style/Subheading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_avatar"
-            app:layout_constraintTop_toBottomOf="@+id/item_recycler_repositories_name"
-            app:layout_constraintVertical_chainStyle="spread_inside"
-            app:text="@{data.description}" />
+            <TextView
+                android:id="@+id/item_recycler_repositories_name"
+                style="@style/Headline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:text="@{data.name}"
+                app:layout_constraintEnd_toStartOf="@+id/item_recycler_repositories_access"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/item_recycler_repositories_update_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:src="@drawable/ic_clock"
-            app:layout_constraintBottom_toBottomOf="@+id/item_recycler_repositories_update"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/item_recycler_repositories_update" />
+            <TextView
+                android:id="@+id/item_recycler_repositories_description"
+                style="@style/Subheading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_avatar"
+                app:layout_constraintTop_toBottomOf="@+id/item_recycler_repositories_name"
+                app:layout_constraintVertical_chainStyle="spread_inside"
+                app:text="@{data.description}" />
 
-        <TextView
-            android:id="@+id/item_recycler_repositories_update"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="6dp"
-            android:text="@{data.updated_on}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/item_recycler_repositories_owner"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_update_image" />
+            <ImageView
+                android:id="@+id/item_recycler_repositories_update_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:src="@drawable/ic_clock"
+                app:layout_constraintBottom_toBottomOf="@+id/item_recycler_repositories_update"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/item_recycler_repositories_update" />
 
-        <ImageView
-            android:id="@+id/item_recycler_repositories_owner_avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="2dp"
-            android:src="@drawable/ic_owner"
-            app:layout_constraintBottom_toBottomOf="@+id/item_recycler_repositories_update_image"
-            app:layout_constraintEnd_toStartOf="@+id/item_recycler_repositories_owner"
-            app:layout_constraintTop_toTopOf="@+id/item_recycler_repositories_update_image" />
+            <TextView
+                android:id="@+id/item_recycler_repositories_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="8dp"
+                android:text="@{data.updated_on}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/item_recycler_repositories_owner"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_update_image" />
 
-        <TextView
-            android:id="@+id/item_recycler_repositories_owner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{data.owner.display_name}"
-            app:layout_constraintBottom_toBottomOf="@+id/item_recycler_repositories_update"
-            app:layout_constraintEnd_toStartOf="@+id/item_recycler_repositories_language"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_update"
-            app:layout_constraintTop_toTopOf="@+id/item_recycler_repositories_update" />
+            <ImageView
+                android:id="@+id/item_recycler_repositories_owner_avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
+                android:src="@drawable/ic_owner"
+                app:layout_constraintBottom_toBottomOf="@+id/item_recycler_repositories_update_image"
+                app:layout_constraintEnd_toStartOf="@+id/item_recycler_repositories_owner"
+                app:layout_constraintTop_toTopOf="@+id/item_recycler_repositories_update_image" />
 
-        <TextView
-            android:id="@+id/item_recycler_repositories_language"
-            style="@style/Body_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:color="@{data.language}"
-            android:text="@{data.language}"
-            app:layout_constraintBottom_toBottomOf="@+id/item_recycler_repositories_owner"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_owner"
-            app:layout_constraintTop_toTopOf="@+id/item_recycler_repositories_owner" />
+            <TextView
+                android:id="@+id/item_recycler_repositories_owner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{data.owner.display_name}"
+                app:layout_constraintBottom_toBottomOf="@+id/item_recycler_repositories_update"
+                app:layout_constraintEnd_toStartOf="@+id/item_recycler_repositories_language"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_update"
+                app:layout_constraintTop_toTopOf="@+id/item_recycler_repositories_update" />
 
-        <ImageView
-            android:id="@+id/item_recycler_repositories_avatar"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:imageUrl="@{data.links.avatar.href}"
-            app:layout_constraintBottom_toTopOf="@+id/item_recycler_repositories_update"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_recycler_repositories_access" />
+            <TextView
+                android:id="@+id/item_recycler_repositories_language"
+                style="@style/Body_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:color="@{data.language}"
+                android:text="@{data.language}"
+                app:layout_constraintBottom_toBottomOf="@+id/item_recycler_repositories_owner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_owner"
+                app:layout_constraintTop_toTopOf="@+id/item_recycler_repositories_owner" />
+
+            <ImageView
+                android:id="@+id/item_recycler_repositories_avatar"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:imageUrl="@{data.links.avatar.href}"
+                app:layout_constraintBottom_toTopOf="@+id/item_recycler_repositories_update"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_recycler_repositories_access" />
 
 
-    </android.support.constraint.ConstraintLayout>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.design.card.MaterialCardView>
 </layout>

@@ -12,75 +12,87 @@
 
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.design.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        app:rippleColor = "@color/black"
+
+        android:foreground="?selectableItemBackground"
         android:layout_margin="4dp"
-        android:background="@drawable/ic_item_recycler_background">
+        app:cardElevation="4dp"
+        app:cardCornerRadius="4dp"
+        android:focusable="true">
 
-
-        <ImageView
-            android:id="@+id/item_recycler_snippets_users_avatar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="@dimen/margin_size_small"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            app:imageUrl="@{data.user.links.avatar.href}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/ic_launcher" />
-
-        <TextView
-            android:id="@+id/item_recycler_snippets_title"
-            style="@style/Headline"
-            android:layout_width="0dp"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            tools:context="ru.noties.markwon.MainActivity"
-            app:markDownText="@{data.content.raw}"
-            app:layout_constraintStart_toEndOf="@+id/item_recycler_snippets_users_avatar"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/item_recycler_snippets_owner_avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/ic_owner"
-            app:layout_constraintBottom_toBottomOf="@+id/item_recycler_snippets_owner"
-            app:layout_constraintStart_toEndOf="@+id/item_recycler_snippets_users_avatar"
-            app:layout_constraintTop_toTopOf="@+id/item_recycler_snippets_owner" />
-
-        <TextView
-            android:id="@+id/item_recycler_snippets_owner"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="8dp"
-            android:text="@{data.user.display_name}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/item_recycler_snippets_id"
-            app:layout_constraintStart_toEndOf="@+id/item_recycler_snippets_owner_avatar"
-            app:layout_constraintTop_toBottomOf="@+id/item_recycler_snippets_title" />
-
-        <TextView
-            android:id="@+id/item_recycler_snippets_id"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:text="@{data.updated_on}"
-            app:layout_constraintBottom_toBottomOf="@+id/item_recycler_snippets_owner"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/item_recycler_snippets_owner"
-            app:layout_constraintTop_toTopOf="@+id/item_recycler_snippets_owner" />
+            android:layout_margin="4dp">
 
 
-    </android.support.constraint.ConstraintLayout>
+            <ImageView
+                android:id="@+id/item_recycler_snippets_users_avatar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="@dimen/margin_size_small"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                app:imageUrl="@{data.user.links.avatar.href}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/item_recycler_snippets_title"
+                style="@style/Headline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toEndOf="@+id/item_recycler_snippets_users_avatar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:markDownText="@{data.content.raw}"
+                tools:context="ru.noties.markwon.MainActivity" />
+
+            <ImageView
+                android:id="@+id/item_recycler_snippets_owner_avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/ic_owner"
+                app:layout_constraintBottom_toBottomOf="@+id/item_recycler_snippets_owner"
+                app:layout_constraintStart_toEndOf="@+id/item_recycler_snippets_users_avatar"
+                app:layout_constraintTop_toTopOf="@+id/item_recycler_snippets_owner" />
+
+            <TextView
+                android:id="@+id/item_recycler_snippets_owner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@{data.user.display_name}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/item_recycler_snippets_id"
+                app:layout_constraintStart_toEndOf="@+id/item_recycler_snippets_owner_avatar"
+                app:layout_constraintTop_toBottomOf="@+id/item_recycler_snippets_title" />
+
+            <TextView
+                android:id="@+id/item_recycler_snippets_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@{data.updated_on}"
+                app:layout_constraintBottom_toBottomOf="@+id/item_recycler_snippets_owner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/item_recycler_snippets_owner"
+                app:layout_constraintTop_toTopOf="@+id/item_recycler_snippets_owner" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.design.card.MaterialCardView>
 </layout>
