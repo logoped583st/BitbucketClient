@@ -138,14 +138,7 @@
             <android.support.constraint.Group
                 android:id="@+id/pullrequest_screen_group"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="pullrequest_screen_recycler_commits,
-                pullrequest_screen_recycler_reviewers,pullrequest_screen_commits,
-                pullrequest_screen_commits,
-                pullrequest_screen_reviewers_text,
-                pullrequest_screen_merge_button,
-                pullrequest_screen_approve,
-                pullrequest_screen_approve_count" />
+                android:layout_height="wrap_content" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/pullrequest_screen_recycler_commits"
