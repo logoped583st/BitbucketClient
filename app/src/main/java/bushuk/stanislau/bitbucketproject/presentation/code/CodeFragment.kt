@@ -1,16 +1,16 @@
 package bushuk.stanislau.bitbucketproject.presentation.code
 
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerCodeAdapter
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerCodePathAdapter
@@ -73,7 +73,7 @@ class CodeFragment : Fragment(), ClickFollow, RecyclerCodePathAdapter.PathClick 
         code_screen_code_path_recycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         code_screen_code_path_recycler.adapter = codePathAdapter
 
-        val mainBranch: String? = viewModel.factory.codeDataSource.repositoryModel.repository.value.mainbranch?.name
+        val mainBranch: String? = viewModel.factory.codeDataSource.repositoryModel.repository.value!!.mainbranch?.name
         var positionOfMainBranch = 0
 
         viewModel.branches.observe(this, Observer {

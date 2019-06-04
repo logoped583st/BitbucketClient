@@ -1,9 +1,9 @@
 package bushuk.stanislau.bitbucketproject.presentation.watchers
 
-import android.arch.lifecycle.LiveData
-import android.arch.paging.DataSource
-import android.arch.paging.LivePagedListBuilder
-import android.arch.paging.PagedList
+import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.constants.Constants
@@ -35,6 +35,6 @@ class WatchersViewModel(factory: WatchersDataSourceFactory = WatchersDataSourceF
     }
 
     fun navigateToUserScreen(userName: User) {
-        router.navigateTo(Screens.USER_SCREEN, userName)
+        //router.navigateTo(Screens.USER_SCREEN, userName)
     }
 }

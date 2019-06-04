@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.presentation.follow.followers.models
 
-import android.arch.paging.DataSource
+import androidx.paging.DataSource
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.global.UserModel

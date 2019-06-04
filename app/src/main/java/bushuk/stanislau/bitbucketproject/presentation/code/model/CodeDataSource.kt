@@ -39,9 +39,9 @@ class CodeDataSource : BaseDataSource<Code, CodeResponse>() {
     override val single: Single<CodeResponse>
         get() =
             if (UrlBuilder.repositoryPath.isNullOrEmpty()) {
-                api.getRepoWithName(userModel.user.value.username, repositoryModel.repository.value.name)
+                api.getRepoWithName(userModel.user.value!!.username, repositoryModel.repository.value!!.name)
             } else {
-                api.getRepoWithNamePath(userModel.user.value.username, repositoryModel.repository.value.name, UrlBuilder.repositoryPath!!)
+                api.getRepoWithNamePath(userModel.user.value!!.username, repositoryModel.repository.value!!.name, UrlBuilder.repositoryPath!!)
             }
 
 

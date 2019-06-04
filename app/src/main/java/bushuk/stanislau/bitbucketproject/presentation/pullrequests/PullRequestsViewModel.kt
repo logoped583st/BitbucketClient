@@ -1,12 +1,12 @@
 package bushuk.stanislau.bitbucketproject.presentation.pullrequests
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Observer
-import android.arch.paging.LivePagedListBuilder
-import android.arch.paging.PagedList
-import android.support.v7.widget.AppCompatSpinner
-import android.support.v7.widget.SearchView
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import androidx.appcompat.widget.AppCompatSpinner
+import androidx.appcompat.widget.SearchView
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.LoadingViewModel
@@ -56,7 +56,7 @@ class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullReq
 
     fun navigateToPullRequestScreen(pullRequest: PullRequest) {
         pullRequestModel.publishSubject.onNext(pullRequest)
-        router.navigateTo(Screens.PULL_REQUEST_SCREEN)
+        //router.navigateTo(Screens.PULL_REQUEST_SCREEN)
     }
 
     override fun onCleared() {

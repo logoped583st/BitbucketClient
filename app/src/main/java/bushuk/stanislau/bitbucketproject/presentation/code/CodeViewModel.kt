@@ -1,12 +1,12 @@
 package bushuk.stanislau.bitbucketproject.presentation.code
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
-import android.arch.paging.LivePagedListBuilder
-import android.arch.paging.PagedList
 import android.widget.Spinner
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.LoadingViewModel
@@ -40,13 +40,13 @@ class CodeViewModel(val factory: CodeDataSourceFactory = CodeDataSourceFactory()
         App.component.initCodeComponent().inject(this)
 
         compositeDisposable.add(factory.codeDataSource.api.getBranchWithUrl(factory
-                .codeDataSource.repositoryModel.repository.value.links.branches.href)
+                .codeDataSource.repositoryModel.repository.value!!.links.branches.href)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     var i = 0
                     while (i < it.values.size) {
-                        if (factory.codeDataSource.repositoryModel.repository.value.mainbranch!!.name == it.values[i].name) {
+                        if (factory.codeDataSource.repositoryModel.repository.value!!.mainbranch!!.name == it.values[i].name) {
                             hash = it.values[i].target.hash
                         }
                         i++
@@ -95,7 +95,7 @@ class CodeViewModel(val factory: CodeDataSourceFactory = CodeDataSourceFactory()
             else -> code.path.subSequence(position + 1, code.path.length).toString()
         }
         UrlBuilder.buildPathWithHash(code.path, hash)
-        router.navigateTo(Screens.CODE_EDITOR_SCREEN, fileName)
+        //router.navigateTo(Screens.CODE_EDITOR_SCREEN, fileName)
     }
 
     fun reloadPathWithHash(lifecycleOwner: LifecycleOwner, adapter: RecyclerCodeAdapter, path: String) {

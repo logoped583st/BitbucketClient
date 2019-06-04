@@ -32,7 +32,7 @@ class CommitsDataSource : BaseDataSource<Commit, CommitResponse>() {
 
 
     override val single: Single<CommitResponse>
-        get() = api.getCommitWithUrl(pullRequestModel.publishSubject.value.links.commits.href)
+        get() = api.getCommitWithUrl(pullRequestModel.publishSubject.value!!.links.commits.href)
 
     override fun loadNextPage(url: String): Single<CommitResponse> = api.getCommitWithUrl(url)
 

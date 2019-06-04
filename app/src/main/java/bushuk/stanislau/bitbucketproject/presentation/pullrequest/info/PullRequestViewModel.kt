@@ -1,11 +1,11 @@
 package bushuk.stanislau.bitbucketproject.presentation.pullrequest.info
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MediatorLiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.paging.LivePagedListBuilder
-import android.arch.paging.PagedList
-import android.support.design.widget.Snackbar
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import com.google.android.material.snackbar.Snackbar
 import android.view.View
 import android.widget.Button
 import bushuk.stanislau.bitbucketproject.App
@@ -68,7 +68,7 @@ class PullRequestViewModel(private val reviewersDataSourceFactory: ReviewersData
                     if (it.participants != null) {
                         countOfApproves.postValue(it.participants)
                         it.participants.forEach {
-                            if (it.user.uuid == userModel.user.value.uuid &&
+                            if (it.user.uuid == userModel.user.value!!.uuid &&
                                     it.approved) {
                                 isApproved.postValue(true)
                                 return@forEach
@@ -87,15 +87,15 @@ class PullRequestViewModel(private val reviewersDataSourceFactory: ReviewersData
     }
 
     fun navigateToUser(data: User) {
-        router.navigateTo(Screens.USER_SCREEN, data)
+        //router.navigateTo(Screens.USER_SCREEN, data)
     }
 
     fun approveButtonClick(view: View) {
         (view as Button).isClickable = false
         val completable: Completable = if (isApproved.value!!) {
-            api.unApprovePullRequest(pullRequest.publishSubject.value.links.approve.href)
+            api.unApprovePullRequest(pullRequest.publishSubject.value!!.links.approve.href)
         } else {
-            api.approvePullRequest(pullRequest.publishSubject.value.links.approve.href)
+            api.approvePullRequest(pullRequest.publishSubject.value!!.links.approve.href)
         }
 
         completable.subscribeOn(Schedulers.io())
@@ -117,7 +117,7 @@ class PullRequestViewModel(private val reviewersDataSourceFactory: ReviewersData
 
     fun mergePullRequest(view: View) {
         (view as Button).isClickable = false
-        api.mergePullRequest(pullRequest.publishSubject.value.links.merge.href)
+        api.mergePullRequest(pullRequest.publishSubject.value!!.links.merge.href)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

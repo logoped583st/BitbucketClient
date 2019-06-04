@@ -1,16 +1,16 @@
 package bushuk.stanislau.bitbucketproject.presentation.addrepository
 
 
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.tabs.TabLayout
+import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.FragmentAddRepositoryBinding
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
@@ -33,7 +33,7 @@ class AddRepositoryFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(AddRepositoryViewModel::class.java)
         binding.let {
             it.fragment = this
-            it.setLifecycleOwner(this)
+            it.lifecycleOwner = this.viewLifecycleOwner
         }
         setToolbar(binding)
         return binding.root

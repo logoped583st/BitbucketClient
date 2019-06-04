@@ -1,28 +1,18 @@
 package bushuk.stanislau.bitbucketproject.presentation.auth
 
-import android.app.Activity.RESULT_OK
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.util.Base64
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.constants.Constants
-import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
 import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
-import ru.terrakok.cicerone.result.ResultListener
 import javax.inject.Inject
 
-class AuthLoginViewModel : ViewModel(), ResultListener {
-
-    override fun onResult(resultData: Any?) {
-        if (resultData == RESULT_OK) {
-            router.newRootScreen(Screens.MAIN_SCREEN)
-        }
-    }
+class AuthLoginViewModel : ViewModel() {
 
     @Inject
     lateinit var tokenPreferences: SharedPreferencesUtil
@@ -59,7 +49,7 @@ class AuthLoginViewModel : ViewModel(), ResultListener {
                 .subscribe(
                         {
                             userModel.user.onNext(it)
-                            router.newRootScreen(Screens.MAIN_SCREEN)
+                           // router.newRootScreen(Screens.MAIN_SCREEN)
                         },
                         {
                             tokenPreferences.clearToken()
@@ -70,8 +60,8 @@ class AuthLoginViewModel : ViewModel(), ResultListener {
     }
 
     fun navigateToBrowser() {
-        router.setResultListener(Constants.GET_TOKEN_BROWSER, this)
-        router.navigateTo(Screens.LOGIN_SCREEN)
+//        router.setResultListener(Constants.GET_TOKEN_BROWSER, this)
+//        router.navigateTo(Screens.LOGIN_SCREEN)
     }
 
 }

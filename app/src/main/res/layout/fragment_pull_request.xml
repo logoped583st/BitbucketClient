@@ -10,11 +10,11 @@
             type="bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.PullRequestViewModel" />
     </data>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:context=".presentation.pullrequest.info.PullRequestFragment">
@@ -135,12 +135,12 @@
                 app:markDownText="@{viewModel.pullRequest.publishSubject.value.description}" />
 
 
-            <android.support.constraint.Group
+            <androidx.constraintlayout.widget.Group
                 android:id="@+id/pullrequest_screen_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/pullrequest_screen_recycler_commits"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -218,7 +218,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/pullrequest_screen_approve" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/pullrequest_screen_recycler_reviewers"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -230,7 +230,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/pullrequest_screen_reviewers_text"
                 app:layout_constraintVertical_bias="1.0" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>

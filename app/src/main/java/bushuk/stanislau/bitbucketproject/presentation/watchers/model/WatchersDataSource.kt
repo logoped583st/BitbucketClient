@@ -40,7 +40,7 @@ class WatchersDataSource : FollowDataSource() {
 
 
     override val single: Single<Followers> = repositoryModel.repository.flatMapSingle {
-        api.getWatchersRepo(userModel.user.value.username, it.uuid)
+        api.getWatchersRepo(userModel.user.value!!.username, it.uuid)
     }.firstOrError()
 
     override fun doOnEmpty() {

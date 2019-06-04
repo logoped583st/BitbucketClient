@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject
 
-import android.arch.paging.PageKeyedDataSource
+import androidx.paging.PageKeyedDataSource
 import android.view.View
 import bushuk.stanislau.bitbucketproject.global.LoadingModel
 import bushuk.stanislau.bitbucketproject.room.code.CodeResponse

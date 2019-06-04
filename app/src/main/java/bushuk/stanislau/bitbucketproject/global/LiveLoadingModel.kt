@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.global
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 
 class LiveLoadingModel {
     val noInfo: MutableLiveData<Int> = MutableLiveData()

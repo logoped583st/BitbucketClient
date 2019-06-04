@@ -3,7 +3,7 @@ package bushuk.stanislau.bitbucketproject
 import android.app.Application
 import android.content.Context
 import android.content.res.Resources
-import android.support.multidex.MultiDex
+import androidx.multidex.MultiDex
 import android.view.ViewConfiguration
 import bushuk.stanislau.bitbucketproject.di.components.DaggerMainComponent
 import bushuk.stanislau.bitbucketproject.di.components.MainComponent

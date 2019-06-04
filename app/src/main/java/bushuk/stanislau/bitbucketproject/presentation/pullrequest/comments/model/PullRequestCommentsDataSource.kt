@@ -35,5 +35,5 @@ class PullRequestCommentsDataSource : BaseDataSource<Comment, CommentResponse>()
         get() = App.resourcesApp.getString(R.string.comments_error_text)
 
     override val single: Single<CommentResponse>
-        get() = api.getPullRequestComments(pullRequestModel.publishSubject.value.links.comments.href)
+        get() = api.getPullRequestComments(pullRequestModel.publishSubject.value!!.links.comments.href)
 }

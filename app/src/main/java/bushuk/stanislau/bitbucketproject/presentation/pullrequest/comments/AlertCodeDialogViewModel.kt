@@ -1,7 +1,7 @@
 package bushuk.stanislau.bitbucketproject.presentation.pullrequest.comments
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.api.ScalarApi
 import bushuk.stanislau.bitbucketproject.global.PullRequestModel
@@ -37,8 +37,8 @@ class AlertCodeDialogViewModel : ViewModel() {
 
     fun setComment(comment: Comment) {
         //loadingModel.loading.postValue(View.VISIBLE)
-        UrlBuilder.buildPathWithHash(comment.inline!!.path, pullRequestModel.publishSubject.value.source.commit.hash)
-        scalarApi.getCodeOfFile(userModel.user.value.username, repositoryModel.repository.value.uuid, UrlBuilder.repositoryPath!!)
+        UrlBuilder.buildPathWithHash(comment.inline!!.path, pullRequestModel.publishSubject.value!!.source.commit.hash)
+        scalarApi.getCodeOfFile(userModel.user.value!!.username, repositoryModel.repository.value!!.uuid, UrlBuilder.repositoryPath!!)
                 .subscribeOn(Schedulers.io())
                 .map {
                     val lines = it.split(System.getProperty("line.separator"))

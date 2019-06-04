@@ -39,7 +39,7 @@ class PullRequestsDataSource : BaseDataSource<PullRequest, PullRequestResponse>(
 
     override val single: Single<PullRequestResponse> = userModel
             .user.flatMapSingle {
-        api.getPullRequests(it.username, repositoryModel.repository.value.uuid, queryPullRequest, sortPullRequest)
+        api.getPullRequests(it.username, repositoryModel.repository.value!!.uuid, queryPullRequest, sortPullRequest)
     }.firstOrError()
 
     override fun loadNextPage(url: String): Single<PullRequestResponse> = api.getPullRequestNextPage(url)

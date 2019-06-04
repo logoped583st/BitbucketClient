@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.presentation.snippets
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.os.Bundle
 import bushuk.stanislau.bitbucketproject.presentation.codeeditor.BaseCodeEditor
 import sharedcode.turboeditor.texteditor.PageSystem

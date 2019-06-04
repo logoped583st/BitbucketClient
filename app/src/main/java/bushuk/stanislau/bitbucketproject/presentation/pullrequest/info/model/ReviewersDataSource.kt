@@ -45,8 +45,8 @@ class ReviewersDataSource : BaseDataSource<User, PullRequest>() {
     }
 
     override val single: Single<PullRequest>
-        get() = api.getPullRequest(userModel.user.value.username,
-                repositoryModel.repository.value.uuid, pullRequestModel.publishSubject.value.id.toString())
+        get() = api.getPullRequest(userModel.user.value!!.username,
+                repositoryModel.repository.value!!.uuid, pullRequestModel.publishSubject.value!!.id.toString())
 
     override val errorText: String = App.resourcesApp.getString(R.string.reviewers_error_text)
 

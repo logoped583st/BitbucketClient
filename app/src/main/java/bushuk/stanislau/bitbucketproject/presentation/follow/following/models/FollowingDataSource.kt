@@ -33,7 +33,7 @@ class FollowingDataSource : FollowDataSource() {
 
     override fun loadNextPage(url: String): Single<Followers> = api.getFollowersNextPage(url)
 
-    override val single: Single<Followers> = api.getFollowing(userModel.user.value.username)
+    override val single: Single<Followers> = api.getFollowing(userModel.user.value!!.username)
 
     override fun doOnEmpty() {
         //loadingModel.errorText.postValue(App.resourcesApp.getString(R.string.following_screen_no_following))

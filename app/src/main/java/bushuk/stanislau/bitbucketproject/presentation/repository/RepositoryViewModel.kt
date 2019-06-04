@@ -1,7 +1,7 @@
 package bushuk.stanislau.bitbucketproject.presentation.repository
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import android.view.MenuItem
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
@@ -64,7 +64,7 @@ class RepositoryViewModel : ViewModel() {
 
 
     fun initView() {
-        localRouter.replaceScreen(tabSelected)
+       // localRouter.replaceScreen(tabSelected)
     }
 
     fun tabRouting(menuItem: MenuItem): Boolean {
@@ -73,18 +73,18 @@ class RepositoryViewModel : ViewModel() {
         when (menuItem.itemId) {
             R.id.repository_code_menu -> {
                 tabSelected = Screens.CODE_SCREEN
-                localRouter.replaceScreen(Screens.CODE_SCREEN)
+               // localRouter.replaceScreen(Screens.CODE_SCREEN)
             }
 
             R.id.repository_pullrequests_menu -> {
                 tabSelected = Screens.PULL_REQUESTS_SCREEN
 
-                localRouter.replaceScreen(Screens.PULL_REQUESTS_SCREEN)
+               // localRouter.replaceScreen(Screens.PULL_REQUESTS_SCREEN)
             }
 
             R.id.repository_watchers_menu -> {
                 tabSelected = Screens.WATCHERS_SCREEN
-                localRouter.replaceScreen(Screens.WATCHERS_SCREEN)
+              //  localRouter.replaceScreen(Screens.WATCHERS_SCREEN)
             }
         }
 

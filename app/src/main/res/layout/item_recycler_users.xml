@@ -11,7 +11,7 @@
 
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/item_recycler_user_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,5 +63,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/item_recycler_display_name"
             app:layout_constraintTop_toBottomOf="@+id/item_recycler_display_name" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

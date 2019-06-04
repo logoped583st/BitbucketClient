@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.presentation.addrepository
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.global.UserModel
@@ -36,11 +36,11 @@ class AddRepositoryViewModel : ViewModel() {
 
     fun createRepository(slug: String, description: String, isPrivate: Boolean) {
         val trimedSlug = slug.toLowerCase().replace(" ", "")
-        compositeDisposable.add(api.createRepository(userModel.user.value.uuid, trimedSlug, CreateRepository(slug, description, isPrivate))
+        compositeDisposable.add(api.createRepository(userModel.user.value!!.uuid, trimedSlug, CreateRepository(slug, description, isPrivate))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    router.exitWithMessage("Repository Create successfully")
+                   // router.exitWithMessage("Repository Create successfully")
                 }, {
                     Timber.e(it.message)
                 }))

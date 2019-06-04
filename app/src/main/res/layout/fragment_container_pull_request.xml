@@ -10,21 +10,17 @@
             type="bushuk.stanislau.bitbucketproject.presentation.pullrequest.ContainerPullRequestViewModel"/>
 
         <variable
-            name="manager"
-            type="android.support.v4.app.FragmentManager" />
-
-        <variable
             name="handler"
             type="bushuk.stanislau.bitbucketproject.presentation.pullrequest.ContainerPullRequestFragment" />
     </data>
 
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
-        <android.support.design.widget.AppBarLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/pullrequest_screen_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <android.support.v7.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbarPullrequest"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -42,9 +38,9 @@
                 app:title="@{viewModel.pullRequest.publishSubject.value.title}" />
 
 
-        </android.support.design.widget.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,10 +53,10 @@
             app:tabMode="fixed"
             app:tabTextColor="@color/white">
 
-        </android.support.design.widget.TabLayout>
+        </com.google.android.material.tabs.TabLayout>
 
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -72,5 +68,5 @@
             app:layout_constraintTop_toBottomOf="@+id/tabLayout2"
             app:layout_constraintVertical_bias="0.0" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

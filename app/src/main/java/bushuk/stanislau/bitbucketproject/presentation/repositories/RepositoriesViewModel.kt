@@ -1,20 +1,20 @@
 package bushuk.stanislau.bitbucketproject.presentation.repositories
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Observer
-import android.arch.paging.LivePagedListBuilder
-import android.arch.paging.PagedList
-import android.support.v7.widget.AppCompatSpinner
-import android.support.v7.widget.SearchView
 import android.view.View
+import androidx.appcompat.widget.AppCompatSpinner
+import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.LoadingViewModel
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerRepositoriesAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
-import bushuk.stanislau.bitbucketproject.constants.Screens
+import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
@@ -107,7 +107,7 @@ class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = Reposit
 
     fun navigateToRepositoryScreen(repository: Repository, username: String) {
         repositoryModel.repository.onNext(repository)
-        router.navigateTo(Screens.REPOSITORY_SCREEN, listOf(repository.links.avatar.href, username))
+        // router.navigateTo(Screens.REPOSITORY_SCREEN, listOf(repository.links.avatar.href, username))
     }
 
     override fun onCleared() {
@@ -116,7 +116,7 @@ class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = Reposit
     }
 
     fun navigateToAddRepository(view: View) {
-        router.navigateTo(Screens.ADD_REPOSITORY_SCREEN)
+        router.navigateTo(ScreensNavigator.AddRepositoryScreen())
     }
 
 }

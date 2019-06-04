@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.presentation.user
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.room.user.User
@@ -19,10 +19,10 @@ class UserViewModel : ViewModel() {
         App.component.inject(this)
     }
 
-    private val userMe: User= userModel.user.value.copy()
+    private val userMe: User= userModel.user.value!!.copy()
 
     override fun onCleared() {
-        userModel.user.value.username = userMe.username
+        userModel.user.value!!.username = userMe.username
         super.onCleared()
     }
 

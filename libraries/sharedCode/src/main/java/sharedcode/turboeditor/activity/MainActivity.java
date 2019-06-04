@@ -20,8 +20,6 @@
 package sharedcode.turboeditor.activity;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -32,20 +30,19 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.DocumentsContract;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.Selection;
@@ -68,18 +65,12 @@ import android.widget.HorizontalScrollView;
 import android.widget.Toast;
 
 import com.faizmalkani.floatingactionbutton.FloatingActionButton;
-import com.spazedog.lib.rootfw4.RootFW;
-import com.spazedog.lib.rootfw4.utils.io.FileReader;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -100,7 +91,6 @@ import sharedcode.turboeditor.preferences.PreferenceChangeType;
 import sharedcode.turboeditor.preferences.PreferenceHelper;
 import sharedcode.turboeditor.task.SaveFileTask;
 import sharedcode.turboeditor.texteditor.EditTextPadding;
-import sharedcode.turboeditor.texteditor.FileUtils;
 import sharedcode.turboeditor.texteditor.LineUtils;
 import sharedcode.turboeditor.texteditor.PageSystem;
 import sharedcode.turboeditor.texteditor.PageSystemButtons;
@@ -108,7 +98,6 @@ import sharedcode.turboeditor.texteditor.Patterns;
 import sharedcode.turboeditor.texteditor.SearchResult;
 import sharedcode.turboeditor.util.AccessStorageApi;
 import sharedcode.turboeditor.util.AccessoryView;
-import sharedcode.turboeditor.util.AnimationUtils;
 import sharedcode.turboeditor.util.AppInfoHelper;
 import sharedcode.turboeditor.util.Device;
 import sharedcode.turboeditor.util.GreatUri;
@@ -118,7 +107,6 @@ import sharedcode.turboeditor.util.ProCheckUtils;
 import sharedcode.turboeditor.util.ThemeUtils;
 import sharedcode.turboeditor.util.ViewUtils;
 import sharedcode.turboeditor.views.CustomDrawerLayout;
-import sharedcode.turboeditor.views.DialogHelper;
 import sharedcode.turboeditor.views.GoodScrollView;
 
 public abstract class MainActivity extends AppCompatActivity implements IHomeActivity, FindTextDialog
@@ -1111,7 +1099,7 @@ public abstract class MainActivity extends AppCompatActivity implements IHomeAct
 
     //endregion
 
-    public static class Editor extends android.support.v7.widget.AppCompatEditText {
+    public static class Editor extends androidx.appcompat.widget.AppCompatEditText {
 
         //region VARIABLES
         private final TextPaint mPaintNumbers = new TextPaint();

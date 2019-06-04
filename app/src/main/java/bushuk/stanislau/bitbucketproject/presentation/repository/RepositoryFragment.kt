@@ -1,20 +1,18 @@
 package bushuk.stanislau.bitbucketproject.presentation.repository
 
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import bushuk.stanislau.bitbucketproject.BackPressFragment
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoryBinding
-import bushuk.stanislau.bitbucketproject.navigation.RepositoryNavigator
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
-import kotlinx.android.synthetic.main.fragment_repositories.*
 import kotlinx.android.synthetic.main.fragment_repository.*
 import kotlinx.android.synthetic.main.fragment_repository.view.*
 import ru.terrakok.cicerone.NavigatorHolder
@@ -37,7 +35,7 @@ class RepositoryFragment : BackPressFragment() {
         viewModel = ViewModelProviders.of(this).get(RepositoryViewModel::class.java)
         avatar = arguments!!.getString("AVATAR")
         userName = arguments!!.getString("USERNAME")
-        viewModel.userModel.user.value.username = userName
+        viewModel.userModel.user.value!!.username = userName
 
         binding.let {
             it.fragment = this
@@ -93,7 +91,7 @@ class RepositoryFragment : BackPressFragment() {
 
     override fun onResume() {
         super.onResume()
-        navigatorHolder.setNavigator(RepositoryNavigator((activity as MainScreenActivity), childFragmentManager, R.id.repository_screen_container))
+       // navigatorHolder.setNavigator(RepositoryNavigator((activity as MainScreenActivity), childFragmentManager, R.id.repository_screen_container))
     }
 
 }

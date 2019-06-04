@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.utils.binding
 
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.graphics.Color
 import android.widget.TextView
 import bushuk.stanislau.bitbucketproject.App

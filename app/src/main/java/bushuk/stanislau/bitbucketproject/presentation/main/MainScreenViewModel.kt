@@ -1,7 +1,7 @@
 package bushuk.stanislau.bitbucketproject.presentation.main
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.constants.Screens
@@ -46,6 +46,6 @@ class MainScreenViewModel : ViewModel() {
 
     fun drawerNavigation(screenKey: String, toolbarTitle:String) {
         this.toolbarTitle.postValue(toolbarTitle)
-        router.newRootScreen(screenKey)
+        //router.newRootScreen(screenKey)
     }
 }

@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.presentation.follow.following
 
-import android.arch.paging.DataSource
+import androidx.paging.DataSource
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.constants.Screens
@@ -24,7 +24,7 @@ class FollowingViewModel(factory: FollowingDataSourceFactory = FollowingDataSour
     }
 
     fun navigateToUserScreen(userName: User) {
-        router.navigateTo(Screens.USER_SCREEN, userName)
+        //router.navigateTo(Screens.USER_SCREEN, userName)
     }
 
     override fun onCleared() {

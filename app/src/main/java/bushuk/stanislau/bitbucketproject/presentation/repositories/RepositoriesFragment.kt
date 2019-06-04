@@ -2,12 +2,12 @@ package bushuk.stanislau.bitbucketproject.presentation.repositories
 
 
 import android.app.Activity
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -95,7 +95,7 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
 
 
     override fun onClickItem(view: View, data: Any) {
-        viewModel.navigateToRepositoryScreen((data as Repository), viewModel.factory.repositoriesDataSource.userModel.user.value.username)
+        viewModel.navigateToRepositoryScreen((data as Repository), viewModel.factory.repositoriesDataSource.userModel.user.value!!.username)
     }
 
     override fun onAttach(activity: Activity?) {

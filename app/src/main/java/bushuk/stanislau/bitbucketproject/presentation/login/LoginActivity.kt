@@ -3,10 +3,9 @@ package bushuk.stanislau.bitbucketproject.presentation.login
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
-import android.app.Activity
 import android.os.Build
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -58,7 +57,6 @@ class LoginActivity : AppCompatActivity() {
                     Timber.e(url)
                     tempString = url.subSequence(url.indexOf("=") + 1, url.indexOf("&")).toString()
                     tokenPreferences.setToken(tempString)
-                    router.exitWithResult(1, Activity.RESULT_OK)
                     return true
                 }
 

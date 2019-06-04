@@ -1,15 +1,13 @@
 package bushuk.stanislau.bitbucketproject.adapters
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
-import android.support.v4.view.PagerAdapter
-import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager.widget.PagerAdapter
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersFragment
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingFragment
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
 import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsFragment
-import timber.log.Timber
 
 
 class ViewPagerUserAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {

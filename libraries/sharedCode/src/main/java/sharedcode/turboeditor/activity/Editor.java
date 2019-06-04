@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.Selection;
@@ -33,7 +33,7 @@ import sharedcode.turboeditor.texteditor.LineUtils;
 import sharedcode.turboeditor.texteditor.Patterns;
 import sharedcode.turboeditor.util.MimeTypes;
 
-public class Editor extends android.support.v7.widget.AppCompatEditText {
+public class Editor extends androidx.appcompat.widget.AppCompatEditText {
 
     private static final int READ_REQUEST_CODE = 42,
             CREATE_REQUEST_CODE = 43,

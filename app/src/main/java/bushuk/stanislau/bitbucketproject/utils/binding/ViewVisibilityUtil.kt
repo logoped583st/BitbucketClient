@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.utils.binding
 
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.view.View
 import android.widget.ProgressBar
 

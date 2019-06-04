@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.di.modules.global
 
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import android.content.Context
 import bushuk.stanislau.bitbucketproject.room.AppDatabase
 import dagger.Module

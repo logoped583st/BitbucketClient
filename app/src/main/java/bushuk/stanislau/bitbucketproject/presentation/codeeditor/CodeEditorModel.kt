@@ -19,7 +19,7 @@ class CodeEditorModel {
     @Inject
     lateinit var repositoryModel: RepositoryModel
 
-    fun getCode(): Single<String> = scalarApi.getCodeOfFile(userModel.user.value.username, repositoryModel.repository.value.name, UrlBuilder.repositoryPath!!)
+    fun getCode(): Single<String> = scalarApi.getCodeOfFile(userModel.user.value!!.username, repositoryModel.repository.value!!.name, UrlBuilder.repositoryPath!!)
 
     init {
         App.component.inject(this)

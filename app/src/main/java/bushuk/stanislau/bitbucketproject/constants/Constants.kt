@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.constants
 
-import android.arch.paging.PagedList
+import androidx.paging.PagedList
 
 object Constants {
     const val TOKEN_PREFERENCES: String = "TOKEN_PREFERENCES"
@@ -17,5 +17,5 @@ object Constants {
             .setPageSize(ITEMS_IN_PAGE)
             .setInitialLoadSizeHint(ITEMS_IN_PAGE)
             .setEnablePlaceholders(true)
-            .build()!!
+            .build()
 }

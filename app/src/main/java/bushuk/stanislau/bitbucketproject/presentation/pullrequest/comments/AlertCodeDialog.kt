@@ -1,10 +1,10 @@
 package bushuk.stanislau.bitbucketproject.presentation.pullrequest.comments
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
+import androidx.fragment.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +18,7 @@ import sharedcode.turboeditor.activity.MainActivity.pageSystem
 import sharedcode.turboeditor.texteditor.PageSystem
 
 
-class AlertCodeDialog : DialogFragment(), PageSystem.PageSystemInterface {
+class AlertCodeDialog : androidx.fragment.app.DialogFragment(), PageSystem.PageSystemInterface {
     override fun onPageChanged(page: Int) {
         //
     }

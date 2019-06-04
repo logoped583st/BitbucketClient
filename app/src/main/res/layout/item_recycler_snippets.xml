@@ -11,7 +11,7 @@
 
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_margin="4dp"
         android:background="@drawable/ic_item_recycler_background"
@@ -81,5 +81,5 @@
             app:layout_constraintTop_toTopOf="@+id/item_recycler_snippets_owner" />
 
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

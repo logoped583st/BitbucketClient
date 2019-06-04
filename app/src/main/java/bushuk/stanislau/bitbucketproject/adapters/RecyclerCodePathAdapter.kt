@@ -1,10 +1,10 @@
 package bushuk.stanislau.bitbucketproject.adapters
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.presentation.code.CodeFragment
 
@@ -38,7 +38,7 @@ class RecyclerCodePathAdapter(list: MutableList<String>, codeFragment: CodeFragm
             path.removeAt(path.lastIndex)
         }
 
-        notifyItemRangeRemoved(position+1, size)
+        notifyItemRangeRemoved(position + 1, size)
     }
 
     fun changePath(string: String) {

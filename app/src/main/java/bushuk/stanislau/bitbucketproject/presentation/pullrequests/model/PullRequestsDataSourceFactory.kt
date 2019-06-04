@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.presentation.pullrequests.model
 
-import android.arch.paging.DataSource
+import androidx.paging.DataSource
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
 import javax.inject.Inject

@@ -10,7 +10,7 @@
             type="bushuk.stanislau.bitbucketproject.room.commits.Commit" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_margin="4dp"
         android:background="@drawable/ic_item_recycler_background"
         android:layout_width="match_parent"
@@ -69,5 +69,5 @@
             app:layout_constraintStart_toEndOf="@+id/item_recycler_commit_created"
             app:layout_constraintTop_toTopOf="@+id/item_recycler_commit_created" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

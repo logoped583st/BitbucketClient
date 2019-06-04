@@ -1,8 +1,8 @@
 package bushuk.stanislau.bitbucketproject.presentation.snippets
 
-import android.arch.lifecycle.LiveData
-import android.arch.paging.LivePagedListBuilder
-import android.arch.paging.PagedList
+import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.LoadingViewModel
@@ -34,6 +34,6 @@ class SnippetsViewModel
     }
 
     fun navigateToCode(url: String) {
-        router.navigateTo(Screens.SNIPPETS_CODE_SCREEN, url)
+        //router.navigateTo(Screens.SNIPPETS_CODE_SCREEN, url)
     }
 }

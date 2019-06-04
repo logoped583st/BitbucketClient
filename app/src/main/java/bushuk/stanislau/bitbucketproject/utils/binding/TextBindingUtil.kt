@@ -1,7 +1,7 @@
 package bushuk.stanislau.bitbucketproject.utils.binding
 
 import android.annotation.SuppressLint
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.widget.TextView
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R

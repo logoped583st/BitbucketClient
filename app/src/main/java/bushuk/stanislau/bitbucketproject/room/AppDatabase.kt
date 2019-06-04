@@ -1,8 +1,8 @@
 package bushuk.stanislau.bitbucketproject.room
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.TypeConverters
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import bushuk.stanislau.bitbucketproject.room.converters.DateConverter
 import bushuk.stanislau.bitbucketproject.room.user.Links
 import bushuk.stanislau.bitbucketproject.room.dao.MeUserDAO

@@ -1,7 +1,7 @@
 package bushuk.stanislau.bitbucketproject.presentation.codeeditor
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.App
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

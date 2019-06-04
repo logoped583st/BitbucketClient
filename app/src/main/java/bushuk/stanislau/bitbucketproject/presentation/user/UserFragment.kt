@@ -1,15 +1,15 @@
 package bushuk.stanislau.bitbucketproject.presentation.user
 
 
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.FragmentUserBinding
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
@@ -44,7 +44,6 @@ class UserFragment : Fragment() {
         binding.let {
             it.fragment = this
             it.handler = this
-            it.manager = childFragmentManager
             it.viewModel = viewModel
         }
 

@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.presentation.repositories.model
 
-import android.arch.paging.DataSource
+import androidx.paging.DataSource
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import timber.log.Timber

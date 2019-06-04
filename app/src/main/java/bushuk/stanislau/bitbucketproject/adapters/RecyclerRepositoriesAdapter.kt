@@ -1,23 +1,20 @@
 package bushuk.stanislau.bitbucketproject.adapters
 
-import android.arch.paging.PagedListAdapter
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
-import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
-import timber.log.Timber
 
 class RecyclerRepositoriesAdapter : PagedListAdapter<Repository,
-        ViewHolder>(UserDiffCallback){
+        ViewHolder>(UserDiffCallback) {
 
     lateinit var clickFollow: ClickFollow
-
 
 
     fun setListener(baseFollow: RepositoriesFragment) {
@@ -25,7 +22,7 @@ class RecyclerRepositoriesAdapter : PagedListAdapter<Repository,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position),clickFollow)
+        holder.bind(getItem(position), clickFollow)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {

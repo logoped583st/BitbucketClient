@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.global.LiveLoadingModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

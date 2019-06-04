@@ -49,6 +49,7 @@ class CryptApi23 @Inject constructor(val context: Context) : Crypto {
 
     override fun encrypt(byteArray: ByteArray): ByteArray {
         val keyStoreKey = keyStore.getKey(KEY_ALIAS, null)
+        keyStoreKey.encoded
         val cipher = Cipher.getInstance(AES_MODE)
         cipher.init(Cipher.ENCRYPT_MODE, keyStoreKey)
         val encodedBytes = cipher.doFinal(byteArray)
