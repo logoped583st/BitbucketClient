@@ -1,18 +1,20 @@
-package bushuk.stanislau.bitbucketproject.presentation.login
+package bushuk.stanislau.bitbucketproject.presentation.auth
 
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.fragment.app.Fragment
 import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.R
-import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
+import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
 import kotlinx.android.synthetic.main.login_fragment.*
 import ru.terrakok.cicerone.NavigatorHolder
@@ -21,26 +23,26 @@ import timber.log.Timber
 import javax.inject.Inject
 
 
-class LoginActivity : AppCompatActivity() {
+class LoginWebFragment : Fragment() {
 
     @Inject
     lateinit var tokenPreferences: SharedPreferencesUtil
 
-    @Inject
-    lateinit var router: Router
+    init {
+        App.component.inject(this)
+    }
 
-    @Inject
-    lateinit var navigatorHolder: NavigatorHolder
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.login_fragment, container, false);
+    }
+
 
     @SuppressLint("SetJavaScriptEnabled")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        App.component.inject(this)
-        setContentView(R.layout.login_fragment)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val webSettings = web_view.settings
         webSettings.javaScriptEnabled = true
-        web_view.webViewClient = object : WebViewClient() {//for check redirect
+        web_view.webViewClient = object : WebViewClient() { //for check redirect
 
             override fun shouldOverrideUrlLoading(webView: WebView, url: String): Boolean {
                 return shouldOverrideUrlLoading(url)
@@ -66,16 +68,5 @@ class LoginActivity : AppCompatActivity() {
 
 
         web_view.loadUrl(Constants.AUTH_URL)
-
-    }
-
-    override fun onResume() {
-        navigatorHolder.setNavigator(MainNavigator(this, R.id.main_container))
-        super.onResume()
-    }
-
-    override fun onPause() {
-        navigatorHolder.removeNavigator()
-        super.onPause()
     }
 }

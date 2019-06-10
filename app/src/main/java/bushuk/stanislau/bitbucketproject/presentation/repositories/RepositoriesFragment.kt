@@ -45,7 +45,7 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
         binding.let {
             it.fragment = this
             it.viewModel = viewModel
-            it.setLifecycleOwner(this)
+            it.lifecycleOwner = this
         }
 
         return binding.root

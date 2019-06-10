@@ -21,13 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.login.LoginActivity"
+        <activity android:name=".presentation.auth.LoginWebFragment"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".presentation.main.MainScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".presentation.auth.AuthLoginActivity"
+            android:name=".presentation.auth.AuthLoginFragment"
             android:label="@string/title_activity_auth_login"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar" >

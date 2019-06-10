@@ -14,7 +14,7 @@ import bushuk.stanislau.bitbucketproject.di.modules.repository.RepositoryModule
 import bushuk.stanislau.bitbucketproject.di.modules.snippets.SnippetsModule
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.addrepository.AddRepositoryViewModel
-import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginActivity
+import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginFragment
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
 import bushuk.stanislau.bitbucketproject.presentation.code.model.CodeDataSource
@@ -26,7 +26,7 @@ import bushuk.stanislau.bitbucketproject.presentation.follow.followers.models.Fo
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingViewModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.models.FollowingDataSource
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.models.FollowingDataSourceFactory
-import bushuk.stanislau.bitbucketproject.presentation.login.LoginActivity
+import bushuk.stanislau.bitbucketproject.presentation.auth.LoginWebFragment
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenViewModel
 import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
@@ -68,7 +68,7 @@ import javax.inject.Singleton
 
 interface MainComponent {
 
-    fun inject(loginActivity: LoginActivity)
+    fun inject(loginActivity: LoginWebFragment)
 
     fun inject(mainActivity: MainActivity)
 
@@ -92,7 +92,7 @@ interface MainComponent {
 
     fun inject(authLoginViewModel: AuthLoginViewModel)
 
-    fun inject(authLoginActivity: AuthLoginActivity)
+    fun inject(authLoginActivity: AuthLoginFragment)
 
     fun inject(repositoriesViewModel: RepositoriesViewModel)
 
