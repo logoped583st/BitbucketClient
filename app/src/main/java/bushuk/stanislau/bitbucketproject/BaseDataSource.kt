@@ -1,12 +1,10 @@
 package bushuk.stanislau.bitbucketproject
 
-import androidx.paging.PageKeyedDataSource
 import android.view.View
+import androidx.paging.PageKeyedDataSource
 import bushuk.stanislau.bitbucketproject.global.LoadingModel
-import bushuk.stanislau.bitbucketproject.room.code.CodeResponse
 import bushuk.stanislau.bitbucketproject.room.comments.CommentResponse
 import bushuk.stanislau.bitbucketproject.room.followers.Followers
-import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce

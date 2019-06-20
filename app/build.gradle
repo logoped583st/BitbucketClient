@@ -80,6 +80,8 @@ dependencies {
 
     //DAGGER//
     implementation "${library.dagger}"
+    implementation 'com.google.dagger:dagger-android-support:2.16'
+    kapt 'com.google.dagger:dagger-android-processor:2.16'
     kapt "${library.daggerKapt}"
 
     //ROOM///

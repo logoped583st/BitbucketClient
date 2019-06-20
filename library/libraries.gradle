@@ -20,7 +20,7 @@ ext.version = [
         glide:                                                                                  "4.6.1",
 
         ////Dagger
-        dagger:                                                                                 "2.13",
+        dagger:                                                                                 "2.16",
 
         //Timber
         timber:                                                                                 "4.6.1",

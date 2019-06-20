@@ -23,20 +23,21 @@
             android:id="@+id/auth_login_screen_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="@dimen/margin_size_medium"
             android:src="@drawable/logo"
             app:layout_constraintBottom_toTopOf="@+id/auth_login_application_textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.51" />
 
         <TextView
             android:id="@+id/auth_login_application_textView"
             style="@style/Headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_size_medium"
+            android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="@string/auth_login_screen_client"
             app:layout_constraintBottom_toTopOf="@+id/auth_login_powered_textView"
@@ -49,9 +50,7 @@
             style="@style/Subheading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="32dp"
-            app:layout_constraintBottom_toTopOf="@+id/auth_login_screen_login_input_layout"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/auth_login_application_textView"
@@ -59,40 +58,39 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/auth_login_screen_login_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_size_medium"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="@dimen/margin_size_medium"
-            app:errorEnabled="true"
             app:layout_constraintBottom_toTopOf="@+id/auth_login_screen_password_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/auth_login_powered_textView"
+            app:layout_constraintVertical_bias="0.58000004"
             app:layout_constraintVertical_chainStyle="packed">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/auth_login_screen_login_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:hint="@string/auth_login_screen_login_hint"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/auth_login_screen_password_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_size_medium"
-
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="@dimen/margin_size_medium"
-            android:layout_marginBottom="16dp"
+            android:paddingBottom="4dp"
+            android:layout_marginBottom="28dp"
             android:hint="@string/auth_login_screen_password_hint"
             app:layout_constraintBottom_toTopOf="@+id/auth_login_screen_login_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/auth_login_screen_login_input_layout">
 
@@ -100,16 +98,15 @@
                 android:id="@+id/auth_login_screen_password_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/auth_login_screen_login_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+
             android:layout_marginEnd="16dp"
             android:clickable="@{loginViewModel.clickableSendButton}"
             android:focusable="@{loginViewModel.clickableSendButton}"
@@ -124,11 +121,11 @@
             style="@style/Body_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="@string/auth_login_screen_security_text"
             app:layout_constraintBottom_toTopOf="@+id/auth_login_screen_browser_textView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/auth_login_screen_login_button" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/auth_login_screen_browser_textView"
@@ -139,8 +136,7 @@
             android:text="@string/auth_login_screen_browser_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/auth_login_screen_security_textView" />
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
