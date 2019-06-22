@@ -12,19 +12,14 @@ import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
-class AuthLoginViewModel : ViewModel() {
+class AuthLoginViewModel @Inject constructor(
+        val tokenPreferences: SharedPreferencesUtil,
+        val router: Router,
+        val userModel: UserModel,
+        val authLoginModel: AuthLoginModel
 
-    @Inject
-    lateinit var tokenPreferences: SharedPreferencesUtil
+) : ViewModel() {
 
-    @Inject
-    lateinit var router: Router
-
-    @Inject
-    lateinit var userModel: UserModel
-
-    @Inject
-    lateinit var authLoginModel: AuthLoginModel
 
     val clickableSendButton: MutableLiveData<Boolean> = MutableLiveData()
 

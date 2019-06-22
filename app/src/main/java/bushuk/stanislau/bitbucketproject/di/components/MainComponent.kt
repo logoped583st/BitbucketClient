@@ -2,6 +2,8 @@ package bushuk.stanislau.bitbucketproject.di.components
 
 import bushuk.stanislau.bitbucketproject.MainActivity
 import bushuk.stanislau.bitbucketproject.MainActivityViewModel
+import bushuk.stanislau.bitbucketproject.di.modules.AppModule
+import bushuk.stanislau.bitbucketproject.di.modules.ViewModelModule
 import bushuk.stanislau.bitbucketproject.di.modules.auth.AuthLoginModule
 import bushuk.stanislau.bitbucketproject.di.modules.codeeditor.CodeEditorModule
 import bushuk.stanislau.bitbucketproject.di.modules.followers.FollowersModule
@@ -60,7 +62,8 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [CiceroneModule::class, CryptoModule::class, RetrofitModule::class,
+@Component(modules = [
+    CiceroneModule::class, CryptoModule::class, RetrofitModule::class,
     MainScreenModule::class, ApplicationContextProvider::class, PreferencesModule::class,
     AuthLoginModule::class, RoomModule::class, UserModule::class, RepositoriesModule::class,
     FollowersModule::class, FollowingModule::class, SnippetsModule::class,

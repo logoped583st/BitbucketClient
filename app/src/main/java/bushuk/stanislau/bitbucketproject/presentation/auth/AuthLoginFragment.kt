@@ -8,21 +8,28 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.ActivityAuthLoginBinding
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import kotlinx.android.synthetic.main.activity_auth_login.*
+import javax.inject.Inject
 
 class AuthLoginFragment : Fragment() {
 
+    //@Inject
+    //lateinit var viewModelFactory: ViewModelProvider.Factory
 
     lateinit var viewModel: AuthLoginViewModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val authLoginActivityMainBinding: ActivityAuthLoginBinding =
                 DataBindingUtil.inflate(layoutInflater, R.layout.activity_auth_login, container, false)
-        viewModel = ViewModelProviders.of(this).get(AuthLoginViewModel::class.java)
+
+      //  viewModel = ViewModelProviders.of(this, viewModelFactory).get(AuthLoginViewModel::class.java)
 
         authLoginActivityMainBinding.let {
             it.loginViewModel = viewModel

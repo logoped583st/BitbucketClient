@@ -11,8 +11,8 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
 
-    @Inject
-    lateinit var navigatorHolder: NavigatorHolder
+   // @Inject
+   // lateinit var navigatorHolder: NavigatorHolder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,12 +24,12 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     }
 
     override fun onResume() {
-        navigatorHolder.setNavigator(MainNavigator(this, R.id.main_container))
+ //       navigatorHolder.setNavigator(MainNavigator(this, R.id.main_container))
         super.onResume()
     }
 
     override fun onPause() {
-        navigatorHolder.removeNavigator()
+ //       navigatorHolder.removeNavigator()
         super.onPause()
     }
 
