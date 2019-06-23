@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.di.components
 
-import bushuk.stanislau.bitbucketproject.MainActivity
+
 import bushuk.stanislau.bitbucketproject.MainActivityViewModel
 import bushuk.stanislau.bitbucketproject.di.modules.AppModule
 import bushuk.stanislau.bitbucketproject.di.modules.ViewModelModule
@@ -73,8 +73,6 @@ interface MainComponent {
 
     fun inject(loginActivity: LoginWebFragment)
 
-    fun inject(mainActivity: MainActivity)
-
     fun inject(mainScreenModel: MainScreenModel)
 
     fun inject(mainScreenViewModel: MainScreenViewModel)
@@ -85,17 +83,11 @@ interface MainComponent {
 
     fun inject(tokenPreferences: SharedPreferencesUtil)
 
-    fun inject(mainActivityViewModel: MainActivityViewModel)
-
     fun inject(mainScreenActivity: MainScreenActivity)
 
     fun inject(authorizationInterceptor: AuthorizationInterceptor)
 
-    fun inject(authLoginModel: AuthLoginModel)
-
     fun inject(authLoginViewModel: AuthLoginViewModel)
-
-    fun inject(authLoginActivity: AuthLoginFragment)
 
     fun inject(repositoriesViewModel: RepositoriesViewModel)
 

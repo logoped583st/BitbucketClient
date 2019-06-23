@@ -10,23 +10,17 @@ import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 
-class MainActivityViewModel : ViewModel(), LifecycleObserver {
+class MainActivityViewModel @Inject constructor(val router: Router,
+                                                val tokenPreferences: SharedPreferencesUtil)
+    : ViewModel(), LifecycleObserver {
 
-    @Inject
-    lateinit var router: Router
-
-    @Inject
-    lateinit var tokenPreferences: SharedPreferencesUtil
-
-    init {
-        App.component.inject(this)
-    }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun navigate() {
         if (tokenPreferences.getToken() == null) {
             router.newRootScreen(ScreensNavigator.LoginScreen())
         } else {
+
         }
     }
 

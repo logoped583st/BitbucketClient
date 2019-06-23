@@ -1,19 +1,15 @@
 package bushuk.stanislau.bitbucketproject.presentation.auth.model
 
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.Single
 import javax.inject.Inject
 
-class AuthLoginModel {
+class AuthLoginModel @Inject constructor(val api: Api) : AuthLoginRepository {
 
-    @Inject
-    lateinit var api: Api
+    override fun authSuccessful(): Single<User> = api.myUser()
+}
 
-    init {
-        App.component.inject(this)
-    }
-
-    fun authSuccessful(): Single<User> = api.myUser()
+interface AuthLoginRepository {
+    fun authSuccessful(): Single<User>
 }

@@ -17,7 +17,6 @@ class AuthLoginViewModel @Inject constructor(
         val router: Router,
         val userModel: UserModel,
         val authLoginModel: AuthLoginModel
-
 ) : ViewModel() {
 
 
