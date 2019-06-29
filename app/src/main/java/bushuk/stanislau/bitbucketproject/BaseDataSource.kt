@@ -17,7 +17,7 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import javax.inject.Inject
 
-abstract class BaseDataSource<Value : Any, Response : Any> : PageKeyedDataSource<String, Value>() {
+abstract class BaseDataSource<Value, Response> : PageKeyedDataSource<String, Value>() {
 
     @Inject
     lateinit var loadingModel: LoadingModel
@@ -38,7 +38,7 @@ abstract class BaseDataSource<Value : Any, Response : Any> : PageKeyedDataSource
 
     abstract fun loadNextPage(url: String): Single<Response>
 
-    private fun loading(a: Any) {
+    private fun loading(a: Response) {
         loadingModel.loading = View.INVISIBLE
         loadingModel.noInfo = View.INVISIBLE
         loadingEvent.onNext(loadingModel)

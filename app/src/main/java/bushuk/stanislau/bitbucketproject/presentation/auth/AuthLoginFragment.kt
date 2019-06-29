@@ -1,5 +1,6 @@
 package bushuk.stanislau.bitbucketproject.presentation.auth
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
@@ -25,6 +26,7 @@ class AuthLoginFragment : Fragment(), Injectable {
 
     lateinit var viewModel: AuthLoginViewModel
 
+    lateinit var dialog: ProgressDialog
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val authLoginActivityMainBinding: ActivityAuthLoginBinding =
@@ -43,11 +45,20 @@ class AuthLoginFragment : Fragment(), Injectable {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        dialog = ProgressDialog(activity)
+        dialog.setMessage("Loading")
 
         auth_login_screen.requestFocus()
         auth_login_powered_textView.text = Html.fromHtml(getString(R.string.auth_login_screen_powered_text))
 
-        auth_login_screen_login_button.clicks().doOnNext {
+        auth_login_screen_login_button.clicks()
+                .doOnSubscribe {
+                    dialog.show()
+                }
+                .doFinally {
+                    dialog.hide()
+                }
+                .doOnNext {
             viewModel.getUserBaseAuth(
                     auth_login_screen_login_editText.text.toString(),
                     auth_login_screen_password_editText.text.toString())
