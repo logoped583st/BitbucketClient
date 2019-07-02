@@ -1,7 +1,6 @@
 package bushuk.stanislau.bitbucketproject
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.global.LiveLoadingModel
 import bushuk.stanislau.bitbucketproject.global.LoadingState
@@ -15,9 +14,6 @@ abstract class LoadingViewModel<Value, Response>(dataSource: BaseDataSource<Valu
 
     @Inject
     lateinit var liveLoadingModel: LiveLoadingModel
-
-    protected val loadingState: LiveData<LoadingState<Response, Exception>> = MutableLiveData<LoadingState<Response, Exception>>()
-
 
     init {
         compositeDisposable.add(dataSource.getLoadingEventObservable()
@@ -40,6 +36,24 @@ abstract class LoadingViewModel<Value, Response>(dataSource: BaseDataSource<Valu
 
 abstract class BaseLoadingViewModel<Response> : ViewModel() {
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
+
+    private val loadingState = LoadingState<Response, Exception>()
+
+    fun loading() {
+        loadingState.state.postValue(LoadingState.LoadingStateSealed.Loading())
+    }
+
+    fun data(data: Response) {
+        loadingState.state.postValue(LoadingState.LoadingStateSealed.Data(data))
+    }
+
+    fun error(exception: Exception) {
+        loadingState.state.postValue(LoadingState.LoadingStateSealed.Error(exception))
+    }
+
+    protected fun state(): LiveData<LoadingState.LoadingStateSealed<Response, Exception>> {
+        return loadingState.state
+    }
 }
 
 fun BaseLoadingViewModel<Any>.addDisposable(disposable: Disposable) {

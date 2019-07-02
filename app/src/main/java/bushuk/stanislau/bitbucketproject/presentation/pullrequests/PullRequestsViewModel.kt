@@ -7,6 +7,7 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.MutableLiveData
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.LoadingViewModel
@@ -112,5 +113,12 @@ class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullReq
         factory.pullRequestsDataSource.sortPullRequest = UrlBuilder.buildSortPullRequest(sortPullRequest)
         pullRequests = LivePagedListBuilder<String, PullRequest>(factory, Constants.listPagedConfig).build()
         pullRequests.observe(lifecycleOwner, Observer(adapter::submitList))
+    }
+
+    val a = MutableLiveData<PullRequestState>()
+
+    sealed class PullRequestState(){
+        class State1:PullRequestState()
+        class State2:PullRequestState()
     }
 }

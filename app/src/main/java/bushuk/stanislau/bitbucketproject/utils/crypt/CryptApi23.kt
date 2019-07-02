@@ -3,81 +3,95 @@ package bushuk.stanislau.bitbucketproject.utils.crypt
 import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
-import android.security.keystore.KeyGenParameterSpec
-import android.security.keystore.KeyProperties
 import android.util.Base64
-import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.constants.Constants
-import java.security.KeyStore
+import timber.log.Timber
+import java.security.Key
+import java.security.SecureRandom
 import javax.crypto.Cipher
-import javax.crypto.KeyGenerator
-import javax.crypto.SecretKey
-import javax.crypto.spec.GCMParameterSpec
+import javax.crypto.spec.IvParameterSpec
+import javax.crypto.spec.SecretKeySpec
 import javax.inject.Inject
 
-@TargetApi(Build.VERSION_CODES.M)
-class CryptApi23 @Inject constructor(val context: Context) : Crypto {
 
-    private lateinit var keyStore: KeyStore
-    private val AndroidKeyStore = Constants.KEY_STORE
-    private val KEY_ALIAS = Constants.TOKEN_PREFERENCES
-    private val AES_MODE = "AES/GCM/NoPadding"
-    var flags = Base64.NO_PADDING
+@TargetApi(Build.VERSION_CODES.M)
+class CryptApi23 @Inject constructor(val rsaCipher: CryptApi19,
+                                     val context: Context) : Crypto {
+
+    private val ivSize = 16
+    private val keySize = 16
+    private val KEY_ALGORITHM = "AES"
+    private val AES_PREFERENCES_KEY = "VGhpcyBpcyB0aGUga2V5IGZvciBhIHNlY3VyZSBzdG9yYWdlIEFFUyBLZXkK"
+    private val SHARED_PREFERENCES_NAME = "FlutterSecureKeyStorage"
+
+    lateinit var secretKey: Key
+    val cipher: Cipher by lazy { Cipher.getInstance("AES/CBC/PKCS7Padding") }
+    lateinit var secureRandom: SecureRandom
 
     init {
-        App.component.inject(this)
-        init()
+        storageCipher18Implementation()
     }
 
-    private fun init() {
-        keyStore = KeyStore.getInstance(AndroidKeyStore)
-        keyStore.load(null)
+    @Throws(Exception::class)
+    fun storageCipher18Implementation() {
+        secureRandom = SecureRandom()
 
-        if (!keyStore.containsAlias(KEY_ALIAS)) {
+        val preferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        val editor = preferences.edit()
 
-            val keyGenerator: KeyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, AndroidKeyStore)
-            keyGenerator.init(
-                    KeyGenParameterSpec.Builder(KEY_ALIAS, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
-                            .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-                            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-                            .build())
+        val aesKey = preferences.getString(AES_PREFERENCES_KEY, null)
 
-            keyGenerator.generateKey()
+        aesKey.let {
+            val encrypted: ByteArray
+            try {
+                encrypted = Base64.decode(aesKey, Base64.DEFAULT)
+                secretKey = rsaCipher.unwrap(encrypted, KEY_ALGORITHM)
+                return
+            } catch (e: Exception) {
+                Timber.e("unwrap key failed  $e")
+            }
         }
+
+        val key = ByteArray(keySize)
+        secureRandom.nextBytes(key)
+        secretKey = SecretKeySpec(key, KEY_ALGORITHM)
+
+        val encryptedKey = rsaCipher.wrap(secretKey)
+        editor.putString(AES_PREFERENCES_KEY, Base64.encodeToString(encryptedKey, Base64.DEFAULT))
+        editor.apply()
     }
 
-
+    @Throws(Exception::class)
     override fun encrypt(byteArray: ByteArray): ByteArray {
-        val keyStoreKey = keyStore.getKey(KEY_ALIAS, null)
-        keyStoreKey.encoded
-        val cipher = Cipher.getInstance(AES_MODE)
-        cipher.init(Cipher.ENCRYPT_MODE, keyStoreKey)
-        val encodedBytes = cipher.doFinal(byteArray)
-        val params = cipher.parameters
-        val iv = params.getParameterSpec(GCMParameterSpec::class.java).iv
-        saveIv(iv)
+        val iv = ByteArray(ivSize)
+        secureRandom.nextBytes(iv)
 
-        return encodedBytes
+        val ivParameterSpec = IvParameterSpec(iv)
+
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec)
+
+        val payload = cipher.doFinal(byteArray)
+        val combined = ByteArray(iv.size + payload.size)
+
+        System.arraycopy(iv, 0, combined, 0, iv.size)
+        System.arraycopy(payload, 0, combined, iv.size, payload.size)
+
+        return combined
     }
 
+    @Throws(Exception::class)
     override fun decrypt(byteArray: ByteArray): ByteArray {
-        val iv = getIv()
-        val ivSpec = GCMParameterSpec(128, iv)
-        val keyStoreKey = keyStore.getKey(KEY_ALIAS, null) as SecretKey
-        val cipher = Cipher.getInstance(AES_MODE)
-        cipher.init(Cipher.DECRYPT_MODE, keyStoreKey, ivSpec)
+        val iv = ByteArray(ivSize)
+        System.arraycopy(byteArray, 0, iv, 0, iv.size)
+        val ivParameterSpec = IvParameterSpec(iv)
 
-        return cipher.doFinal(byteArray)
+        val payloadSize = byteArray.size - ivSize
+        val payload = ByteArray(payloadSize)
+        System.arraycopy(byteArray, iv.size, payload, 0, payloadSize)
+
+        cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec)
+
+        return cipher.doFinal(payload)
     }
 
-    private fun saveIv(iv: ByteArray) {
-        val ivString: String = Base64.encodeToString(iv, flags)
-        context.getSharedPreferences("IV", Context.MODE_PRIVATE).edit().putString("IV", ivString).apply()
-    }
-
-    private fun getIv(): ByteArray {
-        val ivString: String = context.getSharedPreferences("IV", Context.MODE_PRIVATE).getString("IV", null)
-        return Base64.decode(ivString, flags)
-    }
 
 }
