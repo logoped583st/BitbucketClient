@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.global.LiveLoadingModel
 import bushuk.stanislau.bitbucketproject.global.LoadingState
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -37,26 +38,58 @@ abstract class LoadingViewModel<Value, Response>(dataSource: BaseDataSource<Valu
 abstract class BaseLoadingViewModel<Response> : ViewModel() {
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    private val loadingState = LoadingState<Response, Exception>()
+    private val loadingState = LoadingState<Response, Throwable>()
 
-    fun loading() {
+    init {
+        start()
+    }
+
+    private fun start() {
+        loadingState.state.postValue(LoadingState.LoadingStateSealed.Start())
+    }
+
+    protected fun loading() {
         loadingState.state.postValue(LoadingState.LoadingStateSealed.Loading())
     }
 
-    fun data(data: Response) {
+    protected fun data(data: Response) {
         loadingState.state.postValue(LoadingState.LoadingStateSealed.Data(data))
     }
 
-    fun error(exception: Exception) {
+    protected fun error(exception: Throwable) {
         loadingState.state.postValue(LoadingState.LoadingStateSealed.Error(exception))
     }
 
-    protected fun state(): LiveData<LoadingState.LoadingStateSealed<Response, Exception>> {
+    fun state(): LiveData<LoadingState.LoadingStateSealed<Response, Throwable>> {
         return loadingState.state
+    }
+
+    protected fun Single<Response>.loadingSubscriber(
+            onSuccess: (data: Response) -> Unit,
+            onError: (error: Throwable) -> Unit
+    ): Disposable {
+        return doOnError {
+            error(it)
+        }.doOnSuccess {
+            data(it)
+        }.doOnSubscribe {
+            addDisposable(it)
+            loading()
+        }.subscribe({
+            onSuccess(it)
+        }, {
+            onError(it)
+        })
+
+    }
+
+    override fun onCleared() {
+        compositeDisposable.clear()
+        super.onCleared()
     }
 }
 
-fun BaseLoadingViewModel<Any>.addDisposable(disposable: Disposable) {
+fun <T> BaseLoadingViewModel<T>.addDisposable(disposable: Disposable) {
     compositeDisposable.add(disposable)
 }
 

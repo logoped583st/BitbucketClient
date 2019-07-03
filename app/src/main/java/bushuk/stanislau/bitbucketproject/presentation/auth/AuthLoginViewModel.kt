@@ -2,13 +2,15 @@ package bushuk.stanislau.bitbucketproject.presentation.auth
 
 import android.util.Base64
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.App
+import bushuk.stanislau.bitbucketproject.BaseLoadingViewModel
+import bushuk.stanislau.bitbucketproject.addDisposable
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
+import bushuk.stanislau.bitbucketproject.room.user.User
+import bushuk.stanislau.bitbucketproject.utils.extensions.applyDefaultSchedulers
 import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
@@ -17,40 +19,38 @@ class AuthLoginViewModel @Inject constructor(
         val router: Router,
         val userModel: UserModel,
         val authLoginModel: AuthLoginModel
-) : ViewModel() {
+) : BaseLoadingViewModel<User>() {
 
-
-    val clickableSendButton: MutableLiveData<Boolean> = MutableLiveData()
 
     val snackBarAction: MutableLiveData<String> = MutableLiveData()
 
     init {
-        clickableSendButton.postValue(true)
         App.component.inject(this)
     }
 
-
     fun getUserBaseAuth(login: String, password: String) {
-        clickableSendButton.postValue(false)
         val credentials = "$login:$password"
         val basic: String = "Basic " + Base64.encodeToString(credentials
                 .toByteArray(Charsets.ISO_8859_1), Base64.NO_WRAP)
         tokenPreferences.setToken(basic)
 
 
-        authLoginModel.authSuccessful().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
+        addDisposable(authLoginModel.authSuccessful()
+                .applyDefaultSchedulers()
+                .loadingSubscriber(
                         {
                             userModel.user.onNext(it)
-                           // router.newRootScreen(Screens.MAIN_SCREEN)
+                            // router.newRootScreen(Screens.MAIN_SCREEN)
                         },
                         {
+                            if (it is HttpException && it.code() == 401) {
+                                snackBarAction.postValue("Wrong login or password")
+                            }else{
+                                snackBarAction.postValue("Something going wrong")
+                            }
                             tokenPreferences.clearToken()
-                            clickableSendButton.postValue(true)
-                            snackBarAction.postValue("Wrong login or password")
                         }
-                )
+                ))
     }
 
     fun navigateToBrowser() {
@@ -59,3 +59,4 @@ class AuthLoginViewModel @Inject constructor(
     }
 
 }
+

@@ -1,20 +1,18 @@
 package bushuk.stanislau.bitbucketproject.presentation.pullrequests
 
+import androidx.appcompat.widget.AppCompatSpinner
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import androidx.appcompat.widget.AppCompatSpinner
-import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.MutableLiveData
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.LoadingViewModel
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerPullRequestsAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
-import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.global.PullRequestModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequests.model.PullRequestsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
@@ -77,6 +75,7 @@ class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullReq
                 }, {
                     Timber.e(it.message)
                 })
+
     }
 
     fun observeSortSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerPullRequestsAdapter) {
@@ -94,11 +93,12 @@ class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullReq
     }
 
     fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerPullRequestsAdapter) {
-        compositeDisposable.add(RxSearchView.queryTextChanges(searchView)
+        compositeDisposable.add(RxSearchView
+                .queryTextChanges(searchView)
                 .skipInitialValue()
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .map { it.toString() }
-                .debounce(1000, TimeUnit.MILLISECONDS)
+                .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     namePullRequest = it
@@ -115,10 +115,4 @@ class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullReq
         pullRequests.observe(lifecycleOwner, Observer(adapter::submitList))
     }
 
-    val a = MutableLiveData<PullRequestState>()
-
-    sealed class PullRequestState(){
-        class State1:PullRequestState()
-        class State2:PullRequestState()
-    }
 }

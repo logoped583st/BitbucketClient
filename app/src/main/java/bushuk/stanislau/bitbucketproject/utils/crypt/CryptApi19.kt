@@ -21,8 +21,12 @@ class CryptApi19 @Inject constructor(val context: Context) : Crypto {
     private val KEYSTORE_PROVIDER_ANDROID = Constants.KEY_STORE
     private val KEY_ALIAS = Constants.TOKEN_PREFERENCES
     private val TYPE_RSA = "RSA"
+    private val ks = KeyStore.getInstance(KEYSTORE_PROVIDER_ANDROID)
+
+
 
     init {
+        ks.load(null, null)
         RSACipher18Implementation(context)
     }
 
@@ -50,28 +54,25 @@ class CryptApi19 @Inject constructor(val context: Context) : Crypto {
     }
 
     @Throws(Exception::class)
-    override fun encrypt(input: ByteArray): ByteArray {
+    override fun encrypt(byteArray: ByteArray): ByteArray {
         val publicKey = getPublicKey()
         val cipher = getRSACipher()
         cipher.init(Cipher.ENCRYPT_MODE, publicKey)
 
-        return cipher.doFinal(input)
+        return cipher.doFinal(byteArray)
     }
 
     @Throws(Exception::class)
-    override fun decrypt(input: ByteArray): ByteArray {
+    override fun decrypt(byteArray: ByteArray): ByteArray {
         val privateKey = getPrivateKey()
         val cipher = getRSACipher()
         cipher.init(Cipher.DECRYPT_MODE, privateKey)
 
-        return cipher.doFinal(input)
+        return cipher.doFinal(byteArray)
     }
 
     @Throws(Exception::class)
     private fun getPrivateKey(): PrivateKey {
-        val ks = KeyStore.getInstance(KEYSTORE_PROVIDER_ANDROID)
-        ks.load(null)
-
         val key = (ks.getKey(KEY_ALIAS, null)
                 ?: throw Exception("No key found under alias: $KEY_ALIAS")) as? PrivateKey
                 ?: throw Exception("Not an instance of a PrivateKey")
@@ -81,9 +82,6 @@ class CryptApi19 @Inject constructor(val context: Context) : Crypto {
 
     @Throws(Exception::class)
     private fun getPublicKey(): PublicKey {
-        val ks = KeyStore.getInstance(KEYSTORE_PROVIDER_ANDROID)
-        ks.load(null)
-
         val cert = ks.getCertificate(KEY_ALIAS)
                 ?: throw Exception("No certificate found under alias: $KEY_ALIAS")
 
@@ -101,9 +99,6 @@ class CryptApi19 @Inject constructor(val context: Context) : Crypto {
 
     @Throws(Exception::class)
     private fun createRSAKeysIfNeeded(context: Context) {
-        val ks = KeyStore.getInstance(KEYSTORE_PROVIDER_ANDROID)
-        ks.load(null)
-
         val privateKey = ks.getKey(KEY_ALIAS, null)
         if (privateKey == null) {
             createKeys(context)
