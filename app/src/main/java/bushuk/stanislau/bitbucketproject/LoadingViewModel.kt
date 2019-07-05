@@ -4,11 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.global.LiveLoadingModel
 import bushuk.stanislau.bitbucketproject.global.LoadingState
+import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
+import bushuk.stanislau.bitbucketproject.utils.extensions.mapErrors
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 abstract class LoadingViewModel<Value, Response>(dataSource: BaseDataSource<Value, Response>) : BaseLoadingViewModel<Response>() {
@@ -38,7 +41,7 @@ abstract class LoadingViewModel<Value, Response>(dataSource: BaseDataSource<Valu
 abstract class BaseLoadingViewModel<Response> : ViewModel() {
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    private val loadingState = LoadingState<Response, Throwable>()
+    private val loadingState = LoadingState<Response, CustomExceptions>()
 
     init {
         start()
@@ -56,11 +59,11 @@ abstract class BaseLoadingViewModel<Response> : ViewModel() {
         loadingState.state.postValue(LoadingState.LoadingStateSealed.Data(data))
     }
 
-    protected fun error(exception: Throwable) {
+    protected fun error(exception: CustomExceptions) {
         loadingState.state.postValue(LoadingState.LoadingStateSealed.Error(exception))
     }
 
-    fun state(): LiveData<LoadingState.LoadingStateSealed<Response, Throwable>> {
+    fun state(): LiveData<LoadingState.LoadingStateSealed<Response, CustomExceptions>> {
         return loadingState.state
     }
 
@@ -68,19 +71,18 @@ abstract class BaseLoadingViewModel<Response> : ViewModel() {
             onSuccess: (data: Response) -> Unit,
             onError: (error: Throwable) -> Unit
     ): Disposable {
-        return doOnError {
-            error(it)
-        }.doOnSuccess {
+        return doOnSuccess {
             data(it)
         }.doOnSubscribe {
             addDisposable(it)
             loading()
+        }.mapErrors {
+            error(it)
         }.subscribe({
             onSuccess(it)
         }, {
             onError(it)
         })
-
     }
 
     override fun onCleared() {

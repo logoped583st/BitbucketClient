@@ -82,7 +82,7 @@ abstract class BaseDataSource<Value, Response> : PageKeyedDataSource<String, Val
                     loading(it)
                     onResultInitial(it, callback)
                 }, {
-                    loadingEvent.onNext(LoadingModel(noInfo = View.VISIBLE,loading = View.INVISIBLE,errorText = "Error or empty"))
+                    loadingEvent.onNext(LoadingModel(noInfo = View. VISIBLE,loading = View.INVISIBLE,errorText = "Error or empty"))
                 }))
     }
 

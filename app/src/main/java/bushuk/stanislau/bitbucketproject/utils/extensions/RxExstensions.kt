@@ -1,25 +1,53 @@
 package bushuk.stanislau.bitbucketproject.utils.extensions
 
+import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
+import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import retrofit2.HttpException
+import java.net.SocketTimeoutException
 
 fun <T> Single<T>.applyDefaultSchedulers(): Single<T> {
     return this.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 }
 
-fun Throwable.mapExceptions(): Exception {
-    return when (this) {
-        is HttpException -> {
+fun Completable.applyDefaultSchedulers(): Completable {
+    return this.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+}
 
-            Exception("HTTP")
+fun <T> Observable<T>.applyDefaultSchedulers(): Observable<T> {
+    return this.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+}
+
+fun <T> Single<T>.mapErrors(call: (error: CustomExceptions) -> Unit): Single<T> {
+
+    return onErrorResumeNext { error ->
+        val customError: CustomExceptions = when (error) {
+            is SocketTimeoutException -> {
+                CustomExceptions.SocketTimeOut
+            }
+            is HttpException -> {
+                when (error.code()) {
+                    400 -> CustomExceptions.BadBody
+                    401 -> CustomExceptions.UnAuthorized
+                    in 500..600 -> CustomExceptions.ServerError
+                }
+
+                CustomExceptions.ANOTHER(error.message())
+            }
+            else -> CustomExceptions.ANOTHER(error.message ?: "")
         }
 
-        else -> {
-            Exception("TEST")
-        }
+        call(customError)
 
+
+        return@onErrorResumeNext Single.error<T>(customError)
     }
 }
+
+
