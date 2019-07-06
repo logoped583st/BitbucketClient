@@ -13,10 +13,12 @@ import bushuk.stanislau.bitbucketproject.LoadingViewModel
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerPullRequestsAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
+import bushuk.stanislau.bitbucketproject.global.LoadingState
 import bushuk.stanislau.bitbucketproject.global.PullRequestModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequests.model.PullRequestsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestResponse
+import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import com.jakewharton.rxbinding2.widget.RxAdapterView
@@ -29,6 +31,8 @@ import javax.inject.Inject
 class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullRequestsDataSourceFactory(),
                             source: BaseDataSource<PullRequest, PullRequestResponse> = factory.pullRequestsDataSource)
     : LoadingViewModel<PullRequest, PullRequestResponse>(source) {
+    override val state: LiveData<LoadingState.LoadingStateSealed<PullRequestResponse, CustomExceptions>>
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
     @Inject
     lateinit var router: Router

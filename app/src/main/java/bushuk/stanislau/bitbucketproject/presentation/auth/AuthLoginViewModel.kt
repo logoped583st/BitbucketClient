@@ -1,13 +1,18 @@
 package bushuk.stanislau.bitbucketproject.presentation.auth
 
 import android.util.Base64
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BaseLoadingViewModel
+import bushuk.stanislau.bitbucketproject.IBaseLoadingViewModel
 import bushuk.stanislau.bitbucketproject.addDisposable
+import bushuk.stanislau.bitbucketproject.constants.Screens
+import bushuk.stanislau.bitbucketproject.global.LoadingState
 import bushuk.stanislau.bitbucketproject.global.UserModel
-import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
+import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
+import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
 import bushuk.stanislau.bitbucketproject.room.user.User
+import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import bushuk.stanislau.bitbucketproject.utils.extensions.applyDefaultSchedulers
 import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
@@ -19,16 +24,15 @@ class AuthLoginViewModel @Inject constructor(
         val router: Router,
         val userModel: UserModel,
         val authLoginModel: AuthLoginModel
-) : BaseLoadingViewModel<User>() {
+) : BaseLoadingViewModel<User>(), AuthProtocol.IAuthLogin<User> {
 
 
+    override val state: LiveData<LoadingState.LoadingStateSealed<User, CustomExceptions>>
+        get() = super.state()
     val snackBarAction: MutableLiveData<String> = MutableLiveData()
 
-    init {
-        App.component.inject(this)
-    }
 
-    fun getUserBaseAuth(login: String, password: String) {
+    override fun getUserBaseAuth(login: String, password: String) {
         val credentials = "$login:$password"
         val basic: String = "Basic " + Base64.encodeToString(credentials
                 .toByteArray(Charsets.ISO_8859_1), Base64.NO_WRAP)
@@ -53,10 +57,10 @@ class AuthLoginViewModel @Inject constructor(
                 ))
     }
 
-    fun navigateToBrowser() {
-//        router.setResultListener(Constants.GET_TOKEN_BROWSER, this)
-//        router.navigateTo(Screens.LOGIN_SCREEN)
+    override fun navigateToBrowser() {
+        router.newChain(ScreensNavigator.WebLoginScreen())
     }
 
 }
+
 

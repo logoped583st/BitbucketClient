@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.presentation.main.model
+package bushuk.stanislau.bitbucketproject.presentation.main
 
 import bushuk.stanislau.bitbucketproject.App
 import ru.terrakok.cicerone.Router
@@ -12,7 +12,7 @@ class MainScreenModel {
 
 
     fun init() {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
 }

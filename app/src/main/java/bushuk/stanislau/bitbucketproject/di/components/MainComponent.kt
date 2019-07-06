@@ -1,10 +1,6 @@
 package bushuk.stanislau.bitbucketproject.di.components
 
 
-import bushuk.stanislau.bitbucketproject.MainActivityViewModel
-import bushuk.stanislau.bitbucketproject.di.modules.AppModule
-import bushuk.stanislau.bitbucketproject.di.modules.ViewModelModule
-import bushuk.stanislau.bitbucketproject.di.modules.auth.AuthLoginModule
 import bushuk.stanislau.bitbucketproject.di.modules.codeeditor.CodeEditorModule
 import bushuk.stanislau.bitbucketproject.di.modules.followers.FollowersModule
 import bushuk.stanislau.bitbucketproject.di.modules.following.FollowingModule
@@ -16,9 +12,6 @@ import bushuk.stanislau.bitbucketproject.di.modules.repository.RepositoryModule
 import bushuk.stanislau.bitbucketproject.di.modules.snippets.SnippetsModule
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.addrepository.AddRepositoryViewModel
-import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginFragment
-import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
-import bushuk.stanislau.bitbucketproject.presentation.auth.model.AuthLoginModel
 import bushuk.stanislau.bitbucketproject.presentation.code.model.CodeDataSource
 import bushuk.stanislau.bitbucketproject.presentation.codeeditor.CodeEditorModel
 import bushuk.stanislau.bitbucketproject.presentation.codeeditor.CodeEditorViewModel
@@ -28,10 +21,8 @@ import bushuk.stanislau.bitbucketproject.presentation.follow.followers.models.Fo
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingViewModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.models.FollowingDataSource
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.models.FollowingDataSourceFactory
-import bushuk.stanislau.bitbucketproject.presentation.auth.LoginWebFragment
-import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenViewModel
-import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
+import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.ContainerPullRequestViewModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.comments.AlertCodeDialogViewModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.comments.PullRequestCommentsViewModel
@@ -63,15 +54,13 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
-    CiceroneModule::class, CryptoModule::class, RetrofitModule::class,
-    MainScreenModule::class, ApplicationContextProvider::class, PreferencesModule::class,
-    AuthLoginModule::class, RoomModule::class, UserModule::class, RepositoriesModule::class,
+    CiceroneModule::class, RetrofitModule::class,
+    MainScreenModule::class, ApplicationContextProvider::class,
+    RoomModule::class, UserModule::class, RepositoriesModule::class,
     FollowersModule::class, FollowingModule::class, SnippetsModule::class,
     RepositoryModule::class, PullRequestModule::class, PullRequestScopeModule::class, CodeEditorModule::class, LoadingModule::class])
 
 interface MainComponent {
-
-    fun inject(loginActivity: LoginWebFragment)
 
     fun inject(mainScreenModel: MainScreenModel)
 
@@ -83,11 +72,7 @@ interface MainComponent {
 
     fun inject(tokenPreferences: SharedPreferencesUtil)
 
-    fun inject(mainScreenActivity: MainScreenActivity)
-
     fun inject(authorizationInterceptor: AuthorizationInterceptor)
-
-    fun inject(authLoginViewModel: AuthLoginViewModel)
 
     fun inject(repositoriesViewModel: RepositoriesViewModel)
 

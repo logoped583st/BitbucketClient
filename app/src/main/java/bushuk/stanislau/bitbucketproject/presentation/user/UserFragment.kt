@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.FragmentUserBinding
-import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import kotlinx.android.synthetic.main.fragment_user.view.*
 
 class UserFragment : Fragment() {
@@ -65,7 +64,7 @@ class UserFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        (activity as MainScreenActivity).recreateToolbar()
+        //(activity as MainScreenActivity).recreateToolbar()
         super.onDestroyView()
     }
 

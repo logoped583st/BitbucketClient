@@ -6,14 +6,11 @@ import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.global.UserModel
-import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
-import bushuk.stanislau.bitbucketproject.room.AppDatabase
 import bushuk.stanislau.bitbucketproject.room.user.User
 import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.terrakok.cicerone.Router
-import timber.log.Timber
 import javax.inject.Inject
 
 class MainScreenViewModel : ViewModel() {

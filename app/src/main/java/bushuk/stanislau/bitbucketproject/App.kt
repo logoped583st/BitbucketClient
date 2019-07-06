@@ -78,8 +78,8 @@ class App : Application(), HasActivityInjector {
 
         component = DaggerMainComponent.builder()
                 .roomModule(RoomModule(this))
-                .cryptoModule(CryptoModule(this))
-                .preferencesModule(PreferencesModule(this))
+               // .cryptoModule(CryptoModule(this))
+               // .preferencesModule(PreferencesModule(this))
                 .applicationContextProvider(ApplicationContextProvider(this))
                 .retrofitModule(RetrofitModule())
                 .build()

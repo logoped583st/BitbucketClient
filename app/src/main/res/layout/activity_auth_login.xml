@@ -7,7 +7,7 @@
 
         <variable
             name="loginViewModel"
-            type="bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel" />
+            type="bushuk.stanislau.bitbucketproject.presentation.auth.AuthProtocol.IAuthLogin" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -111,7 +111,7 @@
             android:layout_height="56dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            app:bindClickable="@{loginViewModel.state()}"
+            app:bindClickable="@{loginViewModel.state}"
             android:text="@string/auth_login_screen_button_text"
             app:layout_constraintBottom_toTopOf="@+id/auth_login_screen_security_textView"
             app:layout_constraintEnd_toEndOf="parent"

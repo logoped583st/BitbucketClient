@@ -14,10 +14,12 @@ import bushuk.stanislau.bitbucketproject.adapters.RecyclerCodeAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.constants.Screens
+import bushuk.stanislau.bitbucketproject.global.LoadingState
 import bushuk.stanislau.bitbucketproject.presentation.code.model.CodeDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.code.Branch
 import bushuk.stanislau.bitbucketproject.room.code.Code
 import bushuk.stanislau.bitbucketproject.room.code.CodeResponse
+import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import com.jakewharton.rxbinding2.widget.RxAdapterView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -28,6 +30,8 @@ import javax.inject.Inject
 
 class CodeViewModel(val factory: CodeDataSourceFactory = CodeDataSourceFactory(), val source: BaseDataSource<Code, CodeResponse> = factory.codeDataSource) :
         LoadingViewModel<Code, CodeResponse>(source) {
+    override val state: LiveData<LoadingState.LoadingStateSealed<CodeResponse, CustomExceptions>>
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
     @Inject
     lateinit var router: Router

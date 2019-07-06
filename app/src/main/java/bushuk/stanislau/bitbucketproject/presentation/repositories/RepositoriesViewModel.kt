@@ -14,11 +14,13 @@ import bushuk.stanislau.bitbucketproject.LoadingViewModel
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerRepositoriesAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
+import bushuk.stanislau.bitbucketproject.global.LoadingState
 import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
+import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import com.jakewharton.rxbinding2.widget.RxAdapterView
@@ -31,6 +33,8 @@ import javax.inject.Inject
 class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = RepositoriesDataSourceFactory(),
                             source: BaseDataSource<Repository, RepositoriesResponse> = factory.repositoriesDataSource)
     : LoadingViewModel<Repository, RepositoriesResponse>(source) {
+    override val state: LiveData<LoadingState.LoadingStateSealed<RepositoriesResponse, CustomExceptions>>
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
     @Inject
     lateinit var router: Router

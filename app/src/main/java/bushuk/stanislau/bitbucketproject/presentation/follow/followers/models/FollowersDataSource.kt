@@ -27,7 +27,7 @@ class FollowersDataSource : FollowDataSource() {
     lateinit var userModel: UserModel
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     override val errorText: String = App.resourcesApp.getString(R.string.followers_screen_no_followers)

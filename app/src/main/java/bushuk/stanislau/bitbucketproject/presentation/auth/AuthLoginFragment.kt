@@ -1,5 +1,6 @@
 package bushuk.stanislau.bitbucketproject.presentation.auth
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.text.Html
@@ -15,10 +16,11 @@ import bushuk.stanislau.bitbucketproject.Injectable
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.ActivityAuthLoginBinding
 import bushuk.stanislau.bitbucketproject.global.LoadingState
-import com.google.android.material.snackbar.Snackbar
-import com.jakewharton.rxbinding2.view.clicks
+import bushuk.stanislau.bitbucketproject.room.user.User
+import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
+import com.jakewharton.rxbinding2.widget.RxTextView
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_auth_login.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class AuthLoginFragment : Fragment(), Injectable {
@@ -26,7 +28,7 @@ class AuthLoginFragment : Fragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var viewModel: AuthLoginViewModel
+    lateinit var viewModel: AuthProtocol.IAuthLogin<User>
 
     lateinit var dialog: ProgressDialog
 
@@ -35,9 +37,8 @@ class AuthLoginFragment : Fragment(), Injectable {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AuthLoginViewModel::class.java)
 
         val authLoginActivityMainBinding: ActivityAuthLoginBinding =
-                DataBindingUtil.inflate(layoutInflater, R.layout.activity_auth_login, container, false)
+                DataBindingUtil.inflate(inflater, R.layout.activity_auth_login, container, false)
 
-        Timber.e("INFLATE")
         authLoginActivityMainBinding.let {
             it.loginViewModel = viewModel
             it.lifecycleOwner = viewLifecycleOwner
@@ -46,6 +47,7 @@ class AuthLoginFragment : Fragment(), Injectable {
     }
 
 
+    @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -55,16 +57,35 @@ class AuthLoginFragment : Fragment(), Injectable {
         auth_login_screen.requestFocus()
         auth_login_powered_textView.text = Html.fromHtml(getString(R.string.auth_login_screen_powered_text))
 
-        auth_login_screen_login_button.clicks()
-                .doOnNext {
-                    viewModel.getUserBaseAuth(auth_login_screen_login_editText.text.toString(), auth_login_screen_password_editText.text.toString())
-        }.subscribe()
+        auth_login_screen_login_button.setOnClickListener {
+            viewModel.getUserBaseAuth(auth_login_screen_login_editText.text.toString(), auth_login_screen_password_editText.text.toString())
+        }
+
+        Observable.merge(
+                RxTextView.textChanges(auth_login_screen_login_editText),
+                RxTextView.textChanges(auth_login_screen_password_editText)
+        ).subscribe {
+            if (auth_login_screen_password_input_layout.isErrorEnabled) {
+                auth_login_screen_login_input_layout.error = null
+                auth_login_screen_password_input_layout.error = null
+            }
+        }
 
 
-        viewModel.state().observe(this, Observer {
+        viewModel.state.observe(this, Observer {
             when (it) {
                 is LoadingState.LoadingStateSealed.Loading<*, *> -> {
                     dialog.show()
+                }
+                is LoadingState.LoadingStateSealed.Error<*, CustomExceptions> -> {
+                    when (it.error) {
+                        is CustomExceptions.UnAuthorized -> {
+                            auth_login_screen_login_input_layout.error = " "
+                            auth_login_screen_password_input_layout.error = "Wrong login or password"
+                        }
+                    }
+                    dialog.hide()
+
                 }
                 else -> {
                     dialog.hide()
@@ -72,9 +93,6 @@ class AuthLoginFragment : Fragment(), Injectable {
             }
         })
 
-        viewModel.snackBarAction.observe(this, Observer {
-            Snackbar.make(auth_login_powered_textView, it!!, Snackbar.LENGTH_LONG).show()
-        })
 
         auth_login_screen_browser_textView.setOnClickListener {
             viewModel.navigateToBrowser() //BROWSER AUTH

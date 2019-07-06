@@ -1,19 +1,24 @@
 package bushuk.stanislau.bitbucketproject.presentation.follow.followers
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.constants.Screens
+import bushuk.stanislau.bitbucketproject.global.LoadingState
 import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowViewModel
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.models.FollowersDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.followers.Followers
 import bushuk.stanislau.bitbucketproject.room.user.User
+import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 class FollowersViewModel(factory: FollowersDataSourceFactory = FollowersDataSourceFactory(),
                          private val source: BaseDataSource<User, Followers> = factory.followersDataSource)
     : BaseFollowViewModel<DataSource.Factory<String, User>>(factory, source) {
+    override val state: LiveData<LoadingState.LoadingStateSealed<Followers, CustomExceptions>>
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
     @Inject
     lateinit var router: Router

@@ -11,7 +11,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 
 abstract class LoadingViewModel<Value, Response>(dataSource: BaseDataSource<Value, Response>) : BaseLoadingViewModel<Response>() {
@@ -38,7 +37,7 @@ abstract class LoadingViewModel<Value, Response>(dataSource: BaseDataSource<Valu
 }
 
 
-abstract class BaseLoadingViewModel<Response> : ViewModel() {
+abstract class BaseLoadingViewModel<Response> : ViewModel(), IBaseLoadingViewModel<Response> {
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private val loadingState = LoadingState<Response, CustomExceptions>()
@@ -89,6 +88,10 @@ abstract class BaseLoadingViewModel<Response> : ViewModel() {
         compositeDisposable.clear()
         super.onCleared()
     }
+}
+
+interface IBaseLoadingViewModel<Response> {
+    val state: LiveData<LoadingState.LoadingStateSealed<Response, CustomExceptions>>
 }
 
 fun <T> BaseLoadingViewModel<T>.addDisposable(disposable: Disposable) {

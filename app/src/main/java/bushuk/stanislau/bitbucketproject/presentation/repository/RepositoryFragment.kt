@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders
 import bushuk.stanislau.bitbucketproject.BackPressFragment
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoryBinding
-import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_repository.*
 import kotlinx.android.synthetic.main.fragment_repository.view.*
@@ -76,7 +75,7 @@ class RepositoryFragment : BackPressFragment() {
     }
 
     override fun onDestroyView() {
-        (activity as MainScreenActivity).recreateToolbar()
+        //(activity as MainScreenActivity).recreateToolbar()
         super.onDestroyView()
     }
 

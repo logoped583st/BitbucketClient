@@ -20,7 +20,6 @@ import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.ListOfLanguages
 import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoriesBinding
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
-import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import com.github.clans.fab.FloatingActionMenu
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -98,12 +97,12 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
         viewModel.navigateToRepositoryScreen((data as Repository), viewModel.factory.repositoriesDataSource.userModel.user.value!!.username)
     }
 
-    override fun onAttach(activity: Activity?) {
-        super.onAttach(activity)
-        if (activity is MainScreenActivity) {
-            activity.setBackPress(this)
-        }
-    }
+//    override fun onAttach(activity: Activity?) {
+//        super.onAttach(activity)
+//        if (activity is MainScreenActivity) {
+//            activity.setBackPress(this)
+//        }
+//    }
 
     private fun languageSpinner() {
         val languageSpinnerAdapter: ArrayAdapter<String> = SpinnerAdapter(activity!!, android.R.layout.simple_spinner_item, ListOfLanguages.listOfLanguages())

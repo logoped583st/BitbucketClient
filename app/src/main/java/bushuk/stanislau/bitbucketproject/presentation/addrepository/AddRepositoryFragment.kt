@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.FragmentAddRepositoryBinding
-import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenActivity
 import kotlinx.android.synthetic.main.fragment_add_repository.*
 import kotlinx.android.synthetic.main.fragment_add_repository.view.*
 import ru.noties.markwon.Markwon
@@ -85,7 +84,7 @@ class AddRepositoryFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        (activity as MainScreenActivity).recreateToolbar()
+        //(activity as MainScreenActivity).recreateToolbar()
         super.onDestroyView()
     }
 }

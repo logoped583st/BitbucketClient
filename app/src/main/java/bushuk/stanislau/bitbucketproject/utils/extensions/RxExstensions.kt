@@ -36,9 +36,8 @@ fun <T> Single<T>.mapErrors(call: (error: CustomExceptions) -> Unit): Single<T> 
                     400 -> CustomExceptions.BadBody
                     401 -> CustomExceptions.UnAuthorized
                     in 500..600 -> CustomExceptions.ServerError
+                    else -> CustomExceptions.ANOTHER(error.message())
                 }
-
-                CustomExceptions.ANOTHER(error.message())
             }
             else -> CustomExceptions.ANOTHER(error.message ?: "")
         }

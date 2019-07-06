@@ -1,6 +1,6 @@
 package bushuk.stanislau.bitbucketproject.di.modules.mainScreen
 
-import bushuk.stanislau.bitbucketproject.presentation.main.model.MainScreenModel
+import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenModel
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

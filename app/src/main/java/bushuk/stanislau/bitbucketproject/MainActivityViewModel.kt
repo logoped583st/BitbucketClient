@@ -20,7 +20,7 @@ class MainActivityViewModel @Inject constructor(val router: Router,
         if (tokenPreferences.getToken() == null) {
             router.newRootScreen(ScreensNavigator.LoginScreen())
         } else {
-
+            router.newRootScreen(ScreensNavigator.MainScreen())
         }
     }
 
