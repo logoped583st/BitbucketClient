@@ -8,6 +8,7 @@ import bushuk.stanislau.bitbucketproject.presentation.addrepository.AddRepositor
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginFragment
 import bushuk.stanislau.bitbucketproject.presentation.auth.LoginWebFragment
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersFragment
+import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingFragment
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenFragment
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.PullRequestFragment
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
@@ -50,6 +51,12 @@ object ScreensNavigator {
     class FollowersScreen : SupportAppScreen() {
         override fun getFragment(): Fragment {
             return FollowersFragment()
+        }
+    }
+
+    class FollowingScreen : SupportAppScreen() {
+        override fun getFragment(): Fragment {
+            return FollowingFragment()
         }
     }
 

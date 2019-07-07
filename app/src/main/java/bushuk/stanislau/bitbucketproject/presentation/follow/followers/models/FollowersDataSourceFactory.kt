@@ -19,7 +19,7 @@ class FollowersDataSourceFactory : DataSource.Factory<String, User>() {
     lateinit var followersDataSource: FollowersDataSource
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     override fun create(): DataSource<String, User> {

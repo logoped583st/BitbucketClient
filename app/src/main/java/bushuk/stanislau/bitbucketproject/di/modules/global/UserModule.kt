@@ -1,14 +1,15 @@
 package bushuk.stanislau.bitbucketproject.di.modules.global
 
+import bushuk.stanislau.bitbucketproject.global.IUserModel
 import bushuk.stanislau.bitbucketproject.global.UserModel
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class UserModule {
+abstract class UserModule {
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideUserModel():UserModel = UserModel()
+    abstract fun provideUserModel(userModel: UserModel): IUserModel
 }

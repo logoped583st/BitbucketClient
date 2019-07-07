@@ -27,7 +27,7 @@ class CommitsDataSource : BaseDataSource<Commit, CommitResponse>() {
     lateinit var api: Api
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
 

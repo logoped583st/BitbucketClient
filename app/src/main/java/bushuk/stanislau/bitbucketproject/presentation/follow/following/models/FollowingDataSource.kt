@@ -26,7 +26,7 @@ class FollowingDataSource : FollowDataSource() {
     lateinit var api: Api
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     override val errorText: String = App.resourcesApp.getString(R.string.following_screen_no_following)

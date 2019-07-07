@@ -14,7 +14,7 @@ class CiceroneModule {
 
     @Provides
     @Singleton
-    fun provideRoute(): Router = cicerone.router
+    fun provideRouter(): Router = cicerone.router
 
     @Provides
     @Singleton

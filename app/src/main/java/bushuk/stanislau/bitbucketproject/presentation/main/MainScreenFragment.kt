@@ -10,21 +10,30 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import bushuk.stanislau.bitbucketproject.BackPress
 import bushuk.stanislau.bitbucketproject.BackPressFragment
 import bushuk.stanislau.bitbucketproject.Injectable
 import bushuk.stanislau.bitbucketproject.R
-import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.databinding.ActivityMainScreenBinding
 import bushuk.stanislau.bitbucketproject.databinding.NavHeaderMainScreenBinding
+import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main_screen.*
 import kotlinx.android.synthetic.main.activity_main_screen.view.*
+import javax.inject.Inject
 
+const val MAIN_SCREEN_ROUTER = "MAIN_SCREEN_ROUTER"
 
 class MainScreenFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener, Injectable {
 
+//    @Inject
+//    @ActivityScope
+//    lateinit var localCiceroneHolder: NavigatorHolder
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var viewModel: MainScreenViewModel
 
@@ -32,19 +41,21 @@ class MainScreenFragment : Fragment(), NavigationView.OnNavigationItemSelectedLi
 
     private var backPress: BackPress? = null
 
-    lateinit var navHeaderMainScreenBinding: NavHeaderMainScreenBinding
+    private lateinit var navHeaderMainScreenBinding: NavHeaderMainScreenBinding
 
+    private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = ViewModelProviders.of(this).get(MainScreenViewModel::class.java)
         binding = DataBindingUtil.inflate(inflater, R.layout.activity_main_screen, container, false)
         navHeaderMainScreenBinding = DataBindingUtil.inflate(layoutInflater, R.layout.nav_header_main_screen, binding.navView, false)
         binding.navView.addHeaderView(navHeaderMainScreenBinding.root)
 
-        binding.root.toolbar.title = viewModel.toolbarTitle.value
         (activity as AppCompatActivity).setSupportActionBar(binding.root.toolbar)
 
-
+        toggle = ActionBarDrawerToggle(activity, binding.drawerLayout, binding.root.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        toggle.syncState()
+        binding.drawerLayout.addDrawerListener(toggle)
+        binding.navView.setNavigationItemSelectedListener(this)
 
         return binding.root
     }
@@ -52,15 +63,12 @@ class MainScreenFragment : Fragment(), NavigationView.OnNavigationItemSelectedLi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (savedInstanceState == null) {
-            nav_view.menu.findItem(R.id.drawer_menu_repositories).isChecked = true
-        }
+        viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(MainScreenViewModel::class.java)
+        binding.root.toolbar.title = viewModel.toolbarTitle.value
 
-        val toggle = ActionBarDrawerToggle(
-                activity, drawer_layout, binding.root.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
-        nav_view.setNavigationItemSelectedListener(this)
+        if (savedInstanceState == null) {
+            binding.navView.setCheckedItem(binding.navView.menu.findItem(R.id.drawer_menu_repositories))
+        }
 
         binding.let {
             it.viewModel = viewModel
@@ -72,6 +80,17 @@ class MainScreenFragment : Fragment(), NavigationView.OnNavigationItemSelectedLi
             it.lifecycleOwner = this
         }
 
+    }
+
+    override fun onPause() {
+        // localCiceroneHolder.removeNavigator()
+
+        super.onPause()
+    }
+
+    override fun onResume() {
+        // localCiceroneHolder.setNavigator(MainNavigator(activity, R.id.main_screen_container))
+        super.onResume()
     }
 
     //    override fun onBackPressed() {
@@ -99,16 +118,16 @@ class MainScreenFragment : Fragment(), NavigationView.OnNavigationItemSelectedLi
 
         when (item.itemId) {
             R.id.drawer_menu_repositories -> {
-                viewModel.drawerNavigation(Screens.REPOSITORIES_SCREEN, this.getString(R.string.toolbar_title_repository))
+                viewModel.drawerNavigation(ScreensNavigator.RepositoriesScreen(), this.getString(R.string.toolbar_title_repository))
             }
             R.id.drawer_menu_followers -> {
-                viewModel.drawerNavigation(Screens.FOLLOWERS_SCREEN, this.getString(R.string.toolbar_title_followers))
+                viewModel.drawerNavigation(ScreensNavigator.FollowersScreen(), this.getString(R.string.toolbar_title_followers))
             }
             R.id.drawer_menu_following -> {
-                viewModel.drawerNavigation(Screens.FOLLOWING_SCREEN, this.getString(R.string.toolbar_title_following))
+                viewModel.drawerNavigation(ScreensNavigator.FollowingScreen(), this.getString(R.string.toolbar_title_following))
             }
             R.id.drawer_menu_snippets -> {
-                viewModel.drawerNavigation(Screens.SNIPPETS_SCREEN, this.getString(R.string.toolbar_title_snippets))
+                viewModel.drawerNavigation(ScreensNavigator.SnippetsScreen(), this.getString(R.string.toolbar_title_snippets))
             }
 
         }

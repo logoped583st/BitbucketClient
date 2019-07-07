@@ -4,25 +4,22 @@ import android.util.Base64
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import bushuk.stanislau.bitbucketproject.BaseLoadingViewModel
-import bushuk.stanislau.bitbucketproject.IBaseLoadingViewModel
 import bushuk.stanislau.bitbucketproject.addDisposable
-import bushuk.stanislau.bitbucketproject.constants.Screens
+import bushuk.stanislau.bitbucketproject.global.IUserModel
 import bushuk.stanislau.bitbucketproject.global.LoadingState
-import bushuk.stanislau.bitbucketproject.global.UserModel
-import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
 import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
 import bushuk.stanislau.bitbucketproject.room.user.User
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import bushuk.stanislau.bitbucketproject.utils.extensions.applyDefaultSchedulers
-import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
-import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
+import bushuk.stanislau.bitbucketproject.utils.preferences.ISharedPreferencesUtil
 import ru.terrakok.cicerone.Router
+import timber.log.Timber
 import javax.inject.Inject
 
 class AuthLoginViewModel @Inject constructor(
-        val tokenPreferences: SharedPreferencesUtil,
+        val tokenPreferences: ISharedPreferencesUtil,
         val router: Router,
-        val userModel: UserModel,
+        val userModel: IUserModel,
         val authLoginModel: AuthLoginModel
 ) : BaseLoadingViewModel<User>(), AuthProtocol.IAuthLogin<User> {
 
@@ -43,16 +40,11 @@ class AuthLoginViewModel @Inject constructor(
                 .applyDefaultSchedulers()
                 .loadingSubscriber(
                         {
-                            userModel.user.onNext(it)
-                            // router.newRootScreen(Screens.MAIN_SCREEN)
+                            userModel.setUser(it)
+                            router.navigateTo(ScreensNavigator.MainScreen())
                         },
                         {
-                            if (it is HttpException && it.code() == 401) {
-                                snackBarAction.postValue("Wrong login or password")
-                            }else{
-                                snackBarAction.postValue("Something going wrong")
-                            }
-                            tokenPreferences.clearToken()
+                            Timber.e(it.message)
                         }
                 ))
     }

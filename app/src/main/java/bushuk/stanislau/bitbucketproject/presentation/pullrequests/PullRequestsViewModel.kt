@@ -7,10 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.LoadingViewModel
-import bushuk.stanislau.bitbucketproject.adapters.RecyclerPullRequestsAdapter
+import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.global.LoadingState
@@ -23,7 +22,6 @@ import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import com.jakewharton.rxbinding2.widget.RxAdapterView
 import io.reactivex.android.schedulers.AndroidSchedulers
-import ru.terrakok.cicerone.Router
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -34,8 +32,8 @@ class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullReq
     override val state: LiveData<LoadingState.LoadingStateSealed<PullRequestResponse, CustomExceptions>>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
-    @Inject
-    lateinit var router: Router
+    //@Inject
+    //  lateinit var router: Router
 
     @Inject
     lateinit var pullRequestModel: PullRequestModel
@@ -48,7 +46,7 @@ class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullReq
 
 
     init {
-        App.component.initPullRequestsComponent().inject(this)
+        //App.component.initPullRequestsComponent().inject(this)
         factory.pullRequestsDataSource.queryPullRequest = UrlBuilder.buildQueryPullRequest(namePullRequest, statePullRequest)
         factory.pullRequestsDataSource.sortPullRequest = UrlBuilder.buildSortPullRequest(sortPullRequest)
     }
@@ -67,7 +65,7 @@ class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullReq
         super.onCleared()
     }
 
-    fun observeStateSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerPullRequestsAdapter) {
+    fun observeStateSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<PullRequest>) {
         RxAdapterView.itemSelections(spinner)
                 .skipInitialValue()
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -82,7 +80,7 @@ class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullReq
 
     }
 
-    fun observeSortSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerPullRequestsAdapter) {
+    fun observeSortSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<PullRequest>) {
         compositeDisposable.add(RxAdapterView.itemSelections(spinner)
                 .skipInitialValue()
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -96,7 +94,7 @@ class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullReq
                 }))
     }
 
-    fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerPullRequestsAdapter) {
+    fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<PullRequest>) {
         compositeDisposable.add(RxSearchView
                 .queryTextChanges(searchView)
                 .skipInitialValue()
@@ -111,7 +109,7 @@ class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullReq
     }
 
 
-    private fun change(lifecycleOwner: LifecycleOwner, adapter: RecyclerPullRequestsAdapter) {
+    private fun change(lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<PullRequest>) {
         pullRequests.removeObservers(lifecycleOwner)
         factory.pullRequestsDataSource.queryPullRequest = UrlBuilder.buildQueryPullRequest(namePullRequest, statePullRequest)
         factory.pullRequestsDataSource.sortPullRequest = UrlBuilder.buildSortPullRequest(sortPullRequest)

@@ -11,9 +11,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.multidex.MultiDex
 import bushuk.stanislau.bitbucketproject.di.components.DaggerAndroidInjectorComponent
-import bushuk.stanislau.bitbucketproject.di.components.DaggerMainComponent
 import bushuk.stanislau.bitbucketproject.di.components.MainComponent
-import bushuk.stanislau.bitbucketproject.di.modules.global.*
+import bushuk.stanislau.bitbucketproject.di.modules.global.ApplicationContextProvider
+import bushuk.stanislau.bitbucketproject.di.modules.global.CryptoModule
+import bushuk.stanislau.bitbucketproject.di.modules.global.PreferencesModule
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -40,8 +41,7 @@ class App : Application(), HasActivityInjector {
 
 
         DaggerAndroidInjectorComponent.builder()
-                .preferenceModule(PreferencesModule(this))
-                .cryptoModule(CryptoModule(this))
+                .appContext(ApplicationContextProvider(this))
                 .create(this)
                 .inject(this)
 
@@ -76,30 +76,11 @@ class App : Application(), HasActivityInjector {
         })
 
 
-        component = DaggerMainComponent.builder()
-                .roomModule(RoomModule(this))
-               // .cryptoModule(CryptoModule(this))
-               // .preferencesModule(PreferencesModule(this))
-                .applicationContextProvider(ApplicationContextProvider(this))
-                .retrofitModule(RetrofitModule())
-                .build()
-
-
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
 
-        try {
-            val config = ViewConfiguration.get(this)
-            val menuKeyField: Field? = ViewConfiguration::class.java.getDeclaredField("sHasPermanentMenuKey")
-            if (menuKeyField != null) {
-                menuKeyField.isAccessible = true
-                menuKeyField.setBoolean(config, false)
-            }
-        } catch (ex: Exception) {
-            // Ignore
-        }
 
     }
 

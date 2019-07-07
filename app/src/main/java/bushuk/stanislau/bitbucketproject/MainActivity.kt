@@ -11,6 +11,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import ru.terrakok.cicerone.NavigatorHolder
 import javax.inject.Inject
+import javax.inject.Singleton
 
 
 class MainActivity : AppCompatActivity(), LifecycleOwner, Injectable, HasSupportFragmentInjector {
@@ -24,17 +25,21 @@ class MainActivity : AppCompatActivity(), LifecycleOwner, Injectable, HasSupport
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    lateinit var viewModel: MainActivityViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val viewModel: MainActivityViewModel = ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
-        lifecycle.addObserver(viewModel)
+        if (savedInstanceState == null) {
+            viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
+            viewModel.navigate()
+        }
         setContentView(R.layout.activity_main)
     }
 
     override fun onResume() {
-        navigatorHolder.setNavigator(MainNavigator(this, R.id.main_container))
         super.onResume()
+        navigatorHolder.setNavigator(MainNavigator(this, R.id.main_container))
     }
 
     override fun onPause() {

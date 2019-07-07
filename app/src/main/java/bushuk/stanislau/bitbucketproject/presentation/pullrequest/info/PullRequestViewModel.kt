@@ -39,8 +39,8 @@ class PullRequestViewModel(private val reviewersDataSourceFactory: ReviewersData
     @Inject
     lateinit var pullRequest: PullRequestModel
 
-    @Inject
-    lateinit var router: Router
+    //@Inject
+  //  lateinit var router: Router
 
     @Inject
     lateinit var commitDataSourceFactory: CommitsDataSourceFactory
@@ -65,7 +65,7 @@ class PullRequestViewModel(private val reviewersDataSourceFactory: ReviewersData
 
     init {
         isApproved.postValue(false)
-        App.component.inject(this)
+        //App.component.inject(this)
         pullRequest.publishSubject
                 .subscribe { it ->
                     pullRequestState.postValue(it.state)

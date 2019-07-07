@@ -32,7 +32,7 @@ class CodeDataSource : BaseDataSource<Code, CodeResponse>() {
     lateinit var repositoryModel: RepositoryModel
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
 

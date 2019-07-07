@@ -3,6 +3,7 @@ package bushuk.stanislau.bitbucketproject.di.modules.global
 import android.util.Log
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.api.ScalarApi
+import bushuk.stanislau.bitbucketproject.utils.preferences.ISharedPreferencesUtil
 import bushuk.stanislau.bitbucketproject.utils.retrofit.AuthorizationInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -11,12 +12,9 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
-import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.lang.reflect.Type
 import javax.inject.Singleton
 
 @Module
@@ -38,12 +36,15 @@ class RetrofitModule {
             .create()
 
     @Provides
-    fun provideOkhttp(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideOkhttp(httpLoggingInterceptor: HttpLoggingInterceptor, authorizationInterceptor: AuthorizationInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
-                .addInterceptor(AuthorizationInterceptor())
+                .addInterceptor(authorizationInterceptor)
                 .addInterceptor(httpLoggingInterceptor)
                 .build()
     }
+
+    @Provides
+    fun provideAuthorizationInterceptor(sharedPreferences: ISharedPreferencesUtil) = AuthorizationInterceptor(sharedPreferences)
 
 
     @Provides

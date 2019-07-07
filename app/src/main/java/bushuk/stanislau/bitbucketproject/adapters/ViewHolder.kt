@@ -5,13 +5,15 @@ import androidx.recyclerview.widget.RecyclerView
 import bushuk.stanislau.bitbucketproject.BR
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
 
-class ViewHolder(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
+class ViewHolder<T>(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(any: Any?, clickFollow: ClickFollow) {
-        binding.setVariable(BR.data, any)
+    fun bind(item: T?, clickFollow: ClickFollow<T>) {
+        binding.setVariable(BR.data, item)
         binding.executePendingBindings()
-        binding.root.setOnClickListener {
-            clickFollow.onClickItem(it, any!!)
+        binding.root.setOnClickListener { view ->
+            item?.let {
+                clickFollow.onClickItem(view, item)
+            }
         }
     }
 

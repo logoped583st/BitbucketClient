@@ -23,11 +23,11 @@ class SnippetsViewModel
     override val state: LiveData<LoadingState.LoadingStateSealed<SnippetsResponce, CustomExceptions>>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
-    @Inject
-    lateinit var router: Router
+    //@Inject
+  //  lateinit var router: Router
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     val snippets: LiveData<PagedList<Snippet>> = LivePagedListBuilder<String, Snippet>(factory, Constants.listPagedConfig).build()

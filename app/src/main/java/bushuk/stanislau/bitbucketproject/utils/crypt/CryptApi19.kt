@@ -27,13 +27,9 @@ class CryptApi19 @Inject constructor(val context: Context) : Crypto {
 
     init {
         ks.load(null, null)
-        RSACipher18Implementation(context)
-    }
-
-    @Throws(Exception::class)
-    fun RSACipher18Implementation(context: Context) {
         createRSAKeysIfNeeded(context)
     }
+
 
     @Throws(Exception::class)
     fun wrap(key: Key): ByteArray {

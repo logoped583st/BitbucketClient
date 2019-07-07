@@ -31,7 +31,7 @@ class WatchersDataSource : FollowDataSource() {
     lateinit var repositoryModel: RepositoryModel
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     override val errorText: String = App.resourcesApp.getString(R.string.watchers_screen_error_text)

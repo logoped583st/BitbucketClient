@@ -1,26 +1,26 @@
 package bushuk.stanislau.bitbucketproject.presentation.snippets
 
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import bushuk.stanislau.bitbucketproject.R
-import bushuk.stanislau.bitbucketproject.adapters.RecyclerSnippetsAdapter
+import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentSnippetsBinding
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
 import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
 import kotlinx.android.synthetic.main.fragment_snippets.*
 
 
-class SnippetsFragment : Fragment(), ClickFollow {
-    override fun onClickItem(view: View, data: Any) {
-        viewModel.navigateToCode((data as Snippet).links.self.href)
+class SnippetsFragment : Fragment(), ClickFollow<Snippet> {
+    override fun onClickItem(view: View, data: Snippet) {
+        viewModel.navigateToCode(data.links.self.href)
     }
 
     lateinit var binding: FragmentSnippetsBinding
@@ -35,7 +35,7 @@ class SnippetsFragment : Fragment(), ClickFollow {
 
         binding.let {
             it.loading = viewModel.liveLoadingModel
-            it.setLifecycleOwner(this)
+            it.lifecycleOwner = this
         }
 
         return binding.root
@@ -45,8 +45,7 @@ class SnippetsFragment : Fragment(), ClickFollow {
         super.onViewCreated(view, savedInstanceState)
 
         snippets_screen_recycler.layoutManager = LinearLayoutManager(activity)
-        val adapter = RecyclerSnippetsAdapter()
-        adapter.clickFollow = this
+        val adapter = RecyclerAdapter(this)
         snippets_screen_recycler.adapter = adapter
         viewModel.snippets.observe(this, Observer(adapter::submitList))
     }

@@ -12,25 +12,25 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.Injectable
-import bushuk.stanislau.bitbucketproject.MainActivity
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
-import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
+import bushuk.stanislau.bitbucketproject.utils.preferences.ISharedPreferencesUtil
 import kotlinx.android.synthetic.main.login_fragment.*
 import ru.terrakok.cicerone.Router
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Singleton
 
 
 class LoginWebFragment : Fragment(), Injectable {
 
     @Inject
-    lateinit var tokenPreferences: SharedPreferencesUtil
+    lateinit var tokenPreferences: ISharedPreferencesUtil
 
     @Inject
+    @Singleton
     lateinit var router: Router
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

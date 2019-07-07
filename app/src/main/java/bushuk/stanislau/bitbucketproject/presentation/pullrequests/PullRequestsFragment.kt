@@ -13,26 +13,25 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.RecyclerScrollFab
-import bushuk.stanislau.bitbucketproject.adapters.RecyclerPullRequestsAdapter
+import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentPullRequestsBinding
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
 import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryFragment
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
-import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import com.github.clans.fab.FloatingActionMenu
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_pull_requests.*
 import kotlinx.android.synthetic.main.fragment_pull_requests.view.*
 
 
-class PullRequestsFragment : Fragment(), ClickFollow {
+class PullRequestsFragment : Fragment(), ClickFollow<PullRequest>{
 
-    override fun onClickItem(view: View, data: Any) {
-        viewModel.navigateToPullRequestScreen(data as PullRequest)
+    override fun onClickItem(view: View, data: PullRequest) {
+        viewModel.navigateToPullRequestScreen(data)
     }
 
-    lateinit var adapter: RecyclerPullRequestsAdapter
+    lateinit var adapter: RecyclerAdapter<PullRequest>
     lateinit var binding: FragmentPullRequestsBinding
     lateinit var viewModel: PullRequestsViewModel
 
@@ -54,8 +53,7 @@ class PullRequestsFragment : Fragment(), ClickFollow {
             it.fragment = this
         }
 
-        adapter = RecyclerPullRequestsAdapter()
-        adapter.setListener(this)
+        adapter = RecyclerAdapter(this)
         pullrequests_screen_recycler.layoutManager = LinearLayoutManager(activity)
         pullrequests_screen_recycler.adapter = adapter
         pullrequests_screen_recycler.addOnScrollListener(object : RecyclerScrollFab() {

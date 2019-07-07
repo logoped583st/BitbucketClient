@@ -1,6 +1,5 @@
 package bushuk.stanislau.bitbucketproject.global
 
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.room.user.User
 import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
@@ -8,23 +7,22 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
 
-class UserModel {
+class UserModel @Inject constructor(val api: Api,
+                                    var tokenPreferencesUtil: SharedPreferencesUtil) : IUserModel {
 
-    @Inject
-    lateinit var api: Api
 
-    @Inject
-    lateinit var tokenPreferencesUtil: SharedPreferencesUtil
 
     val user: BehaviorSubject<User> = BehaviorSubject.create()
 
-    fun setNewUser(userName: String) {
+    override fun setUser(user: User) {
+        this.user.onNext(user)
+    }
+
+    override fun setNewUser(userName: String) {
         user.value!!.username = userName
     }
 
     init {
-        App.component.inject(this)
-
         if (tokenPreferencesUtil.getToken() != null) {
             api.myUser().subscribeOn(Schedulers.io())
                     .doOnSuccess { user.onNext(it) }
@@ -33,4 +31,10 @@ class UserModel {
         }
     }
 
+}
+
+interface IUserModel {
+    fun setNewUser(userName: String)
+
+    fun setUser(user: User)
 }

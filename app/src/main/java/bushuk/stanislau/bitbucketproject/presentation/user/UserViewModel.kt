@@ -13,10 +13,10 @@ class UserViewModel : ViewModel() {
     @Inject
     lateinit var userModel: UserModel
 
-    @Inject
-    lateinit var router: Router
+    //@Inject
+  //  lateinit var router: Router
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     private val userMe: User= userModel.user.value!!.copy()
@@ -31,6 +31,6 @@ class UserViewModel : ViewModel() {
     }
 
     fun exitFromFragment(){
-        router.exit()
+        //router.exit()
     }
 }

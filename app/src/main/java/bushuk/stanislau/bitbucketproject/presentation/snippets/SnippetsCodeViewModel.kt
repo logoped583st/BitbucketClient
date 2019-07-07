@@ -22,7 +22,7 @@ class SnippetsCodeViewModel : ViewModel() {
     val code: MutableLiveData<String> = MutableLiveData()
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     fun getCode(url: String) {

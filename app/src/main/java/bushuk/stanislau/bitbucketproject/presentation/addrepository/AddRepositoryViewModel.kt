@@ -14,8 +14,8 @@ import javax.inject.Inject
 
 class AddRepositoryViewModel : ViewModel() {
 
-    @Inject
-    lateinit var router: Router
+    //@Inject
+  //  lateinit var router: Router
 
     @Inject
     lateinit var api: Api
@@ -26,11 +26,11 @@ class AddRepositoryViewModel : ViewModel() {
     lateinit var userModel: UserModel
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     fun exitFromFragment() {
-        router.exit()
+        //router.exit()
     }
 
 

@@ -20,7 +20,7 @@ class PullRequestCommentsViewModel(val factory:PullRequestCommentsDataSourceFact
 
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     val comments: LiveData<PagedList<Comment>> by lazy { LivePagedListBuilder(factory, Constants.listPagedConfig).build() }

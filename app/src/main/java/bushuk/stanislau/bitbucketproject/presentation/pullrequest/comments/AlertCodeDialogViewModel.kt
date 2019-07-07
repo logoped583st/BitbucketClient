@@ -32,7 +32,7 @@ class AlertCodeDialogViewModel : ViewModel() {
     val code: MutableLiveData<String> = MutableLiveData()
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     fun setComment(comment: Comment) {

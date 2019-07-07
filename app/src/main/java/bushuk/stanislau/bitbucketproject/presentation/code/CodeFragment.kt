@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import bushuk.stanislau.bitbucketproject.R
-import bushuk.stanislau.bitbucketproject.adapters.RecyclerCodeAdapter
+import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerCodePathAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentCodeBinding
@@ -20,7 +20,7 @@ import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
 import bushuk.stanislau.bitbucketproject.room.code.Code
 import kotlinx.android.synthetic.main.fragment_code.*
 
-class CodeFragment : Fragment(), ClickFollow, RecyclerCodePathAdapter.PathClick {
+class CodeFragment : Fragment(), ClickFollow<Code>, RecyclerCodePathAdapter.PathClick {
 
     override fun onClickPath(path: String, position: Int) {
         viewModel.reloadPathWithHash(this, codeAdapter, path)
@@ -31,11 +31,11 @@ class CodeFragment : Fragment(), ClickFollow, RecyclerCodePathAdapter.PathClick 
     lateinit var viewModel: CodeViewModel
 
     private val codePathAdapter = RecyclerCodePathAdapter(mutableListOf("src"), this)
-    private val codeAdapter = RecyclerCodeAdapter()
+    private val codeAdapter = RecyclerAdapter(this)
 
 
-    override fun onClickItem(view: View, data: Any) {
-        if ((data as Code).type == "commit_directory") {
+    override fun onClickItem(view: View, data: Code) {
+        if (data.type == "commit_directory") {
             codePathAdapter.changePath(data.path)
             viewModel.reloadPathWithHash(this, codeAdapter, data.path)
         } else {
@@ -61,7 +61,7 @@ class CodeFragment : Fragment(), ClickFollow, RecyclerCodePathAdapter.PathClick 
 
         binding.let {
             it.viewModel = viewModel
-            it.setLifecycleOwner(this)
+            it.lifecycleOwner = this
         }
 
         val branchSpinnerAdapter: ArrayAdapter<String> = SpinnerAdapter(activity!!, android.R.layout.simple_spinner_item, mutableListOf())
@@ -89,7 +89,6 @@ class CodeFragment : Fragment(), ClickFollow, RecyclerCodePathAdapter.PathClick 
         })
 
         code_screen_recycler.layoutManager = LinearLayoutManager(activity)
-        codeAdapter.clickFollow = this
         code_screen_recycler.adapter = codeAdapter
         viewModel.code.observe(this, Observer(codeAdapter::submitList))
     }

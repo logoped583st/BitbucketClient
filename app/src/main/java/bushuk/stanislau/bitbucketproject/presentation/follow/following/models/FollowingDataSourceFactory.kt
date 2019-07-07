@@ -13,7 +13,7 @@ class FollowingDataSourceFactory : DataSource.Factory<String, User>() {
     lateinit var followingDataSource: FollowingDataSource
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     override fun create(): DataSource<String, User> {

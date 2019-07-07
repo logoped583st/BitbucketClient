@@ -25,8 +25,8 @@ class RepositoryViewModel : ViewModel() {
     @Inject
     lateinit var repositoryModel: RepositoryModel
 
-    @Inject
-    lateinit var router: Router
+    //@Inject
+  //  lateinit var router: Router
 
     @Inject
     lateinit var userModel: UserModel
@@ -39,7 +39,7 @@ class RepositoryViewModel : ViewModel() {
     private lateinit var userMe: User
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
         repositoryModel.repository.observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     repository.postValue(it)
@@ -54,7 +54,7 @@ class RepositoryViewModel : ViewModel() {
 
 
     fun exitFromFragment() {
-        router.exit()
+        //router.exit()
     }
 
     override fun onCleared() {

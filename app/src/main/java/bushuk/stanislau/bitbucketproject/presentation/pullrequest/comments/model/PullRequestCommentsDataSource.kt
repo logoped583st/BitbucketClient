@@ -28,7 +28,7 @@ class PullRequestCommentsDataSource : BaseDataSource<Comment, CommentResponse>()
     lateinit var pullRequestModel: PullRequestModel
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     override val errorText: String

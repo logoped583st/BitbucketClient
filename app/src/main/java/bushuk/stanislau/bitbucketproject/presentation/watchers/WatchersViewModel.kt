@@ -23,11 +23,11 @@ class WatchersViewModel(factory: WatchersDataSourceFactory = WatchersDataSourceF
     override val state: LiveData<LoadingState.LoadingStateSealed<Followers, CustomExceptions>>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
-    @Inject
-    lateinit var router: Router
+    //@Inject
+  //  lateinit var router: Router
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     val watchers: LiveData<PagedList<User>> by lazy { LivePagedListBuilder<String, User>(factory, Constants.listPagedConfig).build() }

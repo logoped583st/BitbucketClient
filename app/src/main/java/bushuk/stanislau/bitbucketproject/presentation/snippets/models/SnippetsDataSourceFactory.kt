@@ -11,7 +11,7 @@ class SnippetsDataSourceFactory : DataSource.Factory<String, Snippet>() {
     lateinit var snippetsDataSource: SnippetsDataSource
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     override fun create(): DataSource<String, Snippet> {

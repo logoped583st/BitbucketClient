@@ -11,6 +11,6 @@ class ContainerPullRequestViewModel : ViewModel() {
     lateinit var pullRequest:PullRequestModel
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 }

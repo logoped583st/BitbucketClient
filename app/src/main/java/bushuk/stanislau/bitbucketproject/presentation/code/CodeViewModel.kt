@@ -7,13 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.LoadingViewModel
-import bushuk.stanislau.bitbucketproject.adapters.RecyclerCodeAdapter
+import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
-import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.global.LoadingState
 import bushuk.stanislau.bitbucketproject.presentation.code.model.CodeDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.code.Branch
@@ -24,24 +22,22 @@ import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import com.jakewharton.rxbinding2.widget.RxAdapterView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import ru.terrakok.cicerone.Router
 import timber.log.Timber
-import javax.inject.Inject
 
 class CodeViewModel(val factory: CodeDataSourceFactory = CodeDataSourceFactory(), val source: BaseDataSource<Code, CodeResponse> = factory.codeDataSource) :
         LoadingViewModel<Code, CodeResponse>(source) {
     override val state: LiveData<LoadingState.LoadingStateSealed<CodeResponse, CustomExceptions>>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
-    @Inject
-    lateinit var router: Router
+    //@Inject
+  //  lateinit var router: Router
 
     val branches: MutableLiveData<List<Branch>> = MutableLiveData()
 
     private lateinit var hash: String
 
     init {
-        App.component.initCodeComponent().inject(this)
+        //App.component.initCodeComponent().inject(this)
 
         compositeDisposable.add(factory.codeDataSource.api.getBranchWithUrl(factory
                 .codeDataSource.repositoryModel.repository.value!!.links.branches.href)
@@ -64,7 +60,7 @@ class CodeViewModel(val factory: CodeDataSourceFactory = CodeDataSourceFactory()
 
     }
 
-    fun observeSpinner(spinner: Spinner, adapter: RecyclerCodeAdapter, lifecycleOwner: LifecycleOwner) {
+    fun observeSpinner(spinner: Spinner, adapter: RecyclerAdapter<Code>, lifecycleOwner: LifecycleOwner) {
         compositeDisposable.add(RxAdapterView.itemSelections(spinner)
                 .skipInitialValue()
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -102,7 +98,7 @@ class CodeViewModel(val factory: CodeDataSourceFactory = CodeDataSourceFactory()
         //router.navigateTo(Screens.CODE_EDITOR_SCREEN, fileName)
     }
 
-    fun reloadPathWithHash(lifecycleOwner: LifecycleOwner, adapter: RecyclerCodeAdapter, path: String) {
+    fun reloadPathWithHash(lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<Code>, path: String) {
         code.removeObservers(lifecycleOwner)
         UrlBuilder.buildPathWithHash(path, hash)
         code = LivePagedListBuilder<String, Code>(factory, Constants.listPagedConfig).build()

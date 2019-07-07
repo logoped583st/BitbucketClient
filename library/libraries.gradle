@@ -17,7 +17,7 @@ ext.version = [
         retrofit:                                                                               "2.3.0",
 
         //GLIDE
-        glide:                                                                                  "4.6.1",
+        glide:                                                                                  "4.9.0",
 
         ////Dagger
         dagger:                                                                                 "2.16",

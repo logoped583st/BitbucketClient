@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import bushuk.stanislau.bitbucketproject.MainActivityViewModel
 import bushuk.stanislau.bitbucketproject.di.ViewModelKey
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
+import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.AndroidInjectionModule
@@ -22,6 +23,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MainActivityViewModel::class)
     abstract fun bindMainActivityViewModel(mainActivityViewModel: MainActivityViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainScreenViewModel::class)
+    abstract fun bindMainScreenViewModel(mainScreenViewModel: MainScreenViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

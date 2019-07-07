@@ -31,7 +31,7 @@ class SnippetsDataSource : BaseDataSource<Snippet, SnippetsResponce>() {
     lateinit var userModel: UserModel
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     override val single: Single<SnippetsResponce> = userModel.user.flatMapSingle { api.getSnippets(it.username) }.firstOrError()

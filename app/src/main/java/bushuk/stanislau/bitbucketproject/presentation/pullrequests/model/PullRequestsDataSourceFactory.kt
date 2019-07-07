@@ -10,7 +10,7 @@ class PullRequestsDataSourceFactory : DataSource.Factory<String, PullRequest>() 
     val pullRequestsDataSource: PullRequestsDataSource = PullRequestsDataSource()
 
     init {
-        App.component.initPullRequestsComponent().inject(this)
+        //App.component.initPullRequestsComponent().inject(this)
     }
 
     override fun create(): DataSource<String, PullRequest> {

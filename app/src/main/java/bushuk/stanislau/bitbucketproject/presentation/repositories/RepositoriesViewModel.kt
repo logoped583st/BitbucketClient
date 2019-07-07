@@ -8,14 +8,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.BaseDataSource
 import bushuk.stanislau.bitbucketproject.LoadingViewModel
-import bushuk.stanislau.bitbucketproject.adapters.RecyclerRepositoriesAdapter
+import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.global.LoadingState
-import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
 import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
@@ -25,7 +23,6 @@ import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import com.jakewharton.rxbinding2.widget.RxAdapterView
 import io.reactivex.android.schedulers.AndroidSchedulers
-import ru.terrakok.cicerone.Router
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -36,8 +33,8 @@ class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = Reposit
     override val state: LiveData<LoadingState.LoadingStateSealed<RepositoriesResponse, CustomExceptions>>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
-    @Inject
-    lateinit var router: Router
+    //@Inject
+  //  lateinit var router: Router
 
     @Inject
     lateinit var repositoryModel: RepositoryModel
@@ -49,13 +46,13 @@ class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = Reposit
     private var repositoryLanguage: String? = null
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     var repositories: LiveData<PagedList<Repository>> = LivePagedListBuilder<String, Repository>(factory, Constants.listPagedConfig).build()
 
 
-    fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
+    fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<Repository>) {
         compositeDisposable.add(RxSearchView.queryTextChanges(searchView)
                 .skipInitialValue()
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -69,7 +66,7 @@ class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = Reposit
     }
 
 
-    fun observeLanguageChangeSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
+    fun observeLanguageChangeSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<Repository>) {
         compositeDisposable.add(RxAdapterView.itemSelections(spinner)
                 .skipInitialValue()
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -83,7 +80,7 @@ class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = Reposit
                 }))
     }
 
-    fun observeAccessChangeSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
+    fun observeAccessChangeSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<Repository>) {
         compositeDisposable.add(RxAdapterView.itemSelections(spinner)
                 .skipInitialValue()
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -98,7 +95,7 @@ class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = Reposit
     }
 
 
-    private fun queryChange(lifecycleOwner: LifecycleOwner, adapter: RecyclerRepositoriesAdapter) {
+    private fun queryChange(lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<Repository>) {
         repositories.removeObservers(lifecycleOwner)
         factory.repositoriesDataSource.url = UrlBuilder.buildQuery(repositoryName, repositoryAccess, repositoryLanguage)
         repositories = LivePagedListBuilder<String, Repository>(factory, Constants.listPagedConfig).build()
@@ -106,7 +103,7 @@ class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = Reposit
     }
 
     fun exitFromFragment() {
-        router.exit()
+        //router.exit()
     }
 
     fun navigateToRepositoryScreen(repository: Repository, username: String) {
@@ -120,7 +117,7 @@ class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = Reposit
     }
 
     fun navigateToAddRepository(view: View) {
-        router.navigateTo(ScreensNavigator.AddRepositoryScreen())
+        //router.navigateTo(ScreensNavigator.AddRepositoryScreen())
     }
 
 }

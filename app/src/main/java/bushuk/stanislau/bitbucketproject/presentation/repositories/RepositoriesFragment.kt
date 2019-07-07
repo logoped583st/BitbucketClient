@@ -1,21 +1,20 @@
 package bushuk.stanislau.bitbucketproject.presentation.repositories
 
 
-import android.app.Activity
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import bushuk.stanislau.bitbucketproject.BackPressFragment
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.RecyclerScrollFab
-import bushuk.stanislau.bitbucketproject.adapters.RecyclerRepositoriesAdapter
+import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.ListOfLanguages
 import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoriesBinding
@@ -25,12 +24,12 @@ import com.github.clans.fab.FloatingActionMenu
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_repositories.*
 
-class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
+class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow<Repository> {
 
     lateinit var viewModel: RepositoriesViewModel
     lateinit var binding: FragmentRepositoriesBinding
     private val access: MutableList<String> = mutableListOf("All", "Public", "Private")
-    private lateinit var adapter: RecyclerRepositoriesAdapter
+    private lateinit var adapter: RecyclerAdapter<Repository>
 
     lateinit var string: String
 
@@ -54,8 +53,7 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         repositories_screen_recycler.layoutManager = LinearLayoutManager(activity)
-        adapter = RecyclerRepositoriesAdapter()
-        adapter.setListener(this)
+        adapter = RecyclerAdapter(this)
         accessSpinner()
         languageSpinner()
         repositories_screen_recycler.adapter = adapter
@@ -93,8 +91,8 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow {
     }
 
 
-    override fun onClickItem(view: View, data: Any) {
-        viewModel.navigateToRepositoryScreen((data as Repository), viewModel.factory.repositoriesDataSource.userModel.user.value!!.username)
+    override fun onClickItem(view: View, data: Repository) {
+        viewModel.navigateToRepositoryScreen(data, viewModel.factory.repositoriesDataSource.userModel.user.value!!.username)
     }
 
 //    override fun onAttach(activity: Activity?) {

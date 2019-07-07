@@ -24,7 +24,7 @@ class RepositoriesDataSource : BaseDataSource<Repository, RepositoriesResponse>(
     override val errorText: String = App.resourcesApp.getString(R.string.repositories_screen_no_repositories)
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     override val single: Single<RepositoriesResponse> = userModel.user.flatMapSingle {  api.getRepos(it.username, url) }.firstOrError()

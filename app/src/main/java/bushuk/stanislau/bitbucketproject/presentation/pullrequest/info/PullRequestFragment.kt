@@ -1,32 +1,27 @@
 package bushuk.stanislau.bitbucketproject.presentation.pullrequest.info
 
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import bushuk.stanislau.bitbucketproject.R
-import bushuk.stanislau.bitbucketproject.adapters.RecyclerCommitsAdapter
-import bushuk.stanislau.bitbucketproject.adapters.RecyclerReviewersAdapter
+import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentPullRequestBinding
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
+import bushuk.stanislau.bitbucketproject.room.commits.Commit
 import bushuk.stanislau.bitbucketproject.room.user.User
 import kotlinx.android.synthetic.main.fragment_pull_request.*
-import kotlinx.android.synthetic.main.fragment_pull_request.view.*
 
-class PullRequestFragment : Fragment(), ClickFollow {
+class PullRequestFragment : Fragment(), ClickFollow<Any> {
 
     override fun onClickItem(view: View, data: Any) {
-        if (data is User) {
-            viewModel.navigateToUser(data)
-        }
+        viewModel.navigateToUser(data as User)
     }
 
     lateinit var binding: FragmentPullRequestBinding
@@ -50,19 +45,17 @@ class PullRequestFragment : Fragment(), ClickFollow {
             it.viewModel = viewModel
         }
 
-        val adapterCommits = RecyclerCommitsAdapter()
+        val adapterCommits = RecyclerAdapter(this)
         pullrequest_screen_recycler_commits.layoutManager = LinearLayoutManager(activity)
         pullrequest_screen_recycler_commits.adapter = adapterCommits
-        adapterCommits.setListener(this)
 
-        val adapterReviewers = RecyclerReviewersAdapter()
+        val adapterReviewers = RecyclerAdapter(this)
         pullrequest_screen_recycler_reviewers.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         pullrequest_screen_recycler_reviewers.adapter = adapterReviewers
-        adapterReviewers.setListener(this)
 
         viewModel.zipLiveData(viewModel.commits, viewModel.reviewers).observe(this, Observer {
-            adapterCommits.submitList(it!!.first)
-            adapterReviewers.submitList(it.second)
+//            adapterCommits.submitList(it!!.first)
+//            adapterReviewers.submitList(it.second)
         })
 
     }

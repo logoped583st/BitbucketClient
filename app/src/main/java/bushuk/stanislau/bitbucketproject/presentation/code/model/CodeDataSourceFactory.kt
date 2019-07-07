@@ -11,7 +11,7 @@ class CodeDataSourceFactory : DataSource.Factory<String, Code>() {
     lateinit var codeDataSource: CodeDataSource
 
     init {
-        App.component.initCodeComponent().inject(this)
+        //App.component.initCodeComponent().inject(this)
     }
 
     override fun create(): DataSource<String, Code> {

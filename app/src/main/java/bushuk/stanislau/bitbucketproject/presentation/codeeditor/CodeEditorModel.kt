@@ -22,7 +22,7 @@ class CodeEditorModel {
     fun getCode(): Single<String> = scalarApi.getCodeOfFile(userModel.user.value!!.username, repositoryModel.repository.value!!.name, UrlBuilder.repositoryPath!!)
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
 }

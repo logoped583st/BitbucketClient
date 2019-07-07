@@ -1,15 +1,15 @@
 package bushuk.stanislau.bitbucketproject.di.modules.global
 
-import android.content.Context
+import bushuk.stanislau.bitbucketproject.utils.preferences.ISharedPreferencesUtil
 import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class PreferencesModule(val context: Context) {
+abstract class PreferencesModule {
 
-    @Provides
+    @Binds
     @Singleton
-    fun tokenPreferencesModule(): SharedPreferencesUtil = SharedPreferencesUtil(context)
+    abstract fun tokenPreferencesModule(sharedPreferencesUtil: SharedPreferencesUtil): ISharedPreferencesUtil
 }

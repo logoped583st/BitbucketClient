@@ -12,7 +12,7 @@ class PullRequestCommentsDataSourceFactory : DataSource.Factory<String, Comment>
 
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     override fun create(): DataSource<String, Comment> = pullRequestCommentsDataSource

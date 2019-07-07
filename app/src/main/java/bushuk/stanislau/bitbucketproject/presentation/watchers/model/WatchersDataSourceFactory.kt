@@ -12,7 +12,7 @@ class WatchersDataSourceFactory : DataSource.Factory<String, User>() {
     lateinit var watchersDataSource: WatchersDataSource
 
     init {
-        App.component.initWatchersComponent().inject(this)
+        //App.component.initWatchersComponent().inject(this)
     }
 
     override fun create(): DataSource<String, User> {

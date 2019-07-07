@@ -5,7 +5,7 @@ import bushuk.stanislau.bitbucketproject.di.modules.AppModule
 import bushuk.stanislau.bitbucketproject.di.modules.GlobalModule
 import bushuk.stanislau.bitbucketproject.di.modules.ViewModelModule
 import bushuk.stanislau.bitbucketproject.di.modules.auth.AuthLoginModule
-import bushuk.stanislau.bitbucketproject.di.modules.global.CiceroneModule
+import bushuk.stanislau.bitbucketproject.di.modules.global.ApplicationContextProvider
 import bushuk.stanislau.bitbucketproject.di.modules.global.CryptoModule
 import bushuk.stanislau.bitbucketproject.di.modules.global.PreferencesModule
 import bushuk.stanislau.bitbucketproject.di.modules.global.UserModule
@@ -24,7 +24,6 @@ interface AndroidInjectorComponent : AndroidInjector<App> {
 
     @Component.Builder
     abstract class Builder : AndroidInjector.Builder<App>() {
-        abstract fun preferenceModule(module: PreferencesModule): Builder
-        abstract fun cryptoModule(module: CryptoModule): Builder
+        abstract fun appContext(module: ApplicationContextProvider):Builder
     }
 }

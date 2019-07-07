@@ -16,7 +16,7 @@ class CodeEditorViewModel : ViewModel() {
     val code : MutableLiveData<String> = MutableLiveData()
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
         codeEditorModel.getCode()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

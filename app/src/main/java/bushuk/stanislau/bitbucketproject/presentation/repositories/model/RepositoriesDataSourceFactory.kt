@@ -11,7 +11,7 @@ class RepositoriesDataSourceFactory : DataSource.Factory<String, Repository>() {
 
     init {
         Timber.e("FACTORY CONSTRUCROT")
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     override fun create(): DataSource<String, Repository> {

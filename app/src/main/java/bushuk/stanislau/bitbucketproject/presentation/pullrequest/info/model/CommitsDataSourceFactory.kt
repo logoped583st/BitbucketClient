@@ -11,7 +11,7 @@ class CommitsDataSourceFactory : DataSource.Factory<String, Commit>() {
     lateinit var commitsDataSource: CommitsDataSource
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
 

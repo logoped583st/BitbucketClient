@@ -41,7 +41,7 @@ class ReviewersDataSource : BaseDataSource<User, PullRequest>() {
     lateinit var pullRequestModel: PullRequestModel
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     override val single: Single<PullRequest>

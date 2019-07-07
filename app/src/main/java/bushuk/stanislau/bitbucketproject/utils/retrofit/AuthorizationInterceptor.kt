@@ -1,22 +1,12 @@
 package bushuk.stanislau.bitbucketproject.utils.retrofit
 
-import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
+import bushuk.stanislau.bitbucketproject.utils.preferences.ISharedPreferencesUtil
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
 
-class AuthorizationInterceptor : Interceptor {
-
-    @Inject
-    lateinit var sharedPreferences: SharedPreferencesUtil
-
-
-    init {
-        App.component.inject(this)
-    }
-
+class AuthorizationInterceptor @Inject constructor(val sharedPreferences: ISharedPreferencesUtil) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain?): Response {
         val original = chain!!.request()

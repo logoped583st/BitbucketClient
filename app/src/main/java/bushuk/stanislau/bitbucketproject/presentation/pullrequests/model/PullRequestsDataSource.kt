@@ -34,7 +34,7 @@ class PullRequestsDataSource : BaseDataSource<PullRequest, PullRequestResponse>(
     var sortPullRequest: String = ""
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
     override val single: Single<PullRequestResponse> = userModel

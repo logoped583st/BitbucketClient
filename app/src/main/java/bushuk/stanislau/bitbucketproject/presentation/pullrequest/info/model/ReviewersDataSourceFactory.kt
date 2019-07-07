@@ -11,7 +11,7 @@ class ReviewersDataSourceFactory : DataSource.Factory<String, User>() {
     lateinit var reviewersDataSource: ReviewersDataSource
 
     init {
-        App.component.inject(this)
+        //App.component.inject(this)
     }
 
 
