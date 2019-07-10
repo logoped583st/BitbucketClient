@@ -1,6 +1,5 @@
 package bushuk.stanislau.bitbucketproject.presentation.codeeditor
 
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.api.ScalarApi
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel

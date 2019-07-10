@@ -21,16 +21,14 @@ import kotlinx.android.synthetic.main.login_fragment.*
 import ru.terrakok.cicerone.Router
 import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Singleton
 
 
-class LoginWebFragment : Fragment(), Injectable {
+class AuthWebFragment : Fragment(), Injectable {
 
     @Inject
     lateinit var tokenPreferences: ISharedPreferencesUtil
 
     @Inject
-    @Singleton
     lateinit var router: Router
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

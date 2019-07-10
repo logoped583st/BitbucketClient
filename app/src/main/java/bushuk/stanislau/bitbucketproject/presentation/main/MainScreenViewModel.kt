@@ -2,6 +2,7 @@ package bushuk.stanislau.bitbucketproject.presentation.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import bushuk.stanislau.bitbucketproject.di.scopes.DrawerScope
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.room.user.User
 import bushuk.stanislau.bitbucketproject.utils.preferences.ISharedPreferencesUtil
@@ -13,6 +14,7 @@ import javax.inject.Inject
 
 class MainScreenViewModel @Inject constructor(
         val tokenPreferences: ISharedPreferencesUtil,
+        @DrawerScope
         val router: Router,
         val userModel: UserModel
 ) : ViewModel() {
@@ -28,8 +30,7 @@ class MainScreenViewModel @Inject constructor(
                 .subscribe {
                     user.postValue(it)
                 }
-
-      //  drawerNavigation(ScreensNavigator.RepositoriesScreen(), App.resourcesApp.getString(R.string.toolbar_title_repository))
+        //drawerNavigation(ScreensNavigator.RepositoriesScreen(), App.resourcesApp.getString(R.string.toolbar_title_repository))
     }
 
     fun drawerNavigation(screen: SupportAppScreen, toolbarTitle: String) {

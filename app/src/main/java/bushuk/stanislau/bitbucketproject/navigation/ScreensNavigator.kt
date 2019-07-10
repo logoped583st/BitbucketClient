@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import bushuk.stanislau.bitbucketproject.MainActivity
 import bushuk.stanislau.bitbucketproject.presentation.addrepository.AddRepositoryFragment
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginFragment
-import bushuk.stanislau.bitbucketproject.presentation.auth.LoginWebFragment
+import bushuk.stanislau.bitbucketproject.presentation.auth.AuthWebFragment
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersFragment
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingFragment
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenFragment
@@ -25,7 +25,7 @@ object ScreensNavigator {
     }
 
     class WebLoginScreen:SupportAppScreen(){
-        override fun getFragment(): Fragment = LoginWebFragment()
+        override fun getFragment(): Fragment = AuthWebFragment()
     }
 
 

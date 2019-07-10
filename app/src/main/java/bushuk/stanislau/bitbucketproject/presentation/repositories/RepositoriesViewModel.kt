@@ -8,8 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import bushuk.stanislau.bitbucketproject.BaseDataSource
-import bushuk.stanislau.bitbucketproject.LoadingViewModel
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSource
+import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
@@ -29,7 +29,8 @@ import javax.inject.Inject
 
 class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = RepositoriesDataSourceFactory(),
                             source: BaseDataSource<Repository, RepositoriesResponse> = factory.repositoriesDataSource)
-    : LoadingViewModel<Repository, RepositoriesResponse>(source) {
+    : ListLoadingViewModel<Repository, RepositoriesResponse>(source) {
+
     override val state: LiveData<LoadingState.LoadingStateSealed<RepositoriesResponse, CustomExceptions>>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
@@ -45,11 +46,7 @@ class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = Reposit
 
     private var repositoryLanguage: String? = null
 
-    init {
-        //App.component.inject(this)
-    }
-
-    var repositories: LiveData<PagedList<Repository>> = LivePagedListBuilder<String, Repository>(factory, Constants.listPagedConfig).build()
+    var repositories: LiveData<PagedList<Repository>> = LivePagedListBuilder(factory, Constants.listPagedConfig).build()
 
 
     fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<Repository>) {

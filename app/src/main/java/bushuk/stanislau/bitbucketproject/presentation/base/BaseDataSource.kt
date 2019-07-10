@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject
+package bushuk.stanislau.bitbucketproject.presentation.base
 
 import android.view.View
 import androidx.paging.PageKeyedDataSource
@@ -15,22 +15,14 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
-import javax.inject.Inject
 
-abstract class BaseDataSource<Value, Response> : PageKeyedDataSource<String, Value>() {
+abstract class BaseDataSource<Value, Response> : PageKeyedDataSource<String, Value>(),
+        IBaseDataSource<Response, Value> {
 
-    @Inject
-    lateinit var loadingModel: LoadingModel
+
+    var loadingModel: LoadingModel = LoadingModel()
 
     private val compositeDisposable = CompositeDisposable()
-
-    abstract val errorText: String
-
-    abstract val single: Single<Response>
-
-    abstract fun onResult(value: Response, callback: LoadCallback<String, Value>)
-
-    abstract fun onResultInitial(value: Response, callback: LoadInitialCallback<String, Value>)
 
     private val loadingEvent: PublishSubject<LoadingModel> = PublishSubject.create()
 

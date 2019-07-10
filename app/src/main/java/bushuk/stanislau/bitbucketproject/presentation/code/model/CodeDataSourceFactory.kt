@@ -1,7 +1,6 @@
 package bushuk.stanislau.bitbucketproject.presentation.code.model
 
 import androidx.paging.DataSource
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.room.code.Code
 import javax.inject.Inject
 

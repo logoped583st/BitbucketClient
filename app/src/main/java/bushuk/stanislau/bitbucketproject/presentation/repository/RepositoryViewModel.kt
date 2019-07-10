@@ -1,9 +1,8 @@
 package bushuk.stanislau.bitbucketproject.presentation.repository
 
+import android.view.MenuItem
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.view.MenuItem
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.global.UserModel

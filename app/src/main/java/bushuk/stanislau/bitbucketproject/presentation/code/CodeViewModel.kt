@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import bushuk.stanislau.bitbucketproject.BaseDataSource
-import bushuk.stanislau.bitbucketproject.LoadingViewModel
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSource
+import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
@@ -25,7 +25,7 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 class CodeViewModel(val factory: CodeDataSourceFactory = CodeDataSourceFactory(), val source: BaseDataSource<Code, CodeResponse> = factory.codeDataSource) :
-        LoadingViewModel<Code, CodeResponse>(source) {
+        ListLoadingViewModel<Code, CodeResponse>(source) {
     override val state: LiveData<LoadingState.LoadingStateSealed<CodeResponse, CustomExceptions>>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 

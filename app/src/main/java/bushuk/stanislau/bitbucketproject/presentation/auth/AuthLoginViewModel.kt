@@ -2,12 +2,11 @@ package bushuk.stanislau.bitbucketproject.presentation.auth
 
 import android.util.Base64
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import bushuk.stanislau.bitbucketproject.BaseLoadingViewModel
-import bushuk.stanislau.bitbucketproject.addDisposable
 import bushuk.stanislau.bitbucketproject.global.IUserModel
 import bushuk.stanislau.bitbucketproject.global.LoadingState
 import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
+import bushuk.stanislau.bitbucketproject.presentation.base.LoadingViewModel
+import bushuk.stanislau.bitbucketproject.presentation.base.addDisposable
 import bushuk.stanislau.bitbucketproject.room.user.User
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import bushuk.stanislau.bitbucketproject.utils.extensions.applyDefaultSchedulers
@@ -17,19 +16,17 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class AuthLoginViewModel @Inject constructor(
-        val tokenPreferences: ISharedPreferencesUtil,
-        val router: Router,
-        val userModel: IUserModel,
-        val authLoginModel: AuthLoginModel
-) : BaseLoadingViewModel<User>(), AuthProtocol.IAuthLogin<User> {
+        private val tokenPreferences: ISharedPreferencesUtil,
+        private val router: Router,
+        private val userModel: IUserModel,
+        private val authLoginModel: AuthLoginRepository
+) : LoadingViewModel<User>() {
 
 
     override val state: LiveData<LoadingState.LoadingStateSealed<User, CustomExceptions>>
-        get() = super.state()
-    val snackBarAction: MutableLiveData<String> = MutableLiveData()
+        get() = super.state
 
-
-    override fun getUserBaseAuth(login: String, password: String) {
+    fun getUserBaseAuth(login: String, password: String) {
         val credentials = "$login:$password"
         val basic: String = "Basic " + Base64.encodeToString(credentials
                 .toByteArray(Charsets.ISO_8859_1), Base64.NO_WRAP)
@@ -49,7 +46,7 @@ class AuthLoginViewModel @Inject constructor(
                 ))
     }
 
-    override fun navigateToBrowser() {
+    fun navigateToBrowser() {
         router.newChain(ScreensNavigator.WebLoginScreen())
     }
 

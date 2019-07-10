@@ -14,7 +14,6 @@ import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentPullRequestBinding
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
-import bushuk.stanislau.bitbucketproject.room.commits.Commit
 import bushuk.stanislau.bitbucketproject.room.user.User
 import kotlinx.android.synthetic.main.fragment_pull_request.*
 

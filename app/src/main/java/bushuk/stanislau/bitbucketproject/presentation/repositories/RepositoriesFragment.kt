@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import bushuk.stanislau.bitbucketproject.BackPressFragment
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.RecyclerScrollFab
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
@@ -24,14 +24,12 @@ import com.github.clans.fab.FloatingActionMenu
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_repositories.*
 
-class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow<Repository> {
+class RepositoriesFragment : Fragment(), LifecycleOwner, ClickFollow<Repository> {
 
     lateinit var viewModel: RepositoriesViewModel
     lateinit var binding: FragmentRepositoriesBinding
     private val access: MutableList<String> = mutableListOf("All", "Public", "Private")
     private lateinit var adapter: RecyclerAdapter<Repository>
-
-    lateinit var string: String
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -54,17 +52,17 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow<Re
         super.onViewCreated(view, savedInstanceState)
         repositories_screen_recycler.layoutManager = LinearLayoutManager(activity)
         adapter = RecyclerAdapter(this)
-        accessSpinner()
-        languageSpinner()
+       // accessSpinner()
+       // languageSpinner()
         repositories_screen_recycler.adapter = adapter
 
         repositories_screen_recycler.addOnScrollListener(object : RecyclerScrollFab() {
             override fun getFab(): FloatingActionMenu = repositories_screen_settings_menu
         })
 
-        viewModel.observeSearchView(binding.repositoriesScreenSearchView, this, adapter)
-        viewModel.observeLanguageChangeSpinner(binding.repositoriesScreenSpinnerLanguage, this, adapter)
-        viewModel.observeAccessChangeSpinner(binding.repositoriesScreenSpinnerAccess, this, adapter)
+     //   viewModel.observeSearchView(binding.repositoriesScreenSearchView, this, adapter)
+     //   viewModel.observeLanguageChangeSpinner(binding.repositoriesScreenSpinnerLanguage, this, adapter)
+      //  viewModel.observeAccessChangeSpinner(binding.repositoriesScreenSpinnerAccess, this, adapter)
 
 
         viewModel.repositories.observe(this, Observer(adapter::submitList))
@@ -78,17 +76,17 @@ class RepositoriesFragment : BackPressFragment(), LifecycleOwner, ClickFollow<Re
         }
     }
 
-    override fun onBackPressed() {
-        if ((repositories_screen_slide_panel != null)) {
-            if (repositories_screen_slide_panel.panelState != SlidingUpPanelLayout.PanelState.COLLAPSED) {
-                repositories_screen_slide_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-            } else {
-                viewModel.exitFromFragment()
-            }
-        } else {
-            viewModel.exitFromFragment()
-        }
-    }
+//    override fun onBackPressed() {
+//        if ((repositories_screen_slide_panel != null)) {
+//            if (repositories_screen_slide_panel.panelState != SlidingUpPanelLayout.PanelState.COLLAPSED) {
+//                repositories_screen_slide_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+//            } else {
+//                viewModel.exitFromFragment()
+//            }
+//        } else {
+//            viewModel.exitFromFragment()
+//        }
+//    }
 
 
     override fun onClickItem(view: View, data: Repository) {

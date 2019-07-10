@@ -11,7 +11,6 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import ru.terrakok.cicerone.NavigatorHolder
 import javax.inject.Inject
-import javax.inject.Singleton
 
 
 class MainActivity : AppCompatActivity(), LifecycleOwner, Injectable, HasSupportFragmentInjector {

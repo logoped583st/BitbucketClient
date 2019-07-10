@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject
+package bushuk.stanislau.bitbucketproject.presentation.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -11,12 +11,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import timber.log.Timber
-import javax.inject.Inject
 
-abstract class LoadingViewModel<Value, Response>(dataSource: BaseDataSource<Value, Response>) : BaseLoadingViewModel<Response>() {
+abstract class ListLoadingViewModel<Value, Response>(dataSource: BaseDataSource<Value, Response>) : LoadingViewModel<Response>() {
 
-    @Inject
-    lateinit var liveLoadingModel: LiveLoadingModel
+
+    val liveLoadingModel: LiveLoadingModel = LiveLoadingModel()
 
     init {
         compositeDisposable.add(dataSource.getLoadingEventObservable()
@@ -37,7 +36,7 @@ abstract class LoadingViewModel<Value, Response>(dataSource: BaseDataSource<Valu
 }
 
 
-abstract class BaseLoadingViewModel<Response> : ViewModel(), IBaseLoadingViewModel<Response> {
+abstract class LoadingViewModel<Response> : ViewModel(), IBaseLoadingViewModel<Response> {
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private val loadingState = LoadingState<Response, CustomExceptions>()
@@ -62,9 +61,8 @@ abstract class BaseLoadingViewModel<Response> : ViewModel(), IBaseLoadingViewMod
         loadingState.state.postValue(LoadingState.LoadingStateSealed.Error(exception))
     }
 
-    fun state(): LiveData<LoadingState.LoadingStateSealed<Response, CustomExceptions>> {
-        return loadingState.state
-    }
+    override val state: LiveData<LoadingState.LoadingStateSealed<Response, CustomExceptions>> = loadingState.state
+
 
     protected fun Single<Response>.loadingSubscriber(
             onSuccess: (data: Response) -> Unit,
@@ -94,8 +92,10 @@ interface IBaseLoadingViewModel<Response> {
     val state: LiveData<LoadingState.LoadingStateSealed<Response, CustomExceptions>>
 }
 
-fun <T> BaseLoadingViewModel<T>.addDisposable(disposable: Disposable) {
+fun <T> LoadingViewModel<T>.addDisposable(disposable: Disposable) {
     compositeDisposable.add(disposable)
 }
+
+
 
 

@@ -2,7 +2,6 @@ package bushuk.stanislau.bitbucketproject.presentation.pullrequest.comments
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.api.ScalarApi
 import bushuk.stanislau.bitbucketproject.global.PullRequestModel
 import bushuk.stanislau.bitbucketproject.global.UserModel

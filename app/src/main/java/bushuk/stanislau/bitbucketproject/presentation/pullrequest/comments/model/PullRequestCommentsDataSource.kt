@@ -1,7 +1,7 @@
 package bushuk.stanislau.bitbucketproject.presentation.pullrequest.comments.model
 
 import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.BaseDataSource
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSource
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.global.PullRequestModel

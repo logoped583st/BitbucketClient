@@ -1,14 +1,14 @@
 package bushuk.stanislau.bitbucketproject.presentation.repositories.model
 
 import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.BaseDataSource
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSource
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import io.reactivex.Single
-import timber.log.Timber
+import java.lang.Exception
 import javax.inject.Inject
 
 class RepositoriesDataSource : BaseDataSource<Repository, RepositoriesResponse>() {
@@ -27,7 +27,8 @@ class RepositoriesDataSource : BaseDataSource<Repository, RepositoriesResponse>(
         //App.component.inject(this)
     }
 
-    override val single: Single<RepositoriesResponse> = userModel.user.flatMapSingle {  api.getRepos(it.username, url) }.firstOrError()
+    override val single: Single<RepositoriesResponse> = Single.error(Exception("asd"))
+            //userModel.user.flatMapSingle {  api.getRepos(it.username, url) }.firstOrError()
 
 
     override fun loadNextPage(url: String): Single<RepositoriesResponse> = api.getReposNextPage(url)

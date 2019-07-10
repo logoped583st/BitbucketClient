@@ -2,7 +2,6 @@ package bushuk.stanislau.bitbucketproject.presentation.snippets
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.api.ScalarApi
 import io.reactivex.Single

@@ -35,7 +35,7 @@ abstract class BaseFollowFragment<ViewModel : BaseFollowViewModel<DataSource.Fac
         viewModel = ViewModelProviders.of(this).get(viewModelClass)
 
         binding.let {
-            it.setLifecycleOwner(this)
+            it.lifecycleOwner = this
             it.loading = (viewModel).liveLoadingModel
         }
 

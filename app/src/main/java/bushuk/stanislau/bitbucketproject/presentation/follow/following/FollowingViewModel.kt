@@ -2,18 +2,13 @@ package bushuk.stanislau.bitbucketproject.presentation.follow.following
 
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
-import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.BaseDataSource
-import bushuk.stanislau.bitbucketproject.constants.Screens
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSource
 import bushuk.stanislau.bitbucketproject.global.LoadingState
 import bushuk.stanislau.bitbucketproject.presentation.follow.BaseFollowViewModel
-import bushuk.stanislau.bitbucketproject.presentation.follow.followers.models.FollowersDataSourceFactory
 import bushuk.stanislau.bitbucketproject.presentation.follow.following.models.FollowingDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.followers.Followers
 import bushuk.stanislau.bitbucketproject.room.user.User
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
-import ru.terrakok.cicerone.Router
-import javax.inject.Inject
 
 class FollowingViewModel(factory: FollowingDataSourceFactory = FollowingDataSourceFactory(),
                          private val source: BaseDataSource<User, Followers> = factory.followingDataSource)

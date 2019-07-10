@@ -4,14 +4,14 @@ import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.global.UserModel
-import bushuk.stanislau.bitbucketproject.presentation.follow.FollowDataSource
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSource
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
 import bushuk.stanislau.bitbucketproject.room.followers.Followers
 import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.Single
 import javax.inject.Inject
 
-class WatchersDataSource : FollowDataSource() {
+class WatchersDataSource : BaseDataSource<User, Followers>() {
 
     override fun onResult(value: Followers, callback: LoadCallback<String, User>) {
         callback.onResult(value.values, value.next)
@@ -43,7 +43,4 @@ class WatchersDataSource : FollowDataSource() {
         api.getWatchersRepo(userModel.user.value!!.username, it.uuid)
     }.firstOrError()
 
-    override fun doOnEmpty() {
-      //  loadingModel.errorText.postValue(App.resourcesApp.getString(R.string.watchers_screen_error_text))
-    }
 }

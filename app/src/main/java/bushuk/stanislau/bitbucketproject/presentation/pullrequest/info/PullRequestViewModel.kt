@@ -8,11 +8,9 @@ import androidx.paging.PagedList
 import com.google.android.material.snackbar.Snackbar
 import android.view.View
 import android.widget.Button
-import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.LoadingViewModel
+import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.constants.Constants
-import bushuk.stanislau.bitbucketproject.constants.Screens
 import bushuk.stanislau.bitbucketproject.global.LoadingState
 import bushuk.stanislau.bitbucketproject.global.PullRequestModel
 import bushuk.stanislau.bitbucketproject.global.UserModel
@@ -27,12 +25,11 @@ import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import ru.terrakok.cicerone.Router
 import timber.log.Timber
 import javax.inject.Inject
 
 class PullRequestViewModel(private val reviewersDataSourceFactory: ReviewersDataSourceFactory = ReviewersDataSourceFactory(),
-                           source: ReviewersDataSource = reviewersDataSourceFactory.reviewersDataSource) : LoadingViewModel<User, PullRequest>(source) {
+                           source: ReviewersDataSource = reviewersDataSourceFactory.reviewersDataSource) : ListLoadingViewModel<User, PullRequest>(source) {
     override val state: LiveData<LoadingState.LoadingStateSealed<PullRequest, CustomExceptions>>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 

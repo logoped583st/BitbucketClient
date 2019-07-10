@@ -12,25 +12,28 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import bushuk.stanislau.bitbucketproject.BackPress
-import bushuk.stanislau.bitbucketproject.BackPressFragment
+import bushuk.stanislau.bitbucketproject.presentation.base.BackPress
+import bushuk.stanislau.bitbucketproject.presentation.base.BackPressFragment
 import bushuk.stanislau.bitbucketproject.Injectable
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.ActivityMainScreenBinding
 import bushuk.stanislau.bitbucketproject.databinding.NavHeaderMainScreenBinding
+import bushuk.stanislau.bitbucketproject.di.scopes.DrawerScope
+import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
 import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main_screen.*
 import kotlinx.android.synthetic.main.activity_main_screen.view.*
+import ru.terrakok.cicerone.NavigatorHolder
 import javax.inject.Inject
 
 const val MAIN_SCREEN_ROUTER = "MAIN_SCREEN_ROUTER"
 
 class MainScreenFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener, Injectable {
 
-//    @Inject
-//    @ActivityScope
-//    lateinit var localCiceroneHolder: NavigatorHolder
+    @Inject
+    @DrawerScope
+    lateinit var mainScreenHolder: NavigatorHolder
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -83,13 +86,12 @@ class MainScreenFragment : Fragment(), NavigationView.OnNavigationItemSelectedLi
     }
 
     override fun onPause() {
-        // localCiceroneHolder.removeNavigator()
-
+        mainScreenHolder.removeNavigator()
         super.onPause()
     }
 
     override fun onResume() {
-        // localCiceroneHolder.setNavigator(MainNavigator(activity, R.id.main_screen_container))
+        mainScreenHolder.setNavigator(MainNavigator(activity, R.id.main_screen_container))
         super.onResume()
     }
 

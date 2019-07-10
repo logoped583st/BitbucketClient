@@ -7,6 +7,7 @@ import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
 import bushuk.stanislau.bitbucketproject.room.user.User
 
 class FollowersFragment : BaseFollowFragment<FollowersViewModel>() {
+
     override val clickFollow: ClickFollow<User>
         get() = this
 

@@ -1,6 +1,5 @@
 package bushuk.stanislau.bitbucketproject.global
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
 import io.reactivex.Observable

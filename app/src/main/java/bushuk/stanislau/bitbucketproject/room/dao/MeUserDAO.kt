@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import bushuk.stanislau.bitbucketproject.room.user.User
-import io.reactivex.Maybe
 import io.reactivex.Single
 
 @Dao

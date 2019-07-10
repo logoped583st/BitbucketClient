@@ -4,46 +4,36 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.text.Html
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import bushuk.stanislau.bitbucketproject.Injectable
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.ActivityAuthLoginBinding
 import bushuk.stanislau.bitbucketproject.global.LoadingState
-import bushuk.stanislau.bitbucketproject.room.user.User
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseBindingFragment
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_auth_login.*
 import javax.inject.Inject
 
-class AuthLoginFragment : Fragment(), Injectable {
+class AuthLoginFragment : BaseBindingFragment<AuthLoginViewModel, ActivityAuthLoginBinding>(), Injectable {
+
+    override val viewModelClass: Class<AuthLoginViewModel> = AuthLoginViewModel::class.java
+
+    override val containerId: Int = R.layout.activity_auth_login
+
+    override val scope: ViewModelScope = ViewModelScope.FRAGMENT
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    lateinit var viewModel: AuthProtocol.IAuthLogin<User>
+    override lateinit var viewModelFactory: ViewModelProvider.Factory
 
     lateinit var dialog: ProgressDialog
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(AuthLoginViewModel::class.java)
-
-        val authLoginActivityMainBinding: ActivityAuthLoginBinding =
-                DataBindingUtil.inflate(inflater, R.layout.activity_auth_login, container, false)
-
-        authLoginActivityMainBinding.let {
-            it.loginViewModel = viewModel
-            it.lifecycleOwner = viewLifecycleOwner
-        }
-        return authLoginActivityMainBinding.root
+    override fun applyBinding() {
+        binding.loginViewModel = viewModel
     }
 
 

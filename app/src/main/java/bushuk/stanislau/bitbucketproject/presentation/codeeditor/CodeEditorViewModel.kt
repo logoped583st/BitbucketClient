@@ -2,7 +2,6 @@ package bushuk.stanislau.bitbucketproject.presentation.codeeditor
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import bushuk.stanislau.bitbucketproject.App
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber

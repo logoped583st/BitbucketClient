@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 
 class MainActivityViewModel @Inject constructor(
-        val router: Router,
-        val tokenPreferences: ISharedPreferencesUtil)
+        private val router: Router,
+        private val tokenPreferences: ISharedPreferencesUtil)
     : ViewModel() {
 
 

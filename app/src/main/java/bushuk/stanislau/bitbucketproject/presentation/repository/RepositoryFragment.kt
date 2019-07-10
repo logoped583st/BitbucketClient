@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
-import bushuk.stanislau.bitbucketproject.BackPressFragment
+import bushuk.stanislau.bitbucketproject.presentation.base.BackPressFragment
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoryBinding
 import com.sothree.slidinguppanel.SlidingUpPanelLayout

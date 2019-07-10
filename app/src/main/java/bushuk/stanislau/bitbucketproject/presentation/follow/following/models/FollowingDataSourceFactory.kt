@@ -1,9 +1,6 @@
 package bushuk.stanislau.bitbucketproject.presentation.follow.following.models
 
 import androidx.paging.DataSource
-import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.api.Api
-import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.room.user.User
 import javax.inject.Inject
 
