@@ -2,67 +2,59 @@ package bushuk.stanislau.bitbucketproject.presentation.repositories
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import bushuk.stanislau.bitbucketproject.Injectable
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.RecyclerScrollFab
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.ListOfLanguages
 import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoriesBinding
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseBindingFragment
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import com.github.clans.fab.FloatingActionMenu
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_repositories.*
+import javax.inject.Inject
 
-class RepositoriesFragment : Fragment(), LifecycleOwner, ClickFollow<Repository> {
+class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, FragmentRepositoriesBinding>(), LifecycleOwner, ClickFollow<Repository>, Injectable {
 
-    lateinit var viewModel: RepositoriesViewModel
-    lateinit var binding: FragmentRepositoriesBinding
-    private val access: MutableList<String> = mutableListOf("All", "Public", "Private")
-    private lateinit var adapter: RecyclerAdapter<Repository>
+    @Inject
+    override lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    override val containerId: Int = R.layout.fragment_repositories
+    override val viewModelClass: Class<RepositoriesViewModel> = RepositoriesViewModel::class.java
+    override val scope: ViewModelScope = ViewModelScope.ACTIVITY
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil
-                .inflate(inflater, R.layout.fragment_repositories, container, false)
-        viewModel = ViewModelProviders.of(this).get(RepositoriesViewModel::class.java)
-
-        binding.let {
-            it.fragment = this
-            it.viewModel = viewModel
-            it.lifecycleOwner = this
-        }
-
-        return binding.root
+    override fun applyBinding() {
+        binding.viewModel = viewModel
+        binding.fragment = this
     }
 
+    private val access: MutableList<String> = mutableListOf("All", "Public", "Private")
+    private lateinit var adapter: RecyclerAdapter<Repository>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         repositories_screen_recycler.layoutManager = LinearLayoutManager(activity)
         adapter = RecyclerAdapter(this)
-       // accessSpinner()
-       // languageSpinner()
+         accessSpinner()
+         languageSpinner()
         repositories_screen_recycler.adapter = adapter
 
         repositories_screen_recycler.addOnScrollListener(object : RecyclerScrollFab() {
             override fun getFab(): FloatingActionMenu = repositories_screen_settings_menu
         })
 
-     //   viewModel.observeSearchView(binding.repositoriesScreenSearchView, this, adapter)
-     //   viewModel.observeLanguageChangeSpinner(binding.repositoriesScreenSpinnerLanguage, this, adapter)
-      //  viewModel.observeAccessChangeSpinner(binding.repositoriesScreenSpinnerAccess, this, adapter)
+        //   viewModel.observeSearchView(binding.repositoriesScreenSearchView, this, adapter)
+        //   viewModel.observeLanguageChangeSpinner(binding.repositoriesScreenSpinnerLanguage, this, adapter)
+        //  viewModel.observeAccessChangeSpinner(binding.repositoriesScreenSpinnerAccess, this, adapter)
 
 
         viewModel.repositories.observe(this, Observer(adapter::submitList))
@@ -90,7 +82,7 @@ class RepositoriesFragment : Fragment(), LifecycleOwner, ClickFollow<Repository>
 
 
     override fun onClickItem(view: View, data: Repository) {
-        viewModel.navigateToRepositoryScreen(data, viewModel.factory.repositoriesDataSource.userModel.user.value!!.username)
+        //viewModel.navigateToRepositoryScreen(data, viewModel.factory.repositoriesDataSource.userModel.user.value!!.username)
     }
 
 //    override fun onAttach(activity: Activity?) {

@@ -2,12 +2,16 @@ package bushuk.stanislau.bitbucketproject.di.modules
 
 import bushuk.stanislau.bitbucketproject.MainActivity
 import bushuk.stanislau.bitbucketproject.di.modules.auth.AuthLoginModule
-import bushuk.stanislau.bitbucketproject.di.modules.mainScreen.MainScreenModule
+import bushuk.stanislau.bitbucketproject.di.modules.drawer.MainScreenModule
+import bushuk.stanislau.bitbucketproject.di.modules.drawer.RepositoriesModule
 import bushuk.stanislau.bitbucketproject.di.scopes.DrawerScope
 import bushuk.stanislau.bitbucketproject.di.scopes.SimpleFragmentScope
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginFragment
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthWebFragment
+import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersFragment
+import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingFragment
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenFragment
+import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -29,6 +33,18 @@ abstract class AppModule {
     @DrawerScope
     @ContributesAndroidInjector(modules = [MainScreenModule::class])
     abstract fun MainScreenFragmentInjector(): MainScreenFragment
+
+    @DrawerScope
+    @ContributesAndroidInjector(modules = [RepositoriesModule::class])
+    abstract fun RepositoriesFragmentInjector(): RepositoriesFragment
+
+    @DrawerScope
+    @ContributesAndroidInjector
+    abstract fun FollowersFragmentInjector(): FollowersFragment
+
+    @DrawerScope
+    @ContributesAndroidInjector()
+    abstract fun FollowingsFragmentInjector(): FollowingFragment
 
 
 }

@@ -6,6 +6,7 @@ import bushuk.stanislau.bitbucketproject.MainActivityViewModel
 import bushuk.stanislau.bitbucketproject.di.ViewModelKey
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenViewModel
+import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.AndroidInjectionModule
@@ -28,6 +29,12 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MainScreenViewModel::class)
     abstract fun bindMainScreenViewModel(mainScreenViewModel: MainScreenViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RepositoriesViewModel::class)
+    abstract fun bindRepositoriesViewModel(repositoriesViewModel: RepositoriesViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

@@ -8,18 +8,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSource
-import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.global.LoadingState
-import bushuk.stanislau.bitbucketproject.presentation.repositories.model.RepositoriesDataSourceFactory
+import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
-import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import com.jakewharton.rxbinding2.widget.RxAdapterView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,18 +24,17 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = RepositoriesDataSourceFactory(),
-                            source: BaseDataSource<Repository, RepositoriesResponse> = factory.repositoriesDataSource)
-    : ListLoadingViewModel<Repository, RepositoriesResponse>(source) {
+class RepositoriesViewModel @Inject constructor(val factory: RepositoriesDataSourceFactory)
+    : ListLoadingViewModel<RepositoriesResponse>() {
 
     override val state: LiveData<LoadingState.LoadingStateSealed<RepositoriesResponse, CustomExceptions>>
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        get() = super.state
 
     //@Inject
   //  lateinit var router: Router
 
-    @Inject
-    lateinit var repositoryModel: RepositoryModel
+   // @Inject
+   // lateinit var repositoryModel: RepositoryModel
 
     private var repositoryName: String? = null
 
@@ -60,6 +56,7 @@ class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = Reposit
                     repositoryName = it
                     queryChange(lifecycleOwner, adapter)
                 })
+
     }
 
 
@@ -94,8 +91,8 @@ class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = Reposit
 
     private fun queryChange(lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<Repository>) {
         repositories.removeObservers(lifecycleOwner)
-        factory.repositoriesDataSource.url = UrlBuilder.buildQuery(repositoryName, repositoryAccess, repositoryLanguage)
-        repositories = LivePagedListBuilder<String, Repository>(factory, Constants.listPagedConfig).build()
+        //factory.repositoriesDataSource.url = UrlBuilder.buildQuery(repositoryName, repositoryAccess, repositoryLanguage)
+        repositories = LivePagedListBuilder(factory, Constants.listPagedConfig).build()
         repositories.observe(lifecycleOwner, Observer(adapter::submitList))
     }
 
@@ -104,13 +101,13 @@ class RepositoriesViewModel(val factory: RepositoriesDataSourceFactory = Reposit
     }
 
     fun navigateToRepositoryScreen(repository: Repository, username: String) {
-        repositoryModel.repository.onNext(repository)
+    //    repositoryModel.repository.onNext(repository)
         // router.navigateTo(Screens.REPOSITORY_SCREEN, listOf(repository.links.avatar.href, username))
     }
 
     override fun onCleared() {
         super.onCleared()
-        factory.repositoriesDataSource.invalidate()
+        // factory.repositoriesDataSource.invalidate()
     }
 
     fun navigateToAddRepository(view: View) {

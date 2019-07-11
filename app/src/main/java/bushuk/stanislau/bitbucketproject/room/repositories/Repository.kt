@@ -1,5 +1,7 @@
 package bushuk.stanislau.bitbucketproject.room.repositories
 
+import bushuk.stanislau.bitbucketproject.room.BaseListResponse
+import bushuk.stanislau.bitbucketproject.room.ItemResponse
 import java.util.*
 
 data class Repository(val uuid: String,
@@ -10,4 +12,6 @@ data class Repository(val uuid: String,
                       val links: Links,
                       val mainbranch: MainBranch?,
                       val language: String,
-                      val owner: Owner)
+                      val owner: Owner) : ItemResponse()
+
+class RepositoriesResponse : BaseListResponse<Repository>()

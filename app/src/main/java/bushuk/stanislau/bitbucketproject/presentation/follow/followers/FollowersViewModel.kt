@@ -11,8 +11,8 @@ import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import javax.inject.Inject
 
 class FollowersViewModel
-@Inject constructor(factory: FollowersDataSourceFactory, val source: BaseDataSource<User, Followers>)
-    : BaseFollowViewModel<DataSource.Factory<String, User>>(factory, source) {
+@Inject constructor(factory: FollowersDataSourceFactory)
+    : BaseFollowViewModel<DataSource.Factory<String, User>>(factory) {
     override val state: LiveData<LoadingState.LoadingStateSealed<Followers, CustomExceptions>>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
@@ -29,7 +29,7 @@ class FollowersViewModel
 
     override fun onCleared() {
         super.onCleared()
-        source.invalidate()
+        //source.invalidate()
     }
 
 

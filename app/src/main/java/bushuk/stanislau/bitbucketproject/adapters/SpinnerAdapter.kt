@@ -12,7 +12,7 @@ import android.widget.TextView
 class SpinnerAdapter(context: Context, layout: Int, listString: MutableList<String>) : ArrayAdapter<String>(context, layout, listString) {
 
     @SuppressLint("RtlHardcoded")
-    override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val v = super.getView(position, convertView, parent)
         (v as TextView).gravity = Gravity.RIGHT
         return v

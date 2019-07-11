@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.di.modules.mainScreen
+package bushuk.stanislau.bitbucketproject.di.modules.drawer
 
 import bushuk.stanislau.bitbucketproject.di.scopes.DrawerScope
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowProtocol

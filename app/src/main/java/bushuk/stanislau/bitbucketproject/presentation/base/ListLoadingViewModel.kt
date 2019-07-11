@@ -1,32 +1,24 @@
 package bushuk.stanislau.bitbucketproject.presentation.base
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.PagedList
 import bushuk.stanislau.bitbucketproject.global.LiveLoadingModel
 import bushuk.stanislau.bitbucketproject.global.LoadingState
+import bushuk.stanislau.bitbucketproject.room.BaseListResponse
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import bushuk.stanislau.bitbucketproject.utils.extensions.mapErrors
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import timber.log.Timber
 
-abstract class ListLoadingViewModel<Value, Response>(dataSource: BaseDataSource<Value, Response>) : LoadingViewModel<Response>() {
+
+abstract class ListLoadingViewModel<Response> : LoadingViewModel<Response>() {
 
 
     val liveLoadingModel: LiveLoadingModel = LiveLoadingModel()
 
-    init {
-        compositeDisposable.add(dataSource.getLoadingEventObservable()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    Timber.e(it.toString())
-                    liveLoadingModel.notifyLoading(it)
-                }, {
-                    Timber.e(it.message)
-                }))
-    }
 
     override fun onCleared() {
         compositeDisposable.clear()
@@ -80,6 +72,16 @@ abstract class LoadingViewModel<Response> : ViewModel(), IBaseLoadingViewModel<R
         }, {
             onError(it)
         })
+    }
+
+    protected fun LiveData<PagedList<BaseListResponse<*>>>.loadingSubscriber(): LiveData<PagedList<BaseListResponse<*>>> {
+        val result = MediatorLiveData<PagedList<*>>()
+
+
+        result.addSource(this) { data ->
+            result.setValue(data)
+        }
+        return this
     }
 
     override fun onCleared() {

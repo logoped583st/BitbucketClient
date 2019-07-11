@@ -8,7 +8,7 @@ import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
 
 class UserModel @Inject constructor(val api: Api,
-                                    var tokenPreferencesUtil: SharedPreferencesUtil) : IUserModel {
+                                    tokenPreferencesUtil: SharedPreferencesUtil) : IUserModel {
 
 
 

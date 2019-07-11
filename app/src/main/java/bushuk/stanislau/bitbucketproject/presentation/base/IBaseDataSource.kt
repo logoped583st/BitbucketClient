@@ -8,6 +8,8 @@ interface IBaseDataSource<Response, Value> {
 
     val single: Single<Response>
 
+    fun loadNextPage(url: String): Single<Response>
+
     fun onResult(value: Response, callback: PageKeyedDataSource.LoadCallback<String, Value>)
 
     fun onResultInitial(value: Response, callback: PageKeyedDataSource.LoadInitialCallback<String, Value>)

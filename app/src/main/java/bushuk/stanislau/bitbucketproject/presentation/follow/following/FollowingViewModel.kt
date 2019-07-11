@@ -10,9 +10,8 @@ import bushuk.stanislau.bitbucketproject.room.followers.Followers
 import bushuk.stanislau.bitbucketproject.room.user.User
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 
-class FollowingViewModel(factory: FollowingDataSourceFactory = FollowingDataSourceFactory(),
-                         private val source: BaseDataSource<User, Followers> = factory.followingDataSource)
-    : BaseFollowViewModel<DataSource.Factory<String, User>>(factory, source)  {
+class FollowingViewModel(factory: FollowingDataSourceFactory = FollowingDataSourceFactory())
+    : BaseFollowViewModel<DataSource.Factory<String, User>>(factory)  {
     override val state: LiveData<LoadingState.LoadingStateSealed<Followers, CustomExceptions>>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
@@ -29,6 +28,6 @@ class FollowingViewModel(factory: FollowingDataSourceFactory = FollowingDataSour
 
     override fun onCleared() {
         super.onCleared()
-        source.invalidate()
+      //  source.invalidate()
     }
 }

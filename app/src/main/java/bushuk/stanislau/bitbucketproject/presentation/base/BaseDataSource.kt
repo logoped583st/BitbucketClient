@@ -8,8 +8,6 @@ import bushuk.stanislau.bitbucketproject.room.followers.Followers
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
-import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -19,16 +17,11 @@ import timber.log.Timber
 abstract class BaseDataSource<Value, Response> : PageKeyedDataSource<String, Value>(),
         IBaseDataSource<Response, Value> {
 
-
-    var loadingModel: LoadingModel = LoadingModel()
+    private var loadingModel: LoadingModel = LoadingModel()
 
     private val compositeDisposable = CompositeDisposable()
 
     private val loadingEvent: PublishSubject<LoadingModel> = PublishSubject.create()
-
-    fun getLoadingEventObservable(): Observable<LoadingModel> = loadingEvent
-
-    abstract fun loadNextPage(url: String): Single<Response>
 
     private fun loading(a: Response) {
         loadingModel.loading = View.INVISIBLE
@@ -65,7 +58,6 @@ abstract class BaseDataSource<Value, Response> : PageKeyedDataSource<String, Val
 
 
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, Value>) {
-        resetLoading()
         loadingEvent.onNext(loadingModel)
         compositeDisposable.add(single
                 .subscribeOn(Schedulers.io())
@@ -94,11 +86,6 @@ abstract class BaseDataSource<Value, Response> : PageKeyedDataSource<String, Val
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    private fun resetLoading() {
-        loadingModel.noInfo = View.INVISIBLE
-        loadingModel.errorText = errorText
-        loadingModel.loading = View.VISIBLE
-    }
 
     override fun invalidate() {
         compositeDisposable.clear()

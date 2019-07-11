@@ -1,46 +1,29 @@
 package bushuk.stanislau.bitbucketproject.presentation.follow
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.paging.DataSource
 import androidx.recyclerview.widget.LinearLayoutManager
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentFollowersBinding
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseBindingFragment
 import bushuk.stanislau.bitbucketproject.room.user.User
 import kotlinx.android.synthetic.main.fragment_followers.*
 
-abstract class BaseFollowFragment<ViewModel : BaseFollowViewModel<DataSource.Factory<String, User>>> : Fragment(), ClickFollow<User> {
+abstract class BaseFollowFragment<ViewModel : BaseFollowViewModel<DataSource.Factory<String, User>>> :
+        BaseBindingFragment<ViewModel, FragmentFollowersBinding>(), ClickFollow<User> {
 
-    abstract var viewModelClass: Class<ViewModel>
+    override fun applyBinding() {
+        binding.loading = viewModel.liveLoadingModel
+    }
 
-    lateinit var viewModel: ViewModel
+    override val containerId: Int = R.layout.fragment_followers
 
-    lateinit var binding: FragmentFollowersBinding
+    override val scope: ViewModelScope = ViewModelScope.ACTIVITY
 
     abstract val clickFollow: ClickFollow<User>
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-
-        binding = DataBindingUtil
-                .inflate(layoutInflater, R.layout.fragment_followers, container, false)
-
-        viewModel = ViewModelProviders.of(this).get(viewModelClass)
-
-        binding.let {
-            it.lifecycleOwner = this
-            it.loading = (viewModel).liveLoadingModel
-        }
-
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

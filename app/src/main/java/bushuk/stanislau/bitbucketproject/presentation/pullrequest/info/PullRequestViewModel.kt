@@ -28,8 +28,7 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
-class PullRequestViewModel(private val reviewersDataSourceFactory: ReviewersDataSourceFactory = ReviewersDataSourceFactory(),
-                           source: ReviewersDataSource = reviewersDataSourceFactory.reviewersDataSource) : ListLoadingViewModel<User, PullRequest>(source) {
+class PullRequestViewModel(private val reviewersDataSourceFactory: ReviewersDataSourceFactory = ReviewersDataSourceFactory()) : ListLoadingViewModel<PullRequest>() {
     override val state: LiveData<LoadingState.LoadingStateSealed<PullRequest, CustomExceptions>>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
