@@ -13,18 +13,19 @@ import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.global.LoadingState
 import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
-import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import com.jakewharton.rxbinding2.widget.RxAdapterView
 import io.reactivex.android.schedulers.AndroidSchedulers
+import ru.terrakok.cicerone.Router
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class RepositoriesViewModel @Inject constructor(val factory: RepositoriesDataSourceFactory)
+class RepositoriesViewModel @Inject constructor(val factory: RepositoriesDataSourceFactory,
+                                                val router: Router)
     : ListLoadingViewModel<RepositoriesResponse>() {
 
     override val state: LiveData<LoadingState.LoadingStateSealed<RepositoriesResponse, CustomExceptions>>
@@ -63,8 +64,6 @@ class RepositoriesViewModel @Inject constructor(val factory: RepositoriesDataSou
     fun observeLanguageChangeSpinner(spinner: AppCompatSpinner, lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<Repository>) {
         compositeDisposable.add(RxAdapterView.itemSelections(spinner)
                 .skipInitialValue()
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .map { (spinner.adapter as SpinnerAdapter).getItem(it) }
                 .subscribe({
                     repositoryLanguage = it

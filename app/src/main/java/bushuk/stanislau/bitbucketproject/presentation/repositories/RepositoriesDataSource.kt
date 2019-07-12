@@ -13,6 +13,10 @@ import javax.inject.Inject
 class RepositoriesDataSource @Inject constructor(val api: Api, userModel: UserModel) : BaseDataSource<Repository, RepositoriesResponse>(),
         RepositoriesProtocol.IRepositoriesDataSource {
 
+    override fun queryChange(query: String) {
+        url = query
+    }
+
 
     var url: String? = null
 

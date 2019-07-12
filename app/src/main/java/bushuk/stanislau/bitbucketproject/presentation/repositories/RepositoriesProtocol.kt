@@ -6,5 +6,9 @@ import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 
 interface RepositoriesProtocol {
 
-    interface IRepositoriesDataSource : IBaseDataSource<RepositoriesResponse, Repository>
+    interface IRepositoriesDataSource : IBaseDataSource<RepositoriesResponse, Repository> {
+
+        fun queryChange(query: String)
+
+    }
 }

@@ -1,7 +1,11 @@
 package bushuk.stanislau.bitbucketproject.utils.extensions
 
+import androidx.appcompat.widget.AppCompatSpinner
+import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
+import com.jakewharton.rxbinding2.widget.RxAdapterView
+import com.jakewharton.rxbinding2.widget.itemSelections
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -47,6 +51,13 @@ fun <T> Single<T>.mapErrors(call: (error: CustomExceptions) -> Unit): Single<T> 
 
         return@onErrorResumeNext Single.error<T>(customError)
     }
+}
+
+fun RxAdapterView.spinner(spinner: AppCompatSpinner): Observable<String> {
+    return spinner.itemSelections()
+            .skipInitialValue()
+            .map { (spinner.adapter as SpinnerAdapter).getItem(it) }
+
 }
 
 
