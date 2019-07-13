@@ -7,12 +7,12 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
 
-class UserModel @Inject constructor(val api: Api,
+class UserModel @Inject constructor(api: Api,
                                     tokenPreferencesUtil: SharedPreferencesUtil) : IUserModel {
 
 
 
-    val user: BehaviorSubject<User> = BehaviorSubject.create()
+    override val user: BehaviorSubject<User> = BehaviorSubject.create()
 
     override fun setUser(user: User) {
         this.user.onNext(user)
@@ -37,4 +37,6 @@ interface IUserModel {
     fun setNewUser(userName: String)
 
     fun setUser(user: User)
+
+    val user: BehaviorSubject<User>
 }

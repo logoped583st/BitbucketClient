@@ -87,7 +87,9 @@ abstract class BaseDataSource<Value, Response> : PageKeyedDataSource<String, Val
     }
 
 
+
     override fun invalidate() {
         compositeDisposable.clear()
+        super.invalidate()
     }
 }

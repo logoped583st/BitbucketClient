@@ -7,47 +7,8 @@ object UrlBuilder {
     var repositoryPath: String? = null
 
 
-    private fun queryLanguageBuilder(language: String?): String? {
-        Timber.e(language)
-        return if (language == "All" || language == null) {
-            ""
-        } else {
-            "AND(language=\"$language\")"
-        }
-    }
 
-    private fun queryAccessBuilder(access: String?): String? {
-        return when (access) {
-            "All" -> ""
 
-            "Private" -> "AND(is_private=" + true + ")"
-
-            "Public" -> "AND(is_private=" + false + ")"
-
-            else -> {
-                null
-            }
-        }
-    }
-
-    fun buildQuery(repositoryName: String?, repositoryAccess: String?, repositoryLanguage: String?): String {
-        var query = ""
-        query += if (repositoryName.isNullOrEmpty()) {
-            "(name~\"\")"
-        } else {
-            "(name~\"$repositoryName\")"
-        }
-
-        if (!(repositoryLanguage).isNullOrEmpty()) {
-            query += queryLanguageBuilder(repositoryLanguage)
-        }
-
-        if (!repositoryAccess.isNullOrEmpty()) {
-            query += queryAccessBuilder(repositoryAccess)
-        }
-
-        return query
-    }
 
 
     fun buildPathWithHash(path: String, hash: String) {

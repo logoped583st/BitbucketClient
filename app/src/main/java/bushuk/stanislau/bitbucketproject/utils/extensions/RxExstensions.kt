@@ -4,12 +4,12 @@ import androidx.appcompat.widget.AppCompatSpinner
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
-import com.jakewharton.rxbinding2.widget.RxAdapterView
 import com.jakewharton.rxbinding2.widget.itemSelections
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.net.SocketTimeoutException
 
@@ -25,6 +25,11 @@ fun Completable.applyDefaultSchedulers(): Completable {
 
 fun <T> Observable<T>.applyDefaultSchedulers(): Observable<T> {
     return this.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+}
+
+fun <T> Observable<T>.applyMainSchedulers(): Observable<T> {
+    return this.subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
 }
 
@@ -53,11 +58,15 @@ fun <T> Single<T>.mapErrors(call: (error: CustomExceptions) -> Unit): Single<T> 
     }
 }
 
-fun RxAdapterView.spinner(spinner: AppCompatSpinner): Observable<String> {
-    return spinner.itemSelections()
+fun AppCompatSpinner.spinnerRx(call: (string: String) -> Unit): Disposable {
+    return itemSelections()
             .skipInitialValue()
-            .map { (spinner.adapter as SpinnerAdapter).getItem(it) }
-
+            .applyMainSchedulers()
+            .distinctUntilChanged()
+            .map { (this.adapter as SpinnerAdapter).getItem(it) }
+            .subscribe {
+                call(it)
+            }
 }
 
 

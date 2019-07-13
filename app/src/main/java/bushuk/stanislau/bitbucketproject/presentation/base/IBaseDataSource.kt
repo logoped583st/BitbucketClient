@@ -13,4 +13,6 @@ interface IBaseDataSource<Response, Value> {
     fun onResult(value: Response, callback: PageKeyedDataSource.LoadCallback<String, Value>)
 
     fun onResultInitial(value: Response, callback: PageKeyedDataSource.LoadInitialCallback<String, Value>)
+
+    fun invalidate()
 }

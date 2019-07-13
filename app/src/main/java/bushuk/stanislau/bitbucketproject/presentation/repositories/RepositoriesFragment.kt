@@ -18,6 +18,7 @@ import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoriesBinding
 import bushuk.stanislau.bitbucketproject.presentation.base.BaseBindingFragment
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
+import bushuk.stanislau.bitbucketproject.utils.extensions.spinnerRx
 import com.github.clans.fab.FloatingActionMenu
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_repositories.*
@@ -42,9 +43,9 @@ class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, Fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        repositories_screen_recycler.layoutManager = LinearLayoutManager(activity)
+        repositories_screen_recycler.layoutManager = LinearLayoutManager(context)
         adapter = RecyclerAdapter(this)
-         accessSpinner()
+        accessSpinner()
          languageSpinner()
         repositories_screen_recycler.adapter = adapter
 
@@ -93,15 +94,22 @@ class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, Fragment
 //    }
 
     private fun languageSpinner() {
-        val languageSpinnerAdapter: ArrayAdapter<String> = SpinnerAdapter(activity!!, android.R.layout.simple_spinner_item, ListOfLanguages.listOfLanguages())
+        val languageSpinnerAdapter: ArrayAdapter<String> = SpinnerAdapter(context, android.R.layout.simple_spinner_item, ListOfLanguages.listOfLanguages())
         languageSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         repositories_screen_spinner_language.adapter = languageSpinnerAdapter
+
+        repositories_screen_spinner_language.spinnerRx {
+            viewModel.repositoryLanguageChanged(it)
+        }
     }
 
     private fun accessSpinner() {
         val accessSpinnerAdapter: ArrayAdapter<String> = SpinnerAdapter(activity!!, android.R.layout.simple_spinner_item, access)
         accessSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         repositories_screen_spinner_access.adapter = accessSpinnerAdapter
+        repositories_screen_spinner_access.spinnerRx {
+            viewModel.repositoryAccessChanged(it)
+        }
     }
 
     fun clickFilterFab(view: View) {

@@ -12,8 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import bushuk.stanislau.bitbucketproject.presentation.base.BackPress
-import bushuk.stanislau.bitbucketproject.presentation.base.BackPressFragment
 import bushuk.stanislau.bitbucketproject.Injectable
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.ActivityMainScreenBinding
@@ -21,6 +19,8 @@ import bushuk.stanislau.bitbucketproject.databinding.NavHeaderMainScreenBinding
 import bushuk.stanislau.bitbucketproject.di.scopes.DrawerScope
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
 import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
+import bushuk.stanislau.bitbucketproject.presentation.base.BackPress
+import bushuk.stanislau.bitbucketproject.presentation.base.BackPressFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main_screen.*
 import kotlinx.android.synthetic.main.activity_main_screen.view.*
