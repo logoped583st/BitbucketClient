@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment
 import bushuk.stanislau.bitbucketproject.Injectable
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.constants.Constants
+import bushuk.stanislau.bitbucketproject.di.CiceroneFactory
+import bushuk.stanislau.bitbucketproject.di.Cicerones
 import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
 import bushuk.stanislau.bitbucketproject.utils.preferences.ISharedPreferencesUtil
 import kotlinx.android.synthetic.main.login_fragment.*
@@ -29,7 +31,7 @@ class AuthWebFragment : Fragment(), Injectable {
     lateinit var tokenPreferences: ISharedPreferencesUtil
 
     @Inject
-    lateinit var router: Router
+    lateinit var ciceroneFactory: CiceroneFactory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.login_fragment, container, false)
@@ -60,7 +62,7 @@ class AuthWebFragment : Fragment(), Injectable {
                     tempString = url.subSequence(url.indexOf("=") + 1, url.indexOf("%3D")).toString()
                     Timber.e(tempString)
                     tokenPreferences.setToken(tempString)
-                    router.newRootScreen(ScreensNavigator.StartScreen())
+                    ciceroneFactory.provideCicerone(Cicerones.GLOBAL).router.newRootScreen(ScreensNavigator.StartScreen())
                     return true
                 }
 

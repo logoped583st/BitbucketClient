@@ -3,13 +3,16 @@ package bushuk.stanislau.bitbucketproject.di.modules
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import bushuk.stanislau.bitbucketproject.MainActivityViewModel
+import bushuk.stanislau.bitbucketproject.di.ViewModelFactory
 import bushuk.stanislau.bitbucketproject.di.ViewModelKey
+import bushuk.stanislau.bitbucketproject.di.modules.global.CiceroneDrawerModule
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenViewModel
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.AndroidInjectionModule
+import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 
 @Module(includes = [AndroidInjectionModule::class])
@@ -29,7 +32,6 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MainScreenViewModel::class)
     abstract fun bindMainScreenViewModel(mainScreenViewModel: MainScreenViewModel): ViewModel
-
 
     @Binds
     @IntoMap

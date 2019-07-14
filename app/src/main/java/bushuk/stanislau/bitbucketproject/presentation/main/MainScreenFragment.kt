@@ -16,15 +16,15 @@ import bushuk.stanislau.bitbucketproject.Injectable
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.ActivityMainScreenBinding
 import bushuk.stanislau.bitbucketproject.databinding.NavHeaderMainScreenBinding
+import bushuk.stanislau.bitbucketproject.di.CiceroneFactory
+import bushuk.stanislau.bitbucketproject.di.Cicerones
 import bushuk.stanislau.bitbucketproject.di.scopes.DrawerScope
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
-import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
 import bushuk.stanislau.bitbucketproject.presentation.base.BackPress
 import bushuk.stanislau.bitbucketproject.presentation.base.BackPressFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main_screen.*
 import kotlinx.android.synthetic.main.activity_main_screen.view.*
-import ru.terrakok.cicerone.NavigatorHolder
 import javax.inject.Inject
 
 const val MAIN_SCREEN_ROUTER = "MAIN_SCREEN_ROUTER"
@@ -33,7 +33,7 @@ class MainScreenFragment : Fragment(), NavigationView.OnNavigationItemSelectedLi
 
     @Inject
     @DrawerScope
-    lateinit var mainScreenHolder: NavigatorHolder
+    lateinit var mainScreenHolder: CiceroneFactory
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -86,14 +86,16 @@ class MainScreenFragment : Fragment(), NavigationView.OnNavigationItemSelectedLi
     }
 
     override fun onPause() {
-        mainScreenHolder.removeNavigator()
+        mainScreenHolder.provideCicerone(Cicerones.DRAWER).navigatorHolder.removeNavigator()
         super.onPause()
     }
 
+
     override fun onResume() {
-        mainScreenHolder.setNavigator(MainNavigator(activity, R.id.main_screen_container))
         super.onResume()
+        mainScreenHolder.provideCicerone(Cicerones.DRAWER).navigatorHolder.setNavigator(MainNavigator(activity, childFragmentManager, R.id.main_screen_container))
     }
+
 
     //    override fun onBackPressed() {
 //        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
@@ -120,16 +122,16 @@ class MainScreenFragment : Fragment(), NavigationView.OnNavigationItemSelectedLi
 
         when (item.itemId) {
             R.id.drawer_menu_repositories -> {
-                viewModel.drawerNavigation(ScreensNavigator.RepositoriesScreen(), this.getString(R.string.toolbar_title_repository))
+                viewModel.drawerNavigation(MainScreenViewModel.NavigateTo.REPOSITORIES)
             }
             R.id.drawer_menu_followers -> {
-                viewModel.drawerNavigation(ScreensNavigator.FollowersScreen(), this.getString(R.string.toolbar_title_followers))
+                viewModel.drawerNavigation(MainScreenViewModel.NavigateTo.FOLLOWERS)
             }
             R.id.drawer_menu_following -> {
-                viewModel.drawerNavigation(ScreensNavigator.FollowingScreen(), this.getString(R.string.toolbar_title_following))
+                viewModel.drawerNavigation(MainScreenViewModel.NavigateTo.FOLLOWING)
             }
             R.id.drawer_menu_snippets -> {
-                viewModel.drawerNavigation(ScreensNavigator.SnippetsScreen(), this.getString(R.string.toolbar_title_snippets))
+                viewModel.drawerNavigation(MainScreenViewModel.NavigateTo.SNIPPETS)
             }
 
         }

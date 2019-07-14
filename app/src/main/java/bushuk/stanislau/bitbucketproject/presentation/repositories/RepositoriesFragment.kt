@@ -53,11 +53,6 @@ class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, Fragment
             override fun getFab(): FloatingActionMenu = repositories_screen_settings_menu
         })
 
-        //   viewModel.observeSearchView(binding.repositoriesScreenSearchView, this, adapter)
-        //   viewModel.observeLanguageChangeSpinner(binding.repositoriesScreenSpinnerLanguage, this, adapter)
-        //  viewModel.observeAccessChangeSpinner(binding.repositoriesScreenSpinnerAccess, this, adapter)
-
-
         viewModel.repositories.observe(this, Observer(adapter::submitList))
 
         repositories_screen_slide_constraint.setOnClickListener {
@@ -67,6 +62,7 @@ class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, Fragment
         repositories_screen_slide_panel.setFadeOnClickListener {
             repositories_screen_slide_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
         }
+
     }
 
 //    override fun onBackPressed() {

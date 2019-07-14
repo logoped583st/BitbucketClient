@@ -1,4 +1,4 @@
-package bushuk.stanislau.bitbucketproject.di.modules
+package bushuk.stanislau.bitbucketproject.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

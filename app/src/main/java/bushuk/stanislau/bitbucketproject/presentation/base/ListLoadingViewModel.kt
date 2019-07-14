@@ -3,10 +3,8 @@ package bushuk.stanislau.bitbucketproject.presentation.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagedList
 import bushuk.stanislau.bitbucketproject.global.LiveLoadingModel
 import bushuk.stanislau.bitbucketproject.global.LoadingState
-import bushuk.stanislau.bitbucketproject.room.BaseListResponse
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import bushuk.stanislau.bitbucketproject.utils.extensions.mapErrors
 import io.reactivex.Single
@@ -74,14 +72,16 @@ abstract class LoadingViewModel<Response> : ViewModel(), IBaseLoadingViewModel<R
         })
     }
 
-    protected fun LiveData<PagedList<BaseListResponse<*>>>.loadingSubscriber(): LiveData<PagedList<BaseListResponse<*>>> {
-        val result = MediatorLiveData<PagedList<*>>()
-
+    fun LiveData<Response>.loadingSubscriber(): LiveData<Response> {
+        val result = MediatorLiveData<Response>()
+        loading()
 
         result.addSource(this) { data ->
-            result.setValue(data)
+
+            result.postValue(data)
+            data(data)
         }
-        return this
+        return result
     }
 
     override fun onCleared() {

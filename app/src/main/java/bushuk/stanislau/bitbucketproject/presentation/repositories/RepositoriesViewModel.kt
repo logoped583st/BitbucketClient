@@ -8,6 +8,7 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
+import bushuk.stanislau.bitbucketproject.di.CiceroneFactory
 import bushuk.stanislau.bitbucketproject.global.LoadingState
 import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
@@ -15,20 +16,18 @@ import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import io.reactivex.android.schedulers.AndroidSchedulers
-import ru.terrakok.cicerone.Router
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class RepositoriesViewModel @Inject constructor(private val factory: RepositoriesDataSourceFactory,
                                                 private val queryModel: RepositoriesQueryModel,
-                                                private val router: Router
+                                                private val routerFactory: CiceroneFactory
 
 )
-    : ListLoadingViewModel<RepositoriesResponse>() {
+    : ListLoadingViewModel<PagedList<Repository>>() {
 
-    override val state: LiveData<LoadingState.LoadingStateSealed<RepositoriesResponse, CustomExceptions>>
+    override val state: LiveData<LoadingState.LoadingStateSealed<PagedList<Repository>, CustomExceptions>>
         get() = super.state
-
 
     private var repositoryName: String? = null
 
@@ -36,22 +35,22 @@ class RepositoriesViewModel @Inject constructor(private val factory: Repositorie
 
     private var repositoryLanguage: String? = null
 
-    val repositories: LiveData<PagedList<Repository>> by lazy { LivePagedListBuilder(factory, Constants.listPagedConfig).build() }
+    val repositories: LiveData<PagedList<Repository>> = LivePagedListBuilder(factory, Constants.listPagedConfig).build().loadingSubscriber()
 
 
-    fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<Repository>) {
-        compositeDisposable.add(RxSearchView.queryTextChanges(searchView)
-                .skipInitialValue()
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .map { it.toString() }
-                .debounce(1000, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    repositoryName = it
-                    // queryChange(lifecycleOwner, adapter)
-                })
+//    fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<Repository>) {
+//        compositeDisposable.add(RxSearchView.queryTextChanges(searchView)
+//                .skipInitialValue()
+//                .subscribeOn(AndroidSchedulers.mainThread())
+//                .map { it.toString() }
+//                .debounce(1000, TimeUnit.MILLISECONDS)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe {
+//                    repositoryName = it
+//                    // queryChange(lifecycleOwner, adapter)
+//                })
+//    }
 
-    }
 
     private fun queryChange() {
         queryModel.buildQuery(repositoryName, repositoryAccess, repositoryLanguage)

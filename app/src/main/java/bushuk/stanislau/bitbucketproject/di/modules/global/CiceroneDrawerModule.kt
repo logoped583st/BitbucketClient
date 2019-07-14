@@ -1,10 +1,7 @@
 package bushuk.stanislau.bitbucketproject.di.modules.global
 
-import bushuk.stanislau.bitbucketproject.di.CiceroneFactory
-import bushuk.stanislau.bitbucketproject.di.CiceroneFactoryImpl
 import bushuk.stanislau.bitbucketproject.di.CiceroneKey
 import bushuk.stanislau.bitbucketproject.di.Cicerones
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
@@ -13,20 +10,13 @@ import ru.terrakok.cicerone.Router
 import javax.inject.Singleton
 
 @Module
-abstract class CiceroneModule {
-
-    @Binds
-    abstract fun provideFactory(cicerone: CiceroneFactoryImpl): CiceroneFactory
-}
-
-@Module
-class CiceroneGlobalModule {
+class CiceroneDrawerModule {
 
     private val cicerone: Cicerone<Router> = Cicerone.create()
 
-    @Singleton
     @Provides
+    @Singleton
     @IntoMap
-    @CiceroneKey(Cicerones.GLOBAL)
-    fun provideGlobalRouter(): Cicerone<Router> = cicerone
+    @CiceroneKey(Cicerones.DRAWER)
+    fun provideDrawerRouter(): Cicerone<Router> = cicerone
 }

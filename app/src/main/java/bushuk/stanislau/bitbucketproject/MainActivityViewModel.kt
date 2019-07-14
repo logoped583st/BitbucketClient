@@ -1,23 +1,25 @@
 package bushuk.stanislau.bitbucketproject
 
 import androidx.lifecycle.ViewModel
+import bushuk.stanislau.bitbucketproject.di.CiceroneFactory
+import bushuk.stanislau.bitbucketproject.di.Cicerones
 import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
 import bushuk.stanislau.bitbucketproject.utils.preferences.ISharedPreferencesUtil
-import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 
 class MainActivityViewModel @Inject constructor(
-        private val router: Router,
+        routerFactory: CiceroneFactory,
         private val tokenPreferences: ISharedPreferencesUtil)
     : ViewModel() {
 
+    private val router = routerFactory.provideCicerone(Cicerones.GLOBAL).router
 
     fun navigate() {
         if (tokenPreferences.getToken() == null) {
-            router.newRootChain(ScreensNavigator.LoginScreen())
+            router.newRootScreen(ScreensNavigator.LoginScreen())
         } else {
-            router.navigateTo(ScreensNavigator.MainScreen())
+            router.newRootScreen(ScreensNavigator.MainScreen())
         }
     }
 
