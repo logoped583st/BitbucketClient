@@ -44,7 +44,6 @@ class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullReq
 
 
     init {
-        //App.component.initPullRequestsComponent().inject(this)
         factory.pullRequestsDataSource.queryPullRequest = UrlBuilder.buildQueryPullRequest(namePullRequest, statePullRequest)
         factory.pullRequestsDataSource.sortPullRequest = UrlBuilder.buildSortPullRequest(sortPullRequest)
     }

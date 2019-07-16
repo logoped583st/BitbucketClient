@@ -1,12 +1,9 @@
 package bushuk.stanislau.bitbucketproject.presentation.repositories
 
 import android.view.View
-import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.di.CiceroneFactory
 import bushuk.stanislau.bitbucketproject.global.LoadingState
@@ -14,20 +11,15 @@ import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
-import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
-import io.reactivex.android.schedulers.AndroidSchedulers
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class RepositoriesViewModel @Inject constructor(private val factory: RepositoriesDataSourceFactory,
                                                 private val queryModel: RepositoriesQueryModel,
                                                 private val routerFactory: CiceroneFactory
 
-)
-    : ListLoadingViewModel<PagedList<Repository>>() {
+) : ListLoadingViewModel<RepositoriesResponse>() {
 
-    override val state: LiveData<LoadingState.LoadingStateSealed<PagedList<Repository>, CustomExceptions>>
-        get() = super.state
+    override val state: LiveData<LoadingState.LoadingStateSealed<RepositoriesResponse, CustomExceptions>> = factory.state.value!!.state
 
     private var repositoryName: String? = null
 
@@ -35,8 +27,7 @@ class RepositoriesViewModel @Inject constructor(private val factory: Repositorie
 
     private var repositoryLanguage: String? = null
 
-    val repositories: LiveData<PagedList<Repository>> = LivePagedListBuilder(factory, Constants.listPagedConfig).build().loadingSubscriber()
-
+    val repositories: LiveData<PagedList<Repository>> = LivePagedListBuilder(factory, Constants.listPagedConfig).build()
 
 //    fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<Repository>) {
 //        compositeDisposable.add(RxSearchView.queryTextChanges(searchView)

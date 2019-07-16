@@ -14,7 +14,7 @@ interface CiceroneFactory {
 class CiceroneFactoryImpl @Inject constructor(private val creator: Map<Cicerones, @JvmSuppressWildcards Cicerone<Router>>) : CiceroneFactory {
 
     override fun provideCicerone(scope: Cicerones): Cicerone<Router> {
-        return creator[scope] ?: throw Exception("STAS TY DOLBAEB")
+        return creator[scope] ?: throw Exception("STAS")
     }
 
 }
