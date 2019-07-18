@@ -10,7 +10,7 @@ import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.Single
 import javax.inject.Inject
 
-class FollowersDataSource @Inject constructor(val api: Api, val userModel: UserModel) : BaseDataSource<User, Followers>(), FollowProtocol.IFollowDataSource {
+class FollowersDataSource @Inject constructor(val api: Api, val userModel: UserModel) : BaseDataSource<User, Followers>() {
 
     override fun onResult(value: Followers, callback: LoadCallback<String, User>) {
         callback.onResult(value.values, value.next)

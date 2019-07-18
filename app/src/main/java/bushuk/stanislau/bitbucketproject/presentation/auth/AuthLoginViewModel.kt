@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import bushuk.stanislau.bitbucketproject.di.CiceroneFactory
 import bushuk.stanislau.bitbucketproject.di.Cicerones
 import bushuk.stanislau.bitbucketproject.global.IUserModel
-import bushuk.stanislau.bitbucketproject.global.LoadingState
+import bushuk.stanislau.bitbucketproject.global.LoadingStateSealed
 import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
 import bushuk.stanislau.bitbucketproject.presentation.base.LoadingViewModel
 import bushuk.stanislau.bitbucketproject.presentation.base.addDisposable
@@ -25,7 +25,7 @@ class AuthLoginViewModel @Inject constructor(
 
     private val router = routerFactory.provideCicerone(Cicerones.GLOBAL).router
 
-    override val state: LiveData<LoadingState.LoadingStateSealed<User, CustomExceptions>>
+    override val state: LiveData<LoadingStateSealed<User, CustomExceptions>>
         get() = super.state
 
     fun getUserBaseAuth(login: String, password: String) {

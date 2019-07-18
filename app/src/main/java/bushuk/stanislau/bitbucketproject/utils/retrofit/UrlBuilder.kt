@@ -1,7 +1,5 @@
 package bushuk.stanislau.bitbucketproject.utils.retrofit
 
-import timber.log.Timber
-
 object UrlBuilder {
 
     var repositoryPath: String? = null

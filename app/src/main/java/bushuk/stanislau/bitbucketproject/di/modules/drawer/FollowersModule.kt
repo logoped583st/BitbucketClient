@@ -1,7 +1,6 @@
 package bushuk.stanislau.bitbucketproject.di.modules.drawer
 
 import bushuk.stanislau.bitbucketproject.di.scopes.DrawerScope
-import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowProtocol
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersDataSource
 import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersDataSourceFactory
 import dagger.Binds
@@ -12,7 +11,7 @@ abstract class FollowersModule {
 
     @Binds
     @DrawerScope
-    abstract fun provideFollowersDataSource(followersDataSource: FollowersDataSource): FollowProtocol.IFollowDataSource
+    abstract fun provideFollowersDataSource(followersDataSource: FollowersDataSource): FollowersDataSource
 
     @Binds
     @DrawerScope

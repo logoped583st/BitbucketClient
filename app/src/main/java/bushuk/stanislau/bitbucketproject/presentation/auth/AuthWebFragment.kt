@@ -20,7 +20,6 @@ import bushuk.stanislau.bitbucketproject.di.Cicerones
 import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
 import bushuk.stanislau.bitbucketproject.utils.preferences.ISharedPreferencesUtil
 import kotlinx.android.synthetic.main.login_fragment.*
-import ru.terrakok.cicerone.Router
 import timber.log.Timber
 import javax.inject.Inject
 

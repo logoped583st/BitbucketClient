@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import bushuk.stanislau.bitbucketproject.Injectable
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.ActivityAuthLoginBinding
-import bushuk.stanislau.bitbucketproject.global.LoadingState
+import bushuk.stanislau.bitbucketproject.global.LoadingStateSealed
 import bushuk.stanislau.bitbucketproject.presentation.base.BaseBindingFragment
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import com.jakewharton.rxbinding2.widget.RxTextView
@@ -64,10 +64,10 @@ class AuthLoginFragment : BaseBindingFragment<AuthLoginViewModel, ActivityAuthLo
 
         viewModel.state.observe(this, Observer {
             when (it) {
-                is LoadingState.LoadingStateSealed.Loading<*, *> -> {
+                is LoadingStateSealed.Loading<*, *> -> {
                     dialog.show()
                 }
-                is LoadingState.LoadingStateSealed.Error<*, CustomExceptions> -> {
+                is LoadingStateSealed.Error<*, CustomExceptions> -> {
                     when (it.error) {
                         is CustomExceptions.UnAuthorized -> {
                             auth_login_screen_login_input_layout.error = " "

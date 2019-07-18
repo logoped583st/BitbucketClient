@@ -14,6 +14,7 @@ object Constants {
     private const val ITEMS_IN_PAGE: Int = 10
 
     val listPagedConfig = PagedList.Config.Builder()
+
             .setPageSize(ITEMS_IN_PAGE)
             .setInitialLoadSizeHint(ITEMS_IN_PAGE)
             .setEnablePlaceholders(true)

@@ -1,35 +1,34 @@
 package bushuk.stanislau.bitbucketproject.presentation.pullrequest.info
 
+import android.view.View
+import android.widget.Button
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.google.android.material.snackbar.Snackbar
-import android.view.View
-import android.widget.Button
-import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.constants.Constants
-import bushuk.stanislau.bitbucketproject.global.LoadingState
+import bushuk.stanislau.bitbucketproject.global.LoadingStateSealed
 import bushuk.stanislau.bitbucketproject.global.PullRequestModel
 import bushuk.stanislau.bitbucketproject.global.UserModel
+import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.model.CommitsDataSourceFactory
-import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.model.ReviewersDataSource
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.model.ReviewersDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.commits.Commit
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestParticipants
 import bushuk.stanislau.bitbucketproject.room.user.User
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
+import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
-class PullRequestViewModel(private val reviewersDataSourceFactory: ReviewersDataSourceFactory = ReviewersDataSourceFactory()) : ListLoadingViewModel<PullRequest>() {
-    override val state: LiveData<LoadingState.LoadingStateSealed<PullRequest, CustomExceptions>>
+class PullRequestViewModel(private val reviewersDataSourceFactory: ReviewersDataSourceFactory = ReviewersDataSourceFactory()) : ListLoadingViewModel<PullRequest>(TODO()) {
+    override val state: LiveData<LoadingStateSealed<PullRequest, CustomExceptions>>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
     @Inject

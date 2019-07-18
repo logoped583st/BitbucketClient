@@ -10,7 +10,7 @@ import androidx.paging.PagedList
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
-import bushuk.stanislau.bitbucketproject.global.LoadingState
+import bushuk.stanislau.bitbucketproject.global.LoadingStateSealed
 import bushuk.stanislau.bitbucketproject.global.PullRequestModel
 import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequests.model.PullRequestsDataSourceFactory
@@ -26,8 +26,8 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullRequestsDataSourceFactory())
-    : ListLoadingViewModel<PullRequestResponse>() {
-    override val state: LiveData<LoadingState.LoadingStateSealed<PullRequestResponse, CustomExceptions>>
+    : ListLoadingViewModel<PullRequestResponse>(TODO()) {
+    override val state: LiveData<LoadingStateSealed<PullRequestResponse, CustomExceptions>>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
     //@Inject

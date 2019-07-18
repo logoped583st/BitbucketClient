@@ -5,14 +5,12 @@ import androidx.lifecycle.ViewModelProvider
 import bushuk.stanislau.bitbucketproject.MainActivityViewModel
 import bushuk.stanislau.bitbucketproject.di.ViewModelFactory
 import bushuk.stanislau.bitbucketproject.di.ViewModelKey
-import bushuk.stanislau.bitbucketproject.di.modules.global.CiceroneDrawerModule
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenViewModel
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.AndroidInjectionModule
-import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 
 @Module(includes = [AndroidInjectionModule::class])

@@ -2,25 +2,25 @@ package bushuk.stanislau.bitbucketproject.utils.binding
 
 import android.widget.Button
 import androidx.databinding.BindingAdapter
-import bushuk.stanislau.bitbucketproject.global.LoadingState
+import bushuk.stanislau.bitbucketproject.global.LoadingStateSealed
 
 @BindingAdapter("bindClickable")
-fun Button.bindClickable(state: LoadingState.LoadingStateSealed<*, *>?) {
+fun Button.bindClickable(state: LoadingStateSealed<*, *>?) {
     when (state) {
-        is LoadingState.LoadingStateSealed.Loading -> {
+        is LoadingStateSealed.Loading -> {
             this.isClickable = false
             this.isFocusable = false
         }
-        is LoadingState.LoadingStateSealed.Data<*, *> -> {
+        is LoadingStateSealed.Data<*, *> -> {
             this.isClickable = true
             this.isFocusable = true
         }
-        is LoadingState.LoadingStateSealed.Error<*, *> -> {
+        is LoadingStateSealed.Error<*, *> -> {
             this.isClickable = true
             this.isFocusable = true
         }
 
-        is LoadingState.LoadingStateSealed.Start<*, *> -> {
+        is LoadingStateSealed.Start<*, *> -> {
             this.isClickable = true
             this.isFocusable = true
         }

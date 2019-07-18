@@ -1,12 +1,13 @@
 package bushuk.stanislau.bitbucketproject.presentation.repositories
 
+import android.annotation.SuppressLint
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.di.CiceroneFactory
-import bushuk.stanislau.bitbucketproject.global.LoadingState
+import bushuk.stanislau.bitbucketproject.global.LoadingStateSealed
 import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
@@ -17,17 +18,31 @@ class RepositoriesViewModel @Inject constructor(private val factory: Repositorie
                                                 private val queryModel: RepositoriesQueryModel,
                                                 private val routerFactory: CiceroneFactory
 
-) : ListLoadingViewModel<RepositoriesResponse>() {
+) : ListLoadingViewModel<RepositoriesResponse>(factory) {
 
-    override val state: LiveData<LoadingState.LoadingStateSealed<RepositoriesResponse, CustomExceptions>> = factory.state.value!!.state
+    override val state: LiveData<LoadingStateSealed<RepositoriesResponse, CustomExceptions>> = factory.state
 
-    private var repositoryName: String? = null
+    var repositoryName: String? = null
+        set(value) {
+            field = value
+            queryChange()
+        }
 
-    private var repositoryAccess: String? = null
+    var repositoryAccess: String? = null
+        set(value) {
+            field = value
+            queryChange()
+        }
 
-    private var repositoryLanguage: String? = null
+    var repositoryLanguage: String? = null
+        set(value) {
+            field = value
+            queryChange()
+        }
 
+    @SuppressLint("RestrictedApi")
     val repositories: LiveData<PagedList<Repository>> = LivePagedListBuilder(factory, Constants.listPagedConfig).build()
+
 
 //    fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<Repository>) {
 //        compositeDisposable.add(RxSearchView.queryTextChanges(searchView)
@@ -42,10 +57,9 @@ class RepositoriesViewModel @Inject constructor(private val factory: Repositorie
 //                })
 //    }
 
-
     private fun queryChange() {
         queryModel.buildQuery(repositoryName, repositoryAccess, repositoryLanguage)
-        factory.dataSource.invalidate()
+        factory.invalidate()
     }
 
     fun repositoryLanguageChanged(language: String) {
@@ -72,10 +86,6 @@ class RepositoriesViewModel @Inject constructor(private val factory: Repositorie
         // router.navigateTo(Screens.REPOSITORY_SCREEN, listOf(repository.links.avatar.href, username))
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        // factory.repositoriesDataSource.invalidate()
-    }
 
     fun navigateToAddRepository(view: View) {
         //router.navigateTo(ScreensNavigator.AddRepositoryScreen())

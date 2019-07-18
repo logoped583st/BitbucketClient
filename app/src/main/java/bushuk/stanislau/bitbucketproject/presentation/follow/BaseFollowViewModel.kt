@@ -10,6 +10,6 @@ import bushuk.stanislau.bitbucketproject.room.followers.Followers
 import bushuk.stanislau.bitbucketproject.room.user.User
 
 abstract class BaseFollowViewModel<Factory : DataSource.Factory<String, User>>(factory: Factory)
-    : ListLoadingViewModel<Followers>() {
+    : ListLoadingViewModel<Followers>(TODO()) {
     val followers: LiveData<PagedList<User>> by lazy { LivePagedListBuilder<String, User>(factory, Constants.listPagedConfig).build() }
 }
