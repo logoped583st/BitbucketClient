@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
@@ -50,7 +49,7 @@ class CodeFragment : Fragment(), ClickFollow<Code>, RecyclerCodePathAdapter.Path
 
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_code, container, false)
-        viewModel = ViewModelProviders.of(this).get(CodeViewModel::class.java)
+        //viewModel = ViewModelProviders.of(this).get(CodeViewModel::class.java)
 
         return binding.root
     }

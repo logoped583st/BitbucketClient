@@ -1,15 +1,12 @@
 package bushuk.stanislau.bitbucketproject.presentation.base
 
-import android.view.View
 import androidx.paging.PageKeyedDataSource
-import bushuk.stanislau.bitbucketproject.global.LoadingModel
 import bushuk.stanislau.bitbucketproject.global.LoadingStateObservable
 import bushuk.stanislau.bitbucketproject.global.dataReceived
 import bushuk.stanislau.bitbucketproject.global.startLoading
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 
 
@@ -32,8 +29,6 @@ abstract class BaseDataSource<Value, Response> : PageKeyedDataSource<String, Val
 
     private val compositeDisposable = CompositeDisposable()
 
-    private val loadingEvent: PublishSubject<LoadingModel> = PublishSubject.create()
-
     val loadingStateImpl: LoadingStateObservable<Response, CustomExceptions> = LoadingStateObservable()
 
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, Value>) {
@@ -44,7 +39,7 @@ abstract class BaseDataSource<Value, Response> : PageKeyedDataSource<String, Val
                     loadingStateImpl.dataReceived(it)
                     onResultInitial(it, callback)
                 }, {
-                    loadingEvent.onNext(LoadingModel(noInfo = View. VISIBLE,loading = View.INVISIBLE,errorText = "Error or empty"))
+
                 }))
     }
 
@@ -59,7 +54,7 @@ abstract class BaseDataSource<Value, Response> : PageKeyedDataSource<String, Val
     }
 
     override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<String, Value>) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun invalidate() {

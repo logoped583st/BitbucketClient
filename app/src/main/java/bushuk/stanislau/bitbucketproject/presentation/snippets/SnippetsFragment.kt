@@ -34,7 +34,6 @@ class SnippetsFragment : Fragment(), ClickFollow<Snippet> {
         viewModel = ViewModelProviders.of(this).get(SnippetsViewModel::class.java)
 
         binding.let {
-            it.loading = viewModel.liveLoadingModel
             it.lifecycleOwner = this
         }
 

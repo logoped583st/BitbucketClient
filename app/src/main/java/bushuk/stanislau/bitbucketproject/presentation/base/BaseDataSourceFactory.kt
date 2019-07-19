@@ -14,14 +14,12 @@ abstract class BaseDataSourceFactory<Value, Response>(private val dataSourceProv
 
     private val stateImpl = MutableLiveData<LoadingStateSealed<Response, CustomExceptions>>()
 
-    private lateinit var dataSource: BaseDataSource<Value, Response>
+    lateinit var dataSource: BaseDataSource<Value, Response>
 
     private val compositeDisposable = CompositeDisposable()
 
     override fun create(): DataSource<String, Value> {
-        if (compositeDisposable.size() > 0) {
-            compositeDisposable.clear()
-        }
+
         dataSource = dataSourceProvider.get()
 
         compositeDisposable.add(dataSource.loadingStateImpl.state

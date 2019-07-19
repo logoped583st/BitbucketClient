@@ -1,8 +1,8 @@
 package bushuk.stanislau.bitbucketproject.utils.binding
 
-import androidx.databinding.BindingAdapter
-import android.widget.ImageView
 //import bushuk.stanislau.bitbucketproject.GlideApp
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import bushuk.stanislau.bitbucketproject.R
 import com.bumptech.glide.Glide
 
@@ -39,3 +39,4 @@ class ImageBindingUtil {
         }
     }
 }
+

@@ -22,6 +22,7 @@ import bushuk.stanislau.bitbucketproject.utils.extensions.spinnerRx
 import com.github.clans.fab.FloatingActionMenu
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_repositories.*
+import kotlinx.android.synthetic.main.loading_view.*
 import javax.inject.Inject
 
 class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, FragmentRepositoriesBinding>(), LifecycleOwner, ClickFollow<Repository>, Injectable {
@@ -46,14 +47,18 @@ class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, Fragment
         repositories_screen_recycler.layoutManager = LinearLayoutManager(context)
         adapter = RecyclerAdapter(this)
         accessSpinner()
-         languageSpinner()
+        languageSpinner()
         repositories_screen_recycler.adapter = adapter
 
         repositories_screen_recycler.addOnScrollListener(object : RecyclerScrollFab() {
             override fun getFab(): FloatingActionMenu = repositories_screen_settings_menu
         })
 
-        viewModel.repositories.observe(this, Observer(adapter::submitList))
+
+        viewModel.dataSource.observe(this, Observer {
+
+            adapter.submitList(it)
+        })
 
         repositories_screen_slide_constraint.setOnClickListener {
             //Block closing
@@ -62,8 +67,8 @@ class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, Fragment
         repositories_screen_slide_panel.setFadeOnClickListener {
             repositories_screen_slide_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
         }
-
     }
+
 
 //    override fun onBackPressed() {
 //        if ((repositories_screen_slide_panel != null)) {
@@ -79,6 +84,7 @@ class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, Fragment
 
 
     override fun onClickItem(view: View, data: Repository) {
+        waiting_message.show(repositories_screen_content)
         //viewModel.navigateToRepositoryScreen(data, viewModel.factory.repositoriesDataSource.userModel.user.value!!.username)
     }
 
@@ -89,13 +95,14 @@ class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, Fragment
 //        }
 //    }
 
+
     private fun languageSpinner() {
         val languageSpinnerAdapter: ArrayAdapter<String> = SpinnerAdapter(context, android.R.layout.simple_spinner_item, ListOfLanguages.listOfLanguages())
         languageSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         repositories_screen_spinner_language.adapter = languageSpinnerAdapter
 
         repositories_screen_spinner_language.spinnerRx {
-            viewModel.repositoryLanguageChanged(it)
+            viewModel.repositoryLanguage = it
         }
     }
 
@@ -104,11 +111,12 @@ class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, Fragment
         accessSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         repositories_screen_spinner_access.adapter = accessSpinnerAdapter
         repositories_screen_spinner_access.spinnerRx {
-            viewModel.repositoryAccessChanged(it)
+            viewModel.repositoryAccess = it
         }
     }
 
     fun clickFilterFab(view: View) {
+       // waiting_message.hide()
         repositories_screen_settings_menu.close(true)
         repositories_screen_slide_panel.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
     }

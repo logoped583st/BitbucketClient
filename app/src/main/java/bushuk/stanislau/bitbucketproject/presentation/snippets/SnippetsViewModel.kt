@@ -4,18 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import bushuk.stanislau.bitbucketproject.constants.Constants
-import bushuk.stanislau.bitbucketproject.global.LoadingStateSealed
-import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseDisposableViewModel
 import bushuk.stanislau.bitbucketproject.presentation.snippets.models.SnippetsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
-import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
-import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 
 class SnippetsViewModel
 (val factory: SnippetsDataSourceFactory = SnippetsDataSourceFactory())
-    : ListLoadingViewModel<SnippetsResponce>(TODO()) {
-    override val state: LiveData<LoadingStateSealed<SnippetsResponce, CustomExceptions>>
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+    : BaseDisposableViewModel() {
+
 
     //@Inject
   //  lateinit var router: Router

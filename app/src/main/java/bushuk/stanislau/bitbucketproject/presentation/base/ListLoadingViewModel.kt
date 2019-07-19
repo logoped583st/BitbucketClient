@@ -2,7 +2,12 @@ package bushuk.stanislau.bitbucketproject.presentation.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.global.*
+import bushuk.stanislau.bitbucketproject.room.BaseListResponse
+import bushuk.stanislau.bitbucketproject.room.ItemResponse
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import bushuk.stanislau.bitbucketproject.utils.extensions.mapErrors
 import io.reactivex.Single
@@ -10,18 +15,21 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 
-abstract class ListLoadingViewModel<Response>(private val factory: BaseDataSourceFactory<*, *>)
+abstract class ListLoadingViewModel<Item : ItemResponse, Response : BaseListResponse<ItemResponse>>(private val factory: BaseDataSourceFactory<Item, Response>)
     : BaseDisposableViewModel(), IBaseLoadingViewModel<Response> {
 
-    val liveLoadingModel: LiveLoadingModel = LiveLoadingModel()
+    val dataSource: LiveData<PagedList<Item>> = LivePagedListBuilder(factory, Constants.listPagedConfig)
+            .build()
 
+    protected fun clearPaging() {
+        factory.invalidate()
+    }
 
     override fun onCleared() {
         factory.invalidate()
         super.onCleared()
     }
 }
-
 
 abstract class LoadingViewModel<Response> : BaseDisposableViewModel(), IBaseLoadingViewModel<Response> {
 

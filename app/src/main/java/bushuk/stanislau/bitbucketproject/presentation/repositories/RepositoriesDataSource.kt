@@ -8,6 +8,7 @@ import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSource
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import io.reactivex.Single
+import timber.log.Timber
 import javax.inject.Inject
 
 class RepositoriesDataSource @Inject constructor(
@@ -15,6 +16,10 @@ class RepositoriesDataSource @Inject constructor(
         private val queryModel: RepositoriesQueryModel,
         userModel: IUserModel)
     : BaseDataSource<Repository, RepositoriesResponse>() {
+
+    init {
+        Timber.e("INIT")
+    }
 
     override val errorText: String = App.resourcesApp.getString(R.string.repositories_screen_no_repositories)
 

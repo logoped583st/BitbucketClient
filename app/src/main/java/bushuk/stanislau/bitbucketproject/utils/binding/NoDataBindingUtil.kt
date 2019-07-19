@@ -7,7 +7,7 @@ class NoDataBindingUtil {
 
     companion object {
         @JvmStatic
-        @BindingAdapter("android:visibility")
+        @BindingAdapter("android:loadingStateVisibility")
         fun error(view: View, visibility: Int?) {
 
             if (visibility == null) {

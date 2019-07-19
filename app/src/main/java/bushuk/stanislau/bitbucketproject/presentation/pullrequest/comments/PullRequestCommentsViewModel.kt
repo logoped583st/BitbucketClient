@@ -4,17 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import bushuk.stanislau.bitbucketproject.constants.Constants
-import bushuk.stanislau.bitbucketproject.global.LoadingStateSealed
-import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseDisposableViewModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.comments.model.PullRequestCommentsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.comments.Comment
-import bushuk.stanislau.bitbucketproject.room.comments.CommentResponse
-import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 
 class PullRequestCommentsViewModel(val factory: PullRequestCommentsDataSourceFactory = PullRequestCommentsDataSourceFactory())
-    : ListLoadingViewModel<CommentResponse>(TODO()) {
-    override val state: LiveData<LoadingStateSealed<CommentResponse, CustomExceptions>>
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+    : BaseDisposableViewModel() {
+
 
 
     init {

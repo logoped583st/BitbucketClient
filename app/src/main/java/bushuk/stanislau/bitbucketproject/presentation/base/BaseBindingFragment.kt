@@ -34,7 +34,7 @@ abstract class BaseBindingFragment<V : ViewModel, D : ViewDataBinding> : Fragmen
 
         binding = DataBindingUtil.inflate(layoutInflater, containerId, container, false)
 
-        binding.lifecycleOwner = this@BaseBindingFragment
+        binding.lifecycleOwner = viewLifecycleOwner
         applyBinding()
 
         return binding.root

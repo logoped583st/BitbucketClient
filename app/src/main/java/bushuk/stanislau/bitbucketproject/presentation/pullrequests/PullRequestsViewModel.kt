@@ -10,13 +10,10 @@ import androidx.paging.PagedList
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.Constants
-import bushuk.stanislau.bitbucketproject.global.LoadingStateSealed
 import bushuk.stanislau.bitbucketproject.global.PullRequestModel
-import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseDisposableViewModel
 import bushuk.stanislau.bitbucketproject.presentation.pullrequests.model.PullRequestsDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
-import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestResponse
-import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
 import com.jakewharton.rxbinding2.widget.RxAdapterView
@@ -26,9 +23,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullRequestsDataSourceFactory())
-    : ListLoadingViewModel<PullRequestResponse>(TODO()) {
-    override val state: LiveData<LoadingStateSealed<PullRequestResponse, CustomExceptions>>
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+    : BaseDisposableViewModel() {
 
     //@Inject
     //  lateinit var router: Router

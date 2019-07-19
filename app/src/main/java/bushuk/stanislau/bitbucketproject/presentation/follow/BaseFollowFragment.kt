@@ -16,7 +16,7 @@ abstract class BaseFollowFragment<ViewModel : BaseFollowViewModel<DataSource.Fac
         BaseBindingFragment<ViewModel, FragmentFollowersBinding>(), ClickFollow<User> {
 
     override fun applyBinding() {
-        binding.loading = viewModel.liveLoadingModel
+       // binding.loading = viewModel.liveLoadingModel
     }
 
     override val containerId: Int = R.layout.fragment_followers

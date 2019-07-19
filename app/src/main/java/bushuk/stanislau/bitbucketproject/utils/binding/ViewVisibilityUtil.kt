@@ -8,7 +8,7 @@ class ViewVisibilityUtil {
 
     companion object {
         @JvmStatic
-        @BindingAdapter("android:visibility")
+        @BindingAdapter("android:loadingStateVisibility")
         fun setVisibility(progressBar: ProgressBar, visibility: Int) {
             when (visibility) {
                 View.GONE -> progressBar.visibility = View.GONE
