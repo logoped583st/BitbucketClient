@@ -19,11 +19,14 @@ const val VIEW_VISIBILITY = "VIEW_VISIBILITY"
 
 class LoadingView : ConstraintLayout {
 
-    var loadingVisibility: Int = View.GONE
+    private var loadingVisibility: Int = View.VISIBLE
 
     constructor(context: Context) : super(context)
+
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
 
     fun show(rootScree: ViewGroup) {
         loadingVisibility = View.VISIBLE
@@ -36,10 +39,17 @@ class LoadingView : ConstraintLayout {
         waiting_message.visibility = View.VISIBLE
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        waiting_message.visibility = loadingVisibility
+    fun hide(rootScree: ViewGroup) {
+        loadingVisibility = View.GONE
+        val transition = Slide(Gravity.TOP)
+        transition.duration = 300
+        transition.startDelay = 100
+        transition.addTarget(waiting_message)
+
+        TransitionManager.beginDelayedTransition(rootScree, transition)
+        waiting_message.visibility = View.GONE
     }
+
 
     override fun onSaveInstanceState(): Parcelable? {
         val bundle = Bundle()

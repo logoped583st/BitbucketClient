@@ -18,6 +18,8 @@ import io.reactivex.disposables.Disposable
 abstract class ListLoadingViewModel<Item : ItemResponse, Response : BaseListResponse<ItemResponse>>(private val factory: BaseDataSourceFactory<Item, Response>)
     : BaseDisposableViewModel(), IBaseLoadingViewModel<Response> {
 
+    override val state = factory.state
+
     val dataSource: LiveData<PagedList<Item>> = LivePagedListBuilder(factory, Constants.listPagedConfig)
             .build()
 

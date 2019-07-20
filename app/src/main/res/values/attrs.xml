@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="BaseListConstraint">
+        <attr name="layout_manager">
+            <enum name="linear" value="0" />
+            <enum name="grid" value="1" />
+        </attr>
+
+
+    </declare-styleable>
+
+</resources>

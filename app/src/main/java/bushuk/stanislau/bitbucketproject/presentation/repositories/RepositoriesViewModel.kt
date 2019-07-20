@@ -1,13 +1,10 @@
 package bushuk.stanislau.bitbucketproject.presentation.repositories
 
 import android.view.View
-import androidx.lifecycle.LiveData
 import bushuk.stanislau.bitbucketproject.di.CiceroneFactory
-import bushuk.stanislau.bitbucketproject.global.LoadingStateSealed
 import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
-import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import javax.inject.Inject
 
 class RepositoriesViewModel @Inject constructor(factory: RepositoriesDataSourceFactory,
@@ -15,8 +12,6 @@ class RepositoriesViewModel @Inject constructor(factory: RepositoriesDataSourceF
                                                 private val routerFactory: CiceroneFactory
 
 ) : ListLoadingViewModel<Repository, RepositoriesResponse>(factory) {
-
-    override val state: LiveData<LoadingStateSealed<RepositoriesResponse, CustomExceptions>> = factory.state
 
     var repositoryName: String? = null
         set(value) {

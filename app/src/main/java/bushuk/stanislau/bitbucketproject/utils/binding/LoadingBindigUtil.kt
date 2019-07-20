@@ -1,11 +1,14 @@
 package bushuk.stanislau.bitbucketproject.utils.binding
 
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import bushuk.stanislau.bitbucketproject.global.LoadingStateSealed
+import bushuk.stanislau.bitbucketproject.views.LoadingView
+import timber.log.Timber
 
 @BindingAdapter("bindClickable")
 fun Button.bindClickable(state: LoadingStateSealed<*, *>?) {
@@ -40,7 +43,7 @@ fun ProgressBar.visibility(visibility: LoadingStateSealed<*, *>?) {
 
 fun LoadingStateSealed<*, *>.loadingStateVisibility(): Boolean {
     return when (this) {
-        is LoadingStateSealed.Start -> true
+        is LoadingStateSealed.Start -> false
         is LoadingStateSealed.Loading -> true
         is LoadingStateSealed.Data -> false
         is LoadingStateSealed.Error -> false
@@ -53,6 +56,19 @@ fun View.visibility(boolean: Boolean?) {
     } else {
         View.GONE
     }
+}
+
+@BindingAdapter("loading", "root")
+fun LoadingView.visibility(visibility: LoadingStateSealed<*, *>?, rootView: ViewGroup?) {
+    Timber.e(visibility.toString())
+    rootView?.apply {
+        if (visibility?.loadingStateVisibility() == true) {
+            show(this)
+        } else {
+            hide(this)
+        }
+    }
+
 }
 
 

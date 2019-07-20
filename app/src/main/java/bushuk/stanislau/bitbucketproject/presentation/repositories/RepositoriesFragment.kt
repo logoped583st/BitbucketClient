@@ -7,7 +7,6 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import bushuk.stanislau.bitbucketproject.Injectable
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.RecyclerScrollFab
@@ -21,8 +20,8 @@ import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import bushuk.stanislau.bitbucketproject.utils.extensions.spinnerRx
 import com.github.clans.fab.FloatingActionMenu
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import kotlinx.android.synthetic.main.base_list_constraint.*
 import kotlinx.android.synthetic.main.fragment_repositories.*
-import kotlinx.android.synthetic.main.loading_view.*
 import javax.inject.Inject
 
 class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, FragmentRepositoriesBinding>(), LifecycleOwner, ClickFollow<Repository>, Injectable {
@@ -44,19 +43,20 @@ class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, Fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        repositories_screen_recycler.layoutManager = LinearLayoutManager(context)
+        binding.viewGroup = list_constraint
+
         adapter = RecyclerAdapter(this)
         accessSpinner()
         languageSpinner()
-        repositories_screen_recycler.adapter = adapter
+        rv.adapter = adapter
 
-        repositories_screen_recycler.addOnScrollListener(object : RecyclerScrollFab() {
+
+        rv.addOnScrollListener(object : RecyclerScrollFab() {
             override fun getFab(): FloatingActionMenu = repositories_screen_settings_menu
         })
 
 
         viewModel.dataSource.observe(this, Observer {
-
             adapter.submitList(it)
         })
 
@@ -84,7 +84,7 @@ class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, Fragment
 
 
     override fun onClickItem(view: View, data: Repository) {
-        waiting_message.show(repositories_screen_content)
+        //waiting_message.show(repositories_screen_content)
         //viewModel.navigateToRepositoryScreen(data, viewModel.factory.repositoriesDataSource.userModel.user.value!!.username)
     }
 
@@ -116,7 +116,6 @@ class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, Fragment
     }
 
     fun clickFilterFab(view: View) {
-       // waiting_message.hide()
         repositories_screen_settings_menu.close(true)
         repositories_screen_slide_panel.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
     }

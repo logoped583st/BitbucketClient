@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="viewModel"
             type="bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesViewModel" />
+
+        <variable
+            name="viewGroup"
+            type="android.view.ViewGroup" />
 
         <variable
             name="fragment"
@@ -25,30 +28,21 @@
         app:umanoPanelHeight="0dp"
         app:umanoShadowHeight="0dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/repositories_screen_content"
+        <bushuk.stanislau.bitbucketproject.views.BaseListConstraint
+            android:id="@+id/list_constraint"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:animateLayoutChanges="true"
-            android:focusableInTouchMode="true"
-            tools:context=".presentation.repositories.RepositoriesFragment">
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/repositories_screen_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:focusableInTouchMode="true">
 
             <include
-                layout="@layout/include_linear"
+                layout="@layout/loading_view"
+                app:groupView="@{viewGroup}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:loadingState="@{viewModel.state}" />
+
 
             <com.github.clans.fab.FloatingActionMenu
                 android:id="@+id/repositories_screen_settings_menu"
@@ -81,7 +75,7 @@
                     app:fab_size="mini" />
 
             </com.github.clans.fab.FloatingActionMenu>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </bushuk.stanislau.bitbucketproject.views.BaseListConstraint>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/repositories_screen_slide_constraint"

@@ -1,39 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<bushuk.stanislau.bitbucketproject.views.LoadingView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/waiting_message"
-    android:background="@color/black"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="8dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/tv_waiting_message"
-        android:layout_width="0dp"
+    <data>
+
+        <variable
+            name="loadingState"
+            type="bushuk.stanislau.bitbucketproject.global.LoadingStateSealed" />
+
+        <variable
+            name="groupView"
+            type="android.view.ViewGroup" />
+    </data>
+
+    <bushuk.stanislau.bitbucketproject.views.LoadingView
+        android:id="@+id/waiting_message"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:layout_marginStart="8dp"
-        android:text="Loading"
-        android:textSize="24sp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/black"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:loading="@{loadingState}"
+        app:root="@{groupView}">
 
-    <androidx.core.widget.ContentLoadingProgressBar
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_marginEnd="8dp"
-        android:id="@+id/progress_circular"
-        android:layout_gravity="center_vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/tv_waiting_message"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tv_waiting_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="Loading"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</bushuk.stanislau.bitbucketproject.views.LoadingView>
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_circular"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/tv_waiting_message"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </bushuk.stanislau.bitbucketproject.views.LoadingView>
+</layout>
