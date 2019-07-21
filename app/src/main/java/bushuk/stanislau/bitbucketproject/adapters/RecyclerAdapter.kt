@@ -9,8 +9,9 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
+import bushuk.stanislau.bitbucketproject.room.ItemResponse
 
-class RecyclerAdapter<T>(private val clickFollow: ClickFollow<T>) : PagedListAdapter<T,
+class RecyclerAdapter<T : ItemResponse>(private val clickFollow: ClickFollow<T>) : PagedListAdapter<T,
         ViewHolder<T>>(diffUtil<T>()) {
 
 
@@ -30,15 +31,15 @@ class RecyclerAdapter<T>(private val clickFollow: ClickFollow<T>) : PagedListAda
 }
 
 
-fun <D> diffUtil() = object : DiffUtil.ItemCallback<D>() {
+fun <D : ItemResponse> diffUtil() = object : DiffUtil.ItemCallback<D>() {
     override fun areItemsTheSame(oldItem: D, newItem: D): Boolean {
-        return oldItem == newItem
+        return oldItem.uuid == newItem.uuid
     }
 
     @SuppressLint("DiffUtilEquals")
     override fun areContentsTheSame(oldItem: D, newItem: D): Boolean {
         return oldItem == newItem
-        }
     }
+}
 
 

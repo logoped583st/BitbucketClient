@@ -1,10 +1,10 @@
 package bushuk.stanislau.bitbucketproject.presentation.pullrequests.model
 
 import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSource
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.global.UserModel
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSource
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestResponse
@@ -39,7 +39,7 @@ class PullRequestsDataSource : BaseDataSource<PullRequest, PullRequestResponse>(
 
     override val single: Single<PullRequestResponse> = userModel
             .user.flatMapSingle {
-        api.getPullRequests(it.username, repositoryModel.repository.value!!.uuid, queryPullRequest, sortPullRequest)
+        api.getPullRequests(it.username, repositoryModel.repository.value!!.uuid!!, queryPullRequest, sortPullRequest)
     }.firstOrError()
 
     override fun loadNextPage(url: String): Single<PullRequestResponse> = api.getPullRequestNextPage(url)

@@ -1,10 +1,11 @@
 package bushuk.stanislau.bitbucketproject.utils.binding
 
-import androidx.databinding.BindingAdapter
 import android.graphics.Color
 import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
+import com.google.android.material.chip.Chip
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
@@ -15,12 +16,12 @@ class TextAccessBindingUtil {
 
         @JvmStatic
         @BindingAdapter("android:text")
-        fun accessText(textView: TextView, access: Boolean) {
+        fun accessText(chip: Chip, access: Boolean) {
 
             if (access) {
-                textView.text = "Private"
+                chip.text = "Private"
             } else {
-                textView.text = "Public"
+                chip.text = "Public"
             }
         }
 
@@ -42,11 +43,11 @@ class TextAccessBindingUtil {
 
         @JvmStatic
         @BindingAdapter("android:background")
-        fun accessBackgroundColor(textView: TextView, access: Boolean) {
+        fun accessBackgroundColor(chip: Chip, access: Boolean) {
             if (access) {
-                textView.setBackgroundColor(App.resourcesApp.getColor(R.color.colorAccent))
+                chip.setChipBackgroundColorResource(R.color.colorAccent)
             } else {
-                textView.setBackgroundColor(App.resourcesApp.getColor(R.color.colorPrimary))
+                chip.setChipBackgroundColorResource(R.color.colorPrimary)
             }
         }
 

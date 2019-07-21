@@ -47,7 +47,9 @@ ext.version = [
         //slidingPanel
         slidingPanel:                                                                          "3.4.0",
 
-        markDown:                                                                              "2.0.0"
+        markDown:                                                                              "2.0.0",
+
+        cicrleImageViewVersion:                                                                 "3.0.0"
 ]
 def version = ext.version
 

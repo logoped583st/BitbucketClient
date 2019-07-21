@@ -16,4 +16,8 @@ open class BaseListResponse<out T : ItemResponse> {
     val items: List<T>? = null
 }
 
-open class ItemResponse
+open class ItemResponse {
+
+    var uuid: String? = null
+
+}

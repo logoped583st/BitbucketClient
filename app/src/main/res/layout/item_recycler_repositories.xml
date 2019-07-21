@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,40 +11,47 @@
 
     </data>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
         android:clickable="true"
+        android:focusable="true"
         android:foreground="?selectableItemBackground"
-        app:rippleColor = "@color/black"
-        android:layout_margin="4dp"
         app:cardCornerRadius="4dp"
-        android:focusable="true">
+        app:cardElevation="4dp"
+        app:rippleColor="@color/black">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp">
 
-            <TextView
+            <com.google.android.material.chip.Chip
                 android:id="@+id/item_recycler_repositories_access"
                 style="@style/Subheading.white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:background="@{data.is_private}"
-                android:padding="2dp"
+                android:ems="5"
                 android:text="@{data.is_private}"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="@+id/item_recycler_repositories_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_name"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/item_recycler_repositories_name"
+                tools:chipBackgroundColor="@color/black"
+                tools:text="Private" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/item_recycler_repositories_name"
-                style="@style/Headline"
+                style="@style/Title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -52,9 +60,10 @@
                 android:text="@{data.name}"
                 app:layout_constraintEnd_toStartOf="@+id/item_recycler_repositories_access"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Ios moviedb" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/item_recycler_repositories_description"
                 style="@style/Subheading"
                 android:layout_width="0dp"
@@ -66,9 +75,10 @@
                 app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_avatar"
                 app:layout_constraintTop_toBottomOf="@+id/item_recycler_repositories_name"
                 app:layout_constraintVertical_chainStyle="spread_inside"
-                app:text="@{data.description}" />
+                app:text="@{data.description}"
+                tools:text="Description of repo" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/item_recycler_repositories_update_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -79,65 +89,67 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/item_recycler_repositories_update" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/item_recycler_repositories_update"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
                 android:layout_marginBottom="8dp"
                 android:text="@{data.updated_on}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/item_recycler_repositories_owner"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_update_image" />
+                app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_update_image"
+                tools:text="12/12/2018" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/item_recycler_repositories_owner_avatar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2dp"
                 android:src="@drawable/ic_owner"
-                app:layout_constraintBottom_toBottomOf="@+id/item_recycler_repositories_update_image"
+                app:layout_constraintBottom_toBottomOf="@+id/item_recycler_repositories_owner"
                 app:layout_constraintEnd_toStartOf="@+id/item_recycler_repositories_owner"
-                app:layout_constraintTop_toTopOf="@+id/item_recycler_repositories_update_image" />
+                app:layout_constraintTop_toTopOf="@+id/item_recycler_repositories_owner" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/item_recycler_repositories_owner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
                 android:text="@{data.owner.display_name}"
                 app:layout_constraintBottom_toBottomOf="@+id/item_recycler_repositories_update"
-                app:layout_constraintEnd_toStartOf="@+id/item_recycler_repositories_language"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_update"
-                app:layout_constraintTop_toTopOf="@+id/item_recycler_repositories_update" />
+                app:layout_constraintTop_toTopOf="@+id/item_recycler_repositories_update"
+                tools:text="logoped 583" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/item_recycler_repositories_language"
-                style="@style/Body_2"
+                style="@style/Subheading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
                 android:color="@{data.language}"
                 android:text="@{data.language}"
-                app:layout_constraintBottom_toBottomOf="@+id/item_recycler_repositories_owner"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/item_recycler_repositories_owner"
-                app:layout_constraintTop_toTopOf="@+id/item_recycler_repositories_owner" />
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/item_recycler_repositories_description"
+                app:layout_constraintTop_toBottomOf="@+id/item_recycler_repositories_description"
+                tools:text="c++" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/item_recycler_repositories_avatar"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                app:imageUrl="@{data.links.avatar.href}"
+                app:repositoryImage="@{data.links.avatar.href}"
                 app:layout_constraintBottom_toTopOf="@+id/item_recycler_repositories_update"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_recycler_repositories_access" />
+                app:layout_constraintTop_toBottomOf="@+id/item_recycler_repositories_access"
+                tools:src="@drawable/logo" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 </layout>

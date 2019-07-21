@@ -37,7 +37,7 @@ class AlertCodeDialogViewModel : ViewModel() {
     fun setComment(comment: Comment) {
         //loadingModel.loading.postValue(View.VISIBLE)
         UrlBuilder.buildPathWithHash(comment.inline!!.path, pullRequestModel.publishSubject.value!!.source.commit.hash)
-        scalarApi.getCodeOfFile(userModel.user.value!!.username, repositoryModel.repository.value!!.uuid, UrlBuilder.repositoryPath!!)
+        scalarApi.getCodeOfFile(userModel.user.value!!.username, repositoryModel.repository.value!!.uuid!!, UrlBuilder.repositoryPath!!)
                 .subscribeOn(Schedulers.io())
                 .map {
                     val lines = it.split(System.getProperty("line.separator"))

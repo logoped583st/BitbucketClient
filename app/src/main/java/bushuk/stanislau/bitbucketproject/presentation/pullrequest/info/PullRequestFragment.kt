@@ -14,12 +14,13 @@ import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentPullRequestBinding
 import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
+import bushuk.stanislau.bitbucketproject.room.ItemResponse
 import bushuk.stanislau.bitbucketproject.room.user.User
 import kotlinx.android.synthetic.main.fragment_pull_request.*
 
-class PullRequestFragment : Fragment(), ClickFollow<Any> {
+class PullRequestFragment : Fragment(), ClickFollow<ItemResponse> {
 
-    override fun onClickItem(view: View, data: Any) {
+    override fun onClickItem(view: View, data: ItemResponse) {
         viewModel.navigateToUser(data as User)
     }
 
@@ -40,7 +41,7 @@ class PullRequestFragment : Fragment(), ClickFollow<Any> {
         super.onViewCreated(view, savedInstanceState)
 
         binding.let {
-            it.setLifecycleOwner(this)
+            it.lifecycleOwner = this
             it.viewModel = viewModel
         }
 

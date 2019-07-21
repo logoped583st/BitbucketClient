@@ -1,7 +1,7 @@
 package bushuk.stanislau.bitbucketproject.constants
 
 object ListOfLanguages {
-    fun listOfLanguages(): MutableList<String> = mutableListOf(
+    fun listOfLanguages(): List<String> = listOf(
             "All",
             "typeScript",
             "pureBasic",

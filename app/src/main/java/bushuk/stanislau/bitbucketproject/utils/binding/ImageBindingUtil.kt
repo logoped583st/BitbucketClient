@@ -1,42 +1,51 @@
 package bushuk.stanislau.bitbucketproject.utils.binding
 
-//import bushuk.stanislau.bitbucketproject.GlideApp
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import bushuk.stanislau.bitbucketproject.R
 import com.bumptech.glide.Glide
-
-class ImageBindingUtil {
-
-    companion object {
-        @JvmStatic
-        @BindingAdapter("imageUrl")
-        fun loadImage(imageView: ImageView, url: String?) {
-            Glide.with(imageView.context)
-                    .load(url)
-                    .centerCrop()
-                    .placeholder(R.color.white)
-                    .error(R.drawable.ic_teamblue)
-                    .into(imageView)
-        }
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import de.hdodenhof.circleimageview.CircleImageView
 
 
-        @JvmStatic
-        @BindingAdapter("imageCodeUrl")
-        fun codeImage(imageView: ImageView, url: String) {
+@BindingAdapter("imageUrl")
+fun ImageView.loadImage(url: String?) {
+    Glide.with(this.context)
+            .load(url)
+            .centerCrop()
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .error(R.drawable.ic_teamblue)
+            .into(this)
+}
 
-            if (url == "commit_directory") {
-                Glide.with(imageView.context)
-                        .load(R.drawable.ic_folder_24dp)
-                        .centerCrop()
-                        .into(imageView)
-            } else {
-                Glide.with(imageView.context)
-                        .load(R.drawable.ic_file_24dp)
-                        .centerCrop()
-                        .into(imageView)
-            }
-        }
+
+@BindingAdapter("imageCodeUrl")
+fun ImageView.codeImage(url: String) {
+
+    if (url == "commit_directory") {
+        Glide.with(this.context)
+                .load(R.drawable.ic_folder_24dp)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop()
+                .into(this)
+    } else {
+        Glide.with(this.context)
+                .load(R.drawable.ic_file_24dp)
+                .centerCrop()
+                .into(this)
     }
 }
+
+@BindingAdapter("repositoryImage")
+fun CircleImageView.repositoryImage(url: String) {
+    Glide.with(this.context)
+            .load(url)
+            .centerCrop()
+            .placeholder(R.drawable.logo)
+//            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(this)
+}
+
+
 

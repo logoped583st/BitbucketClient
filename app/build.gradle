@@ -85,10 +85,10 @@ dependencies {
     kapt "${library.daggerKapt}"
 
     //ROOM///
-    implementation 'androidx.room:room-runtime:2.0.0'
-    kapt 'androidx.room:room-compiler:2.0.0'
-    testImplementation 'androidx.room:room-testing:2.0.0'
-    implementation 'androidx.room:room-rxjava2:2.0.0'
+    implementation 'androidx.room:room-runtime:2.1.0'
+    kapt 'androidx.room:room-compiler:2.1.0'
+    testImplementation 'androidx.room:room-testing:2.1.0'
+    implementation 'androidx.room:room-rxjava2:2.1.0'
 
     //LifeCycle//
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
@@ -105,11 +105,14 @@ dependencies {
 
     implementation "${library.markDown}"
 
-    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    //circle image view
+    implementation "${library.circle}"
 
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
 

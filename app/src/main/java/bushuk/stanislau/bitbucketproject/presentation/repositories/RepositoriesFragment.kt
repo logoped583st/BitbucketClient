@@ -38,7 +38,7 @@ class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, Fragment
         binding.fragment = this
     }
 
-    private val access: MutableList<String> = mutableListOf("All", "Public", "Private")
+    private val access: List<String> = listOf("All", "Public", "Private")
     private lateinit var adapter: RecyclerAdapter<Repository>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

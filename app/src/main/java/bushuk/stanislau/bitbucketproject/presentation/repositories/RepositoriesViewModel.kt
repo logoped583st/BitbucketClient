@@ -47,8 +47,8 @@ class RepositoriesViewModel @Inject constructor(factory: RepositoriesDataSourceF
 //    }
 
     private fun queryChange() {
-        clearPaging()
         queryModel.buildQuery(repositoryName, repositoryAccess, repositoryLanguage)
+        clearPaging()
     }
 
     fun exitFromFragment() {

@@ -15,7 +15,8 @@ object Constants {
 
     val listPagedConfig = PagedList.Config.Builder()
             .setPageSize(ITEMS_IN_PAGE)
-            .setInitialLoadSizeHint(ITEMS_IN_PAGE)
+            .setInitialLoadSizeHint(0)
+            .setPrefetchDistance(ITEMS_IN_PAGE)
             .setEnablePlaceholders(false)
             .build()
 }

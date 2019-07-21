@@ -29,6 +29,8 @@ class BaseListConstraint : ConstraintLayout {
         val ta = context.obtainStyledAttributes(attrs, R.styleable.BaseListConstraint, 0, 0)
         val manager = ta.getInt(R.styleable.BaseListConstraint_layout_manager, 0)
         rv.layoutManager = LayoutManager.values()[manager].getLayoutManager(context)
+        rv.verticalScrollbarPosition = right
+        rv.isVerticalScrollBarEnabled = true
 
         ta.recycle()
     }

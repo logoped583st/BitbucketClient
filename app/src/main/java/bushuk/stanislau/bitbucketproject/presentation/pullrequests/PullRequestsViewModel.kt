@@ -44,7 +44,7 @@ class PullRequestsViewModel(val factory: PullRequestsDataSourceFactory = PullReq
     }
 
 
-    var pullRequests: LiveData<PagedList<PullRequest>> = LivePagedListBuilder<String, PullRequest>(factory, Constants.listPagedConfig).build()
+    var pullRequests: LiveData<PagedList<PullRequest>> = LivePagedListBuilder(factory, Constants.listPagedConfig).build()
 
 
     fun navigateToPullRequestScreen(pullRequest: PullRequest) {

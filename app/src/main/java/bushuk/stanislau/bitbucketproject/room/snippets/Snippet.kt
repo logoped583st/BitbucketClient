@@ -1,5 +1,6 @@
 package bushuk.stanislau.bitbucketproject.room.snippets
 
+import bushuk.stanislau.bitbucketproject.room.ItemResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.Owner
 import java.util.*
 
@@ -9,4 +10,4 @@ data class Snippet(val title: String,
                    val id: String,
                    val files: Map<String, links>,
                    val links: SnippetLinks,
-                   val owner: Owner)
+                   val owner: Owner) : ItemResponse()

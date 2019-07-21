@@ -3,6 +3,7 @@ package bushuk.stanislau.bitbucketproject.room.user
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import bushuk.stanislau.bitbucketproject.room.ItemResponse
 import java.util.*
 
 @Entity(tableName = "User")
@@ -11,8 +12,8 @@ data class User(var username: String,
                 val website: String? = null,
 
                 val display_name: String,
-
-                val account_id: String?,
+                @PrimaryKey
+                val account_id: String,
 
                 @Embedded
                 val links: Links,
@@ -23,7 +24,4 @@ data class User(var username: String,
 
 //                  val location: Any,
 
-                val type: String,
-
-                @PrimaryKey
-                val uuid: String)
+                val type: String):ItemResponse()
