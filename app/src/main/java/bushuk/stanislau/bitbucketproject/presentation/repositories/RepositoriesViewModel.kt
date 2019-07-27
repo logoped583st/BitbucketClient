@@ -2,7 +2,7 @@ package bushuk.stanislau.bitbucketproject.presentation.repositories
 
 import android.view.View
 import bushuk.stanislau.bitbucketproject.di.CiceroneFactory
-import bushuk.stanislau.bitbucketproject.presentation.base.ListLoadingViewModel
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseListLoadingViewModel
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import javax.inject.Inject
@@ -11,7 +11,7 @@ class RepositoriesViewModel @Inject constructor(factory: RepositoriesDataSourceF
                                                 private val queryModel: RepositoriesQueryModel,
                                                 private val routerFactory: CiceroneFactory
 
-) : ListLoadingViewModel<Repository, RepositoriesResponse>(factory) {
+) : BaseListLoadingViewModel<Repository, RepositoriesResponse>(factory) {
 
     var repositoryName: String? = null
         set(value) {

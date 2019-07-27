@@ -4,6 +4,8 @@ import androidx.paging.PageKeyedDataSource
 import bushuk.stanislau.bitbucketproject.global.LoadingStateObservable
 import bushuk.stanislau.bitbucketproject.global.dataReceived
 import bushuk.stanislau.bitbucketproject.global.startLoading
+import bushuk.stanislau.bitbucketproject.room.BaseListResponse
+import bushuk.stanislau.bitbucketproject.room.ItemResponse
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
@@ -15,7 +17,7 @@ import timber.log.Timber
  *  BY DEFAULT DATASOURCE USING IO SCHEDULER FOR FETCH DATA AND MAIN FOR CALLBACK
  */
 
-abstract class BaseDataSource<Value, Response> : PageKeyedDataSource<String, Value>(){
+abstract class BaseDataSource<Value : ItemResponse, Response : BaseListResponse<Value>> : PageKeyedDataSource<String, Value>() {
 
     abstract val errorText: String
 
@@ -37,6 +39,7 @@ abstract class BaseDataSource<Value, Response> : PageKeyedDataSource<String, Val
         compositeDisposable.add(single
                 .subscribe({
                     loadingStateImpl.dataReceived(it)
+                    callback.onResult(it.items ?: emptyList(), it.previous, it.next)
                     onResultInitial(it, callback)
                 }, {
 
@@ -47,7 +50,7 @@ abstract class BaseDataSource<Value, Response> : PageKeyedDataSource<String, Val
     override fun loadAfter(params: LoadParams<String>, callback: LoadCallback<String, Value>) {
         compositeDisposable.add(loadNextPage(params.key)
                 .subscribe({
-                    onResult(it, callback)
+                    callback.onResult(it.items ?: emptyList(), it.next)
                 }, {
                     Timber.e(it.message)
                 }))

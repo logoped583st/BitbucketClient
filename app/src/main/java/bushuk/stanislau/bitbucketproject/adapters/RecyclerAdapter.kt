@@ -8,10 +8,10 @@ import androidx.databinding.ViewDataBinding
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import bushuk.stanislau.bitbucketproject.R
-import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
+import bushuk.stanislau.bitbucketproject.presentation.base.IItemClick
 import bushuk.stanislau.bitbucketproject.room.ItemResponse
 
-class RecyclerAdapter<T : ItemResponse>(private val clickFollow: ClickFollow<T>) : PagedListAdapter<T,
+class RecyclerAdapter<T : ItemResponse>(private val clickFollow: IItemClick<T>) : PagedListAdapter<T,
         ViewHolder<T>>(diffUtil<T>()) {
 
 

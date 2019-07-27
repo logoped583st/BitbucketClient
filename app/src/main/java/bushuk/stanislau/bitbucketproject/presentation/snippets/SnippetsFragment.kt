@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentSnippetsBinding
-import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
+import bushuk.stanislau.bitbucketproject.presentation.base.IItemClick
 import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
 import kotlinx.android.synthetic.main.fragment_snippets.*
 
 
-class SnippetsFragment : Fragment(), ClickFollow<Snippet> {
+class SnippetsFragment : Fragment(), IItemClick<Snippet> {
     override fun onClickItem(view: View, data: Snippet) {
         viewModel.navigateToCode(data.links.self.href)
     }

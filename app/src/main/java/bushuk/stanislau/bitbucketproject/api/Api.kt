@@ -12,6 +12,7 @@ import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
 import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
 import bushuk.stanislau.bitbucketproject.room.user.User
+import bushuk.stanislau.bitbucketproject.room.user.UserResponse
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*
@@ -45,10 +46,10 @@ interface Api {
     fun getReposNextPage(@Url url: String): Single<RepositoriesResponse>
 
     @GET("users/{userName}/followers")
-    fun getFollowers(@Path("userName") user: String): Single<Followers>
+    fun getFollowers(@Path("userName") user: String): Single<UserResponse>
 
     @GET//request for getting info from next page, Url we take from previous request
-    fun getFollowersNextPage(@Url url: String): Single<Followers>
+    fun getFollowersNextPage(@Url url: String): Single<UserResponse>
 
     @GET("repositories/{userName}/{repoName}/pullrequests")
     fun getPullRequests(@Path("userName") userName: String, @Path("repoName", encoded = false) repoName: String,

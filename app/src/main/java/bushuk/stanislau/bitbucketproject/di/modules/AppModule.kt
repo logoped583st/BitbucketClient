@@ -8,10 +8,9 @@ import bushuk.stanislau.bitbucketproject.di.scopes.DrawerScope
 import bushuk.stanislau.bitbucketproject.di.scopes.SimpleFragmentScope
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginFragment
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthWebFragment
-import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersFragment
-import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingFragment
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenFragment
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
+import bushuk.stanislau.bitbucketproject.presentation.userslist.followers.FollowersFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -40,11 +39,7 @@ abstract class AppModule {
 
     @DrawerScope
     @ContributesAndroidInjector
-    abstract fun FollowersFragmentInjector(): FollowersFragment
-
-    @DrawerScope
-    @ContributesAndroidInjector()
-    abstract fun FollowingsFragmentInjector(): FollowingFragment
+    abstract fun FollowwersFragmentInjector(): FollowersFragment
 
 
 }

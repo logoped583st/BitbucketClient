@@ -4,18 +4,16 @@ package bushuk.stanislau.bitbucketproject.presentation.repositories
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import bushuk.stanislau.bitbucketproject.Injectable
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.RecyclerScrollFab
-import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.constants.ListOfLanguages
 import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoriesBinding
-import bushuk.stanislau.bitbucketproject.presentation.base.BaseBindingFragment
-import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseListFragment
+import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import bushuk.stanislau.bitbucketproject.utils.extensions.spinnerRx
 import com.github.clans.fab.FloatingActionMenu
@@ -24,7 +22,8 @@ import kotlinx.android.synthetic.main.base_list_constraint.*
 import kotlinx.android.synthetic.main.fragment_repositories.*
 import javax.inject.Inject
 
-class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, FragmentRepositoriesBinding>(), LifecycleOwner, ClickFollow<Repository>, Injectable {
+class RepositoriesFragment : BaseListFragment<Repository, RepositoriesResponse, RepositoriesViewModel, FragmentRepositoriesBinding>(), Injectable {
+
 
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -34,30 +33,22 @@ class RepositoriesFragment : BaseBindingFragment<RepositoriesViewModel, Fragment
     override val scope: ViewModelScope = ViewModelScope.ACTIVITY
 
     override fun applyBinding() {
+        binding.viewGroup = list_constraint
         binding.viewModel = viewModel
         binding.fragment = this
     }
 
     private val access: List<String> = listOf("All", "Public", "Private")
-    private lateinit var adapter: RecyclerAdapter<Repository>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewGroup = list_constraint
 
-        adapter = RecyclerAdapter(this)
         accessSpinner()
         languageSpinner()
-        rv.adapter = adapter
 
 
         rv.addOnScrollListener(object : RecyclerScrollFab() {
             override fun getFab(): FloatingActionMenu = repositories_screen_settings_menu
-        })
-
-
-        viewModel.dataSource.observe(this, Observer {
-            adapter.submitList(it)
         })
 
         repositories_screen_slide_constraint.setOnClickListener {

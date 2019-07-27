@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentPullRequestCommentsBinding
-import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
+import bushuk.stanislau.bitbucketproject.presentation.base.IItemClick
 import bushuk.stanislau.bitbucketproject.room.comments.Comment
 import kotlinx.android.synthetic.main.fragment_pull_request_comments.*
 
-class PullRequestCommentsFragment : Fragment(), ClickFollow<Comment> {
+class PullRequestCommentsFragment : Fragment(), IItemClick<Comment> {
 
     lateinit var viewModel: PullRequestCommentsViewModel
     lateinit var binding: FragmentPullRequestCommentsBinding

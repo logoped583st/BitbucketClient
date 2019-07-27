@@ -4,10 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
-import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersFragment
-import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingFragment
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
 import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsFragment
+import bushuk.stanislau.bitbucketproject.presentation.userslist.followers.FollowersFragment
 
 
 class ViewPagerUserAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
@@ -25,7 +24,7 @@ class ViewPagerUserAdapter(fragmentManager: FragmentManager) : FragmentStatePage
             followers -> FollowersFragment()
 
 
-            following -> FollowingFragment()
+            following -> TODO()
 
 
             snippets -> SnippetsFragment()

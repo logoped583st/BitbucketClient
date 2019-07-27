@@ -15,11 +15,11 @@ import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerCodePathAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentCodeBinding
-import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
+import bushuk.stanislau.bitbucketproject.presentation.base.IItemClick
 import bushuk.stanislau.bitbucketproject.room.code.Code
 import kotlinx.android.synthetic.main.fragment_code.*
 
-class CodeFragment : Fragment(), ClickFollow<Code>, RecyclerCodePathAdapter.PathClick {
+class CodeFragment : Fragment(), IItemClick<Code>, RecyclerCodePathAdapter.PathClick {
 
     override fun onClickPath(path: String, position: Int) {
         viewModel.reloadPathWithHash(this, codeAdapter, path)

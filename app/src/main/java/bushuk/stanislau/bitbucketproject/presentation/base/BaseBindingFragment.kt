@@ -10,8 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseBindingFragment<V : ViewModel, D : ViewDataBinding> : Fragment() {
+
+    protected val disposable: CompositeDisposable = CompositeDisposable()
 
     abstract val viewModelFactory: ViewModelProvider.Factory
 
@@ -35,11 +38,14 @@ abstract class BaseBindingFragment<V : ViewModel, D : ViewDataBinding> : Fragmen
         binding = DataBindingUtil.inflate(layoutInflater, containerId, container, false)
 
         binding.lifecycleOwner = viewLifecycleOwner
-        applyBinding()
 
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        applyBinding()
+    }
 
     enum class ViewModelScope {
         ACTIVITY,

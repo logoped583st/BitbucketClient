@@ -16,7 +16,7 @@ import bushuk.stanislau.bitbucketproject.RecyclerScrollFab
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.adapters.SpinnerAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentPullRequestsBinding
-import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
+import bushuk.stanislau.bitbucketproject.presentation.base.IItemClick
 import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryFragment
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
 import com.github.clans.fab.FloatingActionMenu
@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_pull_requests.*
 import kotlinx.android.synthetic.main.fragment_pull_requests.view.*
 
 
-class PullRequestsFragment : Fragment(), ClickFollow<PullRequest>{
+class PullRequestsFragment : Fragment(), IItemClick<PullRequest> {
 
     override fun onClickItem(view: View, data: PullRequest) {
         viewModel.navigateToPullRequestScreen(data)

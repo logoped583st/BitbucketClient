@@ -1,24 +1,24 @@
 package bushuk.stanislau.bitbucketproject.presentation.snippets.models
 
 import bushuk.stanislau.bitbucketproject.App
-import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSource
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.global.UserModel
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSource
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
+import bushuk.stanislau.bitbucketproject.room.BaseListResponse
 import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
-import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
 import io.reactivex.Single
 import javax.inject.Inject
 
-class SnippetsDataSource : BaseDataSource<Snippet, SnippetsResponce>() {
+class SnippetsDataSource : BaseDataSource<Snippet, BaseListResponse<Snippet>>() {
 
-    override fun onResult(value: SnippetsResponce, callback: LoadCallback<String, Snippet>) {
-        callback.onResult(value.values, value.next)
+    override fun onResult(value: BaseListResponse<Snippet>, callback: LoadCallback<String, Snippet>) {
+        callback.onResult(value.items ?: emptyList(), value.next)
     }
 
-    override fun onResultInitial(value: SnippetsResponce, callback: LoadInitialCallback<String, Snippet>) {
-        callback.onResult(value.values, value.previous, value.next)
+    override fun onResultInitial(value: BaseListResponse<Snippet>, callback: LoadInitialCallback<String, Snippet>) {
+        callback.onResult(value.items ?: emptyList(), value.previous, value.next)
     }
 
     @Inject
@@ -34,9 +34,11 @@ class SnippetsDataSource : BaseDataSource<Snippet, SnippetsResponce>() {
         //App.component.inject(this)
     }
 
-    override val single: Single<SnippetsResponce> = userModel.user.flatMapSingle { api.getSnippets(it.username) }.firstOrError()
+    override val single: Single<BaseListResponse<Snippet>> = TODO()
+    //userModel.user.flatMapSingle { api.getSnippets(it.username) }.firstOrError()
 
-    override fun loadNextPage(url: String): Single<SnippetsResponce> = api.getSnippetsNextPage(url)
+    override fun loadNextPage(url: String): Single<BaseListResponse<Snippet>> = TODO()
+    //api.getSnippetsNextPage(url)
 
     override val errorText: String = App.resourcesApp.getString(R.string.snippets_screen_no_snippets)
 

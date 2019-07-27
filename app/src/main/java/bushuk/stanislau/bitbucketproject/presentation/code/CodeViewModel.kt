@@ -13,20 +13,20 @@ import bushuk.stanislau.bitbucketproject.constants.Constants
 import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSource
 import bushuk.stanislau.bitbucketproject.presentation.base.BaseDisposableViewModel
 import bushuk.stanislau.bitbucketproject.presentation.code.model.CodeDataSourceFactory
+import bushuk.stanislau.bitbucketproject.room.BaseListResponse
 import bushuk.stanislau.bitbucketproject.room.code.Branch
 import bushuk.stanislau.bitbucketproject.room.code.Code
-import bushuk.stanislau.bitbucketproject.room.code.CodeResponse
 import bushuk.stanislau.bitbucketproject.utils.retrofit.UrlBuilder
 import com.jakewharton.rxbinding2.widget.RxAdapterView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-class CodeViewModel(val factory: CodeDataSourceFactory = CodeDataSourceFactory(), val source: BaseDataSource<Code, CodeResponse> = factory.codeDataSource) :
+class CodeViewModel(val factory: CodeDataSourceFactory = CodeDataSourceFactory(), val source: BaseDataSource<Code, BaseListResponse<Code>> = factory.codeDataSource) :
         BaseDisposableViewModel() {
 
     //@Inject
-  //  lateinit var router: Router
+    //  lateinit var router: Router
 
     val branches: MutableLiveData<List<Branch>> = MutableLiveData()
 

@@ -7,23 +7,23 @@ import bushuk.stanislau.bitbucketproject.global.PullRequestModel
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSource
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
-import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
+import bushuk.stanislau.bitbucketproject.room.BaseListResponse
 import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.Single
 import javax.inject.Inject
 
-class ReviewersDataSource : BaseDataSource<User, PullRequest>() {
+class ReviewersDataSource : BaseDataSource<User, BaseListResponse<User>>() {
 
-    override fun onResult(value: PullRequest, callback: LoadCallback<String, User>) {
+    override fun onResult(value: BaseListResponse<User>, callback: LoadCallback<String, User>) {
         //there doesn`t exist next page
     }
 
-    override fun onResultInitial(value: PullRequest, callback: LoadInitialCallback<String, User>) {
-        callback.onResult(value.reviewers, null, null)
-        pullRequestModel.publishSubject.onNext(value)
+    override fun onResultInitial(value: BaseListResponse<User>, callback: LoadInitialCallback<String, User>) {
+        callback.onResult(value.items ?: emptyList(), null, null)
+        //pullRequestModel.publishSubject.onNext(value)
     }
 
-    override fun loadNextPage(url: String): Single<PullRequest> {
+    override fun loadNextPage(url: String): Single<BaseListResponse<User>> {
         return Single.error(NullPointerException())//there doesn`t exist next page
     }
 
@@ -44,9 +44,10 @@ class ReviewersDataSource : BaseDataSource<User, PullRequest>() {
         //App.component.inject(this)
     }
 
-    override val single: Single<PullRequest>
-        get() = api.getPullRequest(userModel.user.value!!.username,
-                repositoryModel.repository.value!!.uuid!!, pullRequestModel.publishSubject.value!!.id.toString())
+    override val single: Single<BaseListResponse<User>>
+        get() = TODO()
+    //api.getPullRequest(userModel.user.value!!.username,
+    //repositoryModel.repository.value!!.uuid!!, pullRequestModel.publishSubject.value!!.id.toString())
 
     override val errorText: String = App.resourcesApp.getString(R.string.reviewers_error_text)
 

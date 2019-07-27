@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.databinding.FragmentPullRequestBinding
-import bushuk.stanislau.bitbucketproject.presentation.follow.ClickFollow
+import bushuk.stanislau.bitbucketproject.presentation.base.IItemClick
 import bushuk.stanislau.bitbucketproject.room.ItemResponse
 import bushuk.stanislau.bitbucketproject.room.user.User
 import kotlinx.android.synthetic.main.fragment_pull_request.*
 
-class PullRequestFragment : Fragment(), ClickFollow<ItemResponse> {
+class PullRequestFragment : Fragment(), IItemClick<ItemResponse> {
 
     override fun onClickItem(view: View, data: ItemResponse) {
         viewModel.navigateToUser(data as User)

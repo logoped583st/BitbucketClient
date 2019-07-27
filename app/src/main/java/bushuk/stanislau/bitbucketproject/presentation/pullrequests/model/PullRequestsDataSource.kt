@@ -6,18 +6,18 @@ import bushuk.stanislau.bitbucketproject.api.Api
 import bushuk.stanislau.bitbucketproject.global.UserModel
 import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSource
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
+import bushuk.stanislau.bitbucketproject.room.BaseListResponse
 import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
-import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestResponse
 import io.reactivex.Single
 import javax.inject.Inject
 
-class PullRequestsDataSource : BaseDataSource<PullRequest, PullRequestResponse>() {
-    override fun onResult(value: PullRequestResponse, callback: LoadCallback<String, PullRequest>) {
-        callback.onResult(value.values, value.previous)
+class PullRequestsDataSource : BaseDataSource<PullRequest, BaseListResponse<PullRequest>>() {
+    override fun onResult(value: BaseListResponse<PullRequest>, callback: LoadCallback<String, PullRequest>) {
+        callback.onResult(value.items ?: emptyList(), value.previous)
     }
 
-    override fun onResultInitial(value: PullRequestResponse, callback: LoadInitialCallback<String, PullRequest>) {
-        callback.onResult(value.values, value.previous, value.next)
+    override fun onResultInitial(value: BaseListResponse<PullRequest>, callback: LoadInitialCallback<String, PullRequest>) {
+        callback.onResult(value.items ?: emptyList(), value.previous, value.next)
     }
 
     @Inject
@@ -37,12 +37,13 @@ class PullRequestsDataSource : BaseDataSource<PullRequest, PullRequestResponse>(
         //App.component.inject(this)
     }
 
-    override val single: Single<PullRequestResponse> = userModel
-            .user.flatMapSingle {
-        api.getPullRequests(it.username, repositoryModel.repository.value!!.uuid!!, queryPullRequest, sortPullRequest)
-    }.firstOrError()
+    override val single: Single<BaseListResponse<PullRequest>> = TODO()
+    //userModel
+//            .user.flatMapSingle {
+//        api.getPullRequests(it.username, repositoryModel.repository.value!!.uuid!!, queryPullRequest, sortPullRequest)
+//    }.firstOrError()
 
-    override fun loadNextPage(url: String): Single<PullRequestResponse> = api.getPullRequestNextPage(url)
+    override fun loadNextPage(url: String): Single<BaseListResponse<PullRequest>> = TODO()//api.getPullRequestNextPage(url)
 
     override val errorText: String = App.resourcesApp.getString(R.string.pullrequests_screen_error_text)
 

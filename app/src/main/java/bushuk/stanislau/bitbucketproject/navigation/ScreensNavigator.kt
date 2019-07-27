@@ -7,15 +7,13 @@ import bushuk.stanislau.bitbucketproject.MainActivity
 import bushuk.stanislau.bitbucketproject.presentation.addrepository.AddRepositoryFragment
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginFragment
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthWebFragment
-import bushuk.stanislau.bitbucketproject.presentation.follow.followers.FollowersFragment
-import bushuk.stanislau.bitbucketproject.presentation.follow.following.FollowingFragment
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenFragment
 import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.PullRequestFragment
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
 import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryFragment
 import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsFragment
 import bushuk.stanislau.bitbucketproject.presentation.user.UserFragment
-import bushuk.stanislau.bitbucketproject.presentation.watchers.WatchersFragment
+import bushuk.stanislau.bitbucketproject.presentation.userslist.followers.FollowersFragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 object ScreensNavigator {
@@ -24,7 +22,7 @@ object ScreensNavigator {
         override fun getFragment(): Fragment = AuthLoginFragment()
     }
 
-    class WebLoginScreen:SupportAppScreen(){
+    class WebLoginScreen : SupportAppScreen() {
         override fun getFragment(): Fragment = AuthWebFragment()
     }
 
@@ -56,7 +54,7 @@ object ScreensNavigator {
 
     class FollowingScreen : SupportAppScreen() {
         override fun getFragment(): Fragment {
-            return FollowingFragment()
+            return TODO()
         }
     }
 
@@ -80,7 +78,7 @@ object ScreensNavigator {
 
     class WatchersScreen : SupportAppScreen() {
         override fun getFragment(): Fragment {
-            return WatchersFragment()
+            return TODO()
         }
     }
 

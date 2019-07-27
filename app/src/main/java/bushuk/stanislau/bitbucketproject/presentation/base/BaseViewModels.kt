@@ -15,7 +15,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 
-abstract class ListLoadingViewModel<Item : ItemResponse, Response : BaseListResponse<ItemResponse>>(private val factory: BaseDataSourceFactory<Item, Response>)
+abstract class BaseListLoadingViewModel<Item : ItemResponse, Response : BaseListResponse<Item>>(
+        private val factory: BaseDataSourceFactory<Item, Response>)
     : BaseDisposableViewModel(), IBaseLoadingViewModel<Response> {
 
     override val state = factory.state
@@ -23,7 +24,7 @@ abstract class ListLoadingViewModel<Item : ItemResponse, Response : BaseListResp
     val dataSource: LiveData<PagedList<Item>> = LivePagedListBuilder(factory, Constants.listPagedConfig)
             .build()
 
-    protected fun clearPaging() {
+    fun clearPaging() {
         factory.invalidate()
     }
 
@@ -33,7 +34,7 @@ abstract class ListLoadingViewModel<Item : ItemResponse, Response : BaseListResp
     }
 }
 
-abstract class LoadingViewModel<Response> : BaseDisposableViewModel(), IBaseLoadingViewModel<Response> {
+abstract class BaseLoadingViewModel<Response> : BaseDisposableViewModel(), IBaseLoadingViewModel<Response> {
 
     private val loadingState = LoadingStateLiveData<Response, CustomExceptions>()
 

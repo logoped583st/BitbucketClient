@@ -7,7 +7,7 @@ import bushuk.stanislau.bitbucketproject.di.Cicerones
 import bushuk.stanislau.bitbucketproject.global.IUserModel
 import bushuk.stanislau.bitbucketproject.global.LoadingStateSealed
 import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
-import bushuk.stanislau.bitbucketproject.presentation.base.LoadingViewModel
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseLoadingViewModel
 import bushuk.stanislau.bitbucketproject.presentation.base.addDisposable
 import bushuk.stanislau.bitbucketproject.room.user.User
 import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
@@ -21,7 +21,7 @@ class AuthLoginViewModel @Inject constructor(
         routerFactory: CiceroneFactory,
         private val userModel: IUserModel,
         private val authLoginModel: AuthLoginRepository
-) : LoadingViewModel<User>() {
+) : BaseLoadingViewModel<User>() {
 
     private val router = routerFactory.provideCicerone(Cicerones.GLOBAL).router
 
