@@ -23,13 +23,15 @@ class LoadingStateObservable<DATA, ERROR> {
     }
 }
 
+
 sealed class LoadingStateSealed<DATA, ERROR> {
-    internal class Start<DATA, ERROR> : LoadingStateSealed<DATA, ERROR>()
+    class Start<DATA, ERROR> : LoadingStateSealed<DATA, ERROR>()
     class Loading<DATA, ERROR> : LoadingStateSealed<DATA, ERROR>()
     data class Data<DATA, ERROR>(val data: DATA) : LoadingStateSealed<DATA, ERROR>()
     data class Error<DATA, ERROR>(val error: ERROR) : LoadingStateSealed<DATA, ERROR>()
+    class Refresh<DATA, ERROR> : LoadingStateSealed<DATA, ERROR>()
+    class LoadingNextItems<DATA, ERROR> : LoadingStateSealed<DATA, ERROR>()
 }
-
 
 fun <T, C : CustomExceptions> LoadingStateLiveData<T, C>.startLoading() {
     state.postValue(LoadingStateSealed.Loading())
@@ -45,6 +47,10 @@ fun <T, C : CustomExceptions> LoadingStateLiveData<T, C>.onError(error: C) {
 
 fun <T, C : CustomExceptions> LoadingStateObservable<T, C>.startLoading() {
     state.onNext(LoadingStateSealed.Loading())
+}
+
+fun <T, C : CustomExceptions> LoadingStateObservable<T, C>.refresh() {
+    state.onNext(LoadingStateSealed.Refresh())
 }
 
 fun <T, C : CustomExceptions> LoadingStateObservable<T, C>.dataReceived(data: T) {

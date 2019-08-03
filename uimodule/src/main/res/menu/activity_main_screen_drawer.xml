@@ -8,14 +8,11 @@
             android:id="@+id/drawer_menu_repositories"
             android:icon="@drawable/ic_repositories"
             android:title="@string/drawer_menu_repositories" />
+
         <item
-            android:id="@+id/drawer_menu_followers"
-            android:icon="@drawable/ic_followers"
-            android:title="@string/drawer_menu_followers" />
-        <item
-            android:id="@+id/drawer_menu_following"
+            android:id="@+id/drawer_menu_teams"
             android:icon="@drawable/ic_following"
-            android:title="@string/drawer_menu_following" />
+            android:title="@string/drawer_menu_teams" />
 
         <item
             android:id="@+id/drawer_menu_snippets"

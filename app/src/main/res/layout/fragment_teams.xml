@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesViewModel" />
+            type="bushuk.stanislau.bitbucketproject.presentation.team.TeamsViewModel" />
 
         <variable
             name="viewGroup"
@@ -15,7 +15,7 @@
 
         <variable
             name="fragment"
-            type="bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment" />
+            type="bushuk.stanislau.bitbucketproject.presentation.team.TeamsFragment" />
     </data>
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -32,9 +32,9 @@
             android:id="@+id/list_constraint"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:viewModel = "@{viewModel.state}"
             android:animateLayoutChanges="true"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            app:viewModel="@{viewModel.state}">
 
             <com.github.clans.fab.FloatingActionMenu
                 android:id="@+id/repositories_screen_settings_menu"

@@ -12,6 +12,7 @@ import bushuk.stanislau.bitbucketproject.presentation.pullrequest.info.PullReque
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
 import bushuk.stanislau.bitbucketproject.presentation.repository.RepositoryFragment
 import bushuk.stanislau.bitbucketproject.presentation.snippets.SnippetsFragment
+import bushuk.stanislau.bitbucketproject.presentation.team.TeamsFragment
 import bushuk.stanislau.bitbucketproject.presentation.user.UserFragment
 import bushuk.stanislau.bitbucketproject.presentation.userslist.followers.FollowersFragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
@@ -43,6 +44,12 @@ object ScreensNavigator {
     class RepositoriesScreen : SupportAppScreen() {
         override fun getFragment(): Fragment {
             return RepositoriesFragment()
+        }
+    }
+
+    class TeamsScreen : SupportAppScreen() {
+        override fun getFragment(): Fragment {
+            return TeamsFragment()
         }
     }
 

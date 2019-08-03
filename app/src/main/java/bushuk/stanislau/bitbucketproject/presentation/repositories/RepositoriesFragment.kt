@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import bushuk.stanislau.bitbucketproject.Injectable
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.RecyclerScrollFab
@@ -18,7 +17,6 @@ import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import bushuk.stanislau.bitbucketproject.utils.extensions.spinnerRx
 import com.github.clans.fab.FloatingActionMenu
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
-import kotlinx.android.synthetic.main.base_list_constraint.*
 import kotlinx.android.synthetic.main.fragment_repositories.*
 import javax.inject.Inject
 
@@ -33,7 +31,6 @@ class RepositoriesFragment : BaseListFragment<Repository, RepositoriesResponse, 
     override val scope: ViewModelScope = ViewModelScope.ACTIVITY
 
     override fun applyBinding() {
-        binding.viewGroup = list_constraint
         binding.viewModel = viewModel
         binding.fragment = this
     }
@@ -47,7 +44,7 @@ class RepositoriesFragment : BaseListFragment<Repository, RepositoriesResponse, 
         languageSpinner()
 
 
-        rv.addOnScrollListener(object : RecyclerScrollFab() {
+        list_constraint.mBinding.rv.addOnScrollListener(object : RecyclerScrollFab() {
             override fun getFab(): FloatingActionMenu = repositories_screen_settings_menu
         })
 

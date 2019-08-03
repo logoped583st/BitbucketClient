@@ -2,19 +2,17 @@ package bushuk.stanislau.bitbucketproject.presentation.repositories
 
 import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class RepositoriesQueryModel @Inject constructor() {
+class RepositoriesQueryModel @Inject constructor() : IRepositoriesQueryModel {
 
-    var query: String? = null
+    override var query: String? = null
 
     init {
         Timber.e("INIT QUERY")
     }
 
 
-    fun buildQuery(repositoryName: String?, repositoryAccess: String?, repositoryLanguage: String?) {
+    override fun buildQuery(repositoryName: String?, repositoryAccess: String?, repositoryLanguage: String?) {
         var query = ""
         query += if (repositoryName.isNullOrEmpty()) {
             "(name~\"\")"
@@ -55,5 +53,10 @@ class RepositoriesQueryModel @Inject constructor() {
             }
         }
     }
+}
 
+interface IRepositoriesQueryModel {
+    fun buildQuery(repositoryName: String?, repositoryAccess: String?, repositoryLanguage: String?)
+
+    val query: String?
 }

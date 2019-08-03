@@ -55,13 +55,6 @@ def version = ext.version
 
 ext.libraries = [
 
-    //Design
-    supportAppcompat: "com.android.support:appcompat-v7:"+                                      "$version.support",
-    support: "com.android.support:support-v4:"+                                                 "$version.support",
-    supportDesign: "com.android.support:design:"+                                               "$version.support",
-    supportFragment: "com.android.support:support-fragment:"+                                   "$version.support",
-    recyclerview: "com.android.support:recyclerview-v7:"+                                       "$version.support",
-    constraint:"com.android.support.constraint:constraint-layout:"+                             "$version.constraint",
 
 
     // RXJava+RXAndroid

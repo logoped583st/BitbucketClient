@@ -8,6 +8,7 @@ import bushuk.stanislau.bitbucketproject.di.ViewModelKey
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginViewModel
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenViewModel
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesViewModel
+import bushuk.stanislau.bitbucketproject.presentation.team.TeamsViewModel
 import bushuk.stanislau.bitbucketproject.presentation.userslist.followers.FollowersViewModel
 import dagger.Binds
 import dagger.Module
@@ -41,6 +42,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FollowersViewModel::class)
     abstract fun bindFollowersViewModel(followersViewModel: FollowersViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TeamsViewModel::class)
+    abstract fun bindTeamsViewModel(teamsViewModel: TeamsViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

@@ -19,11 +19,15 @@ abstract class BaseDataSourceFactory<Value : ItemResponse, Response : BaseListRe
 
     lateinit var dataSource: BaseDataSource<Value, Response>
 
+    var isRefresh = false
+
     private val compositeDisposable = CompositeDisposable()
 
     override fun create(): DataSource<String, Value> {
 
         dataSource = dataSourceProvider.get()
+        dataSource.isRefresh = isRefresh
+
 
         compositeDisposable.add(dataSource.loadingStateImpl.state
                 .observeOn(AndroidSchedulers.mainThread())

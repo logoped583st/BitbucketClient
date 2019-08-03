@@ -51,8 +51,7 @@ class MainScreenViewModel @Inject constructor(
 
     enum class NavigateTo(val screen: SupportAppScreen, val title: String) {
         REPOSITORIES(ScreensNavigator.RepositoriesScreen(), App.resourcesApp.getString(R.string.toolbar_title_repository)),
-        FOLLOWERS(ScreensNavigator.FollowersScreen(), App.resourcesApp.getString(R.string.toolbar_title_followers)),
-        FOLLOWING(ScreensNavigator.FollowingScreen(), App.resourcesApp.getString(R.string.toolbar_title_following)),
+        TEAMS(ScreensNavigator.TeamsScreen(), App.resourcesApp.getString(R.string.toolbar_title_teams)),
         SNIPPETS(ScreensNavigator.SnippetsScreen(), App.resourcesApp.getString(R.string.toolbar_title_snippets));
     }
 }

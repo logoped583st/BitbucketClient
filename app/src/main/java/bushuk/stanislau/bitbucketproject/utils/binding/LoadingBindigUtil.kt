@@ -5,10 +5,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import bushuk.stanislau.bitbucketproject.global.LoadingStateSealed
 import bushuk.stanislau.bitbucketproject.views.LoadingView
-import timber.log.Timber
 
 @BindingAdapter("bindClickable")
 fun Button.bindClickable(state: LoadingStateSealed<*, *>?) {
@@ -47,6 +46,8 @@ fun LoadingStateSealed<*, *>.loadingStateVisibility(): Boolean {
         is LoadingStateSealed.Loading -> true
         is LoadingStateSealed.Data -> false
         is LoadingStateSealed.Error -> false
+        is LoadingStateSealed.Refresh -> false
+        is LoadingStateSealed.LoadingNextItems -> false
     }
 }
 
@@ -60,7 +61,6 @@ fun View.visibility(boolean: Boolean?) {
 
 @BindingAdapter("loading", "root")
 fun LoadingView.visibility(visibility: LoadingStateSealed<*, *>?, rootView: ViewGroup?) {
-    Timber.e(visibility.toString())
     rootView?.apply {
         if (visibility?.loadingStateVisibility() == true) {
             show(this)
@@ -71,15 +71,13 @@ fun LoadingView.visibility(visibility: LoadingStateSealed<*, *>?, rootView: View
 
 }
 
-
-@BindingAdapter("loading")
-fun RecyclerView.loadingStateVisibility(visibility: LoadingStateSealed<*, *>?) {
-    this.visibility = when (visibility) {
-        is LoadingStateSealed.Start -> View.GONE
-        is LoadingStateSealed.Loading -> View.GONE
-        is LoadingStateSealed.Data -> View.VISIBLE
-        is LoadingStateSealed.Error -> View.VISIBLE
-        null -> View.GONE
+@BindingAdapter("refreshing")
+fun SwipeRefreshLayout.refresh(visibility: LoadingStateSealed<*, *>?) {
+    when (visibility) {
+        is LoadingStateSealed.Data -> {
+            isRefreshing = false
+        }
     }
 }
+
 

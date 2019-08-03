@@ -11,6 +11,7 @@ import bushuk.stanislau.bitbucketproject.room.repositories.CreateRepository
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
 import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
+import bushuk.stanislau.bitbucketproject.room.team.TeamResponse
 import bushuk.stanislau.bitbucketproject.room.user.User
 import bushuk.stanislau.bitbucketproject.room.user.UserResponse
 import io.reactivex.Completable
@@ -93,5 +94,8 @@ interface Api {
     @POST("repositories/{userName}/{repoName}")
     fun createRepository(@Path("userName") userName: String, @Path("repoName") repoName: String,
                          @Body createRepository: CreateRepository): Completable
+
+    @GET("teams")
+    fun getTeams(@Query("role") role: String): Single<TeamResponse>
 
 }

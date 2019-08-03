@@ -24,6 +24,14 @@ abstract class BaseListLoadingViewModel<Item : ItemResponse, Response : BaseList
     val dataSource: LiveData<PagedList<Item>> = LivePagedListBuilder(factory, Constants.listPagedConfig)
             .build()
 
+    fun refresh() {
+        factory.isRefresh = true
+    }
+
+    fun finishRefresh() {
+        factory.isRefresh = false
+    }
+
     fun clearPaging() {
         factory.invalidate()
     }

@@ -9,7 +9,7 @@ import bushuk.stanislau.bitbucketproject.adapters.RecyclerAdapter
 import bushuk.stanislau.bitbucketproject.room.BaseListResponse
 import bushuk.stanislau.bitbucketproject.room.ItemResponse
 import com.jakewharton.rxbinding2.support.v4.widget.refreshes
-import kotlinx.android.synthetic.main.base_list_constraint.*
+import kotlinx.android.synthetic.main.fragment_repositories.*
 
 abstract class BaseListFragment<I : ItemResponse, R : BaseListResponse<I>,
         VM : BaseListLoadingViewModel<I, R>, B : ViewDataBinding>
@@ -22,14 +22,17 @@ abstract class BaseListFragment<I : ItemResponse, R : BaseListResponse<I>,
         super.onViewCreated(view, savedInstanceState)
 
         adapter = RecyclerAdapter(this)
-        rv.layoutManager = LinearLayoutManager(context)
-        rv.adapter = adapter
+        list_constraint.mBinding.rv.layoutManager = LinearLayoutManager(context)
+        list_constraint.mBinding.rv.adapter = adapter
 
-        disposable.add(list_swiperefresh.refreshes().subscribe {
+        disposable.add(list_constraint.mBinding.listSwiperefresh.refreshes().subscribe {
             viewModel.clearPaging()
+            viewModel.refresh()
         })
 
-        viewModel.dataSource.observe(this, Observer(adapter::submitList))
+        viewModel.dataSource.observe(viewLifecycleOwner, Observer(adapter::submitList))
+
+
     }
 
 }

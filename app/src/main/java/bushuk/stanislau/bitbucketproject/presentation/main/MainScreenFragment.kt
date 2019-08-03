@@ -1,5 +1,6 @@
 package bushuk.stanislau.bitbucketproject.presentation.main
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -18,21 +19,27 @@ import bushuk.stanislau.bitbucketproject.databinding.ActivityMainScreenBinding
 import bushuk.stanislau.bitbucketproject.databinding.NavHeaderMainScreenBinding
 import bushuk.stanislau.bitbucketproject.di.CiceroneFactory
 import bushuk.stanislau.bitbucketproject.di.Cicerones
-import bushuk.stanislau.bitbucketproject.di.scopes.DrawerScope
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
 import bushuk.stanislau.bitbucketproject.presentation.base.BackPress
 import bushuk.stanislau.bitbucketproject.presentation.base.BackPressFragment
 import com.google.android.material.navigation.NavigationView
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
 import kotlinx.android.synthetic.main.activity_main_screen.*
 import kotlinx.android.synthetic.main.activity_main_screen.view.*
 import javax.inject.Inject
 
-const val MAIN_SCREEN_ROUTER = "MAIN_SCREEN_ROUTER"
-
-class MainScreenFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener, Injectable {
+class MainScreenFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener, Injectable, HasActivityInjector {
 
     @Inject
-    @DrawerScope
+    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
+
+    override fun activityInjector(): AndroidInjector<Activity> {
+        return activityInjector
+    }
+
+    @Inject
     lateinit var mainScreenHolder: CiceroneFactory
 
     @Inject
@@ -124,12 +131,10 @@ class MainScreenFragment : Fragment(), NavigationView.OnNavigationItemSelectedLi
             R.id.drawer_menu_repositories -> {
                 viewModel.drawerNavigation(MainScreenViewModel.NavigateTo.REPOSITORIES)
             }
-            R.id.drawer_menu_followers -> {
-                viewModel.drawerNavigation(MainScreenViewModel.NavigateTo.FOLLOWERS)
+            R.id.drawer_menu_teams -> {
+                viewModel.drawerNavigation(MainScreenViewModel.NavigateTo.TEAMS)
             }
-            R.id.drawer_menu_following -> {
-                viewModel.drawerNavigation(MainScreenViewModel.NavigateTo.FOLLOWING)
-            }
+
             R.id.drawer_menu_snippets -> {
                 viewModel.drawerNavigation(MainScreenViewModel.NavigateTo.SNIPPETS)
             }

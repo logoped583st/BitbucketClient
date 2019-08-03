@@ -4,26 +4,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
-            name="viewGroup"
+            name="viewGroupAnim"
             type="android.view.ViewGroup" />
-
         <variable
-            name="viewModel"
-            type="bushuk.stanislau.bitbucketproject.presentation.base.BaseListLoadingViewModel" />
+            name="state"
+            type="bushuk.stanislau.bitbucketproject.global.LoadingStateSealed" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/list_swiperefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:refreshing="@{state}">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view_group"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:animateLayoutChanges="true"
             android:focusableInTouchMode="true">
+
+
+            <include
+                layout="@layout/loading_view"
+                app:groupView="@{viewGroupAnim}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:loadingState="@{state}" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv"

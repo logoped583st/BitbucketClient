@@ -3,6 +3,7 @@ package bushuk.stanislau.bitbucketproject.presentation.base
 import androidx.paging.PageKeyedDataSource
 import bushuk.stanislau.bitbucketproject.global.LoadingStateObservable
 import bushuk.stanislau.bitbucketproject.global.dataReceived
+import bushuk.stanislau.bitbucketproject.global.refresh
 import bushuk.stanislau.bitbucketproject.global.startLoading
 import bushuk.stanislau.bitbucketproject.room.BaseListResponse
 import bushuk.stanislau.bitbucketproject.room.ItemResponse
@@ -31,10 +32,17 @@ abstract class BaseDataSource<Value : ItemResponse, Response : BaseListResponse<
 
     private val compositeDisposable = CompositeDisposable()
 
+    var isRefresh = false
+
     val loadingStateImpl: LoadingStateObservable<Response, CustomExceptions> = LoadingStateObservable()
 
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, Value>) {
-        loadingStateImpl.startLoading()
+        if (isRefresh) {
+            loadingStateImpl.refresh()
+            isRefresh = false
+        } else {
+            loadingStateImpl.startLoading()
+        }
 
         compositeDisposable.add(single
                 .subscribe({
@@ -42,7 +50,7 @@ abstract class BaseDataSource<Value : ItemResponse, Response : BaseListResponse<
                     callback.onResult(it.items ?: emptyList(), it.previous, it.next)
                     onResultInitial(it, callback)
                 }, {
-
+                    Timber.e(it.message)
                 }))
     }
 
@@ -57,7 +65,7 @@ abstract class BaseDataSource<Value : ItemResponse, Response : BaseListResponse<
     }
 
     override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<String, Value>) {
-
+        Timber.e("LOAD BEFORE")
     }
 
     override fun invalidate() {

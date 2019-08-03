@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import bushuk.stanislau.bitbucketproject.di.CiceroneFactory
 import bushuk.stanislau.bitbucketproject.di.Cicerones
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
+import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesDataSourceFactory
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
@@ -21,6 +22,9 @@ class MainActivity : AppCompatActivity(), LifecycleOwner, Injectable, HasSupport
 
     @Inject
     lateinit var navigatorHolder: CiceroneFactory
+
+    @Inject
+    lateinit var factoryTest: RepositoriesDataSourceFactory
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

@@ -14,7 +14,7 @@ class RepositoriesDataSource @Inject constructor(
         private val api: Api,
         private val queryModel: RepositoriesQueryModel,
         userModel: IUserModel)
-    : BaseDataSource<Repository, RepositoriesResponse>() {
+    : BaseDataSource<Repository, RepositoriesResponse>(),IRepositoriesDataSource {
 
     override val errorText: String = App.resourcesApp.getString(R.string.repositories_screen_no_repositories)
 
@@ -25,10 +25,21 @@ class RepositoriesDataSource @Inject constructor(
     override fun loadNextPage(url: String): Single<RepositoriesResponse> = api.getReposNextPage(url)
 
     override fun onResult(value: RepositoriesResponse, callback: LoadCallback<String, Repository>) {
- //       value.items?.let { callback.onResult(it, value.next) }
+        //       value.items?.let { callback.onResult(it, value.next) }
     }
 
     override fun onResultInitial(value: RepositoriesResponse, callback: LoadInitialCallback<String, Repository>) {
 //        value.items?.let { callback.onResult(it, value.previous, value.next) }
     }
 }
+
+
+interface IRepositoriesDataSource {
+    fun loadNextPage(url: String): Single<RepositoriesResponse>
+
+    val single: Single<RepositoriesResponse>
+
+    val errorText: String
+
+}
+
