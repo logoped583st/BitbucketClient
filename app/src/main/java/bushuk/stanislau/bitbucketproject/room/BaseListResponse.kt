@@ -2,7 +2,7 @@ package bushuk.stanislau.bitbucketproject.room
 
 import com.google.gson.annotations.SerializedName
 
-open class BaseListResponse<out T : ItemResponse> {
+open class  BaseListResponse<out T : ItemResponse> {
 
     @SerializedName("pagelen")
     var pagelen: Int = 0

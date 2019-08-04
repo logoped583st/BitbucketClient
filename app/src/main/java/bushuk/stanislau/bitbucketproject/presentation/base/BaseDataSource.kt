@@ -18,23 +18,14 @@ import timber.log.Timber
  *  BY DEFAULT DATASOURCE USING IO SCHEDULER FOR FETCH DATA AND MAIN FOR CALLBACK
  */
 
-abstract class BaseDataSource<Value : ItemResponse, Response : BaseListResponse<Value>> : PageKeyedDataSource<String, Value>() {
-
-    abstract val errorText: String
-
-    abstract val single: Single<Response>
-
-    abstract fun loadNextPage(url: String): Single<Response>
-
-    abstract fun onResult(value: Response, callback: LoadCallback<String, Value>)
-
-    abstract fun onResultInitial(value: Response, callback: LoadInitialCallback<String, Value>)
+abstract class BaseDataSource<Value : ItemResponse, Response : BaseListResponse<Value>> : PageKeyedDataSource<String, Value>(),
+        IBaseDataSource<Response, Value> {
 
     private val compositeDisposable = CompositeDisposable()
 
-    var isRefresh = false
+    override var isRefresh = false
 
-    val loadingStateImpl: LoadingStateObservable<Response, CustomExceptions> = LoadingStateObservable()
+    override val loadingStateImpl: LoadingStateObservable<Response, CustomExceptions> = LoadingStateObservable()
 
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, Value>) {
         if (isRefresh) {
@@ -48,7 +39,6 @@ abstract class BaseDataSource<Value : ItemResponse, Response : BaseListResponse<
                 .subscribe({
                     loadingStateImpl.dataReceived(it)
                     callback.onResult(it.items ?: emptyList(), it.previous, it.next)
-                    onResultInitial(it, callback)
                 }, {
                     Timber.e(it.message)
                 }))
@@ -72,4 +62,18 @@ abstract class BaseDataSource<Value : ItemResponse, Response : BaseListResponse<
         compositeDisposable.clear()
         super.invalidate()
     }
+}
+
+interface IBaseDataSource<Response : BaseListResponse<Value>, Value : ItemResponse> {
+    var isRefresh: Boolean
+
+    fun invalidate()
+
+    val loadingStateImpl: LoadingStateObservable<Response, CustomExceptions>
+
+    val errorText: String
+
+    val single: Single<Response>
+
+    fun loadNextPage(url: String): Single<Response>
 }

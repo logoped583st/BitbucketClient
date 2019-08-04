@@ -30,3 +30,15 @@ class CiceroneGlobalModule {
     @CiceroneKey(Cicerones.GLOBAL)
     fun provideGlobalRouter(): Cicerone<Router> = cicerone
 }
+
+@Module
+class CiceroneDrawerModule {
+
+    private val cicerone: Cicerone<Router> = Cicerone.create()
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CiceroneKey(Cicerones.DRAWER)
+    fun provideDrawerRouter(): Cicerone<Router> = cicerone
+}

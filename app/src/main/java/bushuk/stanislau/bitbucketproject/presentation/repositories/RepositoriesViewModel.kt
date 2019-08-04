@@ -8,7 +8,7 @@ import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import javax.inject.Inject
 
 class RepositoriesViewModel @Inject constructor(factory: RepositoriesDataSourceFactory,
-                                                private val queryModel: RepositoriesQueryModel,
+                                                private val queryModel: IRepositoriesQueryModel,
                                                 private val routerFactory: CiceroneFactory
 
 ) : BaseListLoadingViewModel<Repository, RepositoriesResponse>(factory) {

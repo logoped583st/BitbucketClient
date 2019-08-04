@@ -9,4 +9,4 @@ import javax.inject.Provider
 class FollowersDataSourceFactory
 @Inject constructor(
         followersDataSource: Provider<FollowersDataSource>)
-    : BaseDataSourceFactory<User, UserResponse>(followersDataSource)
+    : BaseDataSourceFactory<User, UserResponse>(TODO())

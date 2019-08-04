@@ -12,19 +12,20 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Provider
 
 abstract class BaseDataSourceFactory<Value : ItemResponse, Response : BaseListResponse<Value>>
-(private val dataSourceProvider: Provider<out BaseDataSource<Value, Response>>)
-    : DataSource.Factory<String, Value>() {
+(override val dataSourceProvider: Provider<out BaseDataSource<Value, Response>>)
+
+    : DataSource.Factory<String, Value>(), IBaseDataSourceFactory<Value, Response> {
 
     private val stateImpl = MutableLiveData<LoadingStateSealed<Response, CustomExceptions>>()
 
-    lateinit var dataSource: BaseDataSource<Value, Response>
+    private lateinit var dataSource: BaseDataSource<Value, Response>
 
     var isRefresh = false
 
     private val compositeDisposable = CompositeDisposable()
 
-    override fun create(): DataSource<String, Value> {
 
+    override fun create(): DataSource<String, Value> {
         dataSource = dataSourceProvider.get()
         dataSource.isRefresh = isRefresh
 
@@ -34,16 +35,28 @@ abstract class BaseDataSourceFactory<Value : ItemResponse, Response : BaseListRe
                 .subscribe {
                     stateImpl.postValue(it)
                 })
+
         return dataSource
     }
 
-    fun invalidate() {
+    override fun invalidate() {
         compositeDisposable.clear()
         dataSource.invalidate()
     }
 
-    val state: LiveData<LoadingStateSealed<Response, CustomExceptions>> = stateImpl
+    override val state: LiveData<LoadingStateSealed<Response, CustomExceptions>> = stateImpl
 
+}
+
+interface IBaseDataSourceFactory<Value : ItemResponse, Response : BaseListResponse<Value>> {
+
+    val dataSourceProvider: Provider<out IBaseDataSource<Response, Value>>
+
+    fun invalidate()
+
+    fun create(): DataSource<String, Value>
+
+    val state: LiveData<LoadingStateSealed<Response, CustomExceptions>>
 }
 
 

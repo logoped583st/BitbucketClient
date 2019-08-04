@@ -13,13 +13,6 @@ import javax.inject.Inject
 
 class WatchersDataSource : BaseDataSource<User, BaseListResponse<User>>() {
 
-    override fun onResult(value: BaseListResponse<User>, callback: LoadCallback<String, User>) {
-        callback.onResult(value.items ?: emptyList(), value.next)
-    }
-
-    override fun onResultInitial(value: BaseListResponse<User>, callback: LoadInitialCallback<String, User>) {
-        callback.onResult(value.items ?: emptyList(), value.previous, value.next)
-    }
 
     @Inject
     lateinit var api: Api

@@ -1,49 +1,51 @@
 package bushuk.stanislau.bitbucketproject.di.modules
 
+import androidx.appcompat.app.AppCompatActivity
 import bushuk.stanislau.bitbucketproject.MainActivity
-import bushuk.stanislau.bitbucketproject.di.modules.auth.AuthLoginModule
-import bushuk.stanislau.bitbucketproject.di.modules.drawer.MainScreenModule
 import bushuk.stanislau.bitbucketproject.di.modules.drawer.RepositoriesModule
+import bushuk.stanislau.bitbucketproject.di.scopes.ActivityScope
 import bushuk.stanislau.bitbucketproject.di.scopes.DrawerScope
 import bushuk.stanislau.bitbucketproject.di.scopes.SimpleFragmentScope
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthLoginFragment
 import bushuk.stanislau.bitbucketproject.presentation.auth.AuthWebFragment
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenFragment
 import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesFragment
-import bushuk.stanislau.bitbucketproject.presentation.team.TeamsFragment
-import bushuk.stanislau.bitbucketproject.presentation.userslist.followers.FollowersFragment
+import dagger.Binds
 import dagger.Module
+import dagger.android.AndroidInjectionModule
 import dagger.android.ContributesAndroidInjector
 
-@Module
+@Module(includes = [AndroidInjectionModule::class])
 abstract class AppModule {
 
-    @DrawerScope
-    @ContributesAndroidInjector
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [MainActivityModule::class, ActivityModule::class])
     abstract fun mainActivityInjector(): MainActivity
 
-    @SimpleFragmentScope
-    @ContributesAndroidInjector(modules = [AuthLoginModule::class])
-    abstract fun AuthLoginFragmentInjector(): AuthLoginFragment
+    @Module
+    abstract class MainActivityModule {
 
-    @SimpleFragmentScope
-    @ContributesAndroidInjector
-    abstract fun AuthLoginBrowserFragmentInjector(): AuthWebFragment
+        @Binds
+        @ActivityScope
+        abstract fun activity(mainActivity: MainActivity): AppCompatActivity
 
-    @DrawerScope
-    @ContributesAndroidInjector(modules = [MainScreenModule::class])
-    abstract fun MainScreenFragmentInjector(): MainScreenFragment
+        @SimpleFragmentScope
+        @ContributesAndroidInjector(modules = [AuthLoginModule::class])
+        abstract fun AuthLoginFragmentInjector(): AuthLoginFragment
 
-    @DrawerScope
-    @ContributesAndroidInjector(modules = [RepositoriesModule::class])
-    abstract fun RepositoriesFragmentInjector(): RepositoriesFragment
+        @SimpleFragmentScope
+        @ContributesAndroidInjector(modules = [AuthLoginModule::class])
+        abstract fun AuthLoginBrowserFragmentInjector(): AuthWebFragment
 
-    @DrawerScope
-    @ContributesAndroidInjector
-    abstract fun FollowwersFragmentInjector(): FollowersFragment
+        @DrawerScope
+        @ContributesAndroidInjector(modules = [MainScreenModule::class])
+        abstract fun MainScreenFragmentInjector(): MainScreenFragment
 
 
-    @DrawerScope
-    @ContributesAndroidInjector
-    abstract fun TeamsFragmentInjector(): TeamsFragment
+        @DrawerScope
+        @ContributesAndroidInjector(modules = [RepositoriesModule::class])
+        abstract fun RepositoriesFragmentInjector(): RepositoriesFragment
+    }
+
+
 }

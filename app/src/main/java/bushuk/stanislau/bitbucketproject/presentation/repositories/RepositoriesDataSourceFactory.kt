@@ -1,18 +1,14 @@
 package bushuk.stanislau.bitbucketproject.presentation.repositories
 
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSource
 import bushuk.stanislau.bitbucketproject.presentation.base.BaseDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
 
 
 class RepositoriesDataSourceFactory @Inject constructor(
-        repositoriesDataSource: Provider<RepositoriesDataSource>)
-    : BaseDataSourceFactory<Repository, RepositoriesResponse>(repositoriesDataSource) {
-    init {
-        Timber.e("INIT FAC")
-    }
-}
+        repositoriesDataSource: Provider<out BaseDataSource<Repository, RepositoriesResponse>>)
+    : BaseDataSourceFactory<Repository, RepositoriesResponse>(repositoriesDataSource)
 

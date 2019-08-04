@@ -3,6 +3,7 @@ package bushuk.stanislau.bitbucketproject.presentation.repositories
 import timber.log.Timber
 import javax.inject.Inject
 
+
 class RepositoriesQueryModel @Inject constructor() : IRepositoriesQueryModel {
 
     override var query: String? = null

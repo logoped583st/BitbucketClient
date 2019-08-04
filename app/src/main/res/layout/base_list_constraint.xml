@@ -26,15 +26,6 @@
             android:animateLayoutChanges="true"
             android:focusableInTouchMode="true">
 
-
-            <include
-                layout="@layout/loading_view"
-                app:groupView="@{viewGroupAnim}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:loadingState="@{state}" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv"
                 android:layout_width="0dp"
@@ -44,6 +35,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <include
+                layout="@layout/loading_view"
+                app:groupView="@{viewGroupAnim}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:loadingState="@{state}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

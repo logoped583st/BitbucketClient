@@ -13,14 +13,6 @@ import javax.inject.Inject
 
 class CodeDataSource : BaseDataSource<Code, BaseListResponse<Code>>() {
 
-    override fun onResult(value: BaseListResponse<Code>, callback: LoadCallback<String, Code>) {
-        callback.onResult(value.items!!, value.next)
-    }
-
-    override fun onResultInitial(value: BaseListResponse<Code>, callback: LoadInitialCallback<String, Code>) {
-        callback.onResult(value.items!!, value.previous, value.next)
-    }
-
     @Inject
     lateinit var userModel: UserModel
 

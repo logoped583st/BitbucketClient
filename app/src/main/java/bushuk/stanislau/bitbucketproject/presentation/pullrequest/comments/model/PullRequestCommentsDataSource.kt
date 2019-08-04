@@ -10,14 +10,7 @@ import bushuk.stanislau.bitbucketproject.room.comments.Comment
 import io.reactivex.Single
 import javax.inject.Inject
 
-class PullRequestCommentsDataSource : BaseDataSource<Comment, BaseListResponse<Comment>>() {
-    override fun onResult(value: BaseListResponse<Comment>, callback: LoadCallback<String, Comment>) {
-        callback.onResult(value.items ?: emptyList(), value.previous)
-    }
-
-    override fun onResultInitial(value: BaseListResponse<Comment>, callback: LoadInitialCallback<String, Comment>) {
-        callback.onResult(value.items ?: emptyList(), value.previous, value.next)
-    }
+class PullRequestCommentsDataSource() : BaseDataSource<Comment, BaseListResponse<Comment>>() {
 
     override fun loadNextPage(url: String): Single<BaseListResponse<Comment>> = TODO()
     //api.getPullRequestComments(url)

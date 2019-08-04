@@ -9,16 +9,11 @@ import bushuk.stanislau.bitbucketproject.room.user.User
 import bushuk.stanislau.bitbucketproject.room.user.UserResponse
 import io.reactivex.Single
 import javax.inject.Inject
+import javax.inject.Provider
 
 class FollowersDataSource @Inject constructor(val api: Api, val userModel: UserModel) : BaseDataSource<User, UserResponse>() {
 
-    override fun onResult(value: UserResponse, callback: LoadCallback<String, User>) {
-        callback.onResult(value.items ?: emptyList(), value.next)
-    }
 
-    override fun onResultInitial(value: UserResponse, callback: LoadInitialCallback<String, User>) {
-        callback.onResult(value.items ?: emptyList(), value.previous, value.next)
-    }
 
     override val errorText: String = App.resourcesApp.getString(R.string.followers_screen_no_followers)
 

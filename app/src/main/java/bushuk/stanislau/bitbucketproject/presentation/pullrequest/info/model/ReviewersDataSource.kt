@@ -11,18 +11,9 @@ import bushuk.stanislau.bitbucketproject.room.BaseListResponse
 import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.Single
 import javax.inject.Inject
+import javax.inject.Provider
 
 class ReviewersDataSource : BaseDataSource<User, BaseListResponse<User>>() {
-
-    override fun onResult(value: BaseListResponse<User>, callback: LoadCallback<String, User>) {
-        //there doesn`t exist next page
-    }
-
-    override fun onResultInitial(value: BaseListResponse<User>, callback: LoadInitialCallback<String, User>) {
-        callback.onResult(value.items ?: emptyList(), null, null)
-        //pullRequestModel.publishSubject.onNext(value)
-    }
-
     override fun loadNextPage(url: String): Single<BaseListResponse<User>> {
         return Single.error(NullPointerException())//there doesn`t exist next page
     }

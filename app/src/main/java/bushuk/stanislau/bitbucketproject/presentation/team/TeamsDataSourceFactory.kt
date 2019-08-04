@@ -8,5 +8,5 @@ import javax.inject.Provider
 
 class TeamsDataSourceFactory @Inject constructor(
         teamDataSource: Provider<TeamsDataSource>)
-    : BaseDataSourceFactory<Team, TeamResponse>(teamDataSource)
+    : BaseDataSourceFactory<Team, TeamResponse>(TODO())
 

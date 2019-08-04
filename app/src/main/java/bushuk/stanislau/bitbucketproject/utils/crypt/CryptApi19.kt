@@ -139,7 +139,7 @@ class CryptApi19 @Inject constructor(val context: Context) : Crypto {
             kpGenerator.initialize(spec)
             kpGenerator.generateKeyPair()
         } catch (se: StrongBoxUnavailableException) {
-            KeyGenParameterSpec.Builder(KEY_ALIAS, KeyProperties.PURPOSE_DECRYPT or KeyProperties.PURPOSE_ENCRYPT)
+            val spec = KeyGenParameterSpec.Builder(KEY_ALIAS, KeyProperties.PURPOSE_DECRYPT or KeyProperties.PURPOSE_ENCRYPT)
                     .setCertificateSubject(X500Principal("CN=$KEY_ALIAS"))
                     .setDigests(KeyProperties.DIGEST_SHA256)
                     .setBlockModes(KeyProperties.BLOCK_MODE_ECB)

@@ -9,7 +9,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class CryptoModule() {
+class CryptoModule {
 
     @Provides
     fun provideCrypto19(context: Context): CryptApi19 {

@@ -3,14 +3,12 @@ package bushuk.stanislau.bitbucketproject.presentation.team
 import android.view.View
 import bushuk.stanislau.bitbucketproject.di.CiceroneFactory
 import bushuk.stanislau.bitbucketproject.presentation.base.BaseListLoadingViewModel
-import bushuk.stanislau.bitbucketproject.presentation.repositories.RepositoriesDataSourceFactory
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import bushuk.stanislau.bitbucketproject.room.team.Team
 import bushuk.stanislau.bitbucketproject.room.team.TeamResponse
 import javax.inject.Inject
 
 class TeamsViewModel @Inject constructor(factory: TeamsDataSourceFactory,
-                                         factoryTest: RepositoriesDataSourceFactory,
                                          private val routerFactory: CiceroneFactory
 
 ) : BaseListLoadingViewModel<Team, TeamResponse>(factory) {

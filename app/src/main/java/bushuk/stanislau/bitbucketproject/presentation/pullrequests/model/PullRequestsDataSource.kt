@@ -11,14 +11,8 @@ import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequest
 import io.reactivex.Single
 import javax.inject.Inject
 
-class PullRequestsDataSource : BaseDataSource<PullRequest, BaseListResponse<PullRequest>>() {
-    override fun onResult(value: BaseListResponse<PullRequest>, callback: LoadCallback<String, PullRequest>) {
-        callback.onResult(value.items ?: emptyList(), value.previous)
-    }
+class PullRequestsDataSource() : BaseDataSource<PullRequest, BaseListResponse<PullRequest>>() {
 
-    override fun onResultInitial(value: BaseListResponse<PullRequest>, callback: LoadInitialCallback<String, PullRequest>) {
-        callback.onResult(value.items ?: emptyList(), value.previous, value.next)
-    }
 
     @Inject
     lateinit var userModel: UserModel

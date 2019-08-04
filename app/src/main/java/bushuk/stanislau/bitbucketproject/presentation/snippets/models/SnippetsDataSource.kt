@@ -13,14 +13,6 @@ import javax.inject.Inject
 
 class SnippetsDataSource : BaseDataSource<Snippet, BaseListResponse<Snippet>>() {
 
-    override fun onResult(value: BaseListResponse<Snippet>, callback: LoadCallback<String, Snippet>) {
-        callback.onResult(value.items ?: emptyList(), value.next)
-    }
-
-    override fun onResultInitial(value: BaseListResponse<Snippet>, callback: LoadInitialCallback<String, Snippet>) {
-        callback.onResult(value.items ?: emptyList(), value.previous, value.next)
-    }
-
     @Inject
     lateinit var api: Api
 

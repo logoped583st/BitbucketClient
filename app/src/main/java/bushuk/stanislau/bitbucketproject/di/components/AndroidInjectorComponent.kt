@@ -13,14 +13,14 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
-    ViewModelModule::class,
     GlobalModule::class,
     UserModule::class,
+    ViewModelModule::class,
     AppModule::class])
 interface AndroidInjectorComponent : AndroidInjector<App> {
 
     @Component.Builder
     abstract class Builder : AndroidInjector.Builder<App>() {
-        abstract fun appContext(module: ApplicationContextProvider):Builder
+        abstract fun appContext(module: ApplicationContextProvider): Builder
     }
 }

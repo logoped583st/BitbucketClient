@@ -9,16 +9,9 @@ import bushuk.stanislau.bitbucketproject.room.BaseListResponse
 import bushuk.stanislau.bitbucketproject.room.commits.Commit
 import io.reactivex.Single
 import javax.inject.Inject
+import javax.inject.Provider
 
 class CommitsDataSource : BaseDataSource<Commit, BaseListResponse<Commit>>() {
-
-    override fun onResult(value: BaseListResponse<Commit>, callback: LoadCallback<String, Commit>) {
-        callback.onResult(value.items ?: emptyList(), value.next)
-    }
-
-    override fun onResultInitial(value: BaseListResponse<Commit>, callback: LoadInitialCallback<String, Commit>) {
-        callback.onResult(value.items ?: emptyList(), value.previous, value.next)
-    }
 
     @Inject
     lateinit var pullRequestModel: PullRequestModel

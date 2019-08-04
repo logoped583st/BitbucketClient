@@ -12,16 +12,9 @@ import javax.inject.Inject
 
 class TeamsDataSource @Inject constructor(
         private val api: Api,
-        private val queryModel: TeamsQueryModel,
         userModel: IUserModel)
     : BaseDataSource<Team, TeamResponse>() {
-    override fun onResultInitial(value: TeamResponse, callback: LoadInitialCallback<String, Team>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
-    override fun onResult(value: TeamResponse, callback: LoadCallback<String, Team>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     override val errorText: String = App.resourcesApp.getString(R.string.repositories_screen_no_repositories)
 
