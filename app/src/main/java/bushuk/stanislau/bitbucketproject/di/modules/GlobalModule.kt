@@ -6,6 +6,6 @@ import dagger.Module
 @Module(includes = [
     CiceroneModule::class, CiceroneGlobalModule::class,
     CiceroneDrawerModule::class,
-    PreferencesModule::class, CryptoModule::class,
+    CryptoModule::class, TokenModule::class, PreferencesModule::class,
     RetrofitModule::class, ApplicationContextProvider::class])
 abstract class GlobalModule

@@ -6,10 +6,12 @@ import bushuk.stanislau.bitbucketproject.utils.exceptions.CustomExceptions
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
 import com.jakewharton.rxbinding2.widget.itemSelections
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import java.net.SocketTimeoutException
 
@@ -67,6 +69,20 @@ fun AppCompatSpinner.spinnerRx(call: (string: String) -> Unit): Disposable {
             .subscribe {
                 call(it)
             }
+}
+
+fun <T> Single<T>.mapUnAuthorize(token: String?, times: Int = 1, refresh: () -> Single<*>): Single<T> {
+    return this.retryWhen { errors ->
+        errors.zipWith(Flowable.range(0, times), BiFunction<Throwable, Int, Int> { error, retryCount ->
+            if (retryCount > times && error is HttpException && (error.code() == 401 && !token.isNullOrEmpty())) {
+                throw error
+            } else {
+                retryCount
+            }
+        }).flatMapSingle {
+            refresh()
+        }
+    }
 }
 
 

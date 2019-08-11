@@ -13,6 +13,8 @@ import javax.inject.Inject
 
 class FollowersFragment : BaseListFragment<User, UserResponse, FollowersViewModel, FragmentRepositoriesBinding>(), Injectable {
 
+    override val itemLayout: Int
+        get() = R.layout.item_recycler_users
 
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory

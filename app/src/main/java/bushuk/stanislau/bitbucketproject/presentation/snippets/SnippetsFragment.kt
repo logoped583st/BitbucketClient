@@ -44,7 +44,7 @@ class SnippetsFragment : Fragment(), IItemClick<Snippet> {
         super.onViewCreated(view, savedInstanceState)
 
         snippets_screen_recycler.layoutManager = LinearLayoutManager(activity)
-        val adapter = RecyclerAdapter(this)
+        val adapter = RecyclerAdapter(this, TODO())
         snippets_screen_recycler.adapter = adapter
         viewModel.snippets.observe(this, Observer(adapter::submitList))
     }

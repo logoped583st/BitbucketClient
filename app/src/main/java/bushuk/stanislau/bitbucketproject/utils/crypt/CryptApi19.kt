@@ -19,7 +19,7 @@ import javax.security.auth.x500.X500Principal
 
 class CryptApi19 @Inject constructor(val context: Context) : Crypto {
     private val KEYSTORE_PROVIDER_ANDROID = Constants.KEY_STORE
-    private val KEY_ALIAS = Constants.TOKEN_PREFERENCES
+    private val KEY_ALIAS = Constants.ACCESS_TOKEN_PREFERENCES
     private val TYPE_RSA = "RSA"
     private val ks = KeyStore.getInstance(KEYSTORE_PROVIDER_ANDROID)
 

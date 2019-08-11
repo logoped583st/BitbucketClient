@@ -8,16 +8,32 @@ import javax.inject.Inject
 
 class SharedPreferencesUtil @Inject constructor(val context: Context, val crypto: BaseCrypto) : ISharedPreferencesUtil {
 
+    override fun getRefreshToken(): String? {
+        val tokenEncrypted: String? = context.getSharedPreferences(Constants.REFRESH_TOKEN_PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.REFRESH_TOKEN_PREFERENCES, null)
+        return if (tokenEncrypted != null) {
+            crypto.decrypt(tokenEncrypted)
+        } else {
+            null
+        }
+    }
+
+    override fun setRefreshToken(refreshToken: String) {
+        val tokenEncrypted = crypto.encrypt(refreshToken)
+        context.getSharedPreferences(Constants.REFRESH_TOKEN_PREFERENCES, Context.MODE_PRIVATE).edit()
+                .putString(Constants.REFRESH_TOKEN_PREFERENCES, tokenEncrypted).apply()
+    }
+
 
     override fun setToken(accessToken: String) {
         val tokenEncrypted = crypto.encrypt(accessToken)
-        context.getSharedPreferences(Constants.TOKEN_PREFERENCES, Context.MODE_PRIVATE).edit()
-                .putString(Constants.TOKEN_PREFERENCES, tokenEncrypted).apply()
+        context.getSharedPreferences(Constants.ACCESS_TOKEN_PREFERENCES, Context.MODE_PRIVATE).edit()
+                .putString(Constants.ACCESS_TOKEN_PREFERENCES, tokenEncrypted).apply()
     }
 
     override fun getToken(): String? {
-        val tokenEncrypted: String? = context.getSharedPreferences(Constants.TOKEN_PREFERENCES, Context.MODE_PRIVATE)
-                .getString(Constants.TOKEN_PREFERENCES, null)
+        val tokenEncrypted: String? = context.getSharedPreferences(Constants.ACCESS_TOKEN_PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.ACCESS_TOKEN_PREFERENCES, null)
 
         return if (tokenEncrypted != null) {
             crypto.decrypt(tokenEncrypted)
@@ -26,9 +42,9 @@ class SharedPreferencesUtil @Inject constructor(val context: Context, val crypto
         }
     }
 
-    override fun clearToken(){
-        context.getSharedPreferences(Constants.TOKEN_PREFERENCES,Context.MODE_PRIVATE).edit()
-                .putString(Constants.TOKEN_PREFERENCES,null).apply()
+    override fun clearToken() {
+        context.getSharedPreferences(Constants.ACCESS_TOKEN_PREFERENCES, Context.MODE_PRIVATE).edit()
+                .putString(Constants.ACCESS_TOKEN_PREFERENCES, null).apply()
     }
 
 }
@@ -37,4 +53,6 @@ interface ISharedPreferencesUtil {
     fun clearToken()
     fun getToken(): String?
     fun setToken(accessToken: String)
+    fun setRefreshToken(refreshToken: String)
+    fun getRefreshToken(): String?
 }

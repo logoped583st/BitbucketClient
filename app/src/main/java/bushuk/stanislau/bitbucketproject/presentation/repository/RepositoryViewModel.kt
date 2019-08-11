@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.constants.Screens
-import bushuk.stanislau.bitbucketproject.global.UserModel
+import bushuk.stanislau.bitbucketproject.global.IUserModel
 import bushuk.stanislau.bitbucketproject.presentation.repository.model.RepositoryModel
 import bushuk.stanislau.bitbucketproject.room.repositories.Repository
 import bushuk.stanislau.bitbucketproject.room.user.User
@@ -28,7 +28,7 @@ class RepositoryViewModel : ViewModel() {
   //  lateinit var router: Router
 
     @Inject
-    lateinit var userModel: UserModel
+    lateinit var userModel: IUserModel
 
     private var tabSelected: String = Screens.CODE_SCREEN
 
@@ -57,7 +57,7 @@ class RepositoryViewModel : ViewModel() {
     }
 
     override fun onCleared() {
-        userModel.user.onNext(userMe)
+        userModel.setUser(userMe)
         super.onCleared()
     }
 

@@ -20,7 +20,6 @@ import retrofit2.http.*
 
 interface Api {
 
-
     @GET("user")
     fun myUser(): Single<User>
 

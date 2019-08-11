@@ -2,8 +2,9 @@ package bushuk.stanislau.bitbucketproject.di.modules.global
 
 import android.util.Log
 import bushuk.stanislau.bitbucketproject.api.Api
+import bushuk.stanislau.bitbucketproject.api.OauthApi
 import bushuk.stanislau.bitbucketproject.api.ScalarApi
-import bushuk.stanislau.bitbucketproject.utils.preferences.ISharedPreferencesUtil
+import bushuk.stanislau.bitbucketproject.global.ITokenCache
 import bushuk.stanislau.bitbucketproject.utils.retrofit.AuthorizationInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -44,12 +45,12 @@ class RetrofitModule {
     }
 
     @Provides
-    fun provideAuthorizationInterceptor(sharedPreferences: ISharedPreferencesUtil) = AuthorizationInterceptor(sharedPreferences)
+    fun provideAuthorizationInterceptor(tokenCache: ITokenCache) = AuthorizationInterceptor(tokenCache)
 
 
     @Provides
     @Singleton
-    fun getApi(gson: Gson, okHttpClient: OkHttpClient): Api {
+    fun provideApi(gson: Gson, okHttpClient: OkHttpClient): Api {
         return Retrofit.Builder()
                 .client(okHttpClient)
                 .baseUrl("https://api.bitbucket.org/2.0/")
@@ -60,13 +61,24 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    fun getPlainApi(okHttpClient: OkHttpClient):ScalarApi{
+    fun providePlainApi(okHttpClient: OkHttpClient): ScalarApi {
         return Retrofit.Builder()
                 .client(okHttpClient)
                 .baseUrl("https://api.bitbucket.org/2.0/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build().create(ScalarApi::class.java) as ScalarApi
+    }
+
+    @Provides
+    @Singleton
+    fun provideOauthApi(gson: Gson, httpLoggingInterceptor: HttpLoggingInterceptor): OauthApi {
+        return Retrofit.Builder()
+                .client(OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build())
+                .baseUrl("https://bitbucket.org/site/")
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build().create(OauthApi::class.java) as OauthApi
     }
 
 }

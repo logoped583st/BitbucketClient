@@ -1,15 +1,19 @@
 package bushuk.stanislau.bitbucketproject.global
 
-import bushuk.stanislau.bitbucketproject.api.Api
+import android.annotation.SuppressLint
+import bushuk.stanislau.bitbucketproject.presentation.auth.IAccessRepository
 import bushuk.stanislau.bitbucketproject.room.user.User
-import bushuk.stanislau.bitbucketproject.utils.preferences.SharedPreferencesUtil
+import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
+import timber.log.Timber
 import javax.inject.Inject
 
-class UserModel @Inject constructor(api: Api,
-                                    tokenPreferencesUtil: SharedPreferencesUtil) : IUserModel {
-
+@SuppressLint("CheckResult")
+class UserModel @Inject constructor(
+        authLoginRepository: IAccessRepository,
+        tokenCache: ITokenCache)
+    : IUserModel {
 
 
     override val user: BehaviorSubject<User> = BehaviorSubject.create()
@@ -23,11 +27,13 @@ class UserModel @Inject constructor(api: Api,
     }
 
     init {
-        if (tokenPreferencesUtil.getToken() != null) {
-            api.myUser().subscribeOn(Schedulers.io())
-                    .doOnSuccess { user.onNext(it) }
-                    .onErrorReturn { null }
-                    .subscribe()
+        if (tokenCache.accessToken != null) {
+            authLoginRepository.getMyUser().subscribeOn(Schedulers.io())
+                    .subscribe({
+                        user.onNext(it)
+                    }, {
+                        Timber.e(it.message)
+                    })
         }
     }
 
@@ -38,5 +44,5 @@ interface IUserModel {
 
     fun setUser(user: User)
 
-    val user: BehaviorSubject<User>
+    val user: Observable<User>
 }

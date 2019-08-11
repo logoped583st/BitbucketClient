@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
-import bushuk.stanislau.bitbucketproject.presentation.base.BackPressFragment
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.databinding.FragmentRepositoryBinding
+import bushuk.stanislau.bitbucketproject.presentation.base.BackPressFragment
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_repository.*
 import kotlinx.android.synthetic.main.fragment_repository.view.*
@@ -34,12 +34,12 @@ class RepositoryFragment : BackPressFragment() {
         viewModel = ViewModelProviders.of(this).get(RepositoryViewModel::class.java)
         avatar = arguments!!.getString("AVATAR")
         userName = arguments!!.getString("USERNAME")
-        viewModel.userModel.user.value!!.username = userName
+        viewModel.userModel.user.blockingFirst().username = userName
 
         binding.let {
             it.fragment = this
             it.viewModel = viewModel
-            it.setLifecycleOwner(this)
+            it.lifecycleOwner = this
         }
         setToolbar(binding)
 

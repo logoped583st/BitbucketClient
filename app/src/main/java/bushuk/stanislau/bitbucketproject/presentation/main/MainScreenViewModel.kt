@@ -1,13 +1,14 @@
 package bushuk.stanislau.bitbucketproject.presentation.main
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.App
 import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.di.CiceroneFactory
 import bushuk.stanislau.bitbucketproject.di.Cicerones
-import bushuk.stanislau.bitbucketproject.global.UserModel
+import bushuk.stanislau.bitbucketproject.global.IUserModel
 import bushuk.stanislau.bitbucketproject.navigation.ScreensNavigator
+import bushuk.stanislau.bitbucketproject.presentation.base.BaseDisposableViewModel
+import bushuk.stanislau.bitbucketproject.presentation.base.addDisposable
 import bushuk.stanislau.bitbucketproject.room.user.User
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -16,8 +17,8 @@ import javax.inject.Inject
 
 class MainScreenViewModel @Inject constructor(
         routerFactory: CiceroneFactory,
-        userModel: UserModel
-) : ViewModel() {
+        userModel: IUserModel
+) : BaseDisposableViewModel() {
 
 
     private val router = routerFactory.provideCicerone(Cicerones.DRAWER).router
@@ -29,12 +30,12 @@ class MainScreenViewModel @Inject constructor(
     private var currentScreen: NavigateTo? = null
 
     init {
-        userModel.user
+        addDisposable(userModel.user
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     user.postValue(it)
-                }
+                })
 
         drawerNavigation(NavigateTo.REPOSITORIES)
     }

@@ -30,7 +30,7 @@ class CodeFragment : Fragment(), IItemClick<Code>, RecyclerCodePathAdapter.PathC
     lateinit var viewModel: CodeViewModel
 
     private val codePathAdapter = RecyclerCodePathAdapter(mutableListOf("src"), this)
-    private val codeAdapter = RecyclerAdapter(this)
+    private val codeAdapter = RecyclerAdapter(this, TODO())
 
 
     override fun onClickItem(view: View, data: Code) {

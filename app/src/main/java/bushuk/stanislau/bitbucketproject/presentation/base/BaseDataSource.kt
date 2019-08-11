@@ -65,6 +65,7 @@ abstract class BaseDataSource<Value : ItemResponse, Response : BaseListResponse<
 }
 
 interface IBaseDataSource<Response : BaseListResponse<Value>, Value : ItemResponse> {
+
     var isRefresh: Boolean
 
     fun invalidate()

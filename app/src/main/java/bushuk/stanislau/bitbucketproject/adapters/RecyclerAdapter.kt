@@ -3,26 +3,25 @@ package bushuk.stanislau.bitbucketproject.adapters
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import bushuk.stanislau.bitbucketproject.R
 import bushuk.stanislau.bitbucketproject.presentation.base.IItemClick
 import bushuk.stanislau.bitbucketproject.room.ItemResponse
 
-class RecyclerAdapter<T : ItemResponse>(private val clickFollow: IItemClick<T>) : PagedListAdapter<T,
+class RecyclerAdapter<T : ItemResponse>(private val clickFollow: IItemClick<T>, @LayoutRes private val itemContainer: Int) : PagedListAdapter<T,
         ViewHolder<T>>(diffUtil<T>()) {
 
 
     override fun onBindViewHolder(holder: ViewHolder<T>, position: Int) {
-
         holder.bind(getItem(position), clickFollow)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder<T> {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding: ViewDataBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_recycler_repositories, parent, false)
+        val binding: ViewDataBinding = DataBindingUtil.inflate(layoutInflater, itemContainer, parent, false)
 
 
         return ViewHolder(binding)

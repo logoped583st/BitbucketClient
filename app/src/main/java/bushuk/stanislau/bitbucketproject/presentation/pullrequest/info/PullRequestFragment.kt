@@ -45,11 +45,11 @@ class PullRequestFragment : Fragment(), IItemClick<ItemResponse> {
             it.viewModel = viewModel
         }
 
-        val adapterCommits = RecyclerAdapter(this)
+        val adapterCommits = RecyclerAdapter(this, TODO())
         pullrequest_screen_recycler_commits.layoutManager = LinearLayoutManager(activity)
         pullrequest_screen_recycler_commits.adapter = adapterCommits
 
-        val adapterReviewers = RecyclerAdapter(this)
+        val adapterReviewers = RecyclerAdapter(this, TODO())
         pullrequest_screen_recycler_reviewers.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         pullrequest_screen_recycler_reviewers.adapter = adapterReviewers
 

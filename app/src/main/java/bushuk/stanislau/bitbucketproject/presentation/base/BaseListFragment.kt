@@ -18,10 +18,12 @@ abstract class BaseListFragment<I : ItemResponse, R : BaseListResponse<I>,
 
     private lateinit var adapter: RecyclerAdapter<I>
 
+    abstract val itemLayout: Int
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = RecyclerAdapter(this)
+        adapter = RecyclerAdapter(this, itemLayout)
         list_constraint.mBinding.rv.layoutManager = LinearLayoutManager(context)
         list_constraint.mBinding.rv.adapter = adapter
 
@@ -31,7 +33,6 @@ abstract class BaseListFragment<I : ItemResponse, R : BaseListResponse<I>,
         })
 
         viewModel.dataSource.observe(viewLifecycleOwner, Observer(adapter::submitList))
-
 
     }
 

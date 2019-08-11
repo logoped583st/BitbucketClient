@@ -1,14 +1,14 @@
 package bushuk.stanislau.bitbucketproject.presentation.user
 
 import androidx.lifecycle.ViewModel
-import bushuk.stanislau.bitbucketproject.global.UserModel
+import bushuk.stanislau.bitbucketproject.global.IUserModel
 import bushuk.stanislau.bitbucketproject.room.user.User
 import javax.inject.Inject
 
 class UserViewModel : ViewModel() {
 
     @Inject
-    lateinit var userModel: UserModel
+    lateinit var userModel: IUserModel
 
     //@Inject
   //  lateinit var router: Router
@@ -16,10 +16,10 @@ class UserViewModel : ViewModel() {
         //App.component.inject(this)
     }
 
-    private val userMe: User= userModel.user.value!!.copy()
+    private val userMe: User= userModel.user.blockingFirst().copy()
 
     override fun onCleared() {
-        userModel.user.value!!.username = userMe.username
+        userModel.user.blockingFirst().username = userMe.username
         super.onCleared()
     }
 

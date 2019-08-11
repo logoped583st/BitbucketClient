@@ -14,13 +14,8 @@ class TeamsViewModel @Inject constructor(factory: TeamsDataSourceFactory,
 ) : BaseListLoadingViewModel<Team, TeamResponse>(factory) {
 
 
-    enum class TeamRole(role: String) {
-        ADMIN("admin"),
-        CONTRIBUTER("contributer"),
-        MEMBER("member")
-    }
 
-    var role: TeamRole = TeamRole.MEMBER
+
 
 
 //    fun observeSearchView(searchView: SearchView, lifecycleOwner: LifecycleOwner, adapter: RecyclerAdapter<Repository>) {

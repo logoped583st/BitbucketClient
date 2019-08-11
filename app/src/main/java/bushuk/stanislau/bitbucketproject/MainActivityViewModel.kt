@@ -23,4 +23,7 @@ class MainActivityViewModel @Inject constructor(
         }
     }
 
+    fun navigateToRoot() {
+        router.newRootChain(ScreensNavigator.LoginScreen())
+    }
 }

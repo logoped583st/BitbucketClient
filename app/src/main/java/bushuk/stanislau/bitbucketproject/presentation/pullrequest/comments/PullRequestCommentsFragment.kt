@@ -49,7 +49,7 @@ class PullRequestCommentsFragment : Fragment(), IItemClick<Comment> {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = RecyclerAdapter(this)
+        val adapter = RecyclerAdapter(this, TODO())
         pullreuqest_comments_screen_recycler.layoutManager = LinearLayoutManager(activity)
         pullreuqest_comments_screen_recycler.adapter = adapter
         viewModel.comments.observe(this, Observer(adapter::submitList))

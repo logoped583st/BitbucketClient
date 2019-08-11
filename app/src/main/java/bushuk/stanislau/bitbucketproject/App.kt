@@ -1,7 +1,6 @@
 package bushuk.stanislau.bitbucketproject
 
 import android.app.Activity
-import android.app.Application
 import android.content.Context
 import android.content.res.Resources
 import android.os.Bundle
@@ -9,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.multidex.MultiDex
+import androidx.multidex.MultiDexApplication
 import bushuk.stanislau.bitbucketproject.di.components.DaggerAndroidInjectorComponent
 import bushuk.stanislau.bitbucketproject.di.modules.global.ApplicationContextProvider
 import dagger.android.AndroidInjection
@@ -20,7 +20,7 @@ import dagger.android.support.HasSupportFragmentInjector
 import timber.log.Timber
 import javax.inject.Inject
 
-class App : Application(), HasActivityInjector {
+class App : MultiDexApplication(), HasActivityInjector {
 
     @Inject
     lateinit var activityInjector: DispatchingAndroidInjector<Activity>
@@ -69,14 +69,11 @@ class App : Application(), HasActivityInjector {
             }
         })
 
-
-
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-
-
     }
+
 
     private fun handleActivity(activity: Activity) {
         if (activity is HasSupportFragmentInjector) {

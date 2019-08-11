@@ -11,6 +11,8 @@ import bushuk.stanislau.bitbucketproject.di.Cicerones
 import bushuk.stanislau.bitbucketproject.navigation.MainNavigator
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
+import io.reactivex.plugins.RxJavaPlugins
+import retrofit2.HttpException
 import javax.inject.Inject
 
 
@@ -47,6 +49,18 @@ class MainActivity : AppCompatActivity(), LifecycleOwner, Injectable, HasSupport
         super.onPause()
     }
 
+    init {
+
+        RxJavaPlugins.setErrorHandler {
+
+            if (it is HttpException) {
+                if (it.code() == 401) {
+                    viewModel.navigateToRoot()
+                }
+            }
+
+        }
+    }
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 }

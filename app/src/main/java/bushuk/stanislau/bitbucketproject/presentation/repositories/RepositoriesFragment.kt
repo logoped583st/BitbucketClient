@@ -23,14 +23,16 @@ import javax.inject.Inject
 class RepositoriesFragment : BaseListFragment<Repository, RepositoriesResponse, RepositoriesViewModel, FragmentRepositoriesBinding>(), Injectable {
 
 
+
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val containerId: Int = R.layout.fragment_repositories
     override val viewModelClass: Class<RepositoriesViewModel> = RepositoriesViewModel::class.java
     override val scope: ViewModelScope = ViewModelScope.ACTIVITY
+    override val itemLayout: Int = R.layout.item_recycler_repositories
 
-    override fun applyBinding() {
+            override fun applyBinding() {
         binding.viewModel = viewModel
         binding.fragment = this
     }

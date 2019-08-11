@@ -2,6 +2,7 @@ package bushuk.stanislau.bitbucketproject.di.modules
 
 import androidx.lifecycle.ViewModel
 import bushuk.stanislau.bitbucketproject.di.ViewModelKey
+import bushuk.stanislau.bitbucketproject.di.scopes.DrawerScope
 import bushuk.stanislau.bitbucketproject.presentation.main.MainScreenViewModel
 import dagger.Binds
 import dagger.Module
@@ -12,6 +13,7 @@ import dagger.multibindings.IntoMap
 abstract class MainScreenModule {
 
     @Binds
+    @DrawerScope
     @IntoMap
     @ViewModelKey(MainScreenViewModel::class)
     abstract fun bindMainActivityViewModel(mainActivityViewModel: MainScreenViewModel): ViewModel
