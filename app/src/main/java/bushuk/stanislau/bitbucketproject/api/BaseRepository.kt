@@ -14,12 +14,9 @@ abstract class BaseApiRepository(
         private val api: Api
 ) {
 
-
     fun authSuccessful(): Single<User> = api.myUser().mapUnAuthorize(tokenCache.refreshToken) { refreshOauthToken() }
 
-    fun getMyUser(): Single<User> {
-        return handleUnAuthorize(api.myUser().subscribeOn(Schedulers.io()))
-    }
+    fun getMyUser(): Single<User> = handleUnAuthorize(api.myUser().subscribeOn(Schedulers.io()))
 
     private fun refreshOauthToken(): Single<OauthResponse> {
         return oauthApi.refreshToken(Constants.GRANT_TYPE_REFRESH_TOKEN, tokenCache.refreshToken
@@ -33,7 +30,7 @@ abstract class BaseApiRepository(
         return oauthApi.getOauth(Constants.GRANT_TYPE_AUTH_CODE, code, Constants.CLIENT_ID, Constants.SECRET_ID).subscribeOn(Schedulers.io())
     }
 
-    protected fun <T> handleUnAuthorize(single: Single<T>): Single<T> {
+    private fun <T> handleUnAuthorize(single: Single<T>): Single<T> {
         return single.mapUnAuthorize(tokenCache.refreshToken) { refreshOauthToken() }
     }
 

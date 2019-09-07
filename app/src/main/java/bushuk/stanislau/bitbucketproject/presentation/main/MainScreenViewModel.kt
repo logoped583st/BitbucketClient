@@ -20,7 +20,6 @@ class MainScreenViewModel @Inject constructor(
         userModel: IUserModel
 ) : BaseDisposableViewModel() {
 
-
     private val router = routerFactory.provideCicerone(Cicerones.DRAWER).router
 
     val toolbarTitle: MutableLiveData<String> = MutableLiveData()

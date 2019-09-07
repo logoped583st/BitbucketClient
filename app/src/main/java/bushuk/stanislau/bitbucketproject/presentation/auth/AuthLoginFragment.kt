@@ -29,13 +29,11 @@ class AuthLoginFragment : BaseBindingFragment<AuthLoginViewModel, ActivityAuthLo
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var dialog: ProgressDialog
-
+    private lateinit var dialog: ProgressDialog
 
     override fun applyBinding() {
         binding.loginViewModel = viewModel
     }
-
 
     @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

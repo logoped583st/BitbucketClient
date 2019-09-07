@@ -25,9 +25,9 @@ class TokenCache @Inject constructor(private val sharedPreferences: ISharedPrefe
 
 interface ITokenCache {
 
-    val accessToken: String?
+    var accessToken: String?
 
-    val refreshToken: String?
+    var refreshToken: String?
 
     fun onNewAccessToken(accessToken: String)
 

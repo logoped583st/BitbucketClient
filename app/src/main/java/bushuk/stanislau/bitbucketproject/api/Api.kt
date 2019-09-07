@@ -10,7 +10,7 @@ import bushuk.stanislau.bitbucketproject.room.pullrequest.PullRequestResponse
 import bushuk.stanislau.bitbucketproject.room.repositories.CreateRepository
 import bushuk.stanislau.bitbucketproject.room.repositories.RepositoriesResponse
 import bushuk.stanislau.bitbucketproject.room.snippets.Snippet
-import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponce
+import bushuk.stanislau.bitbucketproject.room.snippets.SnippetsResponse
 import bushuk.stanislau.bitbucketproject.room.team.TeamResponse
 import bushuk.stanislau.bitbucketproject.room.user.User
 import bushuk.stanislau.bitbucketproject.room.user.UserResponse
@@ -63,10 +63,10 @@ interface Api {
     fun getFollowing(@Path("userName") userName: String): Single<Followers>
 
     @GET("snippets/{userName}")
-    fun getSnippets(@Path("userName") userName: String): Single<SnippetsResponce>
+    fun getSnippets(@Path("userName") userName: String): Single<SnippetsResponse>
 
     @GET//request for getting info from next page, Url we take from previous request
-    fun getSnippetsNextPage(@Url url: String): Single<SnippetsResponce>
+    fun getSnippetsNextPage(@Url url: String): Single<SnippetsResponse>
 
     @GET
     fun getCommitWithUrl(@Url url: String): Single<CommitResponse>
